@@ -1,12 +1,12 @@
 FROM node:alpine
 
-ARG dst=/usr/app
+ARG DEST=/usr/app
 
 RUN npm install --global pm2
 
-COPY ./ ${dst}
+COPY ./ ${DEST}
 
-WORKDIR ${dst}
+WORKDIR ${DEST}
 RUN npm install -D
 
 RUN npm run build
