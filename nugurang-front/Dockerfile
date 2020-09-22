@@ -1,10 +1,10 @@
 FROM node:alpine
 
-ARG DEST=/usr/app
+ARG DEST=/srv
 
 RUN npm install --global pm2
 
-COPY ./ ${DEST}
+COPY . ${DEST}
 
 WORKDIR ${DEST}
 RUN npm install -D
