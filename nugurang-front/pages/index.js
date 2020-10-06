@@ -17,13 +17,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
-import Layout from '../components/Layout';
 
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(8),
+    marginBottom: theme.spacing(12),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -46,7 +45,7 @@ const cards = [1, 2, 3, 4, 5];
 export default function Home() {
   const classes = useStyles();
   return (
-    <Layout>
+
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -90,6 +89,6 @@ export default function Home() {
           </form>
         </div>
       </Container>
-    </Layout>
+
   );
 }
