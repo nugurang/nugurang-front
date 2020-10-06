@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
+import BottomNavBar from '../components/BottomNavBar.js';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -27,6 +28,7 @@ export default function MyApp(props) {
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
+      <BottomNavBar />
     </React.Fragment>
   );
 }

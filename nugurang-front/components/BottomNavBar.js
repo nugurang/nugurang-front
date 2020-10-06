@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -28,10 +29,11 @@ export default function BottomNavBar() {
   return (
     <AppBar className={classes.appBar}>
       <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
-        <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} />
+        <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} href="/"/>
         <BottomNavigationAction label="Forum" value="forum" icon={<ForumIcon />} />
         <BottomNavigationAction label="People" value="people" icon={<PeopleIcon />} />
         <BottomNavigationAction label="Person" value="person" icon={<PersonIcon />} />
+        <BottomNavigationAction label="Sign in" value="signin" icon={<PersonIcon />} href="/signin"/>
       </BottomNavigation>
     </AppBar>
   );
