@@ -12,12 +12,12 @@ import PersonIcon from '@material-ui/icons/Person';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AppBar from '@material-ui/core/AppBar';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   appBar: {
     top: 'auto',
-    bottom: 0
-  }
-}));
+    bottom: 0,
+  },
+})
 
 export default function BottomNavBar() {
   const classes = useStyles();

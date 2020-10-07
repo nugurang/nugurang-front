@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 
+import BottomNavBarLayout from '../components/BottomNavBarLayout';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,8 +41,9 @@ export default function SignIn() {
   const classes = useStyles();
   return (
 
-	  <Container component="main" maxWidth="xs">
-	    <CssBaseline />
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <BottomNavBarLayout>
 	    <div className={classes.paper}>
 	      <Avatar className={classes.avatar}>
 	        <LockOutlinedIcon />
@@ -78,7 +80,8 @@ export default function SignIn() {
 	      </Button>
 
 	    </div>
-	  </Container>
+      </BottomNavBarLayout>
+    </Container>
 
   );
 }

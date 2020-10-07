@@ -4,9 +4,31 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
-import BottomNavBar from '../components/BottomNavBar.js';
+import BottomNavBar from '../components/BottomNavBar';
 
-export default function MyApp(props) {
+
+const styles = {
+    layout: {
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        flexDirection: 'column',
+    },
+    header: {
+        height: 60,
+    },
+    main: {
+        flex: 1,
+    },
+    footer: {
+        height: 60,
+    },
+    divider: {
+        margin: '0 8px',
+    },
+}
+
+export default function RootApp(props) {
   const { Component, pageProps } = props;
 
   React.useEffect(() => {
@@ -28,12 +50,11 @@ export default function MyApp(props) {
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
-      <BottomNavBar />
     </React.Fragment>
   );
 }
 
-MyApp.propTypes = {
+RootApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
 };
