@@ -11,13 +11,7 @@ import GroupIcon from '@material-ui/icons/Group';
 import PersonIcon from '@material-ui/icons/Person';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AppBar from '@material-ui/core/AppBar';
-
-const useStyles = makeStyles({
-  appBar: {
-    top: 'auto',
-    bottom: 0,
-  },
-})
+import useStyles from '../components/UseStyles';
 
 export default function BottomNavBar() {
   const classes = useStyles();
@@ -28,12 +22,12 @@ export default function BottomNavBar() {
   };
 
   return (
-    <AppBar className={classes.appBar}>
+    <AppBar className={classes.app_bar}>
       <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
         <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} href="/"/>
         <BottomNavigationAction label="Forum" value="forum" icon={<ForumIcon />} />
         <BottomNavigationAction label="Team" value="team" icon={<GroupIcon />} />
-        <BottomNavigationAction label="Person" value="person" icon={<PersonIcon />} />
+        <BottomNavigationAction label="Person" value="person" icon={<PersonIcon />} href="/more"/>
         <BottomNavigationAction label="Sign in" value="signin" icon={<MoreHorizIcon />} href="/signin"/>
       </BottomNavigation>
     </AppBar>

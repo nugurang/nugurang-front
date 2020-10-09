@@ -22,65 +22,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import StarsIcon from '@material-ui/icons/Stars';
 import BottomNavBarLayout from '../components/BottomNavBarLayout';
-
-const useStyles = makeStyles((theme) => ({
-  paper_background: {
-    alignItems: 'center',
-    border: '0',
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(10),
-    padding: theme.spacing(1),
-  }, 
-  paper_card: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    margin: theme.spacing(1),
-    padding: theme.spacing(2),
-    variant: 'outlined',
-  },
-  paper_list: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'left',
-    variant: 'outlined',
-    margin: theme.spacing(1),
-    padding: theme.spacing(1),
-  },
-  typography_title: {
-    margin: theme.spacing(2),
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  button_more: {
-    margin: theme.spacing(1),
-  },
-  card: {
-    margin: theme.spacing(1),
-  },
-  card_title: {
-    alignSelf: "end",
-    textAlign: "center"
-  },
-  card_media_image_top: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  favicon: {
-    height: 0,
-    paddingTop: '100%', // 1:1
-  }
-}));
+import useStyles from '../components/UseStyles';
 
 
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
-
 
 const shortcutButtons = [
   {
@@ -147,16 +94,18 @@ const recentComps = [
 function TopTitle() {
   const classes = useStyles();
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={5} />
-      <Grid item xs={2}>
-        <CardMedia
-          className={classes.favicon}
-          image="/static/images/favicon.png"
-          title="Contemplative Reptile"
+    <Grid container spacing={2} alignItems="center" justify="center">
+      <Grid item xs={1}>
+        <Avatar alt="Nugurang"
+          src="/static/favicons/favicon-nugurang.png"
+          variant="square"
         />
       </Grid>
-      <Grid item xs={5} />
+      <Grid item xs={5}>
+        <Typography variant="h3" align="center">
+          Nugurang
+        </Typography>
+      </Grid>
     </Grid>
   );
 }
@@ -191,7 +140,7 @@ function ShortcutButtons() {
             <Button
               size="large"
               color="default"
-              className={classes.button_more}
+              className={classes.button}
               startIcon={<StarsIcon />}
             >
               More
@@ -280,7 +229,7 @@ function RecentComps() {
               <Button
                 size="large"
                 color="default"
-                className={classes.button_more}
+                className={classes.button}
                 startIcon={<StarsIcon />}
               >
                 More
