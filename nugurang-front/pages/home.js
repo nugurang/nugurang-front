@@ -2,14 +2,11 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import InboxIcon from '@material-ui/icons/Inbox';
 import Link from '@material-ui/core/Link';
@@ -22,8 +19,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import StarsIcon from '@material-ui/icons/Stars';
-import Layout from '../components/Layout';
+
 import useStyles from '../components/UseStyles';
+
+import Layout from '../components/Layout';
+import SelectButton from '../components/buttons/SelectButton';
+import BackgroundPaper from '../components/papers/BackgroundPaper';
+import ContentCard from '../components/cards/ContentCard';
+import CardTitleTypography from '../components/cards/CardTitleTypography';
+import ContentPaper from '../components/papers/ContentPaper';
+import ButtonTypography from '../components/buttons/ButtonTypography';
+import PageTitleTypography from '../components/typographies/PageTitleTypography';
+import PaperTitleTypography from '../components/papers/PaperTitleTypography';
+import ContentTitleTypography from '../components/typographies/ContentTitleTypography';
+import ContentTypography from '../components/typographies/ContentTypography';
+import ListItemTextPrimaryTypography from '../components/lists/ListItemTextPrimaryTypography';
+import ListItemTextSecondaryTypography from '../components/lists/ListItemTextSecondaryTypography';
 
 
 function ListItemLink(props) {
@@ -107,35 +118,25 @@ const recentComps = [
 function TopTitle() {
   const classes = useStyles();
   return (
-
-    <div style={{ width: '100%' }}>
-      <Box display="flex" alignItems="center" justifyContent="center" m={1} p={1}>
-        <Box p={1}>
-          <Avatar alt="Nugurang"
-            src="/static/favicons/favicon-nugurang.png"
-            variant="square"
-          />
-        </Box>
-        <Box p={1}>
-          <Typography variant="h3" align="center">
-            Nugurang
-          </Typography>
-        </Box>
-      </Box>
-    </div>
+    <Box display="flex" alignItems="center" justifyContent="center">
+      <Avatar alt="Nugurang"
+        src="/static/favicons/favicon-nugurang.png"
+        variant="square"
+      />
+      <PageTitleTypography>
+        Nugurang
+      </PageTitleTypography>
+    </Box>
   );
 }
 
 function ShortcutButtons() {
  const classes = useStyles();
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
         <Grid container spacing={2}>
-
           {shortcutButtons.map(shortcutButton => (
             <Grid item xs={6} sm={3}>
-              <Card variant="outlined">
+              <ContentCard>
                 <CardActions>
                   <CardActionArea>
                     <CardMedia
@@ -143,28 +144,23 @@ function ShortcutButtons() {
                       image={shortcutButton.image}
                       title={shortcutButton.title}
                     />
-                    <Typography align="center">
+                    <ContentTypography align="center">
                       {shortcutButton.title}
-                    </Typography>
+                    </ContentTypography>
                   </CardActionArea>
                 </CardActions>
-              </Card>
+              </ContentCard>
             </Grid>
           ))}
 
           <Grid item xs={12} align="right">
-            <Button
-              size="large"
-              color="default"
-              className={classes.button}
-              startIcon={<StarsIcon />}
-            >
-              More
-            </Button>
+            <SelectButton startIcon={<StarsIcon />} >
+              <ButtonTypography>
+                More
+              </ButtonTypography>
+            </SelectButton>
           </Grid>
         </Grid>
-      </Grid>
-    </Grid>
   );
 }
 
@@ -173,10 +169,10 @@ function HotArticles() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography className={classes.typography_title} component="h1" variant="h5">
+        <PaperTitleTypography>
           Hot articles
-        </Typography>
-        <Paper className={classes.paper_list} variant="outlined">
+        </PaperTitleTypography>
+        <ContentPaper>
             <List>
 
               {hotArticles.map(hotArticle => (
@@ -187,13 +183,16 @@ function HotArticles() {
                         <StarsIcon />
                       </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary={hotArticle.primary} secondary={hotArticle.secondary} />
+                    <ListItemText
+                      primary={<ListItemTextPrimaryTypography>{hotArticle.primary}</ListItemTextPrimaryTypography>}
+                      secondary={<ListItemTextSecondaryTypography>{hotArticle.secondary}</ListItemTextSecondaryTypography>}
+                    />
                   </ListItem>
                 </>
               ))}
 
             </List>
-        </Paper>
+        </ContentPaper>
       </Grid>
     </Grid>
   );
@@ -206,14 +205,14 @@ function RecentComps() {
       <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-            <Typography className={classes.typography_title} component="h1" variant="h5">
+              <PaperTitleTypography>
                 Recent comps
-              </Typography>
+              </PaperTitleTypography>
             </Grid>
 
             {recentComps.map(recentComp => (
               <Grid item xs={12} sm={6}>
-                <Card className={classes.card} variant="outlined">
+                <ContentCard>
                   <CardActionArea>
                     <CardMedia
                       className={classes.card_media_image_top}
@@ -221,35 +220,30 @@ function RecentComps() {
                       title={recentComp.title}
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <CardTitleTypography>
                         {recentComp.title}
-                      </Typography>
-                      <Typography>
+                      </CardTitleTypography>
+                      <ContentTypography>
                         {recentComp.content}
-                      </Typography>
+                      </ContentTypography>
                     </CardContent>
                     <CardActions>
-                      <Button size="small" color="primary">
-                        View
-                      </Button>
-                      <Button size="small" color="primary">
-                        Star
-                      </Button>
+                      <SelectButton size="small" color="primary">
+                        <ButtonTypography>View</ButtonTypography>
+                      </SelectButton>
+                      <SelectButton size="small" color="primary">
+                        <ButtonTypography>Star</ButtonTypography>
+                      </SelectButton>
                     </CardActions>
                   </CardActionArea>
-                </Card>
+                </ContentCard>
               </Grid>
             ))}
 
             <Grid item xs={12} align="right">
-              <Button
-                size="large"
-                color="default"
-                className={classes.button}
-                startIcon={<StarsIcon />}
-              >
-                More
-              </Button>
+              <SelectButton startIcon={<StarsIcon />} >
+                <ButtonTypography>More</ButtonTypography>
+              </SelectButton>
 
             </Grid>
           </Grid>
@@ -262,38 +256,32 @@ function RecentComps() {
 export default function Home() {
   const classes = useStyles();
   return (
-      <Container component="main" maxWidth="sm">
-        <CssBaseline />
-         <Layout>
-          <Paper className={classes.paper_background} variant="outlined">
+    <Layout>
+      <Grid container spacing={2}>
 
-            <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TopTitle />
+        </Grid>
 
-              <Grid item xs={12}>
-                <TopTitle />
-              </Grid>
+        <Grid item xs={12}>
+          <ContentPaper>
+            <ShortcutButtons />
+          </ContentPaper>
+        </Grid>
 
-              <Grid item xs={12}>
-                <Paper className={classes.paper_card} variant="outlined">
-                  <ShortcutButtons />
-                </Paper>
-              </Grid>
+        <Grid item xs={12}>
+          <ContentPaper>
+            <HotArticles />
+          </ContentPaper>
+        </Grid>
 
-              <Grid item xs={12}>
-                <Paper className={classes.paper_card} variant="outlined">
-                  <HotArticles />
-                </Paper>
-              </Grid>
+        <Grid item xs={12}>
+          <ContentPaper>
+            <RecentComps />
+          </ContentPaper>
+        </Grid>
 
-              <Grid item xs={12}>
-                <Paper className={classes.paper_card} variant="outlined">
-                  <RecentComps />
-                </Paper>
-              </Grid>
-
-            </Grid>
-          </Paper>
-        </Layout>
-      </Container>
+      </Grid>
+    </Layout>
   );
 }
