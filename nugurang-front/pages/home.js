@@ -32,18 +32,22 @@ function ListItemLink(props) {
 
 const shortcutButtons = [
   {
+    id: "competition",
     title: "Competition",
     image: "/static/images/competition.jpg"
   },
   {
+    id: "study",
     title: "Study",
     image: "/static/images/study.jpg"
   },
   {
+    id: "hobby",
     title: "Hobby",
     image: "/static/images/hobby.jpg"
   },
   {
+    id: "team",
     title: "Team",
     image: "/static/images/team.jpg"
   }
@@ -51,18 +55,22 @@ const shortcutButtons = [
 
 const hotArticles = [
   {
+    id: 1,
     primary: "Hot article 1",
     secondary: "1 likes"
   },
   {
+    id: 2,
     primary: "Hot article 2",
     secondary: "4 likes"
   },
   {
+    id: 3,
     primary: "Hot article 3",
     secondary: "9 likes"
   },
   {
+    id: 4,
     primary: "Hot article 4",
     secondary: "16 likes"
   }
@@ -70,21 +78,25 @@ const hotArticles = [
 
 const recentComps = [
   {
+    id: 1,
     title: "Comp 1",
     content: "Comp 1 content",
     image: "/static/images/article_01.jpg"
   },
   {
+    id: 2,
     title: "Comp 2",
     content: "Comp 2 content",
     image: "/static/images/article_02.jpg"
   },
   {
+    id: 3,
     title: "Comp 3",
     content: "Comp 3 content",
     image: "/static/images/article_03.jpg"
   },
   {
+    id: 4,
     title: "Comp 4",
     content: "Comp 4 content",
     image: "/static/images/article_04.jpg"
