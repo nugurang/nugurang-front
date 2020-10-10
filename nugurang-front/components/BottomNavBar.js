@@ -13,6 +13,35 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import AppBar from '@material-ui/core/AppBar';
 import useStyles from '../components/UseStyles';
 
+
+const bottomNavBarButtons = [
+  {
+    label: "Home",
+    path: "/home",
+    icon: <HomeIcon />
+  },
+  {
+    label: "Forum",
+    path: "/forum",
+    icon: <ForumIcon />
+  },
+  {
+    label: "Team",
+    path: "/team",
+    icon: <GroupIcon />
+  },
+  {
+    label: "Person",
+    path: "/signin",
+    icon: <PersonIcon />
+  },
+  {
+    label: "More",
+    path: "/more",
+    icon: <MoreHorizIcon />
+  }
+];
+
 export default function BottomNavBar() {
   const classes = useStyles();
   const [value, setValue] = React.useState('recents');
@@ -24,11 +53,16 @@ export default function BottomNavBar() {
   return (
     <AppBar className={classes.app_bar}>
       <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
-        <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} href="/"/>
-        <BottomNavigationAction label="Forum" value="forum" icon={<ForumIcon />} />
-        <BottomNavigationAction label="Team" value="team" icon={<GroupIcon />} />
-        <BottomNavigationAction label="Person" value="person" icon={<PersonIcon />} href="/more"/>
-        <BottomNavigationAction label="Sign in" value="signin" icon={<MoreHorizIcon />} href="/signin"/>
+        {bottomNavBarButtons.map(button => (
+          <Link href={button.path}>
+            <BottomNavigationAction
+              icon={button.icon}
+              label={button.label}
+              value={button.path}
+            />
+          </Link>
+
+        ))}
       </BottomNavigation>
     </AppBar>
   );

@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import StarsIcon from '@material-ui/icons/Stars';
 import Typography from '@material-ui/core/Typography';
-import BottomNavBarLayout from '../components/BottomNavBarLayout';
+import Layout from '../components/Layout';
 import useStyles from '../components/UseStyles';
 
 
@@ -49,8 +49,8 @@ const settingItems = [
 function UserBriefInfo() {
   const classes = useStyles();
   return (
-    <Grid container spacing={2} alignItems="center" justify="center">
-      <Grid item xs={6}>
+    <Grid container spacing={2} alignItems="center" justify="space-between">
+      <Grid item xs={12} sm={8}>
         <List>
           <ListItem button>
             <ListItemAvatar>
@@ -62,18 +62,15 @@ function UserBriefInfo() {
           </ListItem>
         </List>
       </Grid>
-      <Grid item xs={6}>
-        <List>
-          <ListItem button>
-            <ListItemAvatar>
-              <Avatar alt={userBriefInfo.name}
-                src={userBriefInfo.image}
-                variant="square"
-              />
-            </ListItemAvatar>
-            <ListItemText primary={userBriefInfo.name} secondary={userBriefInfo.bio} />
-          </ListItem>
-        </List>
+      <Grid item xs={12} sm={4}>
+        <Button
+          size="large"
+          color="default"
+          className={classes.button}
+          startIcon={<StarsIcon />}
+        >
+          Sign in / Sign out
+        </Button>
       </Grid>
     </Grid>
   );
@@ -105,13 +102,15 @@ export default function Home() {
   return (
       <Container component="main" maxWidth="sm">
         <CssBaseline />
-         <BottomNavBarLayout>
+         <Layout>
           <Paper className={classes.paper_background} variant="outlined">
 
             <Grid container spacing={2}>
 
               <Grid item xs={12}>
-                <UserBriefInfo />
+                <Paper className={classes.paper_card} variant="outlined">
+                  <UserBriefInfo />
+                </Paper>
               </Grid>
 
 
@@ -124,7 +123,7 @@ export default function Home() {
 
             </Grid>
           </Paper>
-        </BottomNavBarLayout>
+        </Layout>
       </Container>
   );
 }

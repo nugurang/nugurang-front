@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
-import BottomNavBarLayout from '../components/BottomNavBarLayout';
+import Layout from '../components/Layout';
 import useStyles from '../components/UseStyles';
 
 
@@ -39,7 +39,7 @@ const signInButtons = [
 function SignInField() {
   const classes = useStyles();
   return (
-  	<Box width={2/3}>
+  	<Box width={360}>
 	  <Grid container spacing={2} alignItems="center" justify="center">
 	    <Grid item xs={12}>
 	      <Typography variant="h4" style={{textAlign: "center"}} gutterBottom>
@@ -78,7 +78,7 @@ export default function SignIn() {
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
-      <BottomNavBarLayout>
+      <Layout>
         <Paper className={classes.paper_background} variant="outlined">
 
           <Grid container spacing={2}>
@@ -91,7 +91,7 @@ export default function SignIn() {
 
           </Grid>
         </Paper>
-      </BottomNavBarLayout>
+      </Layout>
     </Container>
   );
 }
