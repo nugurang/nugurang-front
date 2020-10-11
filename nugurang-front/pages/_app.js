@@ -5,28 +5,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
 
-
-const styles = {
-    layout: {
-        display: 'flex',
-        width: '100%',
-        height: '100%',
-        flexDirection: 'column',
-    },
-    header: {
-        height: 60,
-    },
-    main: {
-        flex: 1,
-    },
-    footer: {
-        height: 60,
-    },
-    divider: {
-        margin: '0 8px',
-    },
-}
-
 export default function RootApp(props) {
   const { Component, pageProps } = props;
 
