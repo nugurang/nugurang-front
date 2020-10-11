@@ -2,7 +2,7 @@ import React from 'react';
 
 import ArticleListWithLikeComment from '../../components/ArticleListWithLikeComment';
 
-export default function TestComp() {
+export default function CompTest() {
 
 const list = [
   {

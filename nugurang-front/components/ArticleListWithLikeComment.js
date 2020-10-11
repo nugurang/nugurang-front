@@ -23,12 +23,12 @@ const styles = theme => ({
     padding: '0px',
     variant: 'outlined',
   },
-  typography_primary: {
+  typographyPrimary: {
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 300,
   },
-  typography_secondary: {
+  typographySecondary: {
     fontFamily: "Ubuntu",
     fontSize: 14,
     fontWeight: 300,
@@ -53,8 +53,8 @@ function ArticleListWithLikeComment(props) {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary={<Typography className={classes.typography_primary} >{article.title}</Typography>}
-                  secondary={<Typography className={classes.typography_secondary} >{article.like} likes, {article.comment} comments</Typography>}
+                  primary={<Typography className={classes.typographyPrimary} >{article.title}</Typography>}
+                  secondary={<Typography className={classes.typographySecondary} >{article.like} likes, {article.comment} comments</Typography>}
                 />
               </ListItem>
             ))}
