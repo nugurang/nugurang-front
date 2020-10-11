@@ -9,10 +9,10 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import HomeIcon from '@material-ui/icons/Home';
-import ForumIcon from '@material-ui/icons/Forum';
+import TeaIcon from '@material-ui/icons/EmojiFoodBeverage';
 import GroupIcon from '@material-ui/icons/Group';
-import PersonIcon from '@material-ui/icons/Person';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import ChatIcon from '@material-ui/icons/QuestionAnswer';
+import MoreIcon from '@material-ui/icons/MoreHoriz';
 
 const styles = {
   root: {
@@ -33,11 +33,21 @@ function BottomNavBar(props) {
   return (
     <AppBar className={classes.root}>
       <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
-        <Link href="/"><BottomNavigationAction label="Home" value="home" icon={<HomeIcon />}/></Link>
-        <BottomNavigationAction label="Forum" value="forum" icon={<ForumIcon />} />
-        <Link href="/team"><BottomNavigationAction label="Team" value="team" icon={<GroupIcon/>} /></Link>
-        <BottomNavigationAction label="Person" value="person" icon={<PersonIcon />}/>
-        <Link href="/more"><BottomNavigationAction label="Sign in" value="signin" icon={<MoreHorizIcon />}/></Link>
+        <Link href="/" passHref>
+          <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} />
+        </Link>
+        <Link href="/forum" passHref>
+          <BottomNavigationAction label="Forum" value="forum" icon={<TeaIcon />} />
+        </Link>
+        <Link href="team" passHref>
+          <BottomNavigationAction label="Team" value="team" icon={<GroupIcon />}/>
+        </Link>
+        <Link href="chat" passHref>
+          <BottomNavigationAction label="Chat" value="chat" icon={<ChatIcon />} />
+        </Link>
+        <Link href="more" passHref>
+          <BottomNavigationAction label="More" value="more" icon={<MoreIcon />} />
+        </Link>
       </BottomNavigation>
     </AppBar>
   );
