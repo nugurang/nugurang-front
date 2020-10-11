@@ -35,7 +35,7 @@ function BottomNavBar(props) {
       <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
         <Link href="/"><BottomNavigationAction label="Home" value="home" icon={<HomeIcon />}/></Link>
         <BottomNavigationAction label="Forum" value="forum" icon={<ForumIcon />} />
-        <BottomNavigationAction label="Team" value="team" icon={<GroupIcon />} />
+        <Link href="/team"><BottomNavigationAction label="Team" value="team" icon={<GroupIcon/>} /></Link>
         <BottomNavigationAction label="Person" value="person" icon={<PersonIcon />}/>
         <Link href="/more"><BottomNavigationAction label="Sign in" value="signin" icon={<MoreHorizIcon />}/></Link>
       </BottomNavigation>

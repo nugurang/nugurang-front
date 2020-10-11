@@ -7,15 +7,14 @@ import clsx from 'clsx';
 const styles = {
   root: {
     fontFamily: "Ubuntu",
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: 300,
-    lineHeight: 1.0,
-    letterSpacing: 0.0,
-    padding: '20px 10px 0px 10px',
+    margin: '10px',
+    padding: '10px',
   },
 };
 
-function PageTitleTypography(props) {
+function ContentPaperTitleTypography(props) {
   const { classes, children, className, ...other } = props;
 
   return (
@@ -25,10 +24,10 @@ function PageTitleTypography(props) {
   );
 }
 
-PageTitleTypography.propTypes = {
+ContentPaperTitleTypography.propTypes = {
   children: PropTypes.node,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
 };
 
-export default withStyles(styles)(PageTitleTypography);
+export default withStyles(styles)(ContentPaperTitleTypography);

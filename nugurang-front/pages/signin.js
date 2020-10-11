@@ -8,16 +8,17 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import Layout from '../components/Layout';
-import SelectButton from '../components/buttons/SelectButton';
-import BackgroundPaper from '../components/papers/BackgroundPaper';
-import ContentCard from '../components/cards/ContentCard';
-import CardTitleTypography from '../components/cards/CardTitleTypography';
-import ContentPaper from '../components/papers/ContentPaper';
-import ButtonTypography from '../components/buttons/ButtonTypography';
-import PageTitleTypography from '../components/typographies/PageTitleTypography';
-import PaperTitleTypography from '../components/papers/PaperTitleTypography';
 import ContentTitleTypography from '../components/typographies/ContentTitleTypography';
 import ContentTypography from '../components/typographies/ContentTypography';
+import SelectButton from '../components/buttons/SelectButton';
+import ButtonTypography from '../components/buttons/ButtonTypography';
+import ContentCard from '../components/cards/ContentCard';
+import CardTitleTypography from '../components/cards/CardTitleTypography';
+import PageTitlePaper from '../components/papers/PageTitlePaper';
+import BackgroundPaper from '../components/papers/BackgroundPaper';
+import ContentPaper from '../components/papers/ContentPaper';
+import PageTitleTypography from '../components/typographies/PageTitleTypography';
+import ContentPaperTitleTypography from '../components/papers/ContentPaperTitleTypography';
 import ListItemTextPrimaryTypography from '../components/lists/ListItemTextPrimaryTypography';
 import ListItemTextSecondaryTypography from '../components/lists/ListItemTextSecondaryTypography';
 
@@ -40,14 +41,23 @@ const signInButtons = [
   },
 ];
 
+
+function PageTitle() {
+  return (
+    <PageTitleTypography>
+      Sign In
+    </PageTitleTypography>
+  );
+}
+
 function SignInField() {
   const router = useRouter()
   return (
 	  <Grid container spacing={2} alignItems="center" justify="center">
       <Grid item xs={12} justify='space-around'>
-        <ContentTitleTypography align="center">
+        <ContentPaperTitleTypography>
           Sign In
-        </ContentTitleTypography>
+        </ContentPaperTitleTypography>
 
         {signInButtons.map(signInButton => (
         <Grid item xs={12}>
@@ -82,6 +92,12 @@ export default function SignIn() {
   return (
     <Layout>
       <Grid container spacing={2}>
+      
+        <Grid item xs={12}>
+          <PageTitlePaper>
+            <PageTitle />
+          </PageTitlePaper>
+        </Grid>
 
         <Grid item xs={12} align='center'>
           <Box width="75%">

@@ -22,25 +22,25 @@ import ListItemTextPrimaryTypography from '../../components/lists/ListItemTextPr
 import ListItemTextSecondaryTypography from '../../components/lists/ListItemTextSecondaryTypography';
 
 
-const teamsDB = [
+const teamProjectsDB = [
   {
-    id: "team01",
-    name: "Team A",
+    id: "team-project01",
+    name: "Team Project A",
     profile_image: "/static/images/team01-profile-image.jpg"
   },
   {
-    id: "team02",
-    name: "Team B",
+    id: "team-project02",
+    name: "Team Project B",
     profile_image: "/static/images/team02-profile-image.jpg"
   },
   {
-    id: "team03",
-    name: "Team C",
+    id: "team-project03",
+    name: "Team Project C",
     profile_image: "/static/images/team03-profile-image.jpg"
   },
   {
-    id: "team04",
-    name: "Team D",
+    id: "team-project04",
+    name: "Team Project D",
     profile_image: "/static/images/team04-profile-image.jpg"
   }
 ];
@@ -49,12 +49,12 @@ const teamsDB = [
 function PageTitle() {
   return (
     <PageTitleTypography>
-      Teams
+      Projects
     </PageTitleTypography>
   );
 }
 
-function TeamsList() {
+function TeamProjectssList() {
   return (
 
     <Grid container spacing={2}>
@@ -63,18 +63,18 @@ function TeamsList() {
             <Grid item xs={12}>
             </Grid>
 
-            {teamsDB.map(team => (
+            {teamProjectsDB.map(project => (
               <Grid item xs={12} sm={6}>
-                <Link href="/team/[id]" as={`/team/${team.id}`}>
+                <Link href="/team/[id]" as={`/team/${project.id}`}>
                   <ContentCard>
                     <CardActionArea>
                       <ContentCardMedia
-                        image={team.profile_image}
-                        title={team.name}
+                        image={project.profile_image}
+                        title={project.name}
                       />
                       <CardContent>
                         <CardTitleTypography>
-                          {team.name}
+                          {project.name}
                         </CardTitleTypography>
                       </CardContent>
                       <CardActions>
@@ -120,7 +120,7 @@ export default function Teams() {
 
         <Grid item xs={12}>
           <ContentPaper>
-            <TeamsList />
+            <ProjectsList />
           </ContentPaper>
         </Grid>
 

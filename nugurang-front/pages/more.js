@@ -11,11 +11,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import StarsIcon from '@material-ui/icons/Stars';
 
 import Layout from '../components/Layout';
+import PageTitleTypography from '../components/typographies/PageTitleTypography';
 import SelectButton from '../components/buttons/SelectButton';
 import ButtonTypography from '../components/buttons/ButtonTypography';
 import BackgroundPaper from '../components/papers/BackgroundPaper';
 import ContentPaper from '../components/papers/ContentPaper';
-import PaperTitleTypography from '../components/papers/PaperTitleTypography';
+import PageTitlePaper from '../components/papers/PageTitlePaper';
 import ListItemTextPrimaryTypography from '../components/lists/ListItemTextPrimaryTypography';
 import ListItemTextSecondaryTypography from '../components/lists/ListItemTextSecondaryTypography';
 
@@ -45,6 +46,14 @@ const settingItems = [
   },
 ];
 
+
+function PageTitle() {
+  return (
+    <PageTitleTypography>
+      More
+    </PageTitleTypography>
+  );
+}
 
 function UserBriefInfo() {
   return (
@@ -100,20 +109,27 @@ function Setting() {
 export default function Home() {
   return (
     <Layout>
-      <BackgroundPaper>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <ContentPaper>
-              <UserBriefInfo />
-            </ContentPaper>
-          </Grid>
-          <Grid item xs={12}>
-            <ContentPaper>
-              <Setting />
-            </ContentPaper>
-          </Grid>
+      <Grid container spacing={2}>
+
+        <Grid item xs={12}>
+          <PageTitlePaper>
+            <PageTitle />
+          </PageTitlePaper>
         </Grid>
-      </BackgroundPaper>
+
+        <Grid item xs={12}>
+          <ContentPaper>
+            <UserBriefInfo />
+          </ContentPaper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <ContentPaper>
+            <Setting />
+          </ContentPaper>
+        </Grid>
+        
+      </Grid>
     </Layout>
   );
 }

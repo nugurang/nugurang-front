@@ -1,34 +1,34 @@
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
+import Paper from '@material-ui/core/Paper';
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 const styles = {
   root: {
-    border: '1px solid',
+    border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
-    margin: '5px',
-    padding: '5px',
+    margin: '0px 15px',
+    padding: '0px',
     variant: 'outlined',
   },
 };
 
-function ContentCard(props) {
+function PageTitlePaper(props) {
   const { classes, children, className, ...other } = props;
 
   return (
-    <Card className={clsx(classes.root, className)} elevation={0} {...other}>
-      {children || 'Card'}
-    </Card>
+    <Paper className={clsx(classes.root, className)} elevation={0} {...other}>
+      {children || 'Paper'}
+    </Paper>
   );
 }
 
-ContentCard.propTypes = {
+PageTitlePaper.propTypes = {
   children: PropTypes.node,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
 };
 
-export default withStyles(styles)(ContentCard);
+export default withStyles(styles)(PageTitlePaper);
