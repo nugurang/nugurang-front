@@ -4,7 +4,7 @@ import CommentList from '../../components/CommentList';
 
 export default function CompTest() {
 
-const list = [
+const comments = [
   {
     id: 1,
     author: "Author 1",
@@ -29,7 +29,7 @@ const list = [
 
   return (
 	<div>
-	  <CommentList list={list} />
+	  <CommentList comments={comments} />
 	</div>
   );
 }

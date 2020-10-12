@@ -31,7 +31,7 @@ const styles = theme => ({
 });
 
 
-function CommentList(props) {
+function DenseArticleList(props) {
 
     const { classes } = props
 
@@ -51,8 +51,8 @@ function CommentList(props) {
     );
 }
 
-CommentList.propTypes = {
+DenseArticleList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CommentList);
+export default withStyles(styles)(DenseArticleList);

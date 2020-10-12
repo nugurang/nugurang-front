@@ -51,8 +51,8 @@ const components = [
   },
   {
     id: 6,
-    title: "DenseList",
-    link: "./comp_test/dense_list_test",
+    title: "DenseArticleList",
+    link: "./comp_test/dense_article_list_test",
   },
   {
     id: 7,
@@ -82,7 +82,7 @@ const components = [
 ];
 
 
-function CommentList(props) {
+function CompTestList(props) {
 
     const { classes } = props
 
@@ -111,8 +111,8 @@ function CommentList(props) {
     );
 }
 
-CommentList.propTypes = {
+CompTestList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CommentList);
+export default withStyles(styles)(CompTestList);

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import DenseList from '../../components/DenseList';
+import DenseArticleList from '../../components/DenseArticleList';
 
 export default function CompTest() {
 
-const list = [
+const article = [
   {
     id: 1,
     title: "Article 1",
@@ -21,7 +21,7 @@ const list = [
 
   return (
 	<div>
-	  <DenseList list={list} />
+	  <DenseArticleList article={article} />
 	</div>
   );
 }

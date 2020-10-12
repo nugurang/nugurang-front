@@ -4,7 +4,7 @@ import CardGrid from '../../components/CardGrid';
 
 export default function CompTest() {
 
-const list = [
+const cards = [
   {
     id: 1,
     title: "Article 1",
@@ -24,7 +24,7 @@ const list = [
 
   return (
 	<div>
-	  <CardGrid list={list} />
+	  <CardGrid cards={cards} />
 	</div>
   );
 }

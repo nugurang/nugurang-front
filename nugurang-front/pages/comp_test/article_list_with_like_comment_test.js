@@ -4,7 +4,7 @@ import ArticleListWithLikeComment from '../../components/ArticleListWithLikeComm
 
 export default function CompTest() {
 
-const list = [
+const articles = [
   {
     id: 1,
     title: "Article 1",
@@ -27,7 +27,7 @@ const list = [
 
   return (
 	<div>
-	  <ArticleListWithLikeComment list={list} />
+	  <ArticleListWithLikeComment articles={articles} />
 	</div>
   );
 }

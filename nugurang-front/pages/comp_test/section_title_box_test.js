@@ -4,6 +4,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import SectionTitleBox from '../../components/SectionTitleBox';
 
 export default function CompTest() {
+	
   let title = 'Title';
 
   return (

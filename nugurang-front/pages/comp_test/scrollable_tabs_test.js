@@ -4,7 +4,7 @@ import ScrollableTabs from '../../components/ScrollableTabs';
 
 export default function CompTest() {
 
-const list = [
+const tabs = [
   {
     id: 1,
     title: "Tab 1",
@@ -21,7 +21,7 @@ const list = [
 
   return (
 	<div>
-	  <ScrollableTabs list={list} />
+	  <ScrollableTabs tabs={tabs} />
 	</div>
   );
 }

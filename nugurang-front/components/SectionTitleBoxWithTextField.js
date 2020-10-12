@@ -43,7 +43,7 @@ const styles = theme => ({
 });
 
 
-function SectionTitleBox(props) {
+function SectionTitleBoxWithTextField(props) {
 
   const { classes } = props
   const router = useRouter()
@@ -77,8 +77,8 @@ function SectionTitleBox(props) {
   );
 }
 
-SectionTitleBox.propTypes = {
+SectionTitleBoxWithTextField.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SectionTitleBox);
+export default withStyles(styles)(SectionTitleBoxWithTextField);
