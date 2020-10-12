@@ -60,7 +60,7 @@ function UserInfoBox(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Box className={classes.box} elevation={0}>
+      <Box className={classes.box}>
 
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} sm={2} justify='space-around'>

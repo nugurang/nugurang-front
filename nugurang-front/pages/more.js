@@ -1,132 +1,66 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import InboxIcon from '@material-ui/icons/Inbox';
 import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import StarsIcon from '@material-ui/icons/Stars';
+
+import QueueIcon from '@material-ui/icons/Queue';
 
 import Layout from '../components/Layout';
-import PageTitleTypography from '../components/typographies/PageTitleTypography';
-import SelectButton from '../components/buttons/SelectButton';
-import ButtonTypography from '../components/buttons/ButtonTypography';
-import BackgroundPaper from '../components/papers/BackgroundPaper';
-import ContentPaper from '../components/papers/ContentPaper';
-import PageTitlePaper from '../components/papers/PageTitlePaper';
-import ListItemTextPrimaryTypography from '../components/lists/ListItemTextPrimaryTypography';
-import ListItemTextSecondaryTypography from '../components/lists/ListItemTextSecondaryTypography';
 
+import ContentPaper from '../components/ContentPaper';
 import PageTitleBox from '../components/PageTitleBox';
+import SectionTitleBox from '../components/SectionTitleBox';
+import UniversalButton from '../components/UniversalButton';
+import UniversalList from '../components/UniversalList';
+import UserBriefInfoBox from '../components/UserBriefInfoBox';
 
-const userBriefInfo = {
-    id: 1,
-    name: "Name",
-    image: "",
-    bio: "Bio",
-  };
 
-const settingItems = [
+const userTest = {
+  name: "Username",
+  image: "/static/favicon/favicon-nugurang.png",
+  statistics: "Statistics",
+  bio: "Bio"
+}
+
+const settingsTest = [
   {
     id: 1,
-    title: "Message",
+    primary: "Message",
   },
   {
     id: 2,
-    title: "Display",
+    primary: "Display",
   },
   {
     id: 3,
-    title: "Notification",
+    primary: "Notification",
   },
   {
     id: 4,
-    title: "General",
+    primary: "General",
   },
 ];
 
 
-function PageTitle() {
-  return (
-    <PageTitleTypography>
-      More
-    </PageTitleTypography>
-  );
-}
-
-function UserBriefInfo() {
-  return (
-    <Grid container spacing={2} alignItems="center" justify="space-between">
-      <Grid item xs={12} sm={7}>
-        <List>
-          <ListItem button>
-            <ListItemAvatar>
-              <Avatar alt={userBriefInfo.name}
-                src={userBriefInfo.image}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={<ListItemTextPrimaryTypography>{userBriefInfo.name}</ListItemTextPrimaryTypography>}
-              secondary={<ListItemTextSecondaryTypography>{userBriefInfo.bio}</ListItemTextSecondaryTypography>}
-            />
-          </ListItem>
-        </List>
-      </Grid>
-      <Grid item xs={12} sm={5}>
-        <Link href="/signin">
-          <SelectButton startIcon={<StarsIcon />} >
-            <ButtonTypography>Sign in</ButtonTypography>
-          </SelectButton>
-        </Link>
-      </Grid>
-    </Grid>
-  );
-}
-
-
-function Setting() {
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <List>
-          {settingItems.map(settingItem => (
-            <>
-              <ListItem button>
-                <ListItemText
-                  primary={<ListItemTextPrimaryTypography>{settingItem.title}</ListItemTextPrimaryTypography>}
-                />
-              </ListItem>
-            </>
-          ))}
-        </List>
-      </Grid>
-    </Grid>
-  );
-}
-
-
-export default function Home() {
+export default function More() {
   return (
     <Layout>
       <PageTitleBox title="More" />
-      <Grid container spacing={2}>
 
-        <Grid item xs={12}>
-          <ContentPaper>
-            <UserBriefInfo />
-          </ContentPaper>
+        <Grid container spacing={2} alignItems="center" justify="center">
+          <Grid item xs={12} sm={8}>
+            <UserBriefInfoBox user={userTest} />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Link href="/signin">
+              <UniversalButton label="Sign In" />
+            </Link>
+          </Grid>
         </Grid>
 
-        <Grid item xs={12}>
-          <ContentPaper>
-            <Setting />
-          </ContentPaper>
-        </Grid>
-        
-      </Grid>
+      <SectionTitleBox title="More features" icon={<QueueIcon />} />
+      <ContentPaper>
+        <UniversalList list={settingsTest} />
+      </ContentPaper>
     </Layout>
   );
 }

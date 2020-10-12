@@ -78,6 +78,31 @@ const components = [
     id: 11,
     title: "UserInfoBox",
     link: "./comp_test/user_info_box_test",
+  },
+  {
+    id: 12,
+    title: "ContentPaper",
+    link: "./comp_test/content_paper_test",
+  },
+  {
+    id: 13,
+    title: "PageTitleBoxWithoutBackButton",
+    link: "./comp_test/page_title_box_without_back_button_test",
+  },
+  {
+    id: 14,
+    title: "UserBriefInfoBox",
+    link: "./comp_test/user_brief_info_box_test",
+  },
+  {
+    id: 15,
+    title: "UniversalButton",
+    link: "./comp_test/universal_button_test",
+  },
+  {
+    id: 16,
+    title: "UniversalList",
+    link: "./comp_test/universal_list_test",
   }
 ];
 

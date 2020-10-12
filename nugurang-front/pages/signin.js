@@ -1,26 +1,16 @@
 import { useRouter } from 'next/router'
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Typography from '@material-ui/core/Typography';
 
 import Layout from '../components/Layout';
-import ContentTitleTypography from '../components/typographies/ContentTitleTypography';
-import ContentTypography from '../components/typographies/ContentTypography';
-import SelectButton from '../components/buttons/SelectButton';
-import ButtonTypography from '../components/buttons/ButtonTypography';
-import ContentCard from '../components/cards/ContentCard';
-import CardTitleTypography from '../components/cards/CardTitleTypography';
-import PageTitlePaper from '../components/papers/PageTitlePaper';
-import BackgroundPaper from '../components/papers/BackgroundPaper';
-import ContentPaper from '../components/papers/ContentPaper';
-import PageTitleTypography from '../components/typographies/PageTitleTypography';
-import ContentPaperTitleTypography from '../components/papers/ContentPaperTitleTypography';
-import ListItemTextPrimaryTypography from '../components/lists/ListItemTextPrimaryTypography';
-import ListItemTextSecondaryTypography from '../components/lists/ListItemTextSecondaryTypography';
+
+import PageTitleBox from '../components/PageTitleBox';
+import SectionTitleBox from '../components/SectionTitleBox';
+import UniversalButton from '../components/UniversalButton';
 
 
 const signInButtons = [
@@ -42,26 +32,14 @@ const signInButtons = [
 ];
 
 
-function PageTitle() {
-  return (
-    <PageTitleTypography>
-      Sign In
-    </PageTitleTypography>
-  );
-}
-
 function SignInField() {
   const router = useRouter()
   return (
-	  <Grid container spacing={2} alignItems="center" justify="center">
-      <Grid item xs={12} justify='space-around'>
-        <ContentPaperTitleTypography>
-          Sign In
-        </ContentPaperTitleTypography>
+	  <Grid container spacing={2} alignItems="center" direction="row" justify="center">
 
         {signInButtons.map(signInButton => (
-        <Grid item xs={12}>
-          <SelectButton
+        <Grid item xs={12} align="center">
+          <Button
             fullWidth
             startIcon={
               <Avatar alt={signInButton.name}
@@ -71,18 +49,11 @@ function SignInField() {
             type="submit"
             variant="outlined"
           >
-            <ButtonTypography>{signInButton.content}</ButtonTypography>
-          </SelectButton>
+            <Typography>{signInButton.content}</Typography>
+          </Button>
           </Grid>
         ))}
 
-        <Grid item xs={12}>
-          <SelectButton onClick={() => router.back()} startIcon={<ArrowBackIcon />} >
-            <ButtonTypography>Back</ButtonTypography>
-          </SelectButton>
-          </Grid>
-
-	    </Grid>
 	  </Grid>
   );
 }
@@ -91,21 +62,10 @@ function SignInField() {
 export default function SignIn() {
   return (
     <Layout>
-      <Grid container spacing={2}>
-      
-        <Grid item xs={12}>
-          <PageTitlePaper>
-            <PageTitle />
-          </PageTitlePaper>
-        </Grid>
-
-        <Grid item xs={12} align='center'>
-          <Box width="75%">
-            <SignInField />
-          </Box>
-        </Grid>
-
-      </Grid>
+      <PageTitleBox title="Sign In" />
+      <Container maxWidth='xs'>
+        <SignInField />
+      </Container>
     </Layout>
   );
 }

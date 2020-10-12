@@ -9,7 +9,7 @@ import Layout from '../components/Layout';
 import ArticleDenseList from '../components/ArticleDenseList';
 import CardGrid from '../components/CardGrid';
 import ContentPaper from '../components/ContentPaper';
-import PageTitleBox from '../components/PageTitleBox';
+import PageTitleBoxWithoutBackButton from '../components/PageTitleBoxWithoutBackButton';
 import SectionTitleBox from '../components/SectionTitleBox';
 
 
@@ -66,7 +66,7 @@ export default function Home() {
   return (
     <Layout>
 
-      <PageTitleBox title="Home" />
+      <PageTitleBoxWithoutBackButton title="Home" />
       <SectionTitleBox title="Favorite articles" icon={<FavoriteIcon />} />
       <ContentPaper>
         <ArticleDenseList articles={favoriteArticlesListTest} />
@@ -79,7 +79,6 @@ export default function Home() {
       <ContentPaper>
         <CardGrid cards={recentCompsGridTest} />
       </ContentPaper>
-
 
     </Layout>
   );

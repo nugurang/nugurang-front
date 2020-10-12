@@ -1,0 +1,71 @@
+import React, { Component } from 'react';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
+import StarsIcon from '@material-ui/icons/Stars';
+
+const styles = theme => ({
+  box: {
+    border: '0px solid',
+    borderColor: 'rgba(0, 0, 0, 0.25)',
+    borderRadius: 5,
+    margin: '5px',
+    padding: '0px',
+    variant: 'outlined',
+  },
+  listPrimaryTypography: {
+    fontFamily: "Ubuntu",
+    fontSize: 20,
+    fontWeight: 400,
+  },
+  listSecondaryTypography: {
+    fontFamily: "Ubuntu",
+    fontSize: 14,
+    fontWeight: 300,
+  },
+});
+
+
+function UniversalList(props) {
+
+    const { classes } = props
+
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <Box className={classes.box}>
+          <List>
+            {props.list.map(listItem => (
+              <ListItem button alignItems="flex-start">
+                <ListItemText
+                  primary={<Typography className={classes.listPrimaryTypography} >{listItem.primary}</Typography>}
+                  secondary={
+                    listItem.secondary ?
+                      <Typography className={
+                        classes.listSecondaryTypography} >{listItem.secondary
+                      }</Typography>
+                     : null
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </React.Fragment>
+    );
+}
+
+UniversalList.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(UniversalList);
