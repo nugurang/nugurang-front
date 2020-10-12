@@ -17,7 +17,7 @@ const styles = theme => ({
     width: '100px'
   },
   box: {
-    border: '1px solid',
+    border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
     margin: '5px',
