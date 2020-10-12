@@ -3,10 +3,10 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -14,7 +14,7 @@ const styles = theme => ({
   backButton: {
     marginRight: theme.spacing(2),
   },
-  paper: {
+  box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
@@ -30,7 +30,7 @@ const styles = theme => ({
 });
 
 
-function PageTitleAppBar(props) {
+function PageTitleBox(props) {
 
     const { classes } = props
     const router = useRouter()
@@ -38,7 +38,7 @@ function PageTitleAppBar(props) {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Paper className={classes.paper} elevation={0}>
+        <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs={1}>
               <IconButton edge="start" onClick={() => router.back()} className={classes.backButton} color="inherit" aria-label="back">
@@ -51,13 +51,13 @@ function PageTitleAppBar(props) {
               </Typography>
             </Grid>
           </Grid>
-        </Paper>
+        </Box>
       </React.Fragment>
     );
 }
 
-PageTitleAppBar.propTypes = {
+PageTitleBox.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PageTitleAppBar);
+export default withStyles(styles)(PageTitleBox);

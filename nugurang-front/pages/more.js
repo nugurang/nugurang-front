@@ -20,7 +20,7 @@ import PageTitlePaper from '../components/papers/PageTitlePaper';
 import ListItemTextPrimaryTypography from '../components/lists/ListItemTextPrimaryTypography';
 import ListItemTextSecondaryTypography from '../components/lists/ListItemTextSecondaryTypography';
 
-import PageTitleAppBar from '../components/PageTitleAppBar';
+import PageTitleBox from '../components/PageTitleBox';
 
 const userBriefInfo = {
     id: 1,
@@ -111,11 +111,7 @@ function Setting() {
 export default function Home() {
   return (
     <Layout>
-
-
-
-      <PageTitleAppBar title="More!!!" />
-
+      <PageTitleBox title="More" />
       <Grid container spacing={2}>
 
         <Grid item xs={12}>

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import PageTitleAppBar from '../../components/PageTitleAppBar';
+import PageTitleBox from '../../components/PageTitleBox';
 
 export default function CompTest() {
   let title = 'Back';
   return (
 	<div>
-	  <PageTitleAppBar title={title} />
+	  <PageTitleBox title={title} />
 	</div>
   );
 }
