@@ -51,8 +51,8 @@ const components = [
   },
   {
     id: 6,
-    title: "DenseArticleList",
-    link: "./comp_test/dense_article_list_test",
+    title: "ArticleDenseList",
+    link: "./comp_test/article_dense_list_test",
   },
   {
     id: 7,

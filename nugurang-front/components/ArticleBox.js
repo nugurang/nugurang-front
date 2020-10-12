@@ -21,7 +21,7 @@ const styles = theme => ({
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
     margin: '5px',
-    padding: '5px',
+    padding: '0px',
     variant: 'outlined',
   },
   cardTitleTypography: {

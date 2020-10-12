@@ -3,6 +3,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -10,16 +11,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import StarsIcon from '@material-ui/icons/Stars';
 
 const styles = theme => ({
-  paper: {
+  box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
-    margin: '30px 20px 10px 20px',
+    margin: '5px',
     padding: '0px',
     variant: 'outlined',
   },
@@ -31,28 +31,28 @@ const styles = theme => ({
 });
 
 
-function DenseArticleList(props) {
+function ArticleDenseList(props) {
 
     const { classes } = props
 
     return (
       <React.Fragment>
         <CssBaseline />
-        <Paper className={classes.paper} elevation={0}>
+        <Box className={classes.box} elevation={0}>
           <List dense="true">
-            {props.list.map(article => (
+            {props.articles.map(article => (
               <ListItem button>
-                <ListItemText primary={article.title} />
+                <ListItemText primary={<Typography className={classes.typography}>{article.title}</Typography>} />
               </ListItem>
             ))}
           </List>
-        </Paper>
+        </Box>
       </React.Fragment>
     );
 }
 
-DenseArticleList.propTypes = {
+ArticleDenseList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(DenseArticleList);
+export default withStyles(styles)(ArticleDenseList);

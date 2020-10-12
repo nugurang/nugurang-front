@@ -17,7 +17,7 @@ const styles = theme => ({
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
-    margin: '30px 20px 0px 20px',
+    margin: '5px',
     padding: '0px',
     variant: 'outlined',
   },
@@ -52,13 +52,13 @@ function SectionTitleBoxWithTextField(props) {
     <React.Fragment>
       <CssBaseline />
       <Box className={classes.box}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs={1}>
+        <Grid container spacing={2} alignItems="center" justify="flex-start">
+          <Grid item align="center">
             <Avatar>
               {props.icon}
             </Avatar>
           </Grid>
-          <Grid item xs>
+          <Grid item align="center">
             <FormControl fullWidth variant="filled">
               <TextField
                 className={classes.textField}

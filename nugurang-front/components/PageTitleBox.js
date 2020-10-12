@@ -11,14 +11,15 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = theme => ({
-  backButton: {
-    marginRight: theme.spacing(2),
+  button: {
+    height: '30px',
+    width: '30px',
   },
   box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
-    margin: '30px 20px 10px 20px',
+    margin: '15px 15px 5px 15px',
     padding: '0px',
     variant: 'outlined',
   },
@@ -39,13 +40,19 @@ function PageTitleBox(props) {
       <React.Fragment>
         <CssBaseline />
         <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs={1}>
-              <IconButton edge="start" onClick={() => router.back()} className={classes.backButton} color="inherit" aria-label="back">
+          <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
+            <Grid item align="center">
+              <IconButton
+                edge="start" 
+                onClick={() => router.back()}
+                className={classes.button}
+                color="inherit"
+                aria-label="back"
+              >
                 <ArrowBackIcon />
               </IconButton>
             </Grid>
-            <Grid item xs>
+            <Grid item align="center">
               <Typography className={classes.typography}>
                 {props.title}
               </Typography>

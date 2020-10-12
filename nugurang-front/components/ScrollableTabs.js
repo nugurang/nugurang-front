@@ -3,19 +3,19 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
-  paper: {
+  box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
-    margin: '30px 20px 10px 20px',
-    padding: '0px',
+    margin: '0px 0px 10px 0px',
+    padding: '5px',
     variant: 'outlined',
   },
 });
@@ -69,7 +69,7 @@ function ScrollableTabs(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper className={classes.paper} elevation={0}>
+      <Box className={classes.box}>
 
         <AppBar position="static" color="default">
           <Tabs
@@ -94,7 +94,7 @@ function ScrollableTabs(props) {
           )
         })()}
 
-      </Paper>
+      </Box>
     </React.Fragment>
   );
 }
