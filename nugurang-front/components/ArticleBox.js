@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -39,7 +36,7 @@ const styles = theme => ({
     fontWeight: 300,
     margin: '0px',
   },
-  accordion: {
+  contentPaper: {
     border: '1px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
@@ -47,17 +44,11 @@ const styles = theme => ({
     padding: '5px',
     variant: 'outlined',
   },
-  accordionTitleTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 20,
-    fontWeight: 300,
-    margin: '0px',
-  },
-  accordionContentTypography: {
+  contentTypography: {
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 300,
-    margin: '0px',
+    margin: '10px',
   },
   card: {
     border: '1px solid',
@@ -74,7 +65,7 @@ const styles = theme => ({
 });
 
 
-function ArticleBoxWithAccordion(props) {
+function ArticleBox(props) {
 
   const { classes } = props;
 
@@ -104,21 +95,12 @@ function ArticleBoxWithAccordion(props) {
               </CardActionArea>
             </Card>
           </Grid>
-          <Grid item xs={12} sm justify='space-around'>
-            <Accordion className={classes.accordion} variant="outlined">
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography className={classes.accordionTitleTypography}>Content</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography className={classes.accordionContentTypography}>
-                  {props.article.content}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+          <Grid item xs={12} justify='space-around'>
+            <Paper className={classes.contentPaper} variant='outlined'>
+              <Typography className={classes.contentTypography}>
+                {props.article.content}
+              </Typography>
+            </Paper>
           </Grid>
         </Grid>
       </Box>
@@ -126,8 +108,8 @@ function ArticleBoxWithAccordion(props) {
   );
 }
 
-ArticleBoxWithAccordion.propTypes = {
+ArticleBox.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ArticleBoxWithAccordion);
+export default withStyles(styles)(ArticleBox);
