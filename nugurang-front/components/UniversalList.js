@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -14,6 +15,12 @@ import Typography from '@material-ui/core/Typography';
 import StarsIcon from '@material-ui/icons/Stars';
 
 const styles = theme => ({
+  avatar: {
+    backgroundColor: "white",
+    color: "black",
+    height: '25px',
+    width: '25px',
+  },
   box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -46,15 +53,23 @@ function UniversalList(props) {
           <List>
             {props.list.map(listItem => (
               <ListItem button alignItems="flex-start">
+                {
+                  listItem.icon ?
+                  <ListItemAvatar>
+                    <Avatar className={classes.avatar}
+                      alt={listItem.name}
+                      src={listItem.icon}
+                      variant="square"
+                    />
+                  </ListItemAvatar> : null
+                }
                 <ListItemText
                   primary={<Typography className={classes.listPrimaryTypography} >{listItem.primary}</Typography>}
                   secondary={
-                    listItem.secondary ?
-                      <Typography className={
-                        classes.listSecondaryTypography} >{listItem.secondary
-                      }</Typography>
-                     : null
-                  }
+                  listItem.secondary ?
+                    <Typography className={classes.listSecondaryTypography}>
+                      {listItem.secondary}
+                    </Typography> : null}
                 />
               </ListItem>
             ))}

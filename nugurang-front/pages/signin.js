@@ -8,10 +8,32 @@ import Typography from '@material-ui/core/Typography';
 
 import Layout from '../components/Layout';
 
+import ContentPaper from '../components/ContentPaper';
 import PageTitleBox from '../components/PageTitleBox';
 import SectionTitleBox from '../components/SectionTitleBox';
-import UniversalButton from '../components/UniversalButton';
+import UniversalList from '../components/UniversalList';
 
+
+const signInListTest = [
+  {
+    id: 1,
+    name: "Facebook",
+    primary: "Sign in with Facebook",
+    icon: "/static/favicons/favicon-facebook.png",
+  },
+  {
+    id: 2,
+    name: "GitHub",
+    primary: "Sign in with GitHub",
+    icon: "/static/favicons/favicon-github.png",
+  },
+  {
+    id: 3,
+    name: "Kakao",
+    primary: "Sign in with Kakao",
+    icon: "/static/favicons/favicon-kakao.png",
+  },
+];
 
 const signInButtons = [
   {
@@ -32,40 +54,13 @@ const signInButtons = [
 ];
 
 
-function SignInField() {
-  const router = useRouter()
-  return (
-	  <Grid container spacing={2} alignItems="center" direction="row" justify="center">
-
-        {signInButtons.map(signInButton => (
-        <Grid item xs={12} align="center">
-          <Button
-            fullWidth
-            startIcon={
-              <Avatar alt={signInButton.name}
-              src={signInButton.favicon}
-              variant="square"
-            />}
-            type="submit"
-            variant="outlined"
-          >
-            <Typography>{signInButton.content}</Typography>
-          </Button>
-          </Grid>
-        ))}
-
-	  </Grid>
-  );
-}
-
-
 export default function SignIn() {
   return (
     <Layout>
       <PageTitleBox title="Sign In" />
-      <Container maxWidth='xs'>
-        <SignInField />
-      </Container>
+      <ContentPaper>
+        <UniversalList list={signInListTest} />
+      </ContentPaper>
     </Layout>
   );
 }
