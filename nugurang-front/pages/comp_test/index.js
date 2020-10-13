@@ -108,7 +108,12 @@ const components = [
     id: 17,
     title: "UserGroupCard",
     link: "./comp_test/user_group_card_test",
-  }
+  },
+  {
+    id: 18,
+    title: "ChattingBox",
+    link: "./comp_test/chatting_box_test",
+  },
 ];
 
 
