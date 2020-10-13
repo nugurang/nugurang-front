@@ -35,24 +35,6 @@ const signInListTest = [
   },
 ];
 
-const signInButtons = [
-  {
-  	name: "Facebook",
-    content: "Sign in with Facebook",
-    favicon: "/static/favicons/favicon-facebook.png",
-  },
-  {
-  	name: "GitHub",
-    content: "Sign in with GitHub",
-    favicon: "/static/favicons/favicon-github.png",
-  },
-  {
-  	name: "Kakao",
-    content: "Sign in with Kakao",
-    favicon: "/static/favicons/favicon-kakao.png",
-  },
-];
-
 
 export default function SignIn() {
   return (
