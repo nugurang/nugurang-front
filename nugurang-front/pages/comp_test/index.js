@@ -103,6 +103,11 @@ const components = [
     id: 16,
     title: "UniversalList",
     link: "./comp_test/universal_list_test",
+  },
+  {
+    id: 17,
+    title: "UserGroupCard",
+    link: "./comp_test/user_group_card_test",
   }
 ];
 
