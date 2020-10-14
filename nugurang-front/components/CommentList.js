@@ -32,6 +32,9 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 300,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
 });
 
@@ -45,7 +48,7 @@ function CommentList(props) {
         <CssBaseline />
         <Box className={classes.box}>
           <List>
-            {props.list.map(article => (
+            {props.comments.map(article => (
               <ListItem button alignItems="flex-start">
                 <ListItemAvatar>
                   <Avatar>

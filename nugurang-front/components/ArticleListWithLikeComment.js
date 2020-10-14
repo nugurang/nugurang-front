@@ -14,9 +14,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ChatIcon from '@material-ui/icons/Chat';
 import ImageIcon from '@material-ui/icons/Image';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 
 const styles = theme => ({

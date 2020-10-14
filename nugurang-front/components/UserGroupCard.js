@@ -90,15 +90,15 @@ function UserGroupCard(props) {
                   <Grid item container alignItems="center" direction="row" justify="flex-start">
                     <Grid item xs justify="flex-start">
                       <Typography className={classes.cardTitleTypography}>
-                        {props.card.title}
+                        {props.userGroup.title}
                       </Typography>
                       <Typography className={classes.cardContentTypography}>
-                        {props.card.content}
+                        {props.userGroup.content}
                       </Typography>
                     </Grid>
                     <Grid item>
                       <AvatarGroup max={3}>
-                        {props.card.users.map(user => (
+                        {props.userGroup.users.map(user => (
                           <Avatar alt={user.name} src={user.image} />
                         ))}
                       </AvatarGroup>

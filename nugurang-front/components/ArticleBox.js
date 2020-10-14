@@ -30,12 +30,6 @@ const styles = theme => ({
     fontWeight: 300,
     margin: '0px',
   },
-  cardSubtitleTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 300,
-    margin: '0px',
-  },
   contentPaper: {
     border: '1px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -87,9 +81,6 @@ function ArticleBox(props) {
                 <CardContent>
                   <Typography className={classes.cardTitleTypography}>
                     {props.article.title}
-                  </Typography>
-                  <Typography className={classes.cardSubtitleTypography}>
-                    {props.article.subtitle}
                   </Typography>
                 </CardContent>
               </CardActionArea>

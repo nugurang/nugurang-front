@@ -58,7 +58,7 @@ function SectionTitleBoxWithTextField(props) {
               {props.icon}
             </Avatar>
           </Grid>
-          <Grid item align="center">
+          <Grid item xs align="center">
             <FormControl fullWidth variant="filled">
               <TextField
                 className={classes.textField}

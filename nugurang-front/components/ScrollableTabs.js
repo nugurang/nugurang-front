@@ -81,16 +81,16 @@ function ScrollableTabs(props) {
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >
-          {props.list.map(tab => 
-            (<Tab label={tab.title} {...a11yProps(++count)} />)
+          {props.tabs.map(tab => 
+            (<Tab label={tab.title} {...a11yProps(count++)} />)
           )}
           </Tabs>
         </AppBar>
 
         { (() => {
           count = 0;
-          return props.list.map(tab => 
-            (<TabPanel value={value} index={++count}>{tab.title}</TabPanel>)
+          return props.tabs.map(tab => 
+            (<TabPanel value={value} index={count++}>{tab.title}</TabPanel>)
           )
         })()}
 

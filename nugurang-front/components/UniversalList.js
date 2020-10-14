@@ -38,6 +38,7 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 14,
     fontWeight: 300,
+    wordWrap: 'break-word',
   },
 });
 

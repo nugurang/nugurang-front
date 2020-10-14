@@ -23,7 +23,8 @@ const styles = theme => ({
     width: '50px'
   },
   box: {
-    width: '500px'
+    margin: '5px',
+    padding: '0px',
   },
   list: {
     border: '0px solid',
@@ -62,54 +63,54 @@ function ChattingBox(props) {
     <React.Fragment>
       <CssBaseline />
       <Box className={classes.box}>
-          {props.chats.map(chat => (
-                chat.isMyChat == true ?
-                  <div>
-                    <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
-                      <Grid item>
-                        <Grid container>
-                          <Grid item align="right">
-                            <Typography className={classes.nameTypography}>
-                              {chat.name}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid item align="right">
-                        <Avatar className={classes.avatar}
-                          alt={chat.name}
-                          src={chat.image}
-                        />
-                      </Grid>
+        {props.chats.map(chat => (
+          chat.isMyChat == true ?
+            <div>
+              <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
+                <Grid item>
+                  <Grid container>
+                    <Grid item align="right">
+                      <Typography className={classes.nameTypography}>
+                        {chat.name}
+                      </Typography>
                     </Grid>
-                    <Typography className={classes.contentTypography} align="right">
-                      {chat.content}
-                    </Typography>
-                  </div>
-                :                           
-                  <div>
-                    <Grid container spacing={2} alignItems="center"  alignments="flex-start" direction="row" justify="flex-start">
-                      <Grid item align="left">
-                        <Avatar className={classes.avatar}
-                          alt={chat.name}
-                          src={chat.image}
-                        />
-                      </Grid>
-                      <Grid item xs={8}>
-                        <Grid container>
-                          <Grid item align="left">
-                            <Typography className={classes.nameTypography}>
-                              {chat.name}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item align="right">
+                  <Avatar className={classes.avatar}
+                    alt={chat.name}
+                    src={chat.image}
+                  />
+                </Grid>
+              </Grid>
+              <Typography className={classes.contentTypography} align="right">
+                {chat.content}
+              </Typography>
+            </div>
+          :                           
+            <div>
+              <Grid container spacing={2} alignItems="center" alignments="flex-start" direction="row" justify="flex-start">
+                <Grid item align="left">
+                  <Avatar className={classes.avatar}
+                    alt={chat.name}
+                    src={chat.image}
+                  />
+                </Grid>
+                <Grid item xs={8}>
+                  <Grid container>
+                    <Grid item align="left">
+                      <Typography className={classes.nameTypography}>
+                        {chat.name}
+                      </Typography>
                     </Grid>
-                    <Typography className={classes.contentTypography} align="left">
-                      {chat.content}
-                    </Typography>
-                  </div>
-          ))}
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Typography className={classes.contentTypography} align="left">
+                {chat.content}
+              </Typography>
+            </div>
+        ))}
       </Box>
     </React.Fragment>
   );

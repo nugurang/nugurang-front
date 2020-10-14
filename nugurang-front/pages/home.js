@@ -14,34 +14,12 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 import Layout from '../components/Layout';
 
-import ArticleDenseList from '../components/ArticleDenseList';
+import ArticleDenseListWithLikeComment from '../components/ArticleDenseListWithLikeComment';
 import CardGrid from '../components/CardGrid';
 import ContentPaper from '../components/ContentPaper';
 import PageTitleBoxWithoutBackButton from '../components/PageTitleBoxWithoutBackButton';
 import SectionTitleBox from '../components/SectionTitleBox';
 
-
-const useStyles = makeStyles((theme) => ({
-  box: {
-    border: '0px solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '5px',
-    padding: '0px',
-    variant: 'outlined',
-  },
-  iconButton: {
-    backgroundColor: "white",
-    color: "black",
-    height: '40px',
-    width: '40px',
-  },
-  titleTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 30,
-    fontWeight: 300,
-  },
-}));
 
 const favoriteArticlesListTest = [
   {
@@ -90,6 +68,28 @@ const recentCompsGridTest = [
     image: "/static/images/team.jpg",
   }
 ];
+
+const useStyles = makeStyles((theme) => ({
+  box: {
+    border: '0px solid',
+    borderColor: 'rgba(0, 0, 0, 0.25)',
+    borderRadius: 5,
+    margin: '5px',
+    padding: '0px',
+    variant: 'outlined',
+  },
+  iconButton: {
+    backgroundColor: "white",
+    color: "black",
+    height: '40px',
+    width: '40px',
+  },
+  titleTypography: {
+    fontFamily: "Ubuntu",
+    fontSize: 30,
+    fontWeight: 300,
+  },
+}));
 
 function PageTitle(props) {
   const classes = useStyles();
