@@ -212,7 +212,8 @@ const userTest = {
   id: 1,
   name: "Username",
   image: "/static/favicon/sample_1.jpg",
-  statistics: "Statistics",
+  followers: 10,
+  followings: 20,
   bio: "Bio"
 }
 
@@ -228,22 +229,25 @@ const userGroupTest = {
       id: 1,
       name: "User 1",
       image: "/static/images/sample_2.jpg",
-	  statistics: "Statistics",
-	  bio: "Bio"
+      followers: 10,
+      followings: 20,
+  	  bio: "Bio"
     },
     {
       id: 2,
       name: "User 2",
       image: "/static/images/sample_3.jpg",
-	  statistics: "Statistics",
-	  bio: "Bio"
+      followers: 10,
+      followings: 20,
+  	  bio: "Bio"
     },
     {
       id: 3,
       name: "User 3",
       image: "/static/images/sample_4.jpg",
-	  statistics: "Statistics",
-	  bio: "Bio"
+      followers: 10,
+      followings: 20,
+  	  bio: "Bio"
     },
   ]
 };

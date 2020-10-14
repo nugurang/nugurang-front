@@ -29,6 +29,7 @@ import PageTitleBox from '../components/PageTitleBox';
 import PageTitleBoxWithoutBackButton from '../components/PageTitleBoxWithoutBackButton';
 import ScrollableTabs from '../components/ScrollableTabs';
 import SectionTitleBox from '../components/SectionTitleBox';
+import SectionTitleBoxWithButton from '../components/SectionTitleBoxWithButton';
 import SectionTitleBoxWithTextField from '../components/SectionTitleBoxWithTextField';
 import UniversalButton from '../components/UniversalButton';
 import UniversalList from '../components/UniversalList';
@@ -250,7 +251,8 @@ const userTest = {
   id: 1,
   name: "Username",
   image: "/static/favicon/sample_1.jpg",
-  statistics: "Statistics",
+  followers: 10,
+  followings: 20,
   bio: "Bio"
 }
 
@@ -266,26 +268,28 @@ const userGroupTest = {
       id: 1,
       name: "User 1",
       image: "/static/images/sample_2.jpg",
-    statistics: "Statistics",
-    bio: "Bio"
+      followers: 10,
+      followings: 20,
+      bio: "Bio"
     },
     {
       id: 2,
       name: "User 2",
       image: "/static/images/sample_3.jpg",
-    statistics: "Statistics",
-    bio: "Bio"
+      followers: 10,
+      followings: 20,
+      bio: "Bio"
     },
     {
       id: 3,
       name: "User 3",
       image: "/static/images/sample_4.jpg",
-    statistics: "Statistics",
-    bio: "Bio"
+      followers: 10,
+      followings: 20,
+      bio: "Bio"
     },
   ]
 };
-
 
 
 
@@ -427,6 +431,13 @@ function TestComp(props) {
               SectionTitleBox
             </Typography>
             <SectionTitleBox title={titleTest} icon={<AssignmentIcon />} />
+          </Paper>
+
+          <Paper className={classes.paper} elevation={1}>
+            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+              SectionTitleBoxWithButton
+            </Typography>
+            <SectionTitleBoxWithButton title={titleTest} label={labelTest} icon={<AssignmentIcon />} />
           </Paper>
 
           <Paper className={classes.paper} elevation={1}>

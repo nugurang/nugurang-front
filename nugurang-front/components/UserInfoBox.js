@@ -28,13 +28,13 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 36,
     fontWeight: 400,
-    margin: '0px 20px',
+    margin: '0px',
   },
-  statisticsTypography: {
+  followersTypography: {
     fontFamily: "Ubuntu",
     fontSize: 18,
     fontWeight: 300,
-    margin: '0px 20px',
+    margin: '0px',
   },
   bioTypography: {
     fontFamily: "Ubuntu",
@@ -61,22 +61,23 @@ function UserInfoBox(props) {
     <React.Fragment>
       <CssBaseline />
       <Box className={classes.box}>
-
         <Grid container spacing={2} alignItems="center" justify="center">
-          <Grid item xs={12} sm={2} justify='space-around'>
-            <Avatar className={classes.avatar}
-              alt={props.user.name}
-              src={props.user.image}
-              variant="circle"
-            />
-          </Grid>
-          <Grid item xs={12} sm justify='space-around'>
-            <Typography className={classes.nameTypography}>
-              {props.user.name}
-            </Typography>
-            <Typography className={classes.statisticsTypography}>
-              {props.user.statistics}
-            </Typography>
+          <Grid item container spacing={2} alignItems="center" justify="flex-start">
+            <Grid item justify='space-around'>
+              <Avatar className={classes.avatar}
+                alt={props.user.name}
+                src={props.user.image}
+                variant="circle"
+              />
+            </Grid>
+            <Grid item justify='space-around'>
+              <Typography className={classes.nameTypography}>
+                {props.user.name}
+              </Typography>
+              <Typography className={classes.followersTypography}>
+                {props.user.followers} followers, {props.user.followings} followings
+              </Typography>
+            </Grid>
           </Grid>
           <Grid item xs={12} justify='space-around'>
             <Paper className={classes.bioPaper} variant='outlined'>

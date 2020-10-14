@@ -55,17 +55,17 @@ const recentCompsGridTest = [
   {
     id: 1,
     title: "Article 1",
-    image: "/static/images/team.jpg",
+    image: "/static/images/sample_1.jpg",
   },
   {
     id: 2,
     title: "Article 2",
-    image: "/static/images/team.jpg",
+    image: "/static/images/sample_2.jpg",
   },
   {
     id: 3,
     title: "Article 3",
-    image: "/static/images/team.jpg",
+    image: "/static/images/sample_3.jpg",
   }
 ];
 
@@ -132,11 +132,11 @@ export default function Home() {
       <PageTitle />
       <SectionTitleBox title="Favorite articles" icon={<FavoriteIcon />} />
       <ContentPaper>
-        <ArticleDenseList articles={favoriteArticlesListTest} />
+        <ArticleDenseListWithLikeComment articles={favoriteArticlesListTest} />
       </ContentPaper>
       <SectionTitleBox title="Hot articles" icon={<WhatshotIcon />} />
       <ContentPaper>
-        <ArticleDenseList articles={hotArticlesListTest} />
+        <ArticleDenseListWithLikeComment articles={hotArticlesListTest} />
       </ContentPaper>
       <SectionTitleBox title="Recent comps" icon={<TrendingUpIcon />} />
       <ContentPaper>
