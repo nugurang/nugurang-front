@@ -33,12 +33,14 @@ module.exports = {
   ],
   rules: {
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": ["warn", { "extensions": [".jsx"] }],
+    "react/jsx-filename-extension": "off",
     "react/display-name": "warn",
     "react/prop-types": "warn",
     "react/jsx-props-no-spreading": "warn",
     "react/jsx-one-expression-per-line": "warn",
     "react/jsx-fragments": "warn",
-    "react/forbid-prop-types": "warn"
+    "react/forbid-prop-types": "warn",
+    "react/destructuring-assignment": "off",
+    "react/jsx-first-prop-new-line": "off"
   }
 };
