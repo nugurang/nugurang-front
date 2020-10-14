@@ -75,7 +75,7 @@ function SectionTitleBox(props) {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs align="right">
+          <Grid item xs={3} align="right">
             <Button className={classes.button}>
               <Typography className={classes.buttonTypography}>{props.label}</Typography>
             </Button>

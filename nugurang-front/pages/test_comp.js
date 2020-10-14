@@ -21,10 +21,12 @@ import ArticleBoxWithAccordion from '../components/ArticleBoxWithAccordion';
 import ArticleDenseListWithLikeComment from '../components/ArticleDenseListWithLikeComment';
 import ArticleGridWithLikeComment from '../components/ArticleGridWithLikeComment';
 import ArticleListWithLikeComment from '../components/ArticleListWithLikeComment';
+import BriefArticleListWithLikeComment from '../components/BriefArticleListWithLikeComment';
 import CardGrid from '../components/CardGrid';
 import ChattingBox from '../components/ChattingBox';
 import CommentList from '../components/CommentList';
 import ContentPaper from '../components/ContentPaper';
+import HonorBadgeGrid from '../components/HonorBadgeGrid';
 import PageTitleBox from '../components/PageTitleBox';
 import PageTitleBoxWithoutBackButton from '../components/PageTitleBoxWithoutBackButton';
 import ScrollableTabs from '../components/ScrollableTabs';
@@ -49,6 +51,18 @@ const articleTest = {
   chip: <Chip label="Basic1" />,
 };
 
+const singleArticleListTest = [
+  {
+    id: 1,
+    title: "Article 1",
+    author: "User 1",
+    content: "Content 111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    like: 1,
+    comment: 3,
+    image: "/static/images/sample_1.jpg",
+    chip: <Chip label="Basic1" />,
+  },
+];
 
 const articlesTest = [
   {
@@ -192,6 +206,53 @@ const commentsTest = [
     content: "Quite a long comment. 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
   }
 ];
+
+
+const honorBadgesTest = [
+  {
+    id: 1,
+    name: "Badge 1",
+    value: 7000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 2,
+    name: "Badge 2",
+    value: 8000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 3,
+    name: "Badge 3",
+    value: 9000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 4,
+    name: "Badge 4",
+    value: 10000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 5,
+    name: "Badge 5",
+    value: 200000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 6,
+    name: "Badge 6",
+    value: 3000000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 7,
+    name: "Badge 7",
+    value: 40000000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+];
+
 
 
 let labelTest = "UniversalButton";
@@ -372,6 +433,13 @@ function TestComp(props) {
 
           <Paper className={classes.paper} elevation={1}>
             <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+              BriefArticleListWithLikeComment
+            </Typography>
+              <BriefArticleListWithLikeComment articles={singleArticleListTest} />
+          </Paper>
+
+          <Paper className={classes.paper} elevation={1}>
+            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
               CardGrid
             </Typography>
               <CardGrid cards={cardsTest} />
@@ -410,6 +478,13 @@ function TestComp(props) {
               ContentPaper
             </Typography>
             <ContentPaper />
+          </Paper>
+
+          <Paper className={classes.paper} elevation={1}>
+            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+              HonorBadgeGrid
+            </Typography>
+            <HonorBadgeGrid honorBadges={honorBadgesTest}/>
           </Paper>
 
           <Paper className={classes.paper} elevation={1}>

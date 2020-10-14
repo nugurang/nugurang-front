@@ -41,6 +41,7 @@ const styles = theme => ({
     fontSize: 24,
     fontWeight: 300,
     margin: '0px 10px',
+    wordWrap: 'break-word',
   },
   bioPaper: {
     border: '1px solid',

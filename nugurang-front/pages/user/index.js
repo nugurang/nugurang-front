@@ -14,9 +14,10 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 import Layout from '../../components/Layout';
 
-import ArticleDenseListWithLikeComment from '../../components/ArticleDenseListWithLikeComment';
+import BriefArticleListWithLikeComment from '../../components/BriefArticleListWithLikeComment';
 import CardGrid from '../../components/CardGrid';
 import ContentPaper from '../../components/ContentPaper';
+import HonorBadgeGrid from '../../components/HonorBadgeGrid';
 import PageTitleBox from '../../components/PageTitleBox';
 import SectionTitleBoxWithButton from '../../components/SectionTitleBoxWithButton';
 import UniversalButton from '../../components/UniversalButton';
@@ -27,8 +28,71 @@ const userTest = {
   name: "Username",
   image: "/static/favicon/sample_1.jpg",
   statistics: "Statistics",
-  bio: "Bio"
+  bio: "BioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBioBio"
 }
+
+
+const singleArticleListTest = [
+  {
+    id: 1,
+    title: "Article 1",
+    author: "User 1",
+    content: "Content 111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    like: 1,
+    comment: 3,
+    image: "/static/images/sample_1.jpg",
+  },
+];
+
+
+
+const honorBadgesTest = [
+  {
+    id: 1,
+    name: "Badge 1",
+    value: 7000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 2,
+    name: "Badge 2",
+    value: 8000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 3,
+    name: "Badge 3",
+    value: 9000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 4,
+    name: "Badge 4",
+    value: 10000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 5,
+    name: "Badge 5",
+    value: 200000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 6,
+    name: "Badge 6",
+    value: 3000000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+  {
+    id: 7,
+    name: "Badge 7",
+    value: 40000000,
+    image: "/static/favicons/favicon-nugurang.png",
+  },
+];
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -74,11 +138,11 @@ export default function Home() {
 
       <SectionTitleBoxWithButton title="Blog" label="More" icon={<WhatshotIcon />} />
       <ContentPaper>
-        <a>Hi</a>
+        <BriefArticleListWithLikeComment articles={singleArticleListTest}/>
       </ContentPaper>
       <SectionTitleBoxWithButton title="Honor points" label="More" icon={<TrendingUpIcon />} />
       <ContentPaper>
-        <a>Hi</a>
+        <HonorBadgeGrid honorBadges={honorBadgesTest} />
       </ContentPaper>
 
     </Layout>
