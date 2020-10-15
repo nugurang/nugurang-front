@@ -41,7 +41,6 @@ const styles = {
     wordWrap: "break-word",
     overflow: "hidden", 
     textOverflow: "ellipsis",
-    wordWrap: "break-word",
   },
   card: {
     border: '1px solid',
