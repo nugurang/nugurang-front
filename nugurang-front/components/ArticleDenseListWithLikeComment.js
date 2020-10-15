@@ -73,7 +73,7 @@ function ArticleDenseListWithLikeComment(props) {
                         article.chip ?
                         (
                           <Grid item align="right">
-                            <Chip label={article.chip} />
+                            <Chip className={classes.chip} label={article.chip} />
                           </Grid>
                         ) : null
                       }

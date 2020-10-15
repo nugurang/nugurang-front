@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -14,7 +15,7 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 import Layout from '../components/Layout';
 
 import ArticleDenseListWithLikeComment from '../components/ArticleDenseListWithLikeComment';
-import CardGrid from '../components/CardGrid';
+import ArticleGridWithLikeComment from '../components/ArticleGridWithLikeComment';
 import ContentPaper from '../components/ContentPaper';
 import SectionTitleBox from '../components/SectionTitleBox';
 
@@ -23,14 +24,27 @@ const favoriteArticlesListTest = [
   {
     id: 1,
     title: "Article 1",
+    content: "Content 1",
+    like: 1,
+    comment: 3,
+    image: "/static/images/sample_1.jpg",
+    chip: "Basic1",
   },
   {
     id: 2,
-    title: "Article 2",
+    title: "Article 2 with no images",
+    content: "Content 2",
+    like: 4,
+    comment: 2,
+    chip: "Basic2",
   },
   {
     id: 3,
-    title: "Article 3",
+    title: "Article 3 with no chips",
+    content: "Content 3",
+    like: 9,
+    image: "/static/images/sample_3.jpg",
+    comment: 1,
   }
 ];
 
@@ -38,34 +52,58 @@ const hotArticlesListTest = [
   {
     id: 1,
     title: "Article 1",
+    content: "Content 1",
+    like: 1,
+    comment: 3,
+    image: "/static/images/sample_1.jpg",
+    chip: "Basic1",
   },
   {
     id: 2,
-    title: "Article 2",
+    title: "Article 2 with no images",
+    content: "Content 2",
+    like: 4,
+    comment: 2,
+    chip: "Basic2",
   },
   {
     id: 3,
-    title: "Article 3",
+    title: "Article 3 with no chips",
+    content: "Content 3",
+    like: 9,
+    image: "/static/images/sample_3.jpg",
+    comment: 1,
   }
 ];
 
-const recentCompsGridTest = [
+const recentEventsTest = [
   {
     id: 1,
     title: "Article 1",
+    content: "Content 1",
+    like: 1,
+    comment: 3,
     image: "/static/images/sample_1.jpg",
+    chip: "Basic1",
   },
   {
     id: 2,
-    title: "Article 2",
-    image: "/static/images/sample_2.jpg",
+    title: "Article 2 with no images",
+    content: "Content 2",
+    like: 4,
+    comment: 2,
+    chip: "Basic2",
   },
   {
     id: 3,
-    title: "Article 3",
+    title: "Article 3 with no chips",
+    content: "Content 3",
+    like: 9,
     image: "/static/images/sample_3.jpg",
+    comment: 1,
   }
 ];
+
 
 const useStyles = makeStyles(() => ({
   box: {
@@ -91,35 +129,38 @@ const useStyles = makeStyles(() => ({
 
 function PageTitle() {
   const classes = useStyles();
-    return (
-      <>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" direction="row" justify="space-between">
+  return (
+    <>
+      <Box className={classes.box}>
+        <Grid container spacing={2} alignItems="center" direction="row" justify="space-between">
 
-            <Grid item align="left">
-              <Typography className={classes.titleTypography}>
-                Home
-              </Typography>
-            </Grid>
-            <Grid item xs align="right">
+          <Grid item align="left">
+            <Typography className={classes.titleTypography}>
+              Home
+            </Typography>
+          </Grid>
+          <Grid item xs align="right">
 
-              <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
-                <Grid item align="right">
-
+            <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
+              <Grid item align="right">
+                <Link href="/">
                   <IconButton className={classes.iconButton} color="primary" aria-label="Notifications" component="span">
                     <NotificationsIcon />
                   </IconButton>
-                  <IconButton className={classes.iconButton} color="primary" aria-label="Notifications" component="span">
+                </Link>
+                <Link href="/user">
+                  <IconButton className={classes.iconButton} color="primary" aria-label="My Info" component="span">
                     <PersonIcon />
                   </IconButton>
-                </Grid>
+                </Link>
               </Grid>
-
             </Grid>
+
           </Grid>
-        </Box>
-      </>
-    );
+        </Grid>
+      </Box>
+    </>
+  );
 }
 
 
@@ -136,9 +177,9 @@ export default function Home() {
       <ContentPaper>
         <ArticleDenseListWithLikeComment articles={hotArticlesListTest} />
       </ContentPaper>
-      <SectionTitleBox title="Recent comps" icon={<TrendingUpIcon />} />
+      <SectionTitleBox title="Recent Events" icon={<TrendingUpIcon />} />
       <ContentPaper>
-        <CardGrid cards={recentCompsGridTest} />
+        <ArticleGridWithLikeComment articles={recentEventsTest} />
       </ContentPaper>
 
     </Layout>

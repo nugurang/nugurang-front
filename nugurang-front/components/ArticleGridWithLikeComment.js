@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Chip from '@material-ui/core/Chip';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -38,6 +39,9 @@ const styles = {
     fontSize: 16,
     fontWeight: 300,
     wordWrap: "break-word",
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
   card: {
     border: '1px solid',
@@ -53,9 +57,16 @@ const styles = {
   },
   cardTitleTypography: {
     fontFamily: "Ubuntu",
-    fontSize: 24,
-    fontWeight: 300,
+    fontSize: 16,
+    fontWeight: 400,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
     wordWrap: "break-word",
+  },
+  chip: {
+    height: "20px",
+    width: "auto",
+    margin: "0px 10px",
   },
   iconLikeComment: {
     height: "20px",
@@ -73,45 +84,55 @@ function ArticleGridWithLikeComment(props) {
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="stretch" justify="flex-start">
           {props.articles.map(article => (
-            <div key={article.id}>
-              <Grid item xs={12} sm={6}>
-                <Card key={article.id} className={classes.card} variant="outlined">
-                  <CardActionArea>
+            <Grid key={article.id} item xs={12} sm={6}>
+              <Card key={article.id} className={classes.card} variant="outlined">
+                <CardActionArea>
+                  <div key={article.id}>
+                    <CardMedia className={classes.cardMedia}
+                      image={article.image}
+                      title={article.title}
+                    />
+                  </div>
+                  <CardContent>
                     <div key={article.id}>
-                      <CardMedia className={classes.cardMedia}
-                        image={article.image}
-                        title={article.title}
-                      />
+                      <Typography noWrap className={classes.cardTitleTypography}>
+                        {article.title}
+                      </Typography>
                     </div>
-                    <CardContent>
+                    <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
+
                       <div key={article.id}>
-                        <Typography className={classes.cardTitleTypography}>
-                          {article.title}
-                        </Typography>
+                        {
+                          article.chip ?
+                          (
+                            <Grid item align="right">
+                              <Chip className={classes.chip} label={article.chip} />
+                            </Grid>
+                          ) : null
+                        }
                       </div>
-                      <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
-                        <Grid item align="right">
-                          <ThumbUpIcon className={classes.iconLikeComment} />
-                        </Grid>
-                        <Grid item align="right">
-                          <div key={article.id}>
-                            <Typography className={classes.typographyLikeComment}>{article.like}</Typography>
-                          </div>
-                        </Grid>
-                        <Grid item align="right">
-                          <ChatIcon className={classes.iconLikeComment} />
-                        </Grid>
-                        <Grid item align="right">
-                          <div key={article.id}>
-                            <Typography className={classes.typographyLikeComment}>{article.comment}</Typography>
-                          </div>
-                        </Grid>
+
+                      <Grid item align="right">
+                        <ThumbUpIcon className={classes.iconLikeComment} />
                       </Grid>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            </div>
+                      <Grid item align="right">
+                        <div key={article.id}>
+                          <Typography className={classes.typographyLikeComment}>{article.like}</Typography>
+                        </div>
+                      </Grid>
+                      <Grid item align="right">
+                        <ChatIcon className={classes.iconLikeComment} />
+                      </Grid>
+                      <Grid item align="right">
+                        <div key={article.id}>
+                          <Typography className={classes.typographyLikeComment}>{article.comment}</Typography>
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
           ))}
         </Grid>
       </Box>

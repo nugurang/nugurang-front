@@ -1,8 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
+import BookIcon from '@material-ui/icons/Book';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 import Layout from '../../components/Layout';
 
@@ -102,11 +102,11 @@ export default function Home() {
         </Grid>
       </Grid>
 
-      <SectionTitleBoxWithButton title="Blog" label="More" icon={<WhatshotIcon />} />
+      <SectionTitleBoxWithButton title="Blog" label="More" icon={<BookIcon />} />
       <ContentPaper>
         <BriefArticleListWithLikeComment articles={singleArticleListTest} />
       </ContentPaper>
-      <SectionTitleBoxWithButton title="Honor points" label="More" icon={<TrendingUpIcon />} />
+      <SectionTitleBoxWithButton title="Honor points" label="More" icon={<EmojiEventsIcon />} />
       <ContentPaper>
         <HonorBadgeGrid honorBadges={honorBadgesTest} />
       </ContentPaper>

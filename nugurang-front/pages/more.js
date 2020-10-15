@@ -50,7 +50,10 @@ export default function More() {
         <Grid item xs={12} sm={8}>
           <UserBriefInfoBox user={userTest} />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={4} align="right">
+          <Link href="/user">
+            <UniversalButton label="My Info" />
+          </Link>
           <Link href="/signin">
             <UniversalButton label="Sign In" />
           </Link>
