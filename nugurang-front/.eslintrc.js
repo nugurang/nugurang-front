@@ -41,6 +41,7 @@ module.exports = {
     "react/jsx-fragments": "warn",
     "react/forbid-prop-types": "warn",
     "react/destructuring-assignment": "off",
-    "react/jsx-first-prop-new-line": "off"
+    "react/jsx-first-prop-new-line": "off",
+    "no-plusplus": "off"
   }
 };
