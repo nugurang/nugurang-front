@@ -1,16 +1,15 @@
 import { withStyles } from '@material-ui/core/styles';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Link from 'next/link';
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import HomeIcon from '@material-ui/icons/Home';
-import TeaIcon from '@material-ui/icons/EmojiFoodBeverage';
-import GroupIcon from '@material-ui/icons/Group';
 import ChatIcon from '@material-ui/icons/QuestionAnswer';
+import GroupIcon from '@material-ui/icons/Group';
+import HomeIcon from '@material-ui/icons/Home';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
+import TeaIcon from '@material-ui/icons/EmojiFoodBeverage';
 
 const styles = {
   root: {
@@ -19,31 +18,30 @@ const styles = {
   },
 };
 
-
 function BottomNavBar(props) {
+  const router = useRouter();
   const { classes } = props;
-  const [value, setValue] = React.useState('recents');
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const actions = [
+    ['home', <HomeIcon/>],
+    ['boards', <TeaIcon/>],
+    ['team', <GroupIcon/>],
+    ['chat', <ChatIcon/>],
+    ['more', <MoreIcon/>]
+  ].map(([value, icon]) => {
+      return <BottomNavigationAction
+               label={value}
+               value={value}
+               icon={icon}
+               onClick={() => {router.push(`/${value}`)}}
+              />
+  });
   return (
     <AppBar className={classes.root}>
-      <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
-        <Link href="/" passHref>
-          <BottomNavigationAction label="Home" value="home" icon={<HomeIcon />} />
-        </Link>
-        <Link href="/forum" passHref>
-          <BottomNavigationAction label="Forum" value="forum" icon={<TeaIcon />} />
-        </Link>
-        <Link href="team" passHref>
-          <BottomNavigationAction label="Team" value="team" icon={<GroupIcon />} />
-        </Link>
-        <Link href="chat" passHref>
-          <BottomNavigationAction label="Chat" value="chat" icon={<ChatIcon />} />
-        </Link>
-        <Link href="more" passHref>
-          <BottomNavigationAction label="More" value="more" icon={<MoreIcon />} />
-        </Link>
+      <BottomNavigation
+        value={router.pathname.split('/')[1] || 'home'}
+        className={classes.root}
+      >
+        {actions}
       </BottomNavigation>
     </AppBar>
   );
