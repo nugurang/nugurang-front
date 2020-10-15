@@ -1,16 +1,9 @@
-import { useRouter } from 'next/router'
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import Layout from '../components/Layout';
 
 import ContentPaper from '../components/ContentPaper';
 import PageTitleBox from '../components/PageTitleBox';
-import SectionTitleBox from '../components/SectionTitleBox';
 import UniversalList from '../components/UniversalList';
 
 

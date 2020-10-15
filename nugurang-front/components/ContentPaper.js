@@ -17,7 +17,6 @@ const styles = {
 
 function ContentPaper(props) {
   const { classes, children, className, ...other } = props;
-
   return (
     <Paper className={clsx(classes.root, className)} elevation={0} {...other}>
       {children || 'Paper'}
@@ -26,9 +25,7 @@ function ContentPaper(props) {
 }
 
 ContentPaper.propTypes = {
-  children: PropTypes.node,
   classes: PropTypes.object.isRequired,
-  className: PropTypes.string,
 };
 
 export default withStyles(styles)(ContentPaper);

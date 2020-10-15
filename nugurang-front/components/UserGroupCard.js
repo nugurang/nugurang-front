@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,7 +15,11 @@ import Typography from '@material-ui/core/Typography';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 
-const styles = theme => ({
+const styles = {
+  avatarGroup: {
+    border: '0px solid',
+    borderColor: 'rgba(0, 0, 0, 0.25)',
+  },
   box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -42,6 +42,9 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 300,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
   card: {
     border: '1px solid',
@@ -59,11 +62,15 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 24,
     fontWeight: 300,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
   cardContentTypography: {
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 300,
+    wordWrap: "break-word",
   },
   iconButton: {
     backgroundColor: "transparent",
@@ -72,50 +79,46 @@ const styles = theme => ({
     height: '40px',
     width: '40px'
   },
-});
+};
 
 
 function UserGroupCard(props) {
-
-    const { classes } = props
-
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <Box className={classes.box}>
-          <Card variant="outlined">
-            <CardActionArea>
-              <CardContent>
-                <Grid container>
-                  <Grid item container alignItems="center" direction="row" justify="flex-start">
-                    <Grid item xs justify="flex-start">
-                      <Typography className={classes.cardTitleTypography}>
-                        {props.userGroup.title}
-                      </Typography>
-                      <Typography className={classes.cardContentTypography}>
-                        {props.userGroup.content}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <AvatarGroup max={3}>
-                        {props.userGroup.users.map(user => (
-                          <Avatar alt={user.name} src={user.image} />
-                        ))}
-                      </AvatarGroup>
-                    </Grid>
-                    <Grid item align="right">
-                      <IconButton color="primary" aria-label="upload picture" component="span">
-                        <AddCircleIcon className={classes.iconButton} />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
+  const { classes } = props
+  return (
+    <>
+      <CssBaseline />
+      <Box className={classes.box}>
+        <Card variant="outlined">
+          <CardActionArea>
+            <CardContent>
+              <Grid container alignItems="center" direction="row" justify="flex-start">
+                <Grid item xs justify="flex-start">
+                  <Typography className={classes.cardTitleTypography}>
+                    {props.userGroup.title}
+                  </Typography>
+                  <Typography className={classes.cardContentTypography}>
+                    {props.userGroup.content}
+                  </Typography>
                 </Grid>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Box>
-      </React.Fragment>
-    );
+                <Grid item>
+                  <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
+                    {props.userGroup.users.map(user => (
+                      <Avatar key={user.id} alt={user.name} src={user.image} />
+                    ))}
+                  </AvatarGroup>
+                </Grid>
+                <Grid item align="right">
+                  <IconButton color="primary" aria-label="upload picture" component="span">
+                    <AddCircleIcon className={classes.iconButton} />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Box>
+    </>
+  );
 }
 
 UserGroupCard.propTypes = {

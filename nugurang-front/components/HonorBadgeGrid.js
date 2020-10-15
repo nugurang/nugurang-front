@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
+
+const styles = {
   box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -54,6 +51,9 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 300,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
   cardValueTypography: {
     color: 'black',
@@ -64,48 +64,53 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 18,
     fontWeight: 400,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
     padding: '0px 5px',
     position: 'absolute',
     bottom: '30px', 
     left: '50%', 
     transform: 'translateX(-50%)',
   }
-});
+};
 
 
 function HonorBadgeGrid(props) {
-
-    const { classes } = props
-
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <Box className={classes.box}>
-          <Grid container spacing={2}>
-
-            {props.honorBadges.map(honorBadge => (
-              <Grid item xs={4} sm={3}>
-                <Card className={classes.card} variant="outlined">
-                  <CardActionArea>
+  const { classes } = props;
+  return (
+    <>
+      <CssBaseline />
+      <Box className={classes.box}>
+        <Grid container spacing={2}>
+          {props.honorBadges.map(honorBadge => (
+            <Grid key={honorBadge.id} item xs={4} sm={3}>
+              <Card className={classes.card} variant="outlined">
+                <CardActionArea>
+                  <div key={honorBadge.id}>
                     <CardMedia className={classes.cardMedia}
                       image={honorBadge.image}
                       name={honorBadge.name}
                     />
+                  </div>
+                  <div key={honorBadge.id}>
                     <Typography className={classes.cardValueTypography}>
                       {honorBadge.value}
                     </Typography>
+                  </div>
+                  <div key={honorBadge.id}>
                     <Typography className={classes.cardTitleTypography} align="center">
                       {honorBadge.name}
                     </Typography>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
-
-          </Grid>
-        </Box>
-      </React.Fragment>
-    );
+                  </div>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </>
+  );
 }
 
 HonorBadgeGrid.propTypes = {

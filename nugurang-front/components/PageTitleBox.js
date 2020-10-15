@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles';
@@ -10,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-const styles = theme => ({
+const styles = {
   button: {
     height: '30px',
     width: '30px',
@@ -27,40 +26,41 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 30,
     fontWeight: 300,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
-});
+};
 
 
 function PageTitleBox(props) {
-
-    const { classes } = props
-    const router = useRouter()
-
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
-            <Grid item align="center">
-              <IconButton
-                edge="start" 
-                onClick={() => router.back()}
-                className={classes.button}
-                color="inherit"
-                aria-label="back"
-              >
-                <ArrowBackIcon />
-              </IconButton>
-            </Grid>
-            <Grid item align="center">
-              <Typography className={classes.typography}>
-                {props.title}
-              </Typography>
-            </Grid>
+  const { classes } = props;
+  const router = useRouter();
+  return (
+    <>
+      <CssBaseline />
+      <Box className={classes.box}>
+        <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
+          <Grid item align="center">
+            <IconButton
+              edge="start" 
+              onClick={() => router.back()}
+              className={classes.button}
+              color="inherit"
+              aria-label="back"
+            >
+              <ArrowBackIcon />
+            </IconButton>
           </Grid>
-        </Box>
-      </React.Fragment>
-    );
+          <Grid item align="center">
+            <Typography className={classes.typography}>
+              {props.title}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+    </>
+  );
 }
 
 PageTitleBox.propTypes = {

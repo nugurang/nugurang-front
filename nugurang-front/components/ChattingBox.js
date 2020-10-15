@@ -1,21 +1,14 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 
-const styles = theme => ({
+const styles = {
   avatar: {
     fontSize: 24,
     height: '50px', 
@@ -39,6 +32,7 @@ const styles = theme => ({
     fontSize: 16,
     fontWeight: 300,
     margin: '0px 0px',
+    wordWrap: "break-word",
   },
   contentTypography: {
     border: '1px solid',
@@ -49,70 +43,49 @@ const styles = theme => ({
     fontWeight: 300,
     margin: '0px 55px',
     padding: '5px',
-    variant: 'outlined',
-    wordWrap: 'break-word',
+    wordWrap: "break-word",
   },
-});
+};
 
 
 function ChattingBox(props) {
-
   const { classes } = props;
-
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Box className={classes.box}>
         {props.chats.map(chat => (
-          chat.isMyChat == true ?
-            <div>
-              <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
-                <Grid item>
-                  <Grid container>
-                    <Grid item align="right">
-                      <Typography className={classes.nameTypography}>
-                        {chat.name}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item align="right">
+          <>
+            <Grid container spacing={2} alignItems="center" alignments="flex-start" direction={chat.isMyChat ? "row-reverse" : "row"} justify="flex-start">
+              <Grid item align="left">
+                <div key={chat.id}>
                   <Avatar className={classes.avatar}
                     alt={chat.name}
                     src={chat.image}
                   />
-                </Grid>
+                </div>
               </Grid>
-              <Typography className={classes.contentTypography} align="right">
-                {chat.content}
-              </Typography>
-            </div>
-          :                           
-            <div>
-              <Grid container spacing={2} alignItems="center" alignments="flex-start" direction="row" justify="flex-start">
-                <Grid item align="left">
-                  <Avatar className={classes.avatar}
-                    alt={chat.name}
-                    src={chat.image}
-                  />
-                </Grid>
-                <Grid item xs={8}>
-                  <Grid container>
-                    <Grid item align="left">
+              <Grid item xs={8}>
+                <Grid container>
+                  <Grid item align="left">
+                    <div key={chat.id}>
                       <Typography className={classes.nameTypography}>
                         {chat.name}
                       </Typography>
-                    </Grid>
+                    </div>
                   </Grid>
                 </Grid>
               </Grid>
+            </Grid>
+            <div key={chat.id}>
               <Typography className={classes.contentTypography} align="left">
                 {chat.content}
               </Typography>
             </div>
+          </>
         ))}
       </Box>
-    </React.Fragment>
+    </>
   );
 }
 

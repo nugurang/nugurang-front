@@ -46,16 +46,16 @@ export default function More() {
     <Layout>
       <PageTitleBox title="More" />
 
-        <Grid container spacing={2} alignItems="center" justify="center">
-          <Grid item xs={12} sm={8}>
-            <UserBriefInfoBox user={userTest} />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Link href="/signin">
-              <UniversalButton label="Sign In" />
-            </Link>
-          </Grid>
+      <Grid container spacing={2} alignItems="center" justify="center">
+        <Grid item xs={12} sm={8}>
+          <UserBriefInfoBox user={userTest} />
         </Grid>
+        <Grid item xs={12} sm={4}>
+          <Link href="/signin">
+            <UniversalButton label="Sign In" />
+          </Link>
+        </Grid>
+      </Grid>
 
       <SectionTitleBox title="More features" icon={<QueueIcon />} />
       <ContentPaper>

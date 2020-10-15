@@ -19,12 +19,14 @@ const styles = {
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 400,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
 };
 
 function UniversalButton(props) {
-  const { classes, children, className, ...other } = props;
-
+  const { classes } = props;
   return (
     <Button className={classes.button}>
       <Typography className={classes.buttonTypography}>{props.label}</Typography>
@@ -33,9 +35,7 @@ function UniversalButton(props) {
 }
 
 UniversalButton.propTypes = {
-  children: PropTypes.node,
   classes: PropTypes.object.isRequired,
-  className: PropTypes.string,
 };
 
 export default withStyles(styles)(UniversalButton);

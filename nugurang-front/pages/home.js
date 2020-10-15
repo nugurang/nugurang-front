@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
@@ -17,7 +16,6 @@ import Layout from '../components/Layout';
 import ArticleDenseListWithLikeComment from '../components/ArticleDenseListWithLikeComment';
 import CardGrid from '../components/CardGrid';
 import ContentPaper from '../components/ContentPaper';
-import PageTitleBoxWithoutBackButton from '../components/PageTitleBoxWithoutBackButton';
 import SectionTitleBox from '../components/SectionTitleBox';
 
 
@@ -69,7 +67,7 @@ const recentCompsGridTest = [
   }
 ];
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -91,10 +89,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PageTitle(props) {
+function PageTitle() {
   const classes = useStyles();
     return (
-      <React.Fragment>
+      <>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" direction="row" justify="space-between">
 
@@ -120,7 +118,7 @@ function PageTitle(props) {
             </Grid>
           </Grid>
         </Box>
-      </React.Fragment>
+      </>
     );
 }
 

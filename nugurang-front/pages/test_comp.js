@@ -1,16 +1,7 @@
-import Link from 'next/link'
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Chip from '@material-ui/core/Chip';
-import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
@@ -27,9 +18,8 @@ import ChattingBox from '../components/ChattingBox';
 import CommentList from '../components/CommentList';
 import ContentPaper from '../components/ContentPaper';
 import HonorBadgeGrid from '../components/HonorBadgeGrid';
+import Layout from '../components/Layout';
 import PageTitleBox from '../components/PageTitleBox';
-import PageTitleBoxWithoutBackButton from '../components/PageTitleBoxWithoutBackButton';
-import ScrollableTabs from '../components/ScrollableTabs';
 import SectionTitleBox from '../components/SectionTitleBox';
 import SectionTitleBoxWithButton from '../components/SectionTitleBoxWithButton';
 import SectionTitleBoxWithTextField from '../components/SectionTitleBoxWithTextField';
@@ -48,7 +38,7 @@ const articleTest = {
   like: 1,
   comment: 3,
   image: "/static/images/sample_1.jpg",
-  chip: <Chip label="Basic1" />,
+  chip: "Basic1",
 };
 
 const singleArticleListTest = [
@@ -60,7 +50,7 @@ const singleArticleListTest = [
     like: 1,
     comment: 3,
     image: "/static/images/sample_1.jpg",
-    chip: <Chip label="Basic1" />,
+  chip: "Basic1",
   },
 ];
 
@@ -72,7 +62,7 @@ const articlesTest = [
     like: 1,
     comment: 3,
     image: "/static/images/sample_1.jpg",
-    chip: <Chip label="Basic1" />,
+    chip: "Basic1",
   },
   {
     id: 2,
@@ -80,7 +70,7 @@ const articlesTest = [
     content: "Content 2",
     like: 4,
     comment: 2,
-    chip: <Chip label="Basic2" />,
+    chip: "Basic2",
   },
   {
     id: 3,
@@ -204,7 +194,7 @@ const commentsTest = [
     id: 4,
     author: "Author 4",
     content: "Quite a long comment. 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
-  }
+  },
 ];
 
 
@@ -255,7 +245,7 @@ const honorBadgesTest = [
 
 
 
-let labelTest = "UniversalButton";
+const labelTest = "UniversalButton";
 
 
 
@@ -286,27 +276,7 @@ const listTest = [
 ];
 
 
-const tabsTest = [
-  {
-    id: 1,
-    title: "Tab 1",
-  },
-  {
-    id: 2,
-    title: "Tab 2",
-  },
-  {
-    id: 3,
-    title: "Tab 3",
-  }
-];
-
-
-let titleTest = 'Back';
-
-
-
-
+const titleTest = 'Back';
 
 const userTest = {
   id: 1,
@@ -316,8 +286,6 @@ const userTest = {
   followings: 20,
   bio: "Bio"
 }
-
-
 
 const userGroupTest = {
   id: 1,
@@ -357,7 +325,7 @@ const userGroupTest = {
 /* -------------------------- Test data end ---------------------- */
 
 
-const styles = theme => ({
+const styles = {
   paper: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -376,192 +344,161 @@ const styles = theme => ({
     fontSize: 28,
     fontWeight: 300,
   },
-});
+};
 
 
 function TestComp(props) {
+  const { classes } = props
+  return (
+    <>
+      <Layout>
+        <CssBaseline />
 
-    const { classes } = props
+        <Typography className={classes.pageTitleTypography} variant="h4" gutterBottom>Componentes testing area</Typography>
 
-    return (
-      <React.Fragment>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            ArticleBox
+          </Typography>
+          <ArticleBox article={articleTest} />
+        </Paper>
 
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            ArticleBoxWithAccordion
+          </Typography>
+          <ArticleBoxWithAccordion article={articleTest} />
+        </Paper>
 
-        <Container maxWidth="sm" >
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            ArticleDenseListWithLikeComment
+          </Typography>
+          <ArticleDenseListWithLikeComment articles={articlesTest} />
+        </Paper>
 
-          <CssBaseline />
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.pageTitleTypography} variant="h4" gutterBottom>
-    	        Componetes testing area
-    	      </Typography>
-    	    </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            ArticleGridWithLikeComment
+          </Typography>
+          <ArticleGridWithLikeComment articles={articlesTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ArticleBox
-            </Typography>
-            <ArticleBox article={articleTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            ArticleListWithLikeComment
+          </Typography>
+          <ArticleListWithLikeComment articles={articlesTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ArticleBoxWithAccordion
-            </Typography>
-            <ArticleBoxWithAccordion article={articleTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            BriefArticleListWithLikeComment
+          </Typography>
+          <BriefArticleListWithLikeComment articles={singleArticleListTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ArticleDenseListWithLikeComment
-            </Typography>
-            <ArticleDenseListWithLikeComment articles={articlesTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            CardGrid
+          </Typography>
+          <CardGrid cards={cardsTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ArticleGridWithLikeComment
-            </Typography>
-              <ArticleGridWithLikeComment articles={articlesTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            ChattingBox
+          </Typography>
+          <ChattingBox chats={chatsTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ArticleListWithLikeComment
-            </Typography>
-              <ArticleListWithLikeComment articles={articlesTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            CommentList
+          </Typography>
+          <CommentList comments={commentsTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              BriefArticleListWithLikeComment
-            </Typography>
-              <BriefArticleListWithLikeComment articles={singleArticleListTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            ContentPaper
+          </Typography>
+          <ContentPaper />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              CardGrid
-            </Typography>
-              <CardGrid cards={cardsTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            PageTitleBox
+          </Typography>
+          <PageTitleBox title={titleTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ChattingBox
-            </Typography>
-              <ChattingBox chats={chatsTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            HonorBadgeGrid
+          </Typography>
+          <HonorBadgeGrid honorBadges={honorBadgesTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              CommentList
-            </Typography>
-            <CommentList comments={commentsTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            SectionTitleBox
+          </Typography>
+          <SectionTitleBox title={titleTest} icon={<AssignmentIcon />} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ContentPaper
-            </Typography>
-            <ContentPaper />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            SectionTitleBoxWithButton
+          </Typography>
+          <SectionTitleBoxWithButton title={titleTest} label={labelTest} icon={<AssignmentIcon />} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              PageTitleBox
-            </Typography>
-            <PageTitleBox title={titleTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            SectionTitleBoxWithTextField
+          </Typography>
+          <SectionTitleBoxWithTextField title={titleTest} icon={<AssignmentIcon />} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ContentPaper
-            </Typography>
-            <ContentPaper />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            UniversalButton
+          </Typography>
+          <UniversalButton label={labelTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              HonorBadgeGrid
-            </Typography>
-            <HonorBadgeGrid honorBadges={honorBadgesTest}/>
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            UniversalList
+          </Typography>
+          <UniversalList list={listTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              PageTitleBoxWithoutBackButton
-            </Typography>
-            <PageTitleBoxWithoutBackButton title={titleTest} />
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            UserBriefInfoBox
+          </Typography>
+          <UserBriefInfoBox user={userTest} />
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              ScrollableTabs
-            </Typography>
-            <ScrollableTabs tabs={tabsTest} />
-          </Paper>
-
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              SectionTitleBox
-            </Typography>
-            <SectionTitleBox title={titleTest} icon={<AssignmentIcon />} />
-          </Paper>
-
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              SectionTitleBoxWithButton
-            </Typography>
-            <SectionTitleBoxWithButton title={titleTest} label={labelTest} icon={<AssignmentIcon />} />
-          </Paper>
-
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              SectionTitleBoxWithTextField
-            </Typography>
-            <SectionTitleBoxWithTextField title={titleTest} icon={<AssignmentIcon />} />
-          </Paper>
-
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              UniversalButton
-            </Typography>
-            <UniversalButton label={labelTest}/>
-          </Paper>
-
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              UniversalList
-            </Typography>
-            <UniversalList list={listTest} />
-          </Paper>
-
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              UserBriefInfoBox
-            </Typography>
-            <UserBriefInfoBox user={userTest} />
-          </Paper>
-
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              UserGroupCard
-            </Typography>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            UserGroupCard
+          </Typography>
           <UserGroupCard userGroup={userGroupTest} />
-          </Paper>
+        </Paper>
 
-          <Paper className={classes.paper} elevation={1}>
-            <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-              UserInfoBox
-            </Typography>
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            UserInfoBox
+          </Typography>
           <UserInfoBox user={userTest} />
-          </Paper>
+        </Paper>
 
-
-        </Container>
-
-      </React.Fragment>
-    );
+      </Layout>
+    </>
+  );
 }
 
 TestComp.propTypes = {

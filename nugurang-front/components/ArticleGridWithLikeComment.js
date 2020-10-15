@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -17,7 +14,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 
-const styles = theme => ({
+const styles = {
   box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -40,84 +37,86 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 300,
+    wordWrap: "break-word",
   },
   card: {
     border: '1px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
-    margin: '0px',
     padding: '0px',
     variant: 'outlined',
+    width: '100%',
   },
   cardMedia: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    height: '100px',
+    objectFit: 'cover',
   },
   cardTitleTypography: {
     fontFamily: "Ubuntu",
     fontSize: 24,
     fontWeight: 300,
+    wordWrap: "break-word",
   },
   iconLikeComment: {
     height: "20px",
     width: "20px",
     margin: "5px -10px 0px -10px",
   },
-});
+};
 
 
 function ArticleGridWithLikeComment(props) {
-
-    const { classes } = props
-
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <Box className={classes.box}>
-          <Grid container spacing={2}>
-
-            {props.articles.map(article => (
+  const { classes } = props;
+  return (
+    <>
+      <CssBaseline />
+      <Box className={classes.box}>
+        <Grid container spacing={2} alignItems="stretch" justify="flex-start">
+          {props.articles.map(article => (
+            <div key={article.id}>
               <Grid item xs={12} sm={6}>
-                <Card className={classes.article} variant="outlined">
+                <Card key={article.id} className={classes.card} variant="outlined">
                   <CardActionArea>
-                    <CardMedia className={classes.cardMedia}
-                      image={article.image}
-                      title={article.title}
-                    />
+                    <div key={article.id}>
+                      <CardMedia className={classes.cardMedia}
+                        image={article.image}
+                        title={article.title}
+                      />
+                    </div>
                     <CardContent>
-                      <Grid container spacing={2} alignItems="center" justify="space-between">
-                        <Grid item>
-                          <Typography className={classes.cardTitleTypography}>
-                            {article.title}
-                          </Typography>
+                      <div key={article.id}>
+                        <Typography className={classes.cardTitleTypography}>
+                          {article.title}
+                        </Typography>
+                      </div>
+                      <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
+                        <Grid item align="right">
+                          <ThumbUpIcon className={classes.iconLikeComment} />
                         </Grid>
-                        <Grid item container xs spacing={2} alignItems="center" justify="flex-end">
-                          <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
-                            <Grid item align="right">
-                              <ThumbUpIcon className={classes.iconLikeComment} />
-                            </Grid>
-                            <Grid item align="right">
-                              <Typography className={classes.typographyLikeComment}>{article.like}</Typography>
-                            </Grid>
-                            <Grid item align="right">
-                              <ChatIcon className={classes.iconLikeComment} />
-                            </Grid>
-                            <Grid item align="right">
-                              <Typography className={classes.typographyLikeComment}>{article.comment}</Typography>
-                            </Grid>
-                          </Grid>
+                        <Grid item align="right">
+                          <div key={article.id}>
+                            <Typography className={classes.typographyLikeComment}>{article.like}</Typography>
+                          </div>
+                        </Grid>
+                        <Grid item align="right">
+                          <ChatIcon className={classes.iconLikeComment} />
+                        </Grid>
+                        <Grid item align="right">
+                          <div key={article.id}>
+                            <Typography className={classes.typographyLikeComment}>{article.comment}</Typography>
+                          </div>
                         </Grid>
                       </Grid>
                     </CardContent>
                   </CardActionArea>
                 </Card>
               </Grid>
-            ))}
-
-          </Grid>
-        </Box>
-      </React.Fragment>
-    );
+            </div>
+          ))}
+        </Grid>
+      </Box>
+    </>
+  );
 }
 
 ArticleGridWithLikeComment.propTypes = {

@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,7 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
+const styles = {
   avatar: {
     fontSize: 36,
     height: '75px', 
@@ -22,28 +21,33 @@ const styles = theme => ({
     margin: '5px',
     padding: '0px',
     variant: 'outlined',
+    wordWrap: "break-word",
   },
   nameTypography: {
     fontFamily: "Ubuntu",
     fontSize: 28,
     fontWeight: 400,
     margin: '0px',
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
   statisticsTypography: {
     fontFamily: "Ubuntu",
     fontSize: 18,
     fontWeight: 300,
     margin: '0px',
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
-});
+};
 
 
 function UserBriefInfoBox(props) {
-
   const { classes } = props;
-
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
@@ -60,7 +64,7 @@ function UserBriefInfoBox(props) {
           </Grid>
         </Grid>
       </Box>
-    </React.Fragment>
+    </>
   );
 }
 

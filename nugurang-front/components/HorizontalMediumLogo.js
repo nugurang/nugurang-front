@@ -18,7 +18,6 @@ const styles = {
 
 function HorizontalMediumLogo(props) {
   const { classes, children, className, ...other } = props;
-
   return (
     <Box display="flex" alignItems="center" justifyContent="center">
       <Avatar alt="Nugurang"
@@ -33,9 +32,7 @@ function HorizontalMediumLogo(props) {
 }
 
 HorizontalMediumLogo.propTypes = {
-  children: PropTypes.node,
   classes: PropTypes.object.isRequired,
-  className: PropTypes.string,
 };
 
 export default withStyles(styles)(HorizontalMediumLogo);

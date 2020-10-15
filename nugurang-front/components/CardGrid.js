@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -13,7 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
+const styles = {
   box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -32,11 +29,6 @@ const styles = theme => ({
     padding: '10px 30px',
     variant: 'outlined',
   },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 300,
-  },
   card: {
     border: '1px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -53,44 +45,45 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 24,
     fontWeight: 300,
+    wordWrap: "break-word",
   },
-});
+};
 
 
 function CardGrid(props) {
-
-    const { classes } = props
-
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <Box className={classes.box}>
-          <Grid container spacing={2}>
-
-            {props.cards.map(card => (
+  const { classes } = props;
+  return (
+    <>
+      <CssBaseline />
+      <Box className={classes.box}>
+        <Grid container spacing={2}>
+          {props.cards.map(card => (
+            <div key={card.id}>
               <Grid item xs={12} sm={6}>
-                <Card className={classes.card} variant="outlined">
+                <Card key={card.id} className={classes.card} variant="outlined">
                   <CardActionArea>
-                    <CardMedia className={classes.cardMedia}
-                      image={card.image}
-                      title={card.title}
-                    />
+                    <div key={card.id}>
+                      <CardMedia className={classes.cardMedia}
+                        image={card.image}
+                        title={card.title}
+                      />
+                    </div>
                     <CardContent>
-                      <Typography className={classes.cardTitleTypography}>
-                        {card.title}
-                      </Typography>
+                      <div key={card.id}>
+                        <Typography className={classes.cardTitleTypography}>
+                          {card.title}
+                        </Typography>
+                      </div>
                     </CardContent>
-                    <CardActions>
-                    </CardActions>
                   </CardActionArea>
                 </Card>
               </Grid>
-            ))}
-
-          </Grid>
-        </Box>
-      </React.Fragment>
-    );
+            </div>
+          ))}
+        </Grid>
+      </Box>
+    </>
+  );
 }
 
 CardGrid.propTypes = {

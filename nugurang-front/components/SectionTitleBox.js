@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
+const styles = {
   avatar: {
     backgroundColor: "white",
     color: "black",
@@ -33,17 +30,17 @@ const styles = theme => ({
     fontFamily: "Ubuntu",
     fontSize: 30,
     fontWeight: 300,
+    overflow: "hidden", 
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
-});
+};
 
 
 function SectionTitleBox(props) {
-
-  const { classes } = props
-  const router = useRouter()
-
+  const { classes } = props;
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
@@ -58,9 +55,9 @@ function SectionTitleBox(props) {
             </Typography>
           </Grid>
         </Grid>
-        <hr className={classes.hr}/>
+        <hr className={classes.hr} />
       </Box>
-    </React.Fragment>
+    </>
   );
 }
 

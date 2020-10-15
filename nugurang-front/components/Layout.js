@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,8 +18,6 @@ const styles = {
 };
 
 const Layout = props => {
-  const appTitle = `> NUGURANG`;
-
   return (
     <div className="Layout">
       <Head>
@@ -26,15 +25,15 @@ const Layout = props => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <CssBaseline />
-      <Container maxWidth="sm" >
+      <Container maxWidth="sm">
         <Box>
           {props.children}
         </Box>
-        <Box m={'100px'} />
+        <Box m='100px' />
       </Container>
       <BottomNavBar />
     </div>
   );
 };
 
-export default Layout
+export default withStyles(styles)(Layout);

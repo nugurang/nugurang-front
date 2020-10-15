@@ -1,18 +1,14 @@
-import React, { Component } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
+const styles = {
   box: {
     border: '0px solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
@@ -30,7 +26,7 @@ const styles = theme => ({
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: 'black',
+        borderColor: 'gray',
       },
       '&:hover fieldset': {
         borderColor: 'gray',
@@ -40,16 +36,13 @@ const styles = theme => ({
       },
     },
   },
-});
+};
 
 
 function SectionTitleBoxWithTextField(props) {
-
-  const { classes } = props
-  const router = useRouter()
-
+  const { classes } = props;
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" justify="flex-start">
@@ -73,7 +66,7 @@ function SectionTitleBoxWithTextField(props) {
 
         </Grid>
       </Box>
-    </React.Fragment>
+    </>
   );
 }
 
