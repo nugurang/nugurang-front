@@ -57,20 +57,19 @@ const styles = {
 };
 
 
-function ArticleListWithLikeComment(props) {
-  const { classes } = props;
+function ArticleListWithLikeComment({ classes, articles, dense }) {
   return (
     <>
       <Box className={classes.box}>
-        <List>
-          {props.articles.map(article => (
+        <List dense={dense}>
+          {articles.map(article => (
             <ListItem button key={article.id}>
               <Grid container spacing={0} alignItems="center" justify="flex-end">
                 <Grid item container alignItems="center" direction="row" justify="flex-end">
-                  <Grid item xs spacing={2} alignItems="center" justify="flex-start">
+                  <Grid item xs spacing={dense ? 0 : 2} alignItems="center" justify="flex-start">
                     <ListItemText primary={<Typography className={classes.titleTypography}>{article.title}</Typography>} />
                   </Grid>
-                  <Grid item xs={3} spacing={2} alignItems="center" justify="flex-start">
+                  <Grid item xs={3} spacing={dense ? 0 : 2} alignItems="center" justify="flex-start">
                     <div key={article.id}>
                       {
                         article.chip ?

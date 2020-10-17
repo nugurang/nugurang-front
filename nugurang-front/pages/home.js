@@ -6,7 +6,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import Layout from '../components/Layout';
-import ArticleDenseListWithLikeComment from '../components/ArticleDenseListWithLikeComment';
+import ArticleListWithLikeComment from '../components/ArticleListWithLikeComment';
 import ArticleGridWithLikeComment from '../components/ArticleGridWithLikeComment';
 import ContentPaper from '../components/ContentPaper';
 import SectionTitleBox from '../components/SectionTitleBox';
@@ -114,17 +114,16 @@ export default function Home() {
       </PageTitleBox>
       <SectionTitleBox title="Favorite articles" icon={<FavoriteIcon />} />
       <ContentPaper>
-        <ArticleDenseListWithLikeComment articles={favoriteArticlesListTest} />
+        <ArticleListWithLikeComment dense articles={favoriteArticlesListTest} />
       </ContentPaper>
       <SectionTitleBox title="Hot articles" icon={<WhatshotIcon />} />
       <ContentPaper>
-        <ArticleDenseListWithLikeComment articles={hotArticlesListTest} />
+        <ArticleListWithLikeComment dense articles={hotArticlesListTest} />
       </ContentPaper>
       <SectionTitleBox title="Recent Events" icon={<TrendingUpIcon />} />
       <ContentPaper>
-        <ArticleGridWithLikeComment articles={recentEventsTest} />
+        <ArticleGridWithLikeComment dense articles={recentEventsTest} />
       </ContentPaper>
-
     </Layout>
   );
 }

@@ -9,7 +9,6 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import ArticleBox from '../components/ArticleBox';
 import ArticleBoxWithAccordion from '../components/ArticleBoxWithAccordion';
-import ArticleDenseListWithLikeComment from '../components/ArticleDenseListWithLikeComment';
 import ArticleGridWithLikeComment from '../components/ArticleGridWithLikeComment';
 import ArticleListWithLikeComment from '../components/ArticleListWithLikeComment';
 import BriefArticleListWithLikeComment from '../components/BriefArticleListWithLikeComment';
@@ -368,13 +367,6 @@ function TestComp(props) {
             ArticleBoxWithAccordion
           </Typography>
           <ArticleBoxWithAccordion article={articleTest} />
-        </Paper>
-
-        <Paper className={classes.paper} elevation={1}>
-          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
-            ArticleDenseListWithLikeComment
-          </Typography>
-          <ArticleDenseListWithLikeComment articles={articlesTest} />
         </Paper>
 
         <Paper className={classes.paper} elevation={1}>
