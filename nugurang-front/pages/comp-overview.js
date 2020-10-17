@@ -27,6 +27,7 @@ import UniversalList from '../components/UniversalList';
 import UserBriefInfoBox from '../components/UserBriefInfoBox';
 import UserGroupCard from '../components/UserGroupCard';
 import UserInfoBox from '../components/UserInfoBox';
+import FixedTabs from '../components/FixedTabs';
 
 /* ---------------------------- Test data ------------------------ */
 
@@ -487,7 +488,12 @@ function TestComp(props) {
           </Typography>
           <UserInfoBox user={userTest} />
         </Paper>
-
+        <Paper className={classes.paper} elevation={1}>
+          <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
+            FixedTabs
+          </Typography>
+          <FixedTabs userGroup={userGroupTest} />
+        </Paper>
       </Layout>
     </>
   );
