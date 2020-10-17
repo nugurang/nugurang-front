@@ -15,6 +15,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/system": "^4.9.14",
     "apollo-client": "^2.6.10",
+    "array-flat-polyfill": "^1.0.1",
     "clsx": "^1.1.1",
     "graphql": "^15.3.0",
     "js-cookie": "^2.2.1",
