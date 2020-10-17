@@ -1,20 +1,17 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import Layout from '../components/Layout';
-import PageTitleBox from '../components/PageTitleBox';
-import ArticleListWithLikeComment from '../components/ArticleListWithLikeComment';
-import ArticleGridWithLikeComment from '../components/ArticleGridWithLikeComment';
-import ContentPaper from '../components/ContentPaper';
-import SectionTitleBox from '../components/SectionTitleBox';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import PersonIcon from '@material-ui/icons/Person';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import SectionTitleBox from '../components/SectionTitleBox';
+import ContentPaper from '../components/ContentPaper';
+import ArticleGridWithLikeComment from '../components/ArticleGridWithLikeComment';
+import ArticleListWithLikeComment from '../components/ArticleListWithLikeComment';
+import PageTitleBox from '../components/PageTitleBox';
+import Layout from '../components/Layout';
 
 const hotArticlesListTest = [
   {
@@ -79,7 +76,7 @@ export default function Index() {
   const toggleShowEvents = () => {
     setShowEvents((prev) => !prev);
   };
-  const { loading, error, data } = useQuery(gql`
+  const { loading, error/* , data */} = useQuery(gql`
     query  {
       ping
     }
@@ -104,28 +101,31 @@ export default function Index() {
         </Typography>
       </PageTitleBox>
       { showEvents ?
-        (<>
-          <SectionTitleBox title="Hot Events" icon={<WhatshotIcon />} />
-          <ContentPaper>
-            <ArticleGridWithLikeComment articles={recentEventsTest} />
-          </ContentPaper>
-          <SectionTitleBox title="Recent Events" icon={<TrendingUpIcon />} />
-          <ContentPaper>
-            <ArticleGridWithLikeComment articles={recentEventsTest} />
-          </ContentPaper>
-         </>)
+        (
+          <>
+            <SectionTitleBox title="Hot Events" icon={<WhatshotIcon />} />
+            <ContentPaper>
+              <ArticleGridWithLikeComment articles={recentEventsTest} />
+            </ContentPaper>
+            <SectionTitleBox title="Recent Events" icon={<TrendingUpIcon />} />
+            <ContentPaper>
+              <ArticleGridWithLikeComment articles={recentEventsTest} />
+            </ContentPaper>
+          </>
+)
         :
-        (<>
-          <SectionTitleBox title="Hot Articles" icon={<WhatshotIcon />} />
-          <ContentPaper>
-            <ArticleListWithLikeComment dense articles={hotArticlesListTest} />
-          </ContentPaper>
-          <SectionTitleBox title="Recent Articles" icon={<TrendingUpIcon />} />
-          <ContentPaper>
-            <ArticleListWithLikeComment dense articles={hotArticlesListTest} />
-          </ContentPaper>
-        </>)
-      }
+        (
+          <>
+            <SectionTitleBox title="Hot Articles" icon={<WhatshotIcon />} />
+            <ContentPaper>
+              <ArticleListWithLikeComment dense articles={hotArticlesListTest} />
+            </ContentPaper>
+            <SectionTitleBox title="Recent Articles" icon={<TrendingUpIcon />} />
+            <ContentPaper>
+              <ArticleListWithLikeComment dense articles={hotArticlesListTest} />
+            </ContentPaper>
+          </>
+)}
     </Layout>
   );
 }
