@@ -47,40 +47,36 @@ function UniversalList(props) {
       <Box className={classes.box}>
         <List>
           {props.list.map(listItem => (
-            <ListItem key={listItem.id} button alignItems="flex-start">
-              <div key={listItem.id}>
-                {
-                  listItem.icon ?
+            <ListItem key={listItem.id} button alignItems="flex-start" onClick={listItem.onClick}>
+              {
+                listItem.icon ?
+                (
+                  <ListItemAvatar>
+                    <Avatar className={classes.avatar}
+                      alt={listItem.name}
+                      src={listItem.icon}
+                      variant="square"
+                    />
+                  </ListItemAvatar> 
+                ) : null
+              }
+              <ListItemText
+                primary={
                   (
-                    <ListItemAvatar>
-                      <Avatar className={classes.avatar}
-                        alt={listItem.name}
-                        src={listItem.icon}
-                        variant="square"
-                      />
-                    </ListItemAvatar> 
+                    <Typography className={classes.listPrimaryTypography}>
+                      {listItem.primary}
+                    </Typography>
+                  )
+                }
+                secondary={
+                  listItem.secondary ?
+                  (
+                    <Typography className={classes.listSecondaryTypography}>
+                      {listItem.secondary}
+                    </Typography>
                   ) : null
                 }
-              </div>
-              <div key={listItem.id}>
-                <ListItemText
-                  primary={
-                    (
-                      <Typography className={classes.listPrimaryTypography}>
-                        {listItem.primary}
-                      </Typography>
-                    )
-                  }
-                  secondary={
-                    listItem.secondary ?
-                    (
-                      <Typography className={classes.listSecondaryTypography}>
-                        {listItem.secondary}
-                      </Typography>
-                    ) : null
-                  }
-                />
-              </div>
+              />
             </ListItem>
           ))}
         </List>

@@ -73,7 +73,12 @@ function UserInfoBox(props) {
                 {props.user.name}
               </Typography>
               <Typography className={classes.followersTypography}>
-                {props.user.followers} followers, {props.user.followings} followings
+                {props.user.followers}
+                {' '}
+                followers,
+                {props.user.followings}
+                {' '}
+                followings
               </Typography>
             </Grid>
           </Grid>
