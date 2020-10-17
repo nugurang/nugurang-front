@@ -1,12 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import SectionTitleBox from "./SectionTitleBox";
 
 const styles = {
   avatar: {
@@ -56,39 +51,15 @@ const styles = {
 };
 
 
-function SectionTitleBox(props) {
-  const { classes } = props;
+function SectionTitleBoxWithButton(props) {
+  const { classes, label, ...other } = props;
   return (
-    <>
-      <CssBaseline />
-      <Box className={classes.box}>
-        <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
-          <Grid item container xs spacing={2} alignItems="center" direction="row" justify="flex-start">
-            <Grid item align="left">
-              <Avatar className={classes.avatar}>
-                {props.icon}
-              </Avatar>
-            </Grid>
-            <Grid item align="left">
-              <Typography className={classes.typography}>
-                {props.title}
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item xs align="right">
-            <Button className={classes.button}>
-              <Typography className={classes.buttonTypography}>{props.label}</Typography>
-            </Button>
-          </Grid>
-        </Grid>
-        <hr className={classes.hr} />
-      </Box>
-    </>
+    <SectionTitleBox {...other}>
+      <Button className={classes.button}>
+        <Typography className={classes.buttonTypography}>{label}</Typography>
+      </Button>
+    </SectionTitleBox>
   );
 }
 
-SectionTitleBox.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(SectionTitleBox);
+export default withStyles(styles)(SectionTitleBoxWithButton);

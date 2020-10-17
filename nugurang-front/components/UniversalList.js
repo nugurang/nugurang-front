@@ -47,7 +47,7 @@ function UniversalList(props) {
       <Box className={classes.box}>
         <List>
           {props.list.map(listItem => (
-            <ListItem key={listItem.id} button alignItems="flex-start" onClick={listItem.onClick}>
+            <ListItem key={listItem.id} button onClick={listItem.onClick}>
               {
                 listItem.icon ?
                 (

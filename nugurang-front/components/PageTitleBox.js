@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -42,7 +40,7 @@ function PageTitleBox({ classes, children, title, backButton = true}) {
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" justify="space-between">
           <Grid item>
-            <Grid container spacing={2} alignItems="center" justify="flex-end">
+            <Grid container spacing={2} alignItems="center" justify="flex-start">
               {
               backButton 
               && (
@@ -76,9 +74,5 @@ function PageTitleBox({ classes, children, title, backButton = true}) {
     </>
   );
 }
-
-PageTitleBox.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(PageTitleBox);

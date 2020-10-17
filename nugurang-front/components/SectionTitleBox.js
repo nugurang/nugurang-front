@@ -1,9 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -36,33 +33,33 @@ const styles = {
   },
 };
 
-
-function SectionTitleBox(props) {
-  const { classes } = props;
+function SectionTitleBox({ classes, children, icon, title }) {
   return (
-    <>
-      <CssBaseline />
-      <Box className={classes.box}>
-        <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
-          <Grid item align="center">
-            <Avatar className={classes.avatar}>
-              {props.icon}
-            </Avatar>
-          </Grid>
-          <Grid item align="center">
-            <Typography className={classes.typography}>
-              {props.title}
-            </Typography>
+    <Box className={classes.box}>
+      <Grid container spacing={2} alignItems="center" justify="space-between">
+        <Grid item>
+          <Grid container spacing={2} alignItems="center" justify="flex-start">
+            <Grid item>
+              <Avatar className={classes.avatar}>
+                {icon}
+              </Avatar>
+            </Grid>
+            <Grid item>
+              <Typography className={classes.typography}>
+                {title}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
-        <hr className={classes.hr} />
-      </Box>
-    </>
+        <Grid item>
+          <Grid container alignItems="center" justify="flex-end">
+            {[children].flat().map((child) => <Grid item>{child}</Grid>)}
+          </Grid>
+        </Grid>
+      </Grid>
+      <hr className={classes.hr} />
+    </Box>
   );
 }
-
-SectionTitleBox.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(SectionTitleBox);
