@@ -33,29 +33,42 @@ const styles = {
 };
 
 
-function PageTitleBox(props) {
-  const { classes } = props;
+function PageTitleBox({ classes, children, title, backButton = true}) {
   const router = useRouter();
   return (
     <>
       <CssBaseline />
       <Box className={classes.box}>
-        <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
-          <Grid item align="center">
-            <IconButton
-              edge="start" 
-              onClick={() => router.back()}
-              className={classes.button}
-              color="inherit"
-              aria-label="back"
-            >
-              <ArrowBackIcon />
-            </IconButton>
+        <Grid container spacing={2} direction="row" justify="space-between">
+          <Grid item>
+            <Grid container spacing={2} alignItems="center" justify="flex-end">
+              {
+              backButton 
+              && (
+              <Grid item>
+                <IconButton
+                  edge="start" 
+                  onClick={() => router.back()}
+                  className={classes.button}
+                  color="inherit"
+                  aria-label="back"
+                >
+                  <ArrowBackIcon />
+                </IconButton>
+              </Grid>
+)
+            }
+              <Grid item>
+                <Typography className={classes.typography}>
+                  {title}
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item align="center">
-            <Typography className={classes.typography}>
-              {props.title}
-            </Typography>
+          <Grid item>
+            <Grid container justify="flex-end">
+              {children && children.map((child) => <Grid item>{child}</Grid>)}
+            </Grid>
           </Grid>
         </Grid>
       </Box>
