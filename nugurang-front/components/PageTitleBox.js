@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -34,9 +33,9 @@ const styles = {
 
 function PageTitleBox({ classes, children, title, backButton = true}) {
   const router = useRouter();
+  let key = 0;
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" justify="space-between">
           <Grid item>
@@ -66,7 +65,7 @@ function PageTitleBox({ classes, children, title, backButton = true}) {
           </Grid>
           <Grid item>
             <Grid container justify="flex-end">
-              {children && [children].flat().map((child) => <Grid item>{child}</Grid>)}
+              {children && [children].flat().map((child) => <Grid item key={++key}>{child}</Grid>)}
             </Grid>
           </Grid>
         </Grid>

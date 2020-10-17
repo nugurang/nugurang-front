@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -57,7 +56,6 @@ function UserInfoBox(props) {
   const { classes } = props;
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item container spacing={2} alignItems="center" justify="flex-start">

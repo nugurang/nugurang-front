@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -43,7 +42,6 @@ function UniversalList(props) {
   const { classes } = props
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box}>
         <List>
           {props.list.map(listItem => (

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -81,7 +80,6 @@ function BriefArticleListWithLikeComment(props) {
   const { classes } = props;
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box}>
         <List>
           {props.articles.map(article => (

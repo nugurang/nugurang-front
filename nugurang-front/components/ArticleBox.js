@@ -6,7 +6,6 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -59,7 +58,6 @@ function ArticleBox(props) {
   const { classes } = props;
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box} elevation={0}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} justify='space-around'>

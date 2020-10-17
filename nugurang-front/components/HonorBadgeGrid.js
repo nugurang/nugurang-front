@@ -5,7 +5,6 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -80,7 +79,6 @@ function HonorBadgeGrid(props) {
   const { classes } = props;
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box}>
         <Grid container spacing={2}>
           {props.honorBadges.map(honorBadge => (

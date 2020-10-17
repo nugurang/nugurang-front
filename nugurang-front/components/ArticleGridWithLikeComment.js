@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -7,13 +5,12 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Chip from '@material-ui/core/Chip';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import ChatIcon from '@material-ui/icons/Chat';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
+const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27';
 
 const styles = {
   box: {
@@ -79,7 +76,6 @@ function ArticleGridWithLikeComment(props) {
   const { classes } = props;
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="stretch" justify="flex-start">
           {props.articles.map(article => (
@@ -88,7 +84,7 @@ function ArticleGridWithLikeComment(props) {
                 <CardActionArea>
                   <div key={article.id}>
                     <CardMedia className={classes.cardMedia}
-                      image={article.image}
+                      image={article.image || DEFAULT_IMAGE}
                       title={article.title}
                     />
                   </div>
@@ -138,9 +134,5 @@ function ArticleGridWithLikeComment(props) {
     </>
   );
 }
-
-ArticleGridWithLikeComment.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(ArticleGridWithLikeComment);

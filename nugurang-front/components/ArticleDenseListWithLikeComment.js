@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -57,17 +56,16 @@ function ArticleDenseListWithLikeComment(props) {
   const { classes } = props;
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box}>
-        <List dense="true">
+        <List dense>
           {props.articles.map(article => (
             <ListItem button key={article.id}>
               <Grid container spacing={0} alignItems="center" justify="flex-end">
                 <Grid item container alignItems="center" direction="row" justify="flex-end">
-                  <Grid item xs spacing={2} alignItems="center" justify="flex-start">
+                  <Grid item xs>
                     <ListItemText primary={<Typography className={classes.titleTypography}>{article.title}</Typography>} />
                   </Grid>
-                  <Grid item xs={3} spacing={2} alignItems="center" justify="flex-start">
+                  <Grid item xs={3}>
                     <div key={article.id}>
                       {
                         article.chip ?
@@ -80,7 +78,7 @@ function ArticleDenseListWithLikeComment(props) {
                     </div>
                   </Grid>
                 </Grid>
-                <Grid item container alignItems="center" justify="flex-end">
+                <Grid item container alignItems="center">
                   <Grid>
                     <div key={article.id}>
                       {

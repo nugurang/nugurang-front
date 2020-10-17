@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,18 +19,12 @@ export default function RootApp(props) {
 
 
   return (
-    <>
-      <Head>
-        <title>Nugurang</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-      </Head>
-      <ApolloProvider client={client}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </ApolloProvider>
-    </>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </ApolloProvider>
   );
 }
 

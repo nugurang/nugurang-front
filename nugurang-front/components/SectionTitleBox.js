@@ -34,6 +34,7 @@ const styles = {
 };
 
 function SectionTitleBox({ classes, children, icon, title }) {
+  let key = 0;
   return (
     <Box className={classes.box}>
       <Grid container spacing={2} alignItems="center" justify="space-between">
@@ -53,7 +54,7 @@ function SectionTitleBox({ classes, children, icon, title }) {
         </Grid>
         <Grid item>
           <Grid container alignItems="center" justify="flex-end">
-            {[children].flat().map((child) => <Grid item>{child}</Grid>)}
+            {[children].flat().map((child) => <Grid item key={++key}>{child}</Grid>)}
           </Grid>
         </Grid>
       </Grid>
