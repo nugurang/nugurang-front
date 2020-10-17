@@ -39,7 +39,7 @@ function PageTitleBox({ classes, children, title, backButton = true}) {
     <>
       <CssBaseline />
       <Box className={classes.box}>
-        <Grid container spacing={2} direction="row" justify="space-between">
+        <Grid container spacing={2} alignItems="center" justify="space-between">
           <Grid item>
             <Grid container spacing={2} alignItems="center" justify="flex-end">
               {
@@ -67,7 +67,7 @@ function PageTitleBox({ classes, children, title, backButton = true}) {
           </Grid>
           <Grid item>
             <Grid container justify="flex-end">
-              {children && children.map((child) => <Grid item>{child}</Grid>)}
+              {children && [children].flat().map((child) => <Grid item>{child}</Grid>)}
             </Grid>
           </Grid>
         </Grid>
