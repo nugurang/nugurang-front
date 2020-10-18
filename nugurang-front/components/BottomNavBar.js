@@ -15,6 +15,12 @@ const styles = {
     top: 'auto',
     bottom: 0,
   },
+  bottomNavigationAction: {
+    color: "black",
+    "&.Mui-selected": {
+      color: "#9778ec",
+    },
+  }
 };
 
 function BottomNavBar(props) {
@@ -22,16 +28,17 @@ function BottomNavBar(props) {
   const { classes } = props;
   let key = 0;
   const actions = [
-    ['home', <HomeIcon />],
-    ['boards', <TeaIcon />],
-    ['team', <GroupIcon />],
-    ['chat', <ChatIcon />],
-    ['more', <MoreIcon />]
-  ].map(([value, icon]) => {
+    ['Home', 'home', <HomeIcon />],
+    ['Boards', 'boards', <TeaIcon />],
+    ['Teams', 'teams', <GroupIcon />],
+    ['Chats', 'chats', <ChatIcon />],
+    ['More', 'more', <MoreIcon />]
+  ].map(([label, value, icon]) => {
       return (
         <BottomNavigationAction
+          className={classes.bottomNavigationAction}
           key={++key}
-          label={value}
+          label={label}
           value={value}
           icon={icon}
           onClick={() => {router.push(`/${value}`)}}
@@ -41,8 +48,8 @@ function BottomNavBar(props) {
   return (
     <AppBar className={classes.root}>
       <BottomNavigation
-        value={router.pathname.split('/')[1] || 'home'}
         className={classes.root}
+        value={router.pathname.split('/')[1] || 'home'}
       >
         {actions}
       </BottomNavigation>

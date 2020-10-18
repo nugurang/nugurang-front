@@ -1,17 +1,18 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+
 
 const useStyles = makeStyles(() => ({
   card: {
     border: '0.1rem solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
-    margin: '0.5rem',
+    margin: '0rem 0rem',
     padding: '0rem 0rem',
     variant: 'outlined',
     position: 'relative',
@@ -49,29 +50,24 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function ThreadGrid({ items }) {
+export default function HonorBadgeBox({ image, name, score }) {
   const classes = useStyles();
   return (
-    <Grid container alignments="center" justify="flex-start">
-      {[items].flat().map((item) => (
-        <Grid item xs={4} sm={3} key={item.id}>
-          <Card className={classes.card} variant="outlined">
-            <CardActionArea>
-              <CardMedia className={classes.cardMedia}
-                image={item.image}
-                name={item.name}
-              />
-              <Typography className={classes.cardScoreTypography}>
-                {item.score}
-              </Typography>
-              <Typography className={classes.cardTitleTypography} align="center">
-                {item.name}
-              </Typography>
-            </CardActionArea>
-          </Card>
-        </Grid>
-)
-    )}
-    </Grid>
+    <Box>
+      <Card className={classes.card} variant="outlined">
+        <CardActionArea>
+          <CardMedia className={classes.cardMedia}
+            image={image}
+            name={name}
+          />
+          <Typography className={classes.cardScoreTypography}>
+            {score}
+          </Typography>
+          <Typography className={classes.cardTitleTypography} align="center">
+            {name}
+          </Typography>
+        </CardActionArea>
+      </Card>
+    </Box>
   );
 }

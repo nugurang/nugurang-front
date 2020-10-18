@@ -3,14 +3,14 @@ import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+
 
 const useStyles = makeStyles(() => ({
   avatarGroup: {
@@ -67,12 +67,16 @@ const useStyles = makeStyles(() => ({
     fontFamily: "Ubuntu",
     fontSize: 18,
     fontWeight: 300,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
   cardSecondaryTypography: {
     fontFamily: "Ubuntu",
     fontSize: 14,
     fontWeight: 300,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
   iconButton: {
@@ -85,49 +89,47 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function TeamInfoBox({ primary, secondary, title, users }) {
+export default function TeamList({ items }) {
   const classes = useStyles();
   return (
-    <Box className={classes.box}>
-      <Card variant="outlined">
-        <CardActionArea>
-          <CardContent>
-            <Grid container alignItems="center" direction="row" justify="flex-start">
-              <Grid item xs>
-                <Typography className={classes.cardTitleTypography}>
-                  {title}
+    <List>
+      {[items].flat().map((item) => (
+        <ListItem key={item.id} alignItems="flex-start" button onClick={item.onClick}>
+          <Grid container alignItems="center" direction="row" justify="flex-start">
+            <Grid item xs>
+              <Typography className={classes.cardTitleTypography}>
+                {item.title}
+              </Typography>
+              <Box display={item.primary ? "block" : "none"}>
+                <Typography className={classes.cardPrimaryTypography}>
+                  {item.primary}
                 </Typography>
-                <Box display={primary ? "block" : "none"}>
-                  <Typography className={classes.cardPrimaryTypography}>
-                    {primary}
-                  </Typography>
-                </Box>
-                <Box display={secondary ? "block" : "none"}>
-                  <Typography className={classes.cardSecondaryTypography}>
-                    {secondary}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Box display={users ? "block" : "none"}>
-                <Grid container alignItems="center" direction="row" justify="flex-end">
-                  <Grid item align="right">
-                    <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
-                      {users.map(user => (
-                        <Avatar key={user.id} alt={user.name} src={user.image} />
-                      ))}
-                    </AvatarGroup>
-                  </Grid>
-                  <Grid item align="right">
-                    <IconButton color="primary" aria-label="upload picture" component="span">
-                      <AddCircleIcon className={classes.iconButton} />
-                    </IconButton>
-                  </Grid>
-                </Grid>
+              </Box>
+              <Box display={item.secondary ? "block" : "none"}>
+                <Typography className={classes.cardSecondaryTypography}>
+                  {item.secondary}
+                </Typography>
               </Box>
             </Grid>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </Box>
+            <Box display={item.users ? "block" : "none"}>
+              <Grid container alignItems="center" direction="row" justify="flex-end">
+                <Grid item align="right">
+                  <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
+                    {item.users.map(user => (
+                      <Avatar key={user.id} alt={user.name} src={user.image} />
+                  ))}
+                  </AvatarGroup>
+                </Grid>
+                <Grid item align="right">
+                  <IconButton color="primary" aria-label="upload picture" component="span">
+                    <AddCircleIcon className={classes.iconButton} />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+        </ListItem>
+))}
+    </List>
   );
 }

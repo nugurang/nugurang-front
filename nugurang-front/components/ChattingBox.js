@@ -1,53 +1,54 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const styles = {
+const useStyles = makeStyles(() => ({
   avatar: {
     fontSize: 24,
-    height: '50px',
-    margin: '0px',
-    width: '50px'
+    height: '5rem',
+    margin: '0rem',
+    width: '5rem'
   },
   box: {
-    margin: '5px',
-    padding: '0px',
+    margin: '0.5rem',
+    padding: '0rem',
   },
   list: {
-    border: '0px solid',
+    border: '0rem solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
-    margin: '5px',
-    padding: '0px',
+    margin: '0.5rem',
+    padding: '0rem',
     variant: 'outlined',
   },
   nameTypography: {
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 300,
-    margin: '0px 0px',
+    margin: '0rem',
+    overflow: "hidden",
+    textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
   contentTypography: {
-    border: '1px solid',
+    border: '0.1rem solid',
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 10,
     fontFamily: "Ubuntu",
     fontSize: 18,
     fontWeight: 300,
-    margin: '0px 55px',
-    padding: '5px',
+    margin: '0rem 5.5rem',
+    padding: '0.5rem',
     wordWrap: "break-word",
   },
-};
+}));
 
 
-function ChattingBox(props) {
-  const { classes } = props;
+export default function ChattingBox(props) {
+  const classes = useStyles();
   return (
     <>
       <Box className={classes.box}>
@@ -85,15 +86,3 @@ function ChattingBox(props) {
     </>
   );
 }
-
-ChattingBox.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ChattingBox);
-
-
-
-
-
-

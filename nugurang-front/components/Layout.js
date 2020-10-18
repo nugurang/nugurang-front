@@ -1,23 +1,29 @@
 import Head from "next/head";
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import BottomNavBar from './BottomNavBar'
 
-const styles = {};
+const useStyles = makeStyles(() => ({
+  layoutBox: {
+    margin: '0rem 0rem 5rem 0rem',
+  },
+}));
 
-function Layout({ /* classes, */ children, title }) {
+export default function Layout({ children, title }) {
+  const classes = useStyles();
   return (
-    <div className="Layout">
-      <Head>
-        <title>{title || 'Nugurang'}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <Container maxWidth="sm">
-        {children}
-      </Container>
+    <>
+      <Box className={classes.layoutBox}>
+        <Head>
+          <title>{title || 'Nugurang'}</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <Container maxWidth="sm">
+          {children}
+        </Container>
+      </Box>
       <BottomNavBar />
-    </div>
+    </>
   );
 };
-
-export default withStyles(styles)(Layout);
