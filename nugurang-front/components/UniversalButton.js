@@ -19,7 +19,7 @@ const styles = {
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 400,
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },

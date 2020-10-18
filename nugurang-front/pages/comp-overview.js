@@ -320,7 +320,22 @@ const userGroupTest = {
   ]
 };
 
-
+const panelTest={
+  panels :[
+    {
+      id: 1,
+      title: "Projects"
+    },
+    {
+      id: 2,
+      title: "Teammates"
+    },
+    {
+      id: 3,
+      title: "Competition"
+    }
+  ],
+}
 
 /* -------------------------- Test data end ---------------------- */
 
@@ -492,7 +507,13 @@ function TestComp(props) {
           <Typography className={classes.componentNameTypography} variant="h4" gutterBottom>
             FixedTabs
           </Typography>
-          <FixedTabs userGroup={userGroupTest} />
+          <FixedTabs panelGroup={panelTest}>
+            <UserGroupCard userGroup={userGroupTest} />
+            {userGroupTest.users.map(user=> (
+              <UserBriefInfoBox user={user} />
+            ))}
+            <UserGroupCard userGroup={userGroupTest} />
+          </FixedTabs>
         </Paper>
       </Layout>
     </>

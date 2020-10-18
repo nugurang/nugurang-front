@@ -36,7 +36,7 @@ const styles = {
     fontSize: 16,
     fontWeight: 300,
     wordWrap: "break-word",
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
   },
   card: {
@@ -55,7 +55,7 @@ const styles = {
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 400,
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },

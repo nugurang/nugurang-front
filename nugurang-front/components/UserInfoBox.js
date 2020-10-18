@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = {
   avatar: {
     fontSize: 48,
-    height: '100px', 
+    height: '100px',
     margin: '0px',
     width: '100px'
   },

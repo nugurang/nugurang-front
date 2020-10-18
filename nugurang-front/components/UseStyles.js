@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(10),
     padding: theme.spacing(1),
-  }, 
+  },
   paper_card: {
     alignItems: 'center',
     display: 'flex',

@@ -3,7 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import Layout from '../components/Layout';
 import PageTitleBox from '../components/PageTitleBox';
 import TeamInfoBox from '../components/TeamInfoBox';
-import FixedTab from '../components/FixedTabs';
+import FixedTabs from '../components/FixedTabs';
+import UserGroupCard from '../components/UserGroupCard';
+import UserBriefInfoBox from '../components/UserBriefInfoBox';
 
 const teamTest = {
   name: "Teamname",
@@ -45,6 +47,23 @@ const userGroupTest = {
   ]
 };
 
+const panelTest={
+  panels :[
+    {
+      id: 1,
+      title: "Projects"
+    },
+    {
+      id: 2,
+      title: "Teammates"
+    },
+    {
+      id: 3,
+      title: "Competition"
+    }
+  ],
+}
+
 
 export default function TeamProfile() {
 
@@ -54,9 +73,15 @@ export default function TeamProfile() {
       <PageTitleBox title="Team Profile" />
       <TeamInfoBox team={teamTest} />
       <Grid container spacing={2} alignItems="center" direction="row" justify="space-evenly">
-        <FixedTab userGroup={userGroupTest} />
+        <FixedTabs panelGroup={panelTest}>
+          <UserGroupCard userGroup={userGroupTest} />
+          {userGroupTest.users.map(user=> (
+            <UserBriefInfoBox user={user} />
+          ))}
+          <UserGroupCard userGroup={userGroupTest} />
+        </FixedTabs>
       </Grid>
     </Layout>
-  
+
   );
 }

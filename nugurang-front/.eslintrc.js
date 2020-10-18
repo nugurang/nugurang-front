@@ -33,6 +33,7 @@ module.exports = {
   ],
   rules: {
     "no-plusplus": "off",
+    "no-trailing-spaces": "error",
     "react/destructuring-assignment": "off",
     "react/display-name": "warn",
     "react/forbid-prop-types": "off",

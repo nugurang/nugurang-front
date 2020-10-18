@@ -55,7 +55,7 @@ function UniversalList(props) {
                       src={listItem.icon}
                       variant="square"
                     />
-                  </ListItemAvatar> 
+                  </ListItemAvatar>
                 ) : null
               }
               <ListItemText

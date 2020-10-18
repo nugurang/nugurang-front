@@ -16,7 +16,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 const styles = {
   avatar: {
     fontSize: 24,
-    height: '50px', 
+    height: '50px',
     margin: '0px',
     width: '50px'
   },
@@ -37,7 +37,7 @@ const styles = {
     fontSize: 16,
     fontWeight: 300,
     margin: '0px 0px',
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
@@ -46,7 +46,7 @@ const styles = {
     fontSize: 18,
     fontWeight: 400,
     margin: '0px 0px',
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
@@ -59,7 +59,7 @@ const styles = {
     fontWeight: 300,
     margin: '0px',
     padding: '5px',
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
@@ -94,7 +94,7 @@ function BriefArticleListWithLikeComment(props) {
                         src={article.image}
                       />
                     </Grid>
-                    
+
                     <Grid item spacing={2} justify="flex-start">
                       <Grid item align="left">
                         <Typography className={classes.authorTypography}>
@@ -117,7 +117,7 @@ function BriefArticleListWithLikeComment(props) {
 
                   <Grid container spacing={2} alignItems="center" direction="row" justify="flex-end">
                     {
-                      article.image ? 
+                      article.image ?
                         <Grid item align="right"><ImageIcon className={classes.iconImage} /></Grid>
                        : null
                     }

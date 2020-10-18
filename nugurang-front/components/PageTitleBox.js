@@ -24,7 +24,7 @@ const styles = {
     fontFamily: "Ubuntu",
     fontSize: 30,
     fontWeight: 300,
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
@@ -41,11 +41,11 @@ function PageTitleBox({ classes, children, title, backButton = true}) {
           <Grid item>
             <Grid container spacing={2} alignItems="center" justify="flex-start">
               {
-              backButton 
+              backButton
               && (
               <Grid item>
                 <IconButton
-                  edge="start" 
+                  edge="start"
                   onClick={() => router.back()}
                   className={classes.button}
                   color="inherit"

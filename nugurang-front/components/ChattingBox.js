@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = {
   avatar: {
     fontSize: 24,
-    height: '50px', 
+    height: '50px',
     margin: '0px',
     width: '50px'
   },

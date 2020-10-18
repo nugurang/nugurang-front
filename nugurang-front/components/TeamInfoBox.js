@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = {
   avatar: {
     fontSize: 48,
-    height: '100px', 
+    height: '100px',
     margin: '0px',
     width: '100px'
   },
@@ -51,7 +50,6 @@ function TeamInfoBox(props) {
   const { classes } = props;
   return (
     <>
-      <CssBaseline />
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item container spacing={2} alignItems="center" justify="flex-start">

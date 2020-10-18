@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
-import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
+import { useTheme, withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import UserGroupCard from './UserGroupCard';
-import UserBriefInfoBox from './UserBriefInfoBox'
 
 const styles = theme=>({
     root: {
@@ -39,7 +37,11 @@ function TabPanel(props) {
 }
 
 TabPanel.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+    PropTypes.element
+    ]).isRequired,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
@@ -51,7 +53,7 @@ function a11yProps(index) {
   };
 }
 
-function FixedTab(props) {
+function FixedTabs(props) {
   const {classes} = props
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -63,6 +65,8 @@ function FixedTab(props) {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
+
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -74,8 +78,9 @@ function FixedTab(props) {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Projects" {...a11yProps(0)} />
-          <Tab label="Teammates" {...a11yProps(1)} />
+          {props.panelGroup.panels.map(panel => (
+            <Tab key={panel.id-1} label={panel.title} {...a11yProps(panel.id-1)} />
+          ))}
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -83,27 +88,20 @@ function FixedTab(props) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <UserGroupCard userGroup={props.userGroup} />
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <Paper> 
-            {props.userGroup.users.map(user => (
-              <UserBriefInfoBox key={user.id} />
-            ))}
-          </Paper>
-        </TabPanel>
+        {props.panelGroup.panels.map(panel => (
+          <TabPanel value={panel.id} index={panel.id} dir={theme.direction}>
+            <Paper>
+              {props.children[panel.id-1]}
+            </Paper>
+          </TabPanel>
+        ))}
       </SwipeableViews>
     </div>
   );
 }
 
-// FixedTab.propTypes = {
-//     classes: PropTypes.object.isRequired,
-//   };
-
-FixedTab.defaultProps = {
-  userGroup: [],
+FixedTabs.propTypes = {
+  panelGroup : PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(FixedTab);
+export default withStyles(styles)(FixedTabs);

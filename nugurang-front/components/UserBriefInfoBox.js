@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = {
   avatar: {
     fontSize: 36,
-    height: '75px', 
+    height: '75px',
     margin: '0px',
     width: '75px'
   },
@@ -27,7 +27,7 @@ const styles = {
     fontSize: 28,
     fontWeight: 400,
     margin: '0px',
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
@@ -36,7 +36,7 @@ const styles = {
     fontSize: 18,
     fontWeight: 300,
     margin: '0px',
-    overflow: "hidden", 
+    overflow: "hidden",
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
