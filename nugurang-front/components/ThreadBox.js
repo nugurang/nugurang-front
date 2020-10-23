@@ -71,7 +71,7 @@ export default function ThreadBox({ accordion, articles, author, content, image,
     <>
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" justify="center">
-          <Grid item xs={12} justify='space-around'>
+          <Grid item xs={12}>
             <Card className={classes.card} variant="outlined">
               <CardMedia className={classes.cardMedia}
                 image={image}

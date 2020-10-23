@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
+import 'array-flat-polyfill';
 
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
@@ -117,7 +118,7 @@ export default function TeamList({ items }) {
                   <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
                     {item.users.map(user => (
                       <Avatar key={user.id} alt={user.name} src={user.image} />
-                  ))}
+                    ))}
                   </AvatarGroup>
                 </Grid>
                 <Grid item align="right">
@@ -129,7 +130,7 @@ export default function TeamList({ items }) {
             </Box>
           </Grid>
         </ListItem>
-))}
+      ))}
     </List>
   );
 }

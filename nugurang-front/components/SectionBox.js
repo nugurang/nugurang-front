@@ -1,5 +1,7 @@
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Box from '@material-ui/core/Box';
+import 'array-flat-polyfill';
 
 const useStyles = makeStyles(() => ({
   margin: {

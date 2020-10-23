@@ -1,3 +1,4 @@
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router'
 import Avatar from '@material-ui/core/Avatar';
@@ -5,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import 'array-flat-polyfill';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
