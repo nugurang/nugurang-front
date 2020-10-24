@@ -15,6 +15,7 @@ import BaseCard from '../components/BaseCard';
 import BaseIconButton from '../components/BaseIconButton';
 import BaseImage from '../components/BaseImage';
 import BaseListItem from '../components/BaseListItem';
+import BaseMultiSelect from '../components/BaseMultiSelect';
 import BaseSelect from '../components/BaseSelect';
 import BaseSwitch from '../components/BaseSwitch';
 import BaseTextField from '../components/BaseTextField';
@@ -78,6 +79,30 @@ const TEST_ARTICLE_LIST = [
     topic: "Test topic",
     view: 4,
     vote: 5,
+  },
+]
+
+
+const TEST_BASE_MULTI_SELECT_LIST = [
+  {
+    id: 0,
+    label: "Pikachu",
+    value: "pikachu",
+  },
+  {
+    id: 1,
+    label: "Raichu",
+    value: "raichu",
+  },
+  {
+    id: 2,
+    label: "Charmander",
+    value: "charmander",
+  },
+  {
+    id: 3,
+    label: "Squirtle",
+    value: "squirtle",
   },
 ]
 
@@ -372,6 +397,16 @@ export default function ComponentOverview() {
           primary="Primary"
           secondary="Secondary"
           circleIcon
+        />
+      </Overview>
+
+
+      <Overview title="BaseMultiSelect">
+        <BaseMultiSelect
+          items={TEST_BASE_MULTI_SELECT_LIST}
+          label="Test Label"
+          placeholder="Test Placeholder"
+          onChange={refreshBaseSelect}
         />
       </Overview>
 

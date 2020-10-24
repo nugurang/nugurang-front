@@ -14,8 +14,8 @@ const useStyles = makeStyles(() => ({
   avatar: {
     backgroundColor: "transparent",
     color: "black",
-    height: '2.5rem',
-    width: '2.5rem',
+    height: '2rem',
+    width: '2rem',
   },
   backButton: {
     backgroundColor: "transparent",
@@ -50,9 +50,12 @@ const useStyles = makeStyles(() => ({
     height: '0.1rem',
     margin: '0.5rem',
   },
+  iconButton: {
+    color: 'black',
+  },
   typography: {
     fontFamily: "Ubuntu",
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: 300,
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -61,7 +64,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function SectionTitleBar({ children, icon, title, backButton=false, bottomBar=false }) {
+export default function SectionTitleBar({ avatar, circleIcon, children, icon, title, avatarDescription=null, backButton=false, bottomBar=false }) {
   const router = useRouter();
   const classes = useStyles();
   let key = 0;
@@ -81,11 +84,20 @@ export default function SectionTitleBar({ children, icon, title, backButton=fals
                 <ArrowBackIcon />
               </IconButton>
             </Box>
-            <Box display={icon ? "block" : "none"}>
-              <Avatar className={classes.avatar}>
-                {icon}
-              </Avatar>
+
+            <Box display={avatar && !icon ? "block" : "none"}>
+              <Avatar className={classes.avatar}
+                alt={avatarDescription || null}
+                src={avatar}
+                variant={circleIcon ? "circle" : "square"}
+              />
             </Box>
+            <Box display={icon && !avatar ? "block" : "none"}>
+              <IconButton className={classes.iconButton}>
+                {icon}
+              </IconButton>
+            </Box>
+
           </Grid>
           <Grid item xs>
             <Box>

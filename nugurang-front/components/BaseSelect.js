@@ -32,8 +32,8 @@ const useStyles = makeStyles(() => ({
 export default function BaseSelect({ items, label, onChange, value }) {
   const classes = useStyles();
   return (
-    <FormControl className={classes.formControl} variant="outlined">
-      <InputLabel>Age</InputLabel>
+    <FormControl className={classes.formControl} variant="outlined" style={{minWidth: 120}}>
+      <InputLabel>{label}</InputLabel>
       <Select className={classes.select} value={value} onChange={onChange} label={label}>
         {[items].flat().map((item) => (
           <MenuItem key={item.id} value={item.value}>

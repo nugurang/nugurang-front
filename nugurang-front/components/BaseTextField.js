@@ -32,7 +32,7 @@ export default function BaseTextField({ label }) {
       <TextField
         className={classes.textField}
         inputProps={{ style: { fontFamily: "Ubuntu" } }}
-        InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+        inputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
         label={label || null}
         variant="outlined"
       />
