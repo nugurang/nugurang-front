@@ -12,44 +12,7 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 
 
 const useStyles = makeStyles(() => ({
-  button: {
-    background: '#FEFEFE',
-    border: '1px solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    color: 'default',
-    margin: '5px',
-    padding: '5px 30px',
-    variant: 'outlined',
-  },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  textField: {
-    '& label.Mui-focused': {
-      color: 'purple',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'purple',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'gray',
-      },
-      '&:hover fieldset': {
-        borderColor: 'gray',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'purple',
-      },
-    },
-  },
-  welcomeTypography: {
+  typography: {
     fontFamily: "Ubuntu",
     fontSize: 30,
     fontWeight: 400,
@@ -60,7 +23,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function Welcome() {
+export default function ThankYou() {
   const router = useRouter();
   const classes = useStyles();
   return (
@@ -69,7 +32,7 @@ export default function Welcome() {
       <Box mt="50%">
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
-            <Typography className={classes.welcomeTypography}>Thank you for your cooperation!</Typography>
+            <Typography className={classes.typography}>Thank you for your cooperation!</Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Box className={classes.box} align="center">
