@@ -1,5 +1,7 @@
 import React from 'react';
+import {useRouter} from 'next/router';
 /* import { gql, useQuery } from '@apollo/client'; */
+import Grid from'@material-ui/core/Grid';
 
 import BookIcon from '@material-ui/icons/Book';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
@@ -103,6 +105,7 @@ function getData() {
 */
 
 export default function Home() {
+  const router = useRouter();
   /* const data = getData(); */
   return (
     <Layout>
@@ -118,6 +121,12 @@ export default function Home() {
           followings={TEST_USER.followings}
           dense={false}
         />
+        <Grid container direction="row" justify="flex-end">
+          <Grid item align="right">
+            <BaseButton label="My followers" onClick={() => router.push('/user/follow')} />
+            <BaseButton label="Log out" onClick={() => router.push('/signout')} />
+          </Grid>
+        </Grid>
       </SectionBox>
 
 
@@ -135,7 +144,7 @@ export default function Home() {
       <SectionBox
         titleBar={(
           <SectionTitleBar title="My honor badges" icon=<EmojiEventsIcon />>
-            <BaseButton label="More" />
+            <BaseButton label="More" onClick={() => router.push('/user/honor')} />
           </SectionTitleBar>
         )}
       >
