@@ -18,10 +18,13 @@ import BaseListItem from '../components/BaseListItem';
 import BaseMultiSelect from '../components/BaseMultiSelect';
 import BaseSelect from '../components/BaseSelect';
 import BaseSwitch from '../components/BaseSwitch';
+import BaseTabs from '../components/BaseTabs';
 import BaseTextField from '../components/BaseTextField';
+import BaseTypography from '../components/BaseTypography';
 import HonorBadgeBox from '../components/HonorBadgeBox';
 import HonorBadgeGrid from '../components/HonorBadgeGrid';
 import ImageUploadingBox from '../components/ImageUploadingBox';
+import ProjectList from '../components/ProjectList';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import StatCounterBox from '../components/StatCounterBox';
@@ -31,6 +34,7 @@ import ThreadBox from '../components/ThreadBox';
 import ThreadGrid from '../components/ThreadGrid';
 import ThreadList from '../components/ThreadList';
 import UserInfoBox from '../components/UserInfoBox';
+import UserGroupInfoCard from '../components/UserGroupInfoCard';
 import UserList from '../components/UserList';
 
 /* ------------------------ Test data zone start ------------------------- */
@@ -151,6 +155,30 @@ const TEST_HONOR_BADGE_LIST = [
 ]
 
 
+const TEST_TAB_PROPS_LIST = [
+  {
+    id: 0,
+    label: "Test tab 1",
+  },
+  {
+    id: 1,
+    label: "Test tab 2",
+  },
+  {
+    id: 2,
+    label: "Test tab 3",
+  },
+  {
+    id: 3,
+    label: "Test tab 4",
+  },
+  {
+    id: 4,
+    label: "Test tab 5",
+  },
+]
+
+
 const TEST_THREAD_LIST = [
   {
     id: 0,
@@ -231,26 +259,41 @@ const TEST_USER_LIST = [
 ]
 
 
-const TEST_TEAM_LIST = [
+
+const TEST_PROJECT_LIST = [
   {
     id: 0,
-    title: "Test title",
-    primary: "Test primary",
-    secondary: "Test secondary",
+    name: "Test project name",
     users: TEST_USER_LIST,
   },
   {
     id: 1,
-    title: "Test title",
-    primary: "Test primary",
-    secondary: "Test secondary",
+    name: "Test project name",
     users: TEST_USER_LIST,
   },
   {
     id: 2,
-    title: "Test title",
-    primary: "Test primary",
-    secondary: "Test secondary",
+    name: "Test project name",
+    users: TEST_USER_LIST,
+  },
+]
+
+
+
+const TEST_TEAM_LIST = [
+  {
+    id: 0,
+    name: "Test team name",
+    users: TEST_USER_LIST,
+  },
+  {
+    id: 1,
+    name: "Test team name",
+    users: TEST_USER_LIST,
+  },
+  {
+    id: 2,
+    name: "Test team name",
     users: TEST_USER_LIST,
   },
 ]
@@ -437,10 +480,24 @@ export default function ComponentOverview() {
       </Overview>
 
 
+      <Overview title="BaseTabs">
+        <BaseTabs tabProps={TEST_TAB_PROPS_LIST}>
+          <BaseTextField label="Test textField 1" />
+          <BaseTextField label="Test textField 2" />
+          <BaseTextField label="Test textField 3" />
+          <BaseTextField label="Test textField 4" />
+          <BaseTextField label="Test textField 5" />
+        </BaseTabs>
+      </Overview>
+
+
       <Overview title="BaseTextField">
-        <BaseTextField
-          label="Test label"
-        />
+        <BaseTextField label="Test label" />
+      </Overview>
+
+
+      <Overview title="BaseTypography">
+        <BaseTypography>Test typography</BaseTypography>
       </Overview>
 
 
@@ -463,6 +520,13 @@ export default function ComponentOverview() {
       <Overview title="ImageUploadingBox">
         <ImageUploadingBox
           image={TEST_IMAGE}
+        />
+      </Overview>
+
+
+      <Overview title="ProjectList">
+        <ProjectList
+          items={TEST_PROJECT_LIST}
         />
       </Overview>
 
@@ -517,15 +581,15 @@ export default function ComponentOverview() {
       </Overview>
 
 
-
       <Overview title="TeamInfoBox">
         <TeamInfoBox
-          title="Test title"
-          primary="Test primary"
-          secondary="Test secondary"
+          name="Test team"
+          bio="Test team bio"
+          dense={false}
           users={TEST_USER_LIST}
         />
       </Overview>
+
 
 
       <Overview title="TeamList">
@@ -558,6 +622,17 @@ export default function ComponentOverview() {
       <Overview title="ThreadList">
         <ThreadList
           items={TEST_THREAD_LIST}
+        />
+      </Overview>
+
+
+
+      <Overview title="UserGroupInfoCard">
+        <UserGroupInfoCard
+          title="Test title"
+          primary="Test primary"
+          secondary="Test secondary"
+          users={TEST_USER_LIST}
         />
       </Overview>
 

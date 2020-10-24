@@ -8,12 +8,11 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamList from '../../components/TeamList';
 
 
+
 const TEST_TEAM_LIST = [
   {
-    id: 1,
-    title: "Article 1",
-    primary: "Article 1 content",
-    image: "/static/images/sample_1.jpg",
+    id: 0,
+    name: "Test team name",
     users:[
       {
         id: 1,
@@ -39,9 +38,39 @@ const TEST_TEAM_LIST = [
         followings: 20,
         bio: "Bio"
       },
-    ]
-  }
-];
+    ],
+  },
+  {
+    id: 1,
+    name: "Test team name",
+    users:[
+      {
+        id: 1,
+        name: "User 1",
+        image: "/static/images/sample_2.jpg",
+        followers: 10,
+        followings: 20,
+        bio: "Bio"
+      },
+      {
+        id: 2,
+        name: "User 2",
+        image: "/static/images/sample_3.jpg",
+        followers: 10,
+        followings: 20,
+        bio: "Bio"
+      },
+      {
+        id: 3,
+        name: "User 3",
+        image: "/static/images/sample_4.jpg",
+        followers: 10,
+        followings: 20,
+        bio: "Bio"
+      },
+    ],
+  },
+]
 
 
 export default function TeamProfile() {

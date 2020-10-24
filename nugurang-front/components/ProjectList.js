@@ -7,7 +7,7 @@ import 'array-flat-polyfill';
 import UserGroupInfoCard from './UserGroupInfoCard'
 
 
-export default function TeamList({ items }) {
+export default function ProjectList({ items }) {
   return (
     <List>
       {[items].flat().map((item) => (

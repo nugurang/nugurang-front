@@ -15,12 +15,6 @@ const styles = {
     top: 'auto',
     bottom: 0,
   },
-  bottomNavigationAction: {
-    color: "black",
-    "&.Mui-selected": {
-      color: "#9778ec",
-    },
-  }
 };
 
 function BottomNavBar(props) {
@@ -36,7 +30,6 @@ function BottomNavBar(props) {
   ].map(([label, value, icon]) => {
       return (
         <BottomNavigationAction
-          className={classes.bottomNavigationAction}
           key={++key}
           label={label}
           value={value}
