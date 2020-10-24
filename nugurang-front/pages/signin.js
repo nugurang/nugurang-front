@@ -5,6 +5,7 @@ import BaseListItem from '../components/BaseListItem';
 import Layout from '../components/Layout';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
+import { BACKEND_ADDR } from '../src/config';
 
 export default function SignIn() {
   const router = useRouter();
@@ -21,14 +22,14 @@ export default function SignIn() {
       name: "GitHub",
       primary: "Sign in with GitHub",
       avatar: "/static/favicons/favicon-github.png",
-      onClick: () => router.push('http://localhost:8080/oauth2/authorization/github')
+      onClick: () => router.push(`${BACKEND_ADDR}/oauth2/authorization/github`)
     },
     {
       id: 3,
       name: "Kakao",
       primary: "Sign in with Kakao",
       avatar: "/static/favicons/favicon-kakao.png",
-      onClick: () => router.push('http://localhost:8080/oauth2/authorization/kakao')
+      onClick: () => router.push(`${BACKEND_ADDR}/oauth2/authorization/kakao`)
     },
 ];
 

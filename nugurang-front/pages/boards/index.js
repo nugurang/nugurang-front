@@ -1,10 +1,13 @@
-/* import { useRouter } from 'next/router'; */
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-/* import { gql, useQuery } from '@apollo/client'; */
+import { gql, useQuery } from '@apollo/client';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 
+import withAuth from '../../components/withAuth';
+import Loading from '../../components/Loading';
+import GraphQlError from '../../components/GraphQlError';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
-
 import BaseSwitch from '../../components/BaseSwitch';
 import Layout from '../../components/Layout';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -124,32 +127,43 @@ const TEST_RECENT_EVENT_LIST = [
   }
 ];
 
-/*
-function getData() {
-  const { loading, error, data } = useQuery(gql`
-    query  {
-      ping
-    }
-  `);
-  if (loading)
-    return (<p>Loading...</p>);
-  if (error) {
-    console.log(error);
-    router.push('/signin');
-    return (<p>Error :(</p>);
-  }
-  return data;
-}
-*/
-
-
-export default function Boards() {
-  /* const data = getData(); */
-  /* const router = useRouter(); */
+function Boards() {
+  const router = useRouter();
   const [showEvents, setShowEvents] = useState(false);
   const toggleShowEvents = () => {
     setShowEvents((prev) => !prev);
   };
+
+  const GET_RECENT_THREADS = gql`
+    query getThreads($boardNames: [String]!) {
+      getThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
+        id
+        name
+      }
+    }
+  `;
+  const GET_RECENT_EVENTS = gql`
+    query getThreads($boardNames: [String]!) {
+      getThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
+        id
+        name
+      }
+    }
+  `;
+
+  const responses = [
+    useQuery(GET_RECENT_THREADS, {variables: {boardNames: COMMON_BOARDS}}),
+    useQuery(GET_RECENT_EVENTS, {variables: {boardNames: EVENT_BOARDS}})
+  ];
+
+  const errorResponse = responses.find((response) => response.error)
+  if (errorResponse)
+    return <GraphQlError response={errorResponse} />
+
+  if (responses.some((response) => response.loading))
+    return <Loading />;
+
+  console.log(responses);
 
   return (
     <Layout>
@@ -190,3 +204,5 @@ export default function Boards() {
     </Layout>
   );
 }
+
+export default withAuth(Boards);
