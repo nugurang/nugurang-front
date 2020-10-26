@@ -20,7 +20,6 @@ import BaseSelect from '../components/BaseSelect';
 import BaseSwitch from '../components/BaseSwitch';
 import BaseTabs from '../components/BaseTabs';
 import BaseTextField from '../components/BaseTextField';
-import BaseTypography from '../components/BaseTypography';
 import HonorBadgeBox from '../components/HonorBadgeBox';
 import HonorBadgeGrid from '../components/HonorBadgeGrid';
 import ImageUploadingBox from '../components/ImageUploadingBox';
@@ -493,11 +492,6 @@ export default function ComponentOverview() {
 
       <Overview title="BaseTextField">
         <BaseTextField label="Test label" />
-      </Overview>
-
-
-      <Overview title="BaseTypography">
-        <BaseTypography>Test typography</BaseTypography>
       </Overview>
 
 

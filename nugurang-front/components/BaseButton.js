@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function BaseButton({ endIcon, label, startIcon, onClick }) {
+export default function BaseButton({ endIcon, label, startIcon, type, onClick }) {
   const classes = useStyles();
   return (
     <Button
@@ -32,6 +32,7 @@ export default function BaseButton({ endIcon, label, startIcon, onClick }) {
       startIcon={startIcon || null}
       endIcon={endIcon || null}
       onClick={onClick || null}
+      type={type || null}
     >
       <Typography className={classes.typography}>{label}</Typography>
     </Button>

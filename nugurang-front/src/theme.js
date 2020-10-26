@@ -28,8 +28,9 @@ const theme = createMuiTheme({
       default: '#fff',
     },
     typography: {
-      "fontFamily": `"Ubuntu", Roboto", "Helvetica", "Arial", sans-serif`,
-      "fontSize": 14,
+      useNextVariants: true,
+      "fontFamily": ['"Ubuntu"', '"Roboto"', '"Helvetica"', '"Arial"', "sans-serif"].join(','),
+      "fontSize": 16,
       "fontWeightLight": 300,
       "fontWeightRegular": 400,
       "fontWeightMedium": 500

@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../src/theme';
 import client from '../src/graphQlClient';
 
+
 export default function RootApp(props) {
   const { Component, pageProps } = props;
 

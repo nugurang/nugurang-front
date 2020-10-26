@@ -10,7 +10,6 @@ import Layout from '../../components/Layout';
 
 import BaseButton from '../../components/BaseButton';
 import BaseMultiSelect from '../../components/BaseMultiSelect';
-import BaseTypography from '../../components/BaseTypography';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 
@@ -36,6 +35,14 @@ const useStyles = makeStyles(() => ({
     variant: 'outlined',
   },
   buttonTypography: {
+    fontFamily: "Ubuntu",
+    fontSize: 16,
+    fontWeight: 400,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
+  },
+  typography: {
     fontFamily: "Ubuntu",
     fontSize: 16,
     fontWeight: 400,
@@ -124,7 +131,7 @@ export default function PeerReviewIndex() {
         <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image} circleIcon="true" />}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <BaseTypography>Did very well of...</BaseTypography>
+              <Typography className={classes.typography}>Did very well of...</Typography>
               <BaseMultiSelect
                 items={TEST_POSITION_LIST}
                 label="Position"
@@ -132,7 +139,7 @@ export default function PeerReviewIndex() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Needs to go the extra mile to...</Typography>
+              <Typography className={classes.typography}>Needs to go the extra mile to...</Typography>
               <BaseMultiSelect
                 items={TEST_POSITION_LIST}
                 label="Position"

@@ -1,18 +1,20 @@
-/* import { gql, useQuery } from '@apollo/client'; */
+import { gql, useQuery } from '@apollo/client';
+import { makeStyles } from '@material-ui/styles';
 import {useRouter} from 'next/router';
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
-
+import Typography from '@material-ui/core/Typography';
 import QueueIcon from '@material-ui/icons/Queue';
 
+import { BACKEND_ADDR } from '../src/config';
 import Layout from '../components/Layout';
-
 import BaseButton from '../components/BaseButton';
 import BaseListItem from '../components/BaseListItem';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import UserInfoBox from '../components/UserInfoBox';
+import withAuth from '../components/withAuth';
 
 
 const TEST_USER = {
@@ -48,52 +50,86 @@ const TEST_MORE_MENU_LIST = [
   },
 ];
 
-/*
-function getData() {
-  const { loading, error, data } = useQuery(gql`
-    query {
-      userInfo {
-        getCurrentUser() {
-          id
-          name
-          image
-        }
-      }
+
+const useStyles = makeStyles(() => ({
+  typography: {
+    fontFamily: "Ubuntu",
+    fontSize: 24,
+    fontWeight: 300,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
+  },
+}));
+
+
+export const CHECK_USER = gql`
+  query {
+    currentUser {
+      id
+      oauth2Provider
+      oauth2Id
+      name
+      email
+      biography
     }
-  `);
-  if (loading)
+  }
+`;
+
+
+function More() {
+  const router = useRouter();
+  const classes = useStyles();
+  const { loading, error, data } = useQuery(CHECK_USER);
+  if (loading)  {
     return (<p>Loading...</p>);
+  }
   if (error) {
     console.log(error);
   }
-  return data;
-}
-*/
 
-export default function More() {
-  const router = useRouter();
-  /* const data = getData(); */
-  return (
+  if (data && !data.currentUser) {
+    router.push('/signup');
+    return null;
+  }
+  else return (
     <Layout>
-
       <SectionTitleBar title="More" backButton />
 
       <SectionBox border={false}>
-        <Grid container>
-          <Grid item xs={12} sm={8}>
-            <UserInfoBox
-              name={TEST_USER.name}
-              image={TEST_USER.image}
-              bio={TEST_USER.bio}
-              followers={TEST_USER.followers}
-              followings={TEST_USER.followings}
-              dense
-            />
-          </Grid>
-          <Grid item xs={12} sm={4} align="right">
-            <BaseButton label="My info" onClick={() => router.push('/user')} />
-            <BaseButton label="Sign in" onClick={() => router.push('/signin')} />
-          </Grid>
+        <Grid container alignItems="center">
+          {
+            !data
+            ? (
+              <>
+                <Grid item xs={12} sm={8}>
+                  <Typography className={classes.typography}>You need to sign in first.</Typography>
+                </Grid>
+                <Grid item xs={12} sm={4} align="right">
+                  <BaseButton label="Sign in" onClick={() => router.push('/signin')} />
+                </Grid>
+              </>
+            )
+            : (
+              <>
+                <Grid item xs={12} sm={8}>
+                  <UserInfoBox
+                    name={data.currentUser.name}
+                    image={TEST_USER.image}
+                    bio={data.currentUser.bio}
+                    followers={TEST_USER.followers}
+                    followings={TEST_USER.followings}
+                    dense
+                  />
+                </Grid>
+                <Grid item xs={12} sm={4} align="right">
+                  <BaseButton label="My info" onClick={() => router.push('/user')} />
+                  <BaseButton label="Sign out" onClick={() => router.push(`${BACKEND_ADDR}/logout`)} />
+                  <BaseButton label="Sign in" onClick={() => router.push('/signin')} />
+                </Grid>
+              </>
+            )
+          }
         </Grid>
       </SectionBox>
 
@@ -111,3 +147,5 @@ export default function More() {
     </Layout>
   );
 }
+
+export default withAuth(More);

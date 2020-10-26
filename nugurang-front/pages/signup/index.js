@@ -1,11 +1,12 @@
-/* import { gql, useQuery } from '@apollo/client'; */
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useRef, useState } from 'react'
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -16,7 +17,6 @@ import BaseButton from '../../components/BaseButton';
 import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-
 
 
 const useStyles = makeStyles(() => ({
@@ -46,41 +46,65 @@ const useStyles = makeStyles(() => ({
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
-  textField: {
-    '& label.Mui-focused': {
-      color: 'purple',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'purple',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'gray',
-      },
-      '&:hover fieldset': {
-        borderColor: 'gray',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'purple',
-      },
-    },
+  typography: {
+    fontFamily: "Ubuntu",
+    fontSize: 28,
+    fontWeight: 300,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
   },
 }));
 
+export const CHECK_OAUTH2_USER = gql`
+  query {
+    currentOAuth2User {
+      id
+      name
+      email
+    }
+  }
+`;
 
-export default function SignUpIndex() {
+export const CREATE_USER = gql`
+  mutation createUser($name: String!, $email: String!, $biography: String) {
+    createUser (name: $name, email: $email, biography: $biography) {
+      id
+    }
+  }
+`;
+
+function SignUp() {
   const router = useRouter();
   const classes = useStyles();
+  const newName = useRef(null);
+  const newEmail = useRef(null);
+
+  const { loading: queryLoading, error: queryError, data } = useQuery(CHECK_OAUTH2_USER);
+  const [
+    createUser,
+    { loading: mutationLoading, error: mutationError },
+  ] = useMutation(CREATE_USER);
+
+  if (queryLoading) return <p>Loading...</p>;
+  if (queryError) return <p>Error :(</p>;
+
+  function handleNewNameChange() {
+    newName.current.focus();
+  }
+
+  function handleNewEmailChange() {
+    newEmail.current.focus();
+  }
+
   return (
     <Layout>
 
       <SectionTitleBar title="Sign up" backButton="true" />
 
-
-      <SectionBox titleBar={<SectionTitleBar title="Add profile image" icon=<AddAPhotoIcon /> />}>
-        <ImageUploadingBox image="/static/images/sample_1.jpg" />
+      <SectionBox border="false">
+        <Typography className={classes.typography} align="center">Welcome, {data.currentOAuth2User.name}!</Typography>
       </SectionBox>
-
 
       <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonAddIcon /> />}>
         <Box className={classes.box}>
@@ -89,25 +113,61 @@ export default function SignUpIndex() {
               <FormControl fullWidth variant="filled">
                 <TextField
                   className={classes.textField}
+                  defaultValue={data.currentOAuth2User.name}
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                  inputRef={newName}
                   label="Enter username"
                   variant="outlined"
+                  onClick={handleNewNameChange}
                 />
               </FormControl>
             </Grid>
-            <Grid item>
-              <BaseButton label="Verify" />
+          </Grid>
+        </Box>
+      </SectionBox>
+
+      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<PersonAddIcon /> />}>
+        <Box className={classes.box}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  className={classes.textField}
+                  defaultValue={data.currentOAuth2User.email}
+                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                  inputRef={newEmail}
+                  label="Enter email"
+                  variant="outlined"
+                  onClick={handleNewEmailChange}
+                />
+              </FormControl>
             </Grid>
           </Grid>
         </Box>
       </SectionBox>
 
 
-      <Box className={classes.box} align="center">
-        <BaseButton label="Submit" onClick={() => router.push('/signup/welcome')} />
-      </Box>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "" }});
+          router.push('/signup/welcome');
+        }}
+      >
+        <Box className={classes.box} align="center">
+          <BaseButton
+            label="Submit"
+            type="submit"
+          />
+        </Box>
+      </form>
+      {mutationLoading && <p>Loading...</p>}
+      {mutationError && <p>Error :( Please try again</p>}
 
     </Layout>
   );
 }
+
+export default SignUp;
