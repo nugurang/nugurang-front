@@ -1,12 +1,16 @@
 import React from 'react';
+import {useRouter} from 'next/router';
 
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import GroupIcon from '@material-ui/icons/Group';
 
+import BaseIconButton from '../../components/BaseIconButton';
 import Layout from '../../components/Layout';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamList from '../../components/TeamList';
-
+import withAuth from '../../components/withAuth';
 
 
 const TEST_TEAM_LIST = [
@@ -73,21 +77,23 @@ const TEST_TEAM_LIST = [
 ]
 
 
-export default function TeamProfile() {
-
-
+function Teams() {
+  const router = useRouter();
   return (
     <Layout>
-
-      <SectionTitleBar title="Teams" backButton="true" />
+      <SectionTitleBar title="Teams" backButton backButtonLink="/home" />
 
       <SectionBox
-        titleBar={<SectionTitleBar title="My teams" icon={<GroupIcon />} />}
+        titleBar={
+          <SectionTitleBar title="My teams" icon={<GroupIcon />}>
+            <BaseIconButton icon=<AddIcon onClick={() => router.push('/teams/create')} /> />
+          </SectionTitleBar>
+        }
       >
         <TeamList items={TEST_TEAM_LIST} />
       </SectionBox>
-
     </Layout>
-
   );
 }
+
+export default withAuth(Teams);

@@ -126,7 +126,7 @@ export default function PeerReviewIndex() {
   const classes = useStyles();
   return (
     <Layout>
-      <SectionTitleBar title="Peer review" backButton="true" />
+      <SectionTitleBar title="Peer review" backButton/>
       {TEST_USER_LIST.flat().map((item) => (
         <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image} circleIcon="true" />}>
           <Grid container spacing={2}>

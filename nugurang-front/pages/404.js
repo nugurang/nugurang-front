@@ -28,11 +28,11 @@ export default function Error404Page() {
   const classes = useStyles();
   return (
     <Layout>
-      <SectionTitleBar title="Oops!" backButton="true" />
+      <SectionTitleBar title="Oops!" backButton/>
       <Box mt="50%">
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
-            <Typography className={classes.typography}>"Error 404"</Typography>
+            <Typography className={classes.typography}>Error 404</Typography>
             <Typography className={classes.typography}>Something went wrong.</Typography>
           </Grid>
           <Grid item xs={12} align="center">

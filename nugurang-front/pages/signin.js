@@ -36,7 +36,7 @@ export default function SignIn() {
   return (
     <Layout>
       <SectionBox
-        titleBar={<SectionTitleBar title="Sign In" backButton="true" />}
+        titleBar={<SectionTitleBar title="Sign In" backButton/>}
       >
         <List>
           {TEST_SIGNIN_LIST.map(

@@ -64,7 +64,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function SectionTitleBar({ avatar, circleIcon, children, icon, title, avatarDescription=null, backButton=false, bottomBar=false }) {
+export default function SectionTitleBar({ avatar, circleIcon, children, icon, title, avatarDescription=null, backButton=false, backButtonLink=null, bottomBar=false }) {
   const router = useRouter();
   const classes = useStyles();
   let key = 0;
@@ -77,7 +77,7 @@ export default function SectionTitleBar({ avatar, circleIcon, children, icon, ti
               <IconButton
                 className={classes.backButton}
                 edge="start"
-                onClick={() => router.back()}
+                onClick={() => {backButtonLink ? router.push(backButtonLink) : router.back()}}
                 color="inherit"
                 aria-label="back"
               >

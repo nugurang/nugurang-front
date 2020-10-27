@@ -7,7 +7,6 @@ import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
-import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 import BaseSwitch from '../../components/BaseSwitch';
@@ -16,6 +15,7 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
 import ThreadGrid from '../../components/ThreadGrid';
 import ThreadList from '../../components/ThreadList';
+import withAuth from '../../components/withAuth';
 
 const GET_THREADS = gql`
   query GetThreads($boardNames: [String]!) {
@@ -84,7 +84,7 @@ function Boards() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Boards" backButton>
+      <SectionTitleBar title="Boards" backButton backButtonLink="/home">
         <BaseSwitch label="Show events" checked={showEvents} onChange={toggleShowEvents} />
       </SectionTitleBar>
       { showEvents ?

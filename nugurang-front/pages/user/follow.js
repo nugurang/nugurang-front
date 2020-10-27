@@ -105,7 +105,7 @@ export default function Follow() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Followings" backButton="true" />
+      <SectionTitleBar title="Followings" backButton backButtonLink="/user"/>
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>

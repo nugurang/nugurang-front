@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import Container from '@material-ui/core/Container';
 import ChatIcon from '@material-ui/icons/QuestionAnswer';
 import GroupIcon from '@material-ui/icons/Group';
 import HomeIcon from '@material-ui/icons/Home';
@@ -11,7 +12,8 @@ import MoreIcon from '@material-ui/icons/MoreHoriz';
 import TeaIcon from '@material-ui/icons/EmojiFoodBeverage';
 
 const styles = {
-  root: {
+  appBar: {
+    background: 'transparent',
     top: 'auto',
     bottom: 0,
   },
@@ -39,13 +41,14 @@ function BottomNavBar(props) {
       )
   });
   return (
-    <AppBar className={classes.root}>
-      <BottomNavigation
-        className={classes.root}
-        value={router.pathname.split('/')[1] || 'home'}
-      >
-        {actions}
-      </BottomNavigation>
+    <AppBar className={classes.appBar}>
+      <Container maxWidth="sm">
+        <BottomNavigation
+          value={router.pathname.split('/')[1] || 'home'}
+        >
+          {actions}
+        </BottomNavigation>
+      </Container>
     </AppBar>
   );
 }

@@ -7,12 +7,13 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 import Layout from '../../components/Layout';
 import BaseButton from '../../components/BaseButton';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
+import withAuth from '../../components/withAuth';
 
 
 const useStyles = makeStyles(() => ({
@@ -52,15 +53,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const CHECK_OAUTH2_USER = gql`
-  query {
-    currentOAuth2User {
-      id
-      name
-      email
-    }
-  }
-`;
 
 export const CREATE_USER = gql`
   mutation createUser($name: String!, $email: String!, $biography: String) {
@@ -70,50 +62,36 @@ export const CREATE_USER = gql`
   }
 `;
 
-function SignUp() {
+function CreateTeam() {
   const router = useRouter();
   const classes = useStyles();
   const newName = useRef(null);
-  const newEmail = useRef(null);
 
-  const { loading: queryLoading, error: queryError, data } = useQuery(CHECK_OAUTH2_USER);
   const [
     createUser,
     { loading: mutationLoading, error: mutationError },
   ] = useMutation(CREATE_USER);
 
-  if (queryLoading) return <p>Loading...</p>;
-  if (queryError) return <p>Error :(</p>;
-
   function handleNewNameChange() {
     newName.current.focus();
-  }
-
-  function handleNewEmailChange() {
-    newEmail.current.focus();
   }
 
   return (
     <Layout>
 
-      <SectionTitleBar title="Sign up" backButton/>
+      <SectionTitleBar title="Create new team" backButton/>
 
-      <SectionBox border="false">
-        <Typography className={classes.typography} align="center">Welcome, {data.currentOAuth2User.name}!</Typography>
-      </SectionBox>
-
-      <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonAddIcon /> />}>
+      <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
                   className={classes.textField}
-                  defaultValue={data.currentOAuth2User.name}
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                   inputRef={newName}
-                  label="Enter username"
+                  label="Enter team name"
                   variant="outlined"
                   onClick={handleNewNameChange}
                 />
@@ -123,33 +101,11 @@ function SignUp() {
         </Box>
       </SectionBox>
 
-      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<PersonAddIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  defaultValue={data.currentOAuth2User.email}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newEmail}
-                  label="Enter email"
-                  variant="outlined"
-                  onClick={handleNewEmailChange}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Box>
-      </SectionBox>
-
-
       <form
         onSubmit={e => {
           e.preventDefault();
-          createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "" }});
-          router.push('/signup/welcome');
+          createUser({ variables: {name: newName.current.value}});
+          router.push('/teams');
         }}
       >
         <Box className={classes.box} align="center">
@@ -166,4 +122,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default withAuth(CreateTeam);

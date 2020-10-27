@@ -28,7 +28,7 @@ export default function ErrorPage({ errorCode }) {
   const classes = useStyles();
   return (
     <Layout>
-      <SectionTitleBar title="Oops!" backButton="true" />
+      <SectionTitleBar title="Oops!" backButton/>
       <Box mt="50%">
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">

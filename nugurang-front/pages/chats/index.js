@@ -65,7 +65,7 @@ export default function Welcome() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Sorry!" backButton />
+      <SectionTitleBar title="Sorry!" backButton backButtonLink="/home"/>
 
       <Box mt="50%">
         <Grid container spacing={2} alignItems="center" justify="center">

@@ -92,9 +92,9 @@ function More() {
     router.push('/signup');
     return null;
   }
-  else return (
+  return (
     <Layout>
-      <SectionTitleBar title="More" backButton />
+      <SectionTitleBar title="More" backButton backButtonLink="/home"/>
 
       <SectionBox border={false}>
         <Grid container alignItems="center">
@@ -112,7 +112,7 @@ function More() {
             )
             : (
               <>
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12}>
                   <UserInfoBox
                     name={data.currentUser.name}
                     image={TEST_USER.image}
@@ -122,10 +122,9 @@ function More() {
                     dense
                   />
                 </Grid>
-                <Grid item xs={12} sm={4} align="right">
+                <Grid item xs align="right">
                   <BaseButton label="My info" onClick={() => router.push('/user')} />
                   <BaseButton label="Sign out" onClick={() => router.push(`${BACKEND_ADDR}/logout`)} />
-                  <BaseButton label="Sign in" onClick={() => router.push('/signin')} />
                 </Grid>
               </>
             )

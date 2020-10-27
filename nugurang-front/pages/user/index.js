@@ -1,19 +1,18 @@
 import React from 'react';
 import {useRouter} from 'next/router';
-/* import { gql, useQuery } from '@apollo/client'; */
+import { gql, useQuery } from '@apollo/client';
 import Grid from'@material-ui/core/Grid';
-
 import BookIcon from '@material-ui/icons/Book';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 import Layout from '../../components/Layout';
-
 import BaseButton from '../../components/BaseButton';
 import HonorBadgeGrid from '../../components/HonorBadgeGrid';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import UserInfoBox from '../../components/UserInfoBox';
 import ThreadList from '../../components/ThreadList';
+import withAuth from '../../components/withAuth';
 
 
 const TEST_USER = {
@@ -70,53 +69,32 @@ const TEST_HONOR_BADGE_LIST = [
   },
 ]
 
-
-/*
-function getData() {
-  const { loading, error, data } = useQuery(gql`
-    query {
-      userInfo {
-        getUser(
-          id: {userId}
-        ) {
-          id
-          name
-          email
-          image
-          biography
-          followers
-          followings
-          blog {
-            id
-            threads
-          }
-          honors
-        }
-      }
+export const GET_USER = gql`
+  query {
+    currentUser {
+      id
+      name
+      email
     }
-  `);
-  if (loading)
-    return (<p>Loading...</p>);
-  if (error) {
-    console.log(error);
   }
-  return data;
-}
-*/
+`;
 
-export default function Home() {
+function User() {
   const router = useRouter();
-  /* const data = getData(); */
+  const { loading: queryLoading, error: queryError, data } = useQuery(GET_USER);
+  if (queryLoading) return <p>Loading...</p>;
+  if (queryError) return <p>Error :(</p>;
+
   return (
     <Layout>
 
-      <SectionTitleBar title="My info" backButton="true" />
+      <SectionTitleBar title="My info" backButton/>
 
       <SectionBox border={false}>
         <UserInfoBox
-          name={TEST_USER.name}
+          name={data.currentUser.name}
           image={TEST_USER.image}
-          bio={TEST_USER.bio}
+          bio={data.currentUser.biography || "No biography"}
           followers={TEST_USER.followers}
           followings={TEST_USER.followings}
           dense={false}
@@ -124,7 +102,7 @@ export default function Home() {
         <Grid container direction="row" justify="flex-end">
           <Grid item align="right">
             <BaseButton label="My followers" onClick={() => router.push('/user/follow')} />
-            <BaseButton label="Log out" onClick={() => router.push('/signout')} />
+            <BaseButton label="Sign out" onClick={() => router.push('/signout')} />
           </Grid>
         </Grid>
       </SectionBox>
@@ -154,3 +132,5 @@ export default function Home() {
     </Layout>
   );
 }
+
+export default withAuth(User);
