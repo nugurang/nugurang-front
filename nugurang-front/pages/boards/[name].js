@@ -6,8 +6,7 @@ import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import BaseSwitch from '../../components/BaseSwitch';
 import Layout from '../../components/Layout';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -63,12 +62,10 @@ function Board() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Boards" backButton>
-        <BaseSwitch label="Show events" checked={showEvents} onChange={toggleShowEvents} />
-      </SectionTitleBar>
+      <SectionTitleBar title="Boards" backButton />
 
       <SectionBox
-        titleBar={<SectionTitleBar title={router.query.name} icon={<WhatshotIcon />} />}
+        titleBar={<SectionTitleBar title={router.query.name} icon={<AssignmentIcon />} />}
       >
         <ThreadList items={threads} />
       </SectionBox>

@@ -1,6 +1,10 @@
+import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import 'array-flat-polyfill';
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 
 import withAuth from '../../components/withAuth';
@@ -8,12 +12,26 @@ import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
+import BaseCard from '../../components/BaseCard';
 import BaseSwitch from '../../components/BaseSwitch';
 import Layout from '../../components/Layout';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
 import ThreadGrid from '../../components/ThreadGrid';
 import ThreadList from '../../components/ThreadList';
+
+
+
+const useStyles = makeStyles(() => ({
+  typography: {
+    fontFamily: "Ubuntu",
+    fontSize: 20,
+    fontWeight: 400,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
+  },
+}));
 
 const GET_THREADS = gql`
   query GetThreads($boardNames: [String]!) {
@@ -57,6 +75,7 @@ const GET_HOT_THREADS = gql`
 
 function Boards() {
   const router = useRouter();
+  const classes = useStyles();
   const [showEvents, setShowEvents] = useState(false);
   const toggleShowEvents = () => {
     setShowEvents((prev) => !prev);
@@ -81,14 +100,26 @@ function Boards() {
   const hotThreads = responses[2].data.getHotThreadsByBoardNames;
   const hotEvents = responses[3].data.getHotThreadsByBoardNames;
 
+  let key = 0;
   return (
     <Layout>
       <SectionTitleBar title="Boards" backButton>
         <BaseSwitch label="Show events" checked={showEvents} onChange={toggleShowEvents} />
       </SectionTitleBar>
+
       { showEvents ?
         (
           <>
+            <Grid container spacing={2}>
+              {[EVENT_BOARDS].flat().map((board) => 
+                <Grid item key={++key} xs={6} align="center">
+                  <BaseCard onClick={() => router.push(`/boards/${board}`)}>
+                    <Typography className={classes.typography}>{board}</Typography>
+                  </BaseCard>
+                </Grid>
+              )}
+            </Grid>
+
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Events" icon={<WhatshotIcon />} />}
             >
@@ -105,6 +136,15 @@ function Boards() {
         )
         : (
           <>
+            <Grid container spacing={2}>
+              {[COMMON_BOARDS].flat().map((board) => 
+                <Grid item key={++key} xs={6} align="center">
+                  <BaseCard onClick={() => router.push(`/boards/${board}`)}>
+                    <Typography className={classes.typography}>{board}</Typography>
+                  </BaseCard>
+                </Grid>
+              )}
+            </Grid>
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
             >
