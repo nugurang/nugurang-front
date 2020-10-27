@@ -7,6 +7,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
+import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 
 import StatCounterBox from './StatCounterBox';
@@ -59,13 +60,14 @@ const useStyles = makeStyles(() => ({
 
 export default function ThreadGrid({ items }) {
   const classes = useStyles();
+  const router = useRouter();
   return (
     <Grid container alignments="center" justify="flex-start">
       {[items].flat().map((item) => (
         <Grid item xs={12} sm={6} key={item.id}>
           <Card
             className={classes.card}
-            onClick={item.onClick ? item.onClick : null}
+            onClick={() => router.push(`/threads/${item.id}`)}
             variant="outlined"
           >
             <CardActionArea>

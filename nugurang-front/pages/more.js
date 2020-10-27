@@ -118,7 +118,7 @@ function More() {
                 <Grid item xs={12}>
                   <UserInfoBox
                     name={data.currentUser.name}
-                    image={data.currentUser.image.address}
+                    image={data.currentUser.image ? data.currentUser.image.address : null}
                     bio={data.currentUser.bio}
                     followers={TEST_USER.followers}
                     followings={TEST_USER.followings}

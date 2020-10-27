@@ -185,13 +185,21 @@ function SignUp() {
       <form
         onSubmit={e => {
           e.preventDefault();
-          const createImageAsync = async() => {
+          const WithImageAsync = async() => {
             const res = await createImage({ variables: {address: newImageAddress.current.value }});
-            console.log(res);
             createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image: res.data.createImage.id }});
             router.push('/signup/welcome');
           }
-          createImageAsync();
+          const WithoutImageAsync = async() => {
+            createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "" }});
+            router.push('/signup/welcome');
+          }
+
+          {
+            newImageAddress.current.value
+            ? WithImageAsync()
+            : WithoutImageAsync()
+          };
 
         }}
       >

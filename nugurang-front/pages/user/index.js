@@ -92,7 +92,7 @@ function User() {
       <SectionBox border={false}>
         <UserInfoBox
           name={data.currentUser.name}
-          image={TEST_USER.image}
+          image={data.currentUser.image ? data.currentUser.image.address : null}
           bio={data.currentUser.biography || "No biography"}
           followers={TEST_USER.followers}
           followings={TEST_USER.followings}
