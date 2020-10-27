@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
+import Layout from './Layout';
 
-export default function GraphQlError({response}) {
+export default function GraphQlError({error}) {
   const router = useRouter();
-  if (response.error.networkError?.statusCode === 403) {
+  if (error.networkError?.statusCode === 403) {
     router.push('/signin');
-    return <p>Signin required</p>;
+    return <Layout><p>Signin required</p></Layout>;
   }
-  return <p>{response.error.message}</p>;
+  return <Layout><p>{error.message}</p></Layout>;
 }

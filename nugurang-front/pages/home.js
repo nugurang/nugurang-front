@@ -67,7 +67,7 @@ function Home() {
 
   const errorResponse = responses.find((response) => response.error)
   if (errorResponse)
-    return <GraphQlError response={errorResponse} />
+    return <GraphQlError error={errorResponse.error} />
 
   if (responses.some((response) => response.loading))
     return <Loading />;

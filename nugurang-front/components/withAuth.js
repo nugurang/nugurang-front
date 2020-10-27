@@ -17,7 +17,7 @@ export default function withAuth(Component) {
     const router = useRouter();
     const response = useQuery(GET_CURRENT_USER);
     if (response.error)
-      return <GraphQlError response={response} />
+      return <GraphQlError error={response.error} />
     if (response.loading)
       return <Loading />;
     if (response.data.currentUser === null) {

@@ -18,7 +18,9 @@ const link = from([
   }),
 ]);
 
-export default new ApolloClient({
+const graphQlClient = new ApolloClient({
   cache: new InMemoryCache(),
   link
 });
+
+export default graphQlClient;
