@@ -187,10 +187,12 @@ function SignUp() {
           e.preventDefault();
           const WithImageAsync = async() => {
             const res = await createImage({ variables: {address: newImageAddress.current.value }});
+            {imageMutationLoading && <p>Loading...</p>}
+            {imageMutationError && <p>Error :( Please try again</p>}
             createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image: res.data.createImage.id }});
             router.push('/signup/welcome');
           }
-          const WithoutImageAsync = async() => {
+          const WithoutImageAsync = () => {
             createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "" }});
             router.push('/signup/welcome');
           }
@@ -210,8 +212,7 @@ function SignUp() {
           />
         </Box>
       </form>
-      {imageMutationLoading && <p>Loading...</p>}
-      {imageMutationError && <p>Error :( Please try again</p>}
+
       {userMutationLoading && <p>Loading...</p>}
       {userMutationError && <p>Error :( Please try again</p>}
 
