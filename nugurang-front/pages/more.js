@@ -71,6 +71,9 @@ export const CHECK_USER = gql`
       oauth2Id
       name
       email
+      image {
+        address
+      }
       biography
     }
   }
@@ -115,7 +118,7 @@ function More() {
                 <Grid item xs={12}>
                   <UserInfoBox
                     name={data.currentUser.name}
-                    image={TEST_USER.image}
+                    image={data.currentUser.image.address}
                     bio={data.currentUser.bio}
                     followers={TEST_USER.followers}
                     followings={TEST_USER.followings}

@@ -66,9 +66,17 @@ export const CHECK_OAUTH2_USER = gql`
   }
 `;
 
+export const CREATE_IMAGE = gql`
+  mutation createImage($address: String! ) {
+    createImage (address: $address) {
+      id
+    }
+  }
+`;
+
 export const CREATE_USER = gql`
-  mutation createUser($name: String!, $email: String!, $biography: String) {
-    createUser (name: $name, email: $email, biography: $biography) {
+  mutation createUser($name: String!, $email: String!, $biography: String, $image: ID ) {
+    createUser (name: $name, email: $email, biography: $biography, image: $image) {
       id
     }
   }
@@ -79,11 +87,16 @@ function SignUp() {
   const classes = useStyles();
   const newName = useRef(null);
   const newEmail = useRef(null);
+  const newImageAddress = useRef(null);
 
-  const { loading: queryLoading, error: queryError, data } = useQuery(CHECK_OAUTH2_USER);
+  const { loading: queryLoading, error: queryError, data: userData } = useQuery(CHECK_OAUTH2_USER);
+  const [
+    createImage,
+    { loading: imageMutationLoading, error: imageMutationError, data: imageData },
+  ] = useMutation(CREATE_IMAGE);
   const [
     createUser,
-    { loading: mutationLoading, error: mutationError },
+    { loading: userMutationLoading, error: userMutationError },
   ] = useMutation(CREATE_USER);
 
   if (queryLoading) return <p>Loading...</p>;
@@ -95,6 +108,10 @@ function SignUp() {
 
   function handleNewEmailChange() {
     newEmail.current.focus();
+  }
+
+  function handleNewImageAddressChange() {
+    newImageAddress.current.focus();
   }
 
   return (
@@ -109,7 +126,7 @@ function SignUp() {
               <FormControl fullWidth variant="filled">
                 <TextField
                   className={classes.textField}
-                  defaultValue={data.currentOAuth2User.name}
+                  defaultValue={userData.currentOAuth2User.name}
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                   inputRef={newName}
@@ -130,7 +147,7 @@ function SignUp() {
               <FormControl fullWidth variant="filled">
                 <TextField
                   className={classes.textField}
-                  defaultValue={data.currentOAuth2User.email}
+                  defaultValue={userData.currentOAuth2User.email}
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                   inputRef={newEmail}
@@ -144,17 +161,38 @@ function SignUp() {
         </Box>
       </SectionBox>
 
-      <SectionBox titleBar={<SectionTitleBar title="Add user image" icon=<ImageIcon /> />}>
-        <ImageUploadingBox
-          image={DEFAULT_IMAGE}
-        />
+
+      <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />}>
+        <Box className={classes.box}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  className={classes.textField}
+                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                  inputRef={newImageAddress}
+                  label="Enter image link"
+                  variant="outlined"
+                  onClick={handleNewImageAddressChange}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Box>
       </SectionBox>
 
       <form
         onSubmit={e => {
           e.preventDefault();
-          createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "" }});
-          router.push('/signup/welcome');
+          const createImageAsync = async() => {
+            const res = await createImage({ variables: {address: newImageAddress.current.value }});
+            console.log(res);
+            createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image: res.data.createImage.id }});
+            router.push('/signup/welcome');
+          }
+          createImageAsync();
+
         }}
       >
         <Box className={classes.box} align="center">
@@ -164,8 +202,10 @@ function SignUp() {
           />
         </Box>
       </form>
-      {mutationLoading && <p>Loading...</p>}
-      {mutationError && <p>Error :( Please try again</p>}
+      {imageMutationLoading && <p>Loading...</p>}
+      {imageMutationError && <p>Error :( Please try again</p>}
+      {userMutationLoading && <p>Loading...</p>}
+      {userMutationError && <p>Error :( Please try again</p>}
 
     </Layout>
   );
