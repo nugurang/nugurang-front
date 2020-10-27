@@ -139,7 +139,7 @@ const TEST_TEAM_LIST = [
 const TEST_ARTICLE_LIST = [
   {
     id: 0,
-    author: TEST_USER,
+    user: TEST_USER,
     title: "Ignored",
     content: "Content and more",
     image: TEST_IMAGE,
@@ -150,7 +150,7 @@ const TEST_ARTICLE_LIST = [
   },
   {
     id: 1,
-    author: TEST_USER,
+    user: TEST_USER,
     title: "Ignored",
     content: "Content and more",
     image: TEST_IMAGE,
@@ -161,7 +161,7 @@ const TEST_ARTICLE_LIST = [
   },
   {
     id: 2,
-    author: TEST_USER,
+    user: TEST_USER,
     title: "Ignored",
     content: "Content and more",
     image: TEST_IMAGE,
@@ -266,7 +266,7 @@ const TEST_TAB_PROPS_LIST = [
 
 const TEST_THREAD = {
   id: 0,
-  author: "Test user",
+  user: "Test user",
   avatar: TEST_AVATAR,
   title: "Test title",
   content: "Content and more",
@@ -385,7 +385,7 @@ export default function ComponentOverview() {
 
       <Overview title="ArticleListItem">
         <ArticleListItem
-          author="Test user"
+          user="Test user"
           avatar={TEST_AVATAR}
           title="Ignored"
           content="Content and more"
@@ -449,8 +449,6 @@ export default function ComponentOverview() {
         />
       </Overview>
 
-
-
       <Overview title="BaseListItem-Icon">
         <BaseListItem
           icon={TEST_ICON}
@@ -459,7 +457,6 @@ export default function ComponentOverview() {
           circleIcon
         />
       </Overview>
-
 
       <Overview title="BaseMultiSelect">
         <BaseMultiSelect
@@ -615,7 +612,7 @@ export default function ComponentOverview() {
       <Overview title="ThreadBox">
         <ThreadBox
           title="Test title"
-          author={TEST_USER}
+          user={TEST_USER}
           content="Test content"
           image={TEST_IMAGE}
           articles={TEST_ARTICLE_LIST}

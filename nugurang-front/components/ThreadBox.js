@@ -69,10 +69,8 @@ export default function ThreadBox({ articleLeader, articles, like, topic, view, 
       <Box className={classes.box}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12}>
-
-            <ArticleLeader article={articleLeader} like={like} topic={topic} view={view} vote={vote} />
+            { articleLeader && <ArticleLeader article={articleLeader} like={like} topic={topic} view={view} vote={vote} /> }
             <ArticleList items={articles} />
-
           </Grid>
         </Grid>
       </Box>
