@@ -8,8 +8,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-
 import StatCounterBox from './StatCounterBox';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles(() => ({
   avatar: {
@@ -40,9 +40,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
 export default function ThreadList({ items }) {
   const classes = useStyles();
+  const router = useRouter();
   return (
     <List>
       {[items].flat().map((item) => (
@@ -50,14 +50,14 @@ export default function ThreadList({ items }) {
           <ListItem
             alignItems="flex-start"
             button
-            onClick={item.onClick}
+            onClick={() => router.push(`/threads/${item.id}`)}
           >
             <Grid container>
               <Grid item>
                 <ListItemAvatar>
                   <Avatar className={classes.avatar}
-                    alt={item.author}
-                    src={item.avatar}
+                    alt={item.user.name}
+                    src={item.user.image?.address}
                     variant="circle"
                   />
                 </ListItemAvatar>
@@ -66,9 +66,9 @@ export default function ThreadList({ items }) {
                 <Box display="flex" flexWrap="wrap">
                   <ListItemText
                     primary={(
-                      <Box display={item.title ? "block" : "none"}>
+                      <Box display={item.name ? "block" : "none"}>
                         <Typography className={classes.listPrimaryTypography}>
-                          {item.title}
+                          {item.name}
                         </Typography>
                       </Box>
                     )}
@@ -83,7 +83,7 @@ export default function ThreadList({ items }) {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                <StatCounterBox topic={item.topic} image={item.image} view={item.view} like={item.like} vote={item.vote} />
+                <StatCounterBox image={item.image} upCount={item.upCount} />
               </Grid>
             </Grid>
           </ListItem>

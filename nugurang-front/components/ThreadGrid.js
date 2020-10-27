@@ -84,9 +84,9 @@ export default function ThreadGrid({ items }) {
                     />
                   </Grid>
                   <Grid item>
-                    <Box display={item.title ? "block" : "none"}>
+                    <Box display={item.name ? "block" : "none"}>
                       <Typography className={classes.titleTypography}>
-                        {item.title}
+                        {item.name}
                       </Typography>
                     </Box>
                     <Box display={item.author ? "block" : "none"}>
@@ -98,7 +98,7 @@ export default function ThreadGrid({ items }) {
                 </Grid>
                 <Grid container justify="flex-end">
                   <Grid item align="right">
-                    <StatCounterBox compact topic={item.topic} image={item.image} view={item.view} like={item.like} vote={item.vote} />
+                    <StatCounterBox compact image={item.image} upCount={item.upCount} />
                   </Grid>
                 </Grid>
               </CardContent>

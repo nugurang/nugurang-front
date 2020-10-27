@@ -15,117 +15,45 @@ import SectionBox from '../../components/SectionBox';
 import ThreadGrid from '../../components/ThreadGrid';
 import ThreadList from '../../components/ThreadList';
 
-const TEST_HOT_THREAD_LIST = [
-  {
-    id: 1,
-    title: "Article 1",
-    content: "Content 1",
-    like: 1,
-    comment: 3,
-    image: "/static/images/sample_1.jpg",
-    chip: "Basic1",
-  },
-  {
-    id: 2,
-    title: "Article 2 with no images",
-    content: "Content 2",
-    like: 4,
-    comment: 2,
-    chip: "Basic2",
-  },
-  {
-    id: 3,
-    title: "Article 3 with no chips",
-    content: "Content 3",
-    like: 9,
-    image: "/static/images/sample_3.jpg",
-    comment: 1,
+const GET_THREADS = gql`
+  query GetThreads($boardNames: [String]!) {
+    getThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
+      id
+      name
+      upCount
+      commentCount
+      user {
+        name
+        image {
+          address
+        }
+      }
+      image {
+        address
+      }
+    }
   }
-];
+`;
 
-const TEST_RECENT_THREAD_LIST = [
-  {
-    id: 1,
-    title: "Article 1",
-    content: "Content 1",
-    like: 1,
-    comment: 3,
-    image: "/static/images/sample_1.jpg",
-    chip: "Basic1",
-  },
-  {
-    id: 2,
-    title: "Article 2 with no images",
-    content: "Content 2",
-    like: 4,
-    comment: 2,
-    chip: "Basic2",
-  },
-  {
-    id: 3,
-    title: "Article 3 with no chips",
-    content: "Content 3",
-    like: 9,
-    image: "/static/images/sample_3.jpg",
-    comment: 1,
+const GET_HOT_THREADS = gql`
+  query GetHotThreads($boardNames: [String]!) {
+    getHotThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
+      id
+      name
+      upCount
+      commentCount
+      user {
+        name
+        image {
+          address
+        }
+      }
+      image {
+        address
+      }
+    }
   }
-];
-
-const TEST_HOT_EVENT_LIST = [
-  {
-    id: 1,
-    title: "Article 1",
-    content: "Content 1",
-    like: 1,
-    comment: 3,
-    image: "/static/images/sample_1.jpg",
-    chip: "Basic1",
-  },
-  {
-    id: 2,
-    title: "Article 2 with no images",
-    content: "Content 2",
-    like: 4,
-    comment: 2,
-    chip: "Basic2",
-  },
-  {
-    id: 3,
-    title: "Article 3 with no chips",
-    content: "Content 3",
-    like: 9,
-    image: "/static/images/sample_3.jpg",
-    comment: 1,
-  }
-];
-
-const TEST_RECENT_EVENT_LIST = [
-  {
-    id: 1,
-    title: "Article 1",
-    content: "Content 1",
-    like: 1,
-    comment: 3,
-    image: "/static/images/sample_1.jpg",
-    chip: "Basic1",
-  },
-  {
-    id: 2,
-    title: "Article 2 with no images",
-    content: "Content 2",
-    like: 4,
-    comment: 2,
-    chip: "Basic2",
-  },
-  {
-    id: 3,
-    title: "Article 3 with no chips",
-    content: "Content 3",
-    like: 9,
-    image: "/static/images/sample_3.jpg",
-    comment: 1,
-  }
-];
+`;
 
 function Boards() {
   const router = useRouter();
@@ -134,26 +62,11 @@ function Boards() {
     setShowEvents((prev) => !prev);
   };
 
-  const GET_RECENT_THREADS = gql`
-    query getThreads($boardNames: [String]!) {
-      getThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
-        id
-        name
-      }
-    }
-  `;
-  const GET_RECENT_EVENTS = gql`
-    query getThreads($boardNames: [String]!) {
-      getThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
-        id
-        name
-      }
-    }
-  `;
-
   const responses = [
-    useQuery(GET_RECENT_THREADS, {variables: {boardNames: COMMON_BOARDS}}),
-    useQuery(GET_RECENT_EVENTS, {variables: {boardNames: EVENT_BOARDS}})
+    useQuery(GET_THREADS, {variables: {boardNames: COMMON_BOARDS}}),
+    useQuery(GET_THREADS, {variables: {boardNames: EVENT_BOARDS}}),
+    useQuery(GET_HOT_THREADS, {variables: {boardNames: COMMON_BOARDS}}),
+    useQuery(GET_HOT_THREADS, {variables: {boardNames: EVENT_BOARDS}})
   ];
 
   const errorResponse = responses.find((response) => response.error)
@@ -163,7 +76,10 @@ function Boards() {
   if (responses.some((response) => response.loading))
     return <Loading />;
 
-  console.log(responses);
+  const recentThreads = responses[0].data.getThreadsByBoardNames;
+  const recentEvents = responses[1].data.getThreadsByBoardNames;
+  const hotThreads = responses[2].data.getHotThreadsByBoardNames;
+  const hotEvents = responses[3].data.getHotThreadsByBoardNames;
 
   return (
     <Layout>
@@ -176,13 +92,13 @@ function Boards() {
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Events" icon={<WhatshotIcon />} />}
             >
-              <ThreadGrid items={TEST_HOT_EVENT_LIST} />
+              <ThreadGrid items={recentEvents} />
             </SectionBox>
 
             <SectionBox
               titleBar={<SectionTitleBar title="Recent Events" icon={<TrendingUpIcon />} />}
             >
-              <ThreadGrid items={TEST_RECENT_EVENT_LIST} />
+              <ThreadGrid items={recentEvents} />
             </SectionBox>
 
           </>
@@ -192,12 +108,12 @@ function Boards() {
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
             >
-              <ThreadList items={TEST_HOT_THREAD_LIST} />
+              <ThreadList items={recentThreads} />
             </SectionBox>
             <SectionBox
               titleBar={<SectionTitleBar title="Recent Threads" icon={<TrendingUpIcon />} />}
             >
-              <ThreadList items={TEST_RECENT_THREAD_LIST} />
+              <ThreadList items={recentThreads} />
             </SectionBox>
           </>
         )}

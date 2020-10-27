@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 
-export default function Boards() {
+export default function Ping() {
   /*
   const [ping, setPing] = useState(null);
   useEffect(() => {

@@ -73,7 +73,7 @@ function IconCounter({ compact, count, icon }) {
   );
 }
 
-export default function StatCounterBox({ comment, image, like, topic, view, vote, compact=false }) {
+export default function StatCounterBox({ commentCount, image, upCount, topic, view, vote, compact=false }) {
   const classes = useStyles();
   return (
     <>
@@ -85,9 +85,9 @@ export default function StatCounterBox({ comment, image, like, topic, view, vote
           <Grid container spacing={0} direction="row" justify="flex-end">
             { image ? <IconCounter compact={compact} count=" " icon=<ImageIcon className={classes.iconCompact} /> /> : null }
             { view ? <IconCounter compact={compact} count={view} icon=<VisibilityIcon className={classes.iconCompact} /> /> : null }
-            { like ? <IconCounter compact={compact} count={like} icon=<FavoriteIcon className={classes.iconCompact} /> /> : null }
+            { typeof(upCount) === 'number' && <IconCounter compact={compact} count={upCount} icon=<FavoriteIcon className={classes.iconCompact} /> /> }
             { vote ? <IconCounter compact={compact} count={vote} icon=<ThumbUpIcon className={classes.iconCompact} /> /> : null }
-            { comment ? <IconCounter compact={compact} count={comment} icon=<ChatIcon className={classes.iconCompact} /> /> : null }
+            { commentCount ? <IconCounter compact={compact} count={commentCount} icon=<ChatIcon className={classes.iconCompact} /> /> : null }
           </Grid>
         </Grid>
       </Box>
@@ -96,9 +96,9 @@ export default function StatCounterBox({ comment, image, like, topic, view, vote
           { topic ? <Chip className={classes.chip} label={topic} /> : null }
           { image ? <IconCounter compact={compact} count=" " icon=<ImageIcon className={classes.icon} /> /> : null }
           { view ? <IconCounter compact={compact} count={view} icon=<VisibilityIcon className={classes.icon} /> /> : null }
-          { like ? <IconCounter compact={compact} count={like} icon=<FavoriteIcon className={classes.icon} /> /> : null }
+          { typeof(upCount) === 'number' && <IconCounter compact={compact} count={upCount} icon=<FavoriteIcon className={classes.icon} /> /> }
           { vote ? <IconCounter compact={compact} count={vote} icon=<ThumbUpIcon className={classes.icon} /> /> : null }
-          { comment ? <IconCounter compact={compact} count={comment} icon=<ChatIcon className={classes.icon} /> /> : null }
+          { commentCount ? <IconCounter compact={compact} count={commentCount} icon=<ChatIcon className={classes.icon} /> /> : null }
         </Grid>
       </Box>
     </>
