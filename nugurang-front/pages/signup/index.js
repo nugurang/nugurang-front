@@ -16,6 +16,8 @@ import BaseButton from '../../components/BaseButton';
 import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
+import Loading from '../../components/Loading';
+import GraphQlError from '../../components/GraphQlError';
 
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27';
 
@@ -89,18 +91,15 @@ function SignUp() {
   const newEmail = useRef(null);
   const newImageAddress = useRef(null);
 
-  const { loading: queryLoading, error: queryError, data: userData } = useQuery(CHECK_OAUTH2_USER);
-  const [
-    createImage,
-    { loading: imageMutationLoading, error: imageMutationError, data: imageData },
-  ] = useMutation(CREATE_IMAGE);
-  const [
-    createUser,
-    { loading: userMutationLoading, error: userMutationError },
-  ] = useMutation(CREATE_USER);
+  const results = [[null, useQuery(CHECK_OAUTH2_USER)], useMutation(CREATE_IMAGE), useMutation(CREATE_USER)];
+  const userData = results[0][1].data;
+  const [getOAuth2User, createImage, createUser] = results.map(result => result[0]);
 
-  if (queryLoading) return <p>Loading...</p>;
-  if (queryError) return <p>Error :(</p>;
+  if (results.some(result => result[1].loading))
+    return <Loading />;
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />
 
   function handleNewNameChange() {
     newName.current.focus();
@@ -116,9 +115,7 @@ function SignUp() {
 
   return (
     <Layout>
-
       <SectionTitleBar title="Sign up" backButton/>
-
       <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
@@ -139,7 +136,6 @@ function SignUp() {
           </Grid>
         </Box>
       </SectionBox>
-
       <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
@@ -183,26 +179,16 @@ function SignUp() {
       </SectionBox>
 
       <form
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          const WithImageAsync = async() => {
-            const res = await createImage({ variables: {address: newImageAddress.current.value }});
-            {imageMutationLoading && <p>Loading...</p>}
-            {imageMutationError && <p>Error :( Please try again</p>}
-            createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image: res.data.createImage.id }});
-            router.push('/signup/welcome');
-          }
-          const WithoutImageAsync = () => {
-            createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "" }});
-            router.push('/signup/welcome');
+          let image;
+          if (newImageAddress.current.value) {
+            const res = await createImage({ variables: { address: newImageAddress.current.value }});
+            image = res.data.createImage.id;
           }
 
-          {
-            newImageAddress.current.value
-            ? WithImageAsync()
-            : WithoutImageAsync()
-          };
-
+          await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
+          router.push('/signup/welcome');
         }}
       >
         <Box className={classes.box} align="center">
@@ -212,10 +198,6 @@ function SignUp() {
           />
         </Box>
       </form>
-
-      {userMutationLoading && <p>Loading...</p>}
-      {userMutationError && <p>Error :( Please try again</p>}
-
     </Layout>
   );
 }
