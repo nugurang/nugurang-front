@@ -190,7 +190,7 @@ function SignUp() {
             createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image: res.data.createImage.id }});
             router.push('/signup/welcome');
           }
-          const WithoutImageAsync = async() => {
+          const WithoutImageAsync = () => {
             createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "" }});
             router.push('/signup/welcome');
           }
