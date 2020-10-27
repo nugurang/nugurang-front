@@ -55,6 +55,15 @@ const CREATE_POSITION = gql`
   }
 `;
 
+const CREATE_TEAM = gql`
+  mutation CreateTeam($name: String!) {
+    createTeam(name: $name) {
+      id
+      name
+    }
+  }
+`
+
 function Init({client}) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState();
@@ -63,6 +72,8 @@ function Init({client}) {
     if (error || done)
       return;
     try {
+      const createTeam = await client.mutate({mutation: CREATE_TEAM, variables: {name: 'Capstone'}});
+      console.log(createTeam);
       for (const name of ALL_POSITIONS) {
         const createPosition = await client.mutate({mutation: CREATE_POSITION, variables: {name}});
         console.log(createPosition);
