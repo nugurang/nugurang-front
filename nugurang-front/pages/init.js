@@ -8,6 +8,8 @@ import Loading from '../components/Loading';
 import withAuth from '../components/withAuth';
 import { ALL_BOARDS } from '../src/config';
 
+const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
+
 const GET_BOARDS = gql`
   query GetBoardsByNames($names: [String]!) {
     getBoardsByNames(names: $names) {
@@ -39,6 +41,16 @@ const CREATE_ARTICLE = gql`
   mutation CreateArticle($title: String, $content: String!, $thread: ID!, $parent: ID) {
     createArticle(title: $title, content: $content, thread: $thread, parent: $parent) {
       id
+      title
+    }
+  }
+`;
+
+const CREATE_POSITION = gql`
+  mutation CreatePosition($name: String!) {
+    createPosition(name: $name) {
+      id
+      name
     }
   }
 `;
@@ -51,9 +63,13 @@ function Init({client}) {
     if (error || done)
       return;
     try {
+      for (const name of ALL_POSITIONS) {
+        const createPosition = await client.mutate({mutation: CREATE_POSITION, variables: {name}});
+        console.log(createPosition);
+      }
       for (const name of ALL_BOARDS) {
         const createBoard = await client.mutate({mutation: CREATE_BOARD, variables: {name}});
-        console.log(createBoard)
+        console.log(createBoard);
       }
       const getBoards = await client.query({query: GET_BOARDS, variables: {names: ALL_BOARDS}})
       for (const board of getBoards.data.getBoardsByNames.map(board => board.id)) {

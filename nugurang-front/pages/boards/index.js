@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 
 import withAuth from '../../components/withAuth';
