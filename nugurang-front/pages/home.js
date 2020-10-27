@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonIcon from '@material-ui/icons/Person';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
@@ -77,7 +78,7 @@ function Home() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Home" backButton>
+      <SectionTitleBar title="Home" icon=<HomeIcon />>
         <BaseIconButton icon=<NotificationsIcon onClick={() => router.push('/notification')} /> />
         <BaseIconButton icon=<PersonIcon onClick={() => router.push('/user')} /> />
       </SectionTitleBar>

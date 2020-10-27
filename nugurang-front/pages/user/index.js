@@ -28,8 +28,7 @@ const TEST_USER = {
 const TEST_BLOG_THREAD = [
   {
     id: 0,
-    author: "Test user 1",
-    avatar: "/static/images/sample_1.jpg",
+    user: TEST_USER,
     title: "Recent event 1",
     content: "Content and more",
     image: "/static/images/sample_1.jpg",

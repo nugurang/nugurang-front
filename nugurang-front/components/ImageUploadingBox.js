@@ -39,7 +39,6 @@ const useStyles = makeStyles(() => ({
     borderColor: 'rgba(0, 0, 0, 0.25)',
     borderRadius: 5,
     margin: '0.5rem',
-    padding: '0.5rem',
     variant: 'outlined',
   },
   cardMedia: {
@@ -54,7 +53,7 @@ export default function ImageUploadingBox({ image }) {
   return (
     <>
       <Box className={classes.box}>
-        <Grid container spacing={2} alignItems="center" justify="center">
+        <Grid container alignItems="center" justify="center">
           <Grid item xs={12} sm={8}>
             <Card className={classes.card} variant="outlined">
               <CardMedia className={classes.cardMedia}
@@ -62,7 +61,7 @@ export default function ImageUploadingBox({ image }) {
               />
             </Card>
           </Grid>
-          <Grid item container spacing={2} xs={12} sm={4} alignItems="center" justify="space-evenly">
+          <Grid container spacing={2} xs={12} sm={4} alignItems="center" justify="space-evenly">
             <Grid item align="center">
               <Button className={classes.button}>
                 <Typography className={classes.buttonTypography}>Upload image</Typography>

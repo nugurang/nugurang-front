@@ -46,11 +46,100 @@ const TEST_ICON = <GitHubIcon style={{ fontSize: 30 }} />;
 const TEST_IMAGE = "/static/images/sample_2.jpg";
 
 
+
+const TEST_USER = {
+  id: 0,
+  name: "Test User",
+  email: "Test email",
+  image: "/static/images/sample_1.jpg",
+  bio: "Test bio",
+  followers: 5,
+  followings: 10,
+};
+
+const TEST_USER_LIST = [
+  {
+    id: 0,
+    name: "Test User",
+    email: "Test email",
+    image: "/static/images/sample_1.jpg",
+    bio: "Test bio",
+    followers: 5,
+    followings: 10,
+  },
+  {
+    id: 1,
+    name: "Test User",
+    email: "Test email",
+    image: "/static/images/sample_2.jpg",
+    bio: "Test bio",
+    followers: 5,
+    followings: 10,
+  },
+  {
+    id: 2,
+    name: "Test User",
+    email: "Test email",
+    image: "/static/images/sample_3.jpg",
+    bio: "Test bio",
+    followers: 5,
+    followings: 10,
+  },
+  {
+    id: 3,
+    name: "Test User",
+    email: "Test email",
+    image: "/static/images/sample_4.jpg",
+    bio: "Test bio",
+    followers: 5,
+    followings: 10,
+  },
+]
+
+
+
+const TEST_PROJECT_LIST = [
+  {
+    id: 0,
+    name: "Test project name",
+    users: TEST_USER_LIST,
+  },
+  {
+    id: 1,
+    name: "Test project name",
+    users: TEST_USER_LIST,
+  },
+  {
+    id: 2,
+    name: "Test project name",
+    users: TEST_USER_LIST,
+  },
+]
+
+
+
+const TEST_TEAM_LIST = [
+  {
+    id: 0,
+    name: "Test team name",
+    users: TEST_USER_LIST,
+  },
+  {
+    id: 1,
+    name: "Test team name",
+    users: TEST_USER_LIST,
+  },
+  {
+    id: 2,
+    name: "Test team name",
+    users: TEST_USER_LIST,
+  },
+]
+
 const TEST_ARTICLE_LIST = [
   {
     id: 0,
-    author: "Test user",
-    avatar: TEST_AVATAR,
+    author: TEST_USER,
     title: "Ignored",
     content: "Content and more",
     image: TEST_IMAGE,
@@ -61,8 +150,7 @@ const TEST_ARTICLE_LIST = [
   },
   {
     id: 1,
-    author: "Test user",
-    avatar: TEST_AVATAR,
+    author: TEST_USER,
     title: "Ignored",
     content: "Content and more",
     image: TEST_IMAGE,
@@ -73,8 +161,7 @@ const TEST_ARTICLE_LIST = [
   },
   {
     id: 2,
-    author: "Test user",
-    avatar: TEST_AVATAR,
+    author: TEST_USER,
     title: "Ignored",
     content: "Content and more",
     image: TEST_IMAGE,
@@ -177,11 +264,22 @@ const TEST_TAB_PROPS_LIST = [
   },
 ]
 
-
+const TEST_THREAD = {
+  id: 0,
+  author: "Test user",
+  avatar: TEST_AVATAR,
+  title: "Test title",
+  content: "Content and more",
+  image: TEST_IMAGE,
+  like: 3,
+  topic: "Test topic",
+  view: 4,
+  vote: 5,
+};
 const TEST_THREAD_LIST = [
   {
     id: 0,
-    author: "Test user",
+    user: TEST_USER,
     avatar: TEST_AVATAR,
     title: "Test title",
     content: "Content and more",
@@ -193,7 +291,7 @@ const TEST_THREAD_LIST = [
   },
   {
     id: 1,
-    author: "Test user",
+    user: TEST_USER,
     avatar: TEST_AVATAR,
     title: "Test title",
     content: "Content and more",
@@ -205,7 +303,7 @@ const TEST_THREAD_LIST = [
   },
   {
     id: 2,
-    author: "Test user",
+    user: TEST_USER,
     avatar: TEST_AVATAR,
     title: "Test title",
     content: "Content and more",
@@ -214,86 +312,6 @@ const TEST_THREAD_LIST = [
     topic: "Test topic",
     view: 4,
     vote: 5,
-  },
-]
-
-
-const TEST_USER_LIST = [
-  {
-    id: 0,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_1.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 1,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_2.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 2,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_3.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 3,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_4.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-]
-
-
-
-const TEST_PROJECT_LIST = [
-  {
-    id: 0,
-    name: "Test project name",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 1,
-    name: "Test project name",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 2,
-    name: "Test project name",
-    users: TEST_USER_LIST,
-  },
-]
-
-
-
-const TEST_TEAM_LIST = [
-  {
-    id: 0,
-    name: "Test team name",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 1,
-    name: "Test team name",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 2,
-    name: "Test team name",
-    users: TEST_USER_LIST,
   },
 ]
 
@@ -597,7 +615,7 @@ export default function ComponentOverview() {
       <Overview title="ThreadBox">
         <ThreadBox
           title="Test title"
-          author="Test user"
+          author={TEST_USER}
           content="Test content"
           image={TEST_IMAGE}
           articles={TEST_ARTICLE_LIST}

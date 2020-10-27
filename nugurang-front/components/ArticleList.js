@@ -54,22 +54,20 @@ export default function ArticleList({ items }) {
             onClick={item.onClick}
           >
             <Grid container>
-              <Grid item>
-                <ListItemAvatar>
-                  <Avatar className={classes.avatar}
-                    alt={item.author}
-                    src={item.avatar}
-                    variant="circle"
-                  />
-                </ListItemAvatar>
+              <Grid item >
+                <Avatar className={classes.avatar}
+                  alt={item.author.name}
+                  src={item.author.avatar}
+                  variant="circle"
+                />
               </Grid>
-              <Grid item xs>
+              <Grid item xs={10}>
                 <Box display="flex" flexWrap="wrap">
                   <ListItemText
                     primary={(
-                      <Box display={item.author ? "block" : "none"}>
+                      <Box display={item.author? "block" : "none"}>
                         <Typography className={classes.listPrimaryTypography}>
-                          {item.author}
+                          {item.author.name}
                         </Typography>
                       </Box>
                     )}
@@ -83,6 +81,7 @@ export default function ArticleList({ items }) {
                   />
                 </Box>
               </Grid>
+
               <Grid item xs={12}>
                 <StatCounterBox topic={item.topic} image={item.image} view={item.view} like={item.like} vote={item.vote} />
               </Grid>

@@ -7,13 +7,17 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import EmailIcon from '@material-ui/icons/Email';
+import ImageIcon from '@material-ui/icons/Image';
+import PersonIcon from '@material-ui/icons/Person';
 
 import Layout from '../../components/Layout';
 import BaseButton from '../../components/BaseButton';
+import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 
+const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27';
 
 const useStyles = makeStyles(() => ({
   box: {
@@ -98,11 +102,7 @@ function SignUp() {
 
       <SectionTitleBar title="Sign up" backButton/>
 
-      <SectionBox border="false">
-        <Typography className={classes.typography} align="center">Welcome, {data.currentOAuth2User.name}!</Typography>
-      </SectionBox>
-
-      <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonAddIcon /> />}>
+      <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
@@ -123,7 +123,7 @@ function SignUp() {
         </Box>
       </SectionBox>
 
-      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<PersonAddIcon /> />}>
+      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
@@ -144,6 +144,11 @@ function SignUp() {
         </Box>
       </SectionBox>
 
+      <SectionBox titleBar={<SectionTitleBar title="Add user image" icon=<ImageIcon /> />}>
+        <ImageUploadingBox
+          image={DEFAULT_IMAGE}
+        />
+      </SectionBox>
 
       <form
         onSubmit={e => {

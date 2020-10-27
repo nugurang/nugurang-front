@@ -54,9 +54,9 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export const CREATE_USER = gql`
-  mutation createUser($name: String!, $email: String!, $biography: String) {
-    createUser (name: $name, email: $email, biography: $biography) {
+export const CREATE_TEAM = gql`
+  mutation createTeam($name: String!) {
+    createTeam (name: $name) {
       id
     }
   }
@@ -68,9 +68,9 @@ function CreateTeam() {
   const newName = useRef(null);
 
   const [
-    createUser,
+    createTeam,
     { loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREATE_USER);
+  ] = useMutation(CREATE_TEAM);
 
   function handleNewNameChange() {
     newName.current.focus();
@@ -104,7 +104,7 @@ function CreateTeam() {
       <form
         onSubmit={e => {
           e.preventDefault();
-          createUser({ variables: {name: newName.current.value}});
+          createTeam({ variables: {name: newName.current.value}});
           router.push('/teams');
         }}
       >

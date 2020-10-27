@@ -1,21 +1,21 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
-
+import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
 import BaseSwitch from '../../components/BaseSwitch';
 import Layout from '../../components/Layout';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
 import ThreadGrid from '../../components/ThreadGrid';
 import ThreadList from '../../components/ThreadList';
-import withAuth from '../../components/withAuth';
 
 const GET_THREADS = gql`
   query GetThreads($boardNames: [String]!) {
@@ -58,6 +58,7 @@ const GET_HOT_THREADS = gql`
 `;
 
 function Boards() {
+  const router = useRouter();
   const [showEvents, setShowEvents] = useState(false);
   const toggleShowEvents = () => {
     setShowEvents((prev) => !prev);
@@ -84,7 +85,7 @@ function Boards() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Boards" backButton backButtonLink="/home">
+      <SectionTitleBar title="Boards" backButton>
         <BaseSwitch label="Show events" checked={showEvents} onChange={toggleShowEvents} />
       </SectionTitleBar>
       { showEvents ?

@@ -57,7 +57,7 @@ export default function ThreadList({ items }) {
                 <ListItemAvatar>
                   <Avatar className={classes.avatar}
                     alt={item.user.name}
-                    src={item.user.image?.address}
+                    src={item.image?.address}
                     variant="circle"
                   />
                 </ListItemAvatar>
