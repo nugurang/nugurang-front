@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { withApollo } from '@apollo/react-hoc';
 import { loremIpsum } from 'lorem-ipsum';
 import { useEffect, useState } from 'react';
 import GraphQlError from '../components/GraphQlError';
@@ -6,7 +7,6 @@ import Layout from '../components/Layout';
 import Loading from '../components/Loading';
 import withAuth from '../components/withAuth';
 import { ALL_BOARDS } from '../src/config';
-import client from '../src/graphQlClient';
 
 const GET_BOARDS = gql`
   query GetBoardsByNames($names: [String]!) {
@@ -43,7 +43,7 @@ const CREATE_ARTICLE = gql`
   }
 `;
 
-function Init() {
+function Init({client}) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState();
 
@@ -103,4 +103,4 @@ function Init() {
   );
 }
 
-export default withAuth(Init);
+export default withAuth(withApollo(Init));
