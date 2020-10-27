@@ -8,8 +8,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-import StatCounterBox from './StatCounterBox';
 import { useRouter } from 'next/router';
+import StatCounterBox from './StatCounterBox';
 
 const useStyles = makeStyles(() => ({
   avatar: {

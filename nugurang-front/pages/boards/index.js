@@ -1,13 +1,12 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
 import BaseSwitch from '../../components/BaseSwitch';
 import Layout from '../../components/Layout';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -56,7 +55,6 @@ const GET_HOT_THREADS = gql`
 `;
 
 function Boards() {
-  const router = useRouter();
   const [showEvents, setShowEvents] = useState(false);
   const toggleShowEvents = () => {
     setShowEvents((prev) => !prev);
@@ -92,7 +90,7 @@ function Boards() {
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Events" icon={<WhatshotIcon />} />}
             >
-              <ThreadGrid items={recentEvents} />
+              <ThreadGrid items={hotEvents} />
             </SectionBox>
 
             <SectionBox
@@ -108,7 +106,7 @@ function Boards() {
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
             >
-              <ThreadList items={recentThreads} />
+              <ThreadList items={hotThreads} />
             </SectionBox>
             <SectionBox
               titleBar={<SectionTitleBar title="Recent Threads" icon={<TrendingUpIcon />} />}

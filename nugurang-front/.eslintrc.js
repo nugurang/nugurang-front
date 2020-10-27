@@ -32,8 +32,12 @@ module.exports = {
     'react',
   ],
   rules: {
+    "no-await-in-loop": "off",
     "no-plusplus": "off",
+    "no-restricted-syntax": "off",
+    "no-shadow": "off",
     "no-trailing-spaces": "error",
+    "no-unused-vars": "warn",
     "react/destructuring-assignment": "off",
     "react/display-name": "warn",
     "react/forbid-prop-types": "off",

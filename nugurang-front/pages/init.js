@@ -1,11 +1,11 @@
-import { gql, useQuery, useLazyQuery, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { loremIpsum } from 'lorem-ipsum';
+import { useEffect, useState } from 'react';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
 import withAuth from '../components/withAuth';
-import { useEffect, useState } from 'react';
-import { COMMON_BOARDS, EVENT_BOARDS, ALL_BOARDS } from '../src/config';
+import { ALL_BOARDS } from '../src/config';
 import client from '../src/graphQlClient';
 
 const GET_BOARDS = gql`
@@ -58,7 +58,7 @@ function Init() {
       const getBoards = await client.query({query: GET_BOARDS, variables: {names: ALL_BOARDS}})
       for (const board of getBoards.data.getBoardsByNames.map(board => board.id)) {
         for (let i = 0; i < 10; ++i) {
-          const createThread = await client.mutate({mutation: CREATE_THREAD, variables: {board: board, name: loremIpsum()}});
+          const createThread = await client.mutate({mutation: CREATE_THREAD, variables: {board, name: loremIpsum()}});
           const createArticle = await client.mutate({
             mutation: CREATE_ARTICLE,
             variables: {

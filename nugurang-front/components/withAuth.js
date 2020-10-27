@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import Loading from './Loading';
 import GraphQlError from './GraphQlError';
