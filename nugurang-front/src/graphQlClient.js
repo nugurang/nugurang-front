@@ -21,7 +21,12 @@ const link = from([
 const graphQlClient = new ApolloClient({
   ssr: typeof(window) === 'undefined',
   cache: new InMemoryCache(),
-  link
+  link,
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+    },
+  }
 });
 
 export default graphQlClient;

@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
+
+import Layout from './Layout';
 import Loading from './Loading';
 import GraphQlError from './GraphQlError';
 
@@ -21,7 +23,7 @@ export default function withAuth(Component) {
       return <Loading />;
     if (response.data.currentUser === null) {
       router.push('/signup');
-      return <p>Signup Required</p>;
+      return <Layout><p>Signup Required</p></Layout>;
     }
     return <Component {...props} />
   }
