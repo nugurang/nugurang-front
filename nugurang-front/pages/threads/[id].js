@@ -75,7 +75,7 @@ const GET_THREAD = gql`
     getThread(id: $id) {
       id
       name
-      getArticles(page: 0, pageSize: 0) {
+      getArticles(page: 0, pageSize: 100) {
         id
         user {
           id
@@ -84,8 +84,6 @@ const GET_THREAD = gql`
         title
         content
         viewCount
-        createdAt
-        modifiedAt
       }
     }
   }
@@ -103,7 +101,7 @@ function Thread(threadId) {
   ];
   const errorResponse = responses.find((response) => response.error)
   if (errorResponse)
-    return <GraphQlError response={errorResponse} />
+    return <GraphQlError error={errorResponse.error} />
 
   if (responses.some((response) => response.loading))
     return <Loading />;

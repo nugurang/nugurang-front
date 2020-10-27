@@ -56,8 +56,8 @@ export default function ArticleList({ items }) {
             <Grid container>
               <Grid item >
                 <Avatar className={classes.avatar}
-                  alt={item.author.name}
-                  src={item.author.avatar}
+                  alt={item.user.name}
+                  src={item.user.avatar}
                   variant="circle"
                 />
               </Grid>
@@ -65,9 +65,9 @@ export default function ArticleList({ items }) {
                 <Box display="flex" flexWrap="wrap">
                   <ListItemText
                     primary={(
-                      <Box display={item.author? "block" : "none"}>
+                      <Box display={item.user? "block" : "none"}>
                         <Typography className={classes.listPrimaryTypography}>
-                          {item.author.name}
+                          {item.user.name}
                         </Typography>
                       </Box>
                     )}
