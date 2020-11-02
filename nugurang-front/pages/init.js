@@ -38,8 +38,8 @@ const CREATE_THREAD = gql`
 `;
 
 const CREATE_ARTICLE = gql`
-  mutation CreateArticle($title: String, $content: String!, $thread: ID!, $parent: ID) {
-    createArticle(title: $title, content: $content, thread: $thread, parent: $parent) {
+  mutation CreateArticle($article: ArticleInput!) {
+    createArticle(article: $article) {
       id
       title
     }
@@ -103,9 +103,12 @@ function Init({client}) {
           const createArticle = await client.mutate({
             mutation: CREATE_ARTICLE,
             variables: {
-              thread: createThread.data.createThread.id,
-              title: loremIpsum(),
-              content: loremIpsum()
+              article: {
+                thread: createThread.data.createThread.id,
+                title: loremIpsum(),
+                content: loremIpsum(),
+                images: []
+              }
             }
           });
 
@@ -113,9 +116,12 @@ function Init({client}) {
             const createComment = await client.mutate({
               mutation: CREATE_ARTICLE,
               variables: {
-                thread: createThread.data.createThread.id,
-                parent: createArticle.data.createArticle.id,
-                content: loremIpsum()
+                article: {
+                  thread: createThread.data.createThread.id,
+                  parent: createArticle.data.createArticle.id,
+                  content: loremIpsum(),
+                  images: []
+                }
               }
             });
           }
