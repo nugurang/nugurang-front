@@ -135,12 +135,6 @@ export default function WorkInfo() {
   /* const data = getData(); */
   return (
     <Layout>
-
-      <SectionTitleBar title="Work info" backButton="true">
-        <BaseButton label="Create task" onClick={() => router.push({pathname: "/tasks/create", query: { work: router.query.name }})} />
-      </SectionTitleBar>
-
-
       <SectionTitleBar title="Work info" backButton="true" />
         <SectionBox border={false}>
         <>

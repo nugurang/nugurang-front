@@ -68,7 +68,7 @@ function CreateWork() {
   const newName = useRef(null);
 
   const [
-    CreateWork,
+    createWork,
     { loading: mutationLoading, error: mutationError },
   ] = useMutation(CREATE_WORK);
 
@@ -103,7 +103,7 @@ function CreateWork() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          const workRes = await CreateWork({ variables: {project: router.query.project, name: newName.current.value}});
+          const workRes = await createWork({ variables: {project: router.query.project, name: newName.current.value}});
           let workId = workRes.data.createWork.id;
           router.push(`/works/${workId}`);
         }}

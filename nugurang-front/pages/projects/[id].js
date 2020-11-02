@@ -89,8 +89,43 @@ const TAB_PROPS = [
 ]
 
 
+const GET_PROJECT = gql`
+  query getProject($id: ID!) {
+    getProject(id: $id) {
+      id
+      name
+      team {
+        id
+      }
+      works {
+        id
+        name
+      }
+      event {
+        id
+      }
+      getUsers(page: 0, pageSize: 100) {
+        id
+        name
+        email
+      }
+    }
+  }
+`;
+
 export default function ProjectInfo() {
-  /* const data = getData(); */
+  const router = useRouter();
+  const responses = [
+    useQuery(GET_PROJECT, {variables: {id: router.query.id}}),
+  ];
+  const errorResponse = responses.find((response) => response.error)
+  if (errorResponse)
+    return <GraphQlError error={errorResponse.error} />
+  if (responses.some((response) => response.loading))
+    return <Loading />;
+  const project = responses[0].data ? responses[0].data.getProject : null;
+  const users = responses[0].data.getTeam ? responses[0].data.getProject.getUsers : null;
+
   return (
     <Layout>
 
@@ -99,14 +134,14 @@ export default function ProjectInfo() {
         <>
           <Grid item xs={12}>
             <ProjectInfoBox
-              name="Test project"
-              event="Null"
-              users={TEST_USER_LIST}
+              name={project.name}
+              event={project.event}
+              users={users}
               dense={false}
             />
           </Grid>
           <Grid item xs align="right">
-            <BaseButton label="Create work" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.name }})} />
+            <BaseButton label="Create work" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})} />
           </Grid>
         </>
       </SectionBox>
@@ -114,10 +149,10 @@ export default function ProjectInfo() {
 
       <BaseTabs tabProps={TAB_PROPS}>
         <WorkList
-          items={TEST_WORK_LIST}
+          items={project.works}
         />
         <UserList
-          items={TEST_USER_LIST}
+          items={users}
         />
       </BaseTabs>
 

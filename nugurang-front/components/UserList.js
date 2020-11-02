@@ -82,41 +82,65 @@ const useStyles = makeStyles(() => ({
     height: '2rem',
     width: '2rem'
   },
+  noContentsTypography: {
+    fontFamily: "Ubuntu",
+    fontSize: 20,
+    fontWeight: 400,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
+  },
 }));
 
 
 export default function UserList({ items }) {
   const classes = useStyles();
   return (
-    <List>
-      {[items].flat().map((item) => (
-        <ListItem key={item.id} alignItems="flex-start" button onClick={item.onClick}>
-          <Grid container spacing={2} alignItems="flex-start" direction="row" justify="flex-start">
-            <Grid item justify="flex-start">
-              <Avatar className={classes.avatar}
-                alt={item.name}
-                src={item.image}
-                variant="circle"
-              />
-            </Grid>
-            <Grid item xs justify="flex-start">
-              <Typography className={classes.cardTitleTypography}>
-                {item.name}
+    <>
+      {
+        items
+        ? (
+          <List>
+            {[items].flat().map((item) => (
+              <ListItem key={item.id} alignItems="flex-start" button onClick={item.onClick}>
+                <Grid container spacing={2} alignItems="flex-start" direction="row" justify="flex-start">
+                  <Grid item justify="flex-start">
+                    <Avatar className={classes.avatar}
+                      alt={item.name}
+                      src={item.image}
+                      variant="circle"
+                    />
+                  </Grid>
+                  <Grid item xs justify="flex-start">
+                    <Typography className={classes.cardTitleTypography}>
+                      {item.name}
+                    </Typography>
+                    <Box display={item.email ? "block" : "none"}>
+                      <Typography className={classes.cardPrimaryTypography}>
+                        {item.email}
+                      </Typography>
+                    </Box>
+                    <Box display={item.bio ? "block" : "none"}>
+                      <Typography className={classes.cardSecondaryTypography}>
+                        {item.bio}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </ListItem>
+            ))}
+          </List>
+        )
+        : (
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <Typography className={classes.noContentsTypography} align="center">
+                No contents :(
               </Typography>
-              <Box display={item.email ? "block" : "none"}>
-                <Typography className={classes.cardPrimaryTypography}>
-                  {item.email}
-                </Typography>
-              </Box>
-              <Box display={item.bio ? "block" : "none"}>
-                <Typography className={classes.cardSecondaryTypography}>
-                  {item.bio}
-                </Typography>
-              </Box>
             </Grid>
           </Grid>
-        </ListItem>
-))}
-    </List>
+        )
+      }
+    </>
   );
 }

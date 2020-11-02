@@ -129,7 +129,7 @@ export default function TeamInfo() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Team info" backButton="true" />
+      <SectionTitleBar title="Team info" backButton="true" backButtonLink="/teams"/>
         <SectionBox border={false}>
         <>
           <Grid item xs={12}>
