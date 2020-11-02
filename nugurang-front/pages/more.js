@@ -11,10 +11,12 @@ import { BACKEND_ADDR } from '../src/config';
 import Layout from '../components/Layout';
 import BaseButton from '../components/BaseButton';
 import BaseListItem from '../components/BaseListItem';
+import GraphQlError from '../components/GraphQlError';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import UserInfoBox from '../components/UserInfoBox';
 import withAuth from '../components/withAuth';
+import Loading from '../components/Loading';
 
 
 const TEST_USER = {
@@ -83,18 +85,19 @@ export const GET_CURRENT_USER = gql`
 function More() {
   const router = useRouter();
   const classes = useStyles();
-  const { loading, error, data } = useQuery(GET_CURRENT_USER);
-  if (loading)  {
-    return (<p>Loading...</p>);
-  }
-  if (error) {
-    console.log(error);
-  }
+  const responses = [
+    useQuery(GET_CURRENT_USER)
+  ];
+  const errorResponse = responses.find((response) => response.error)
+  if (errorResponse)
+    return <GraphQlError error={errorResponse.error} />
 
-  if (data && !data.currentUser) {
-    router.push('/signup');
-    return null;
-  }
+  if (responses.some((response) => response.loading))
+    return <Loading />;
+
+  const currentUser = responses[0].data.currentUser;
+
+
   return (
     <Layout>
       <SectionTitleBar title="More" backButton backButtonLink="/home" />
@@ -102,7 +105,7 @@ function More() {
       <SectionBox border={false}>
         <Grid container alignItems="center">
           {
-            !data
+            !currentUser
             ? (
               <>
                 <Grid item xs={12} sm={8}>
@@ -117,16 +120,16 @@ function More() {
               <>
                 <Grid item xs={12}>
                   <UserInfoBox
-                    name={data.currentUser.name}
-                    image={data.currentUser.image ? data.currentUser.image.address : null}
-                    bio={data.currentUser.bio}
-                    followers={TEST_USER.followers}
-                    followings={TEST_USER.followings}
+                    name={currentUser.name}
+                    image={currentUser.image ? currentUser.image.address : null}
+                    bio={currentUser.biography}
+                    followers={currentUser.followers}
+                    followings={currentUser.followings}
                     dense
                   />
                 </Grid>
                 <Grid item xs align="right">
-                  <BaseButton label="My info" onClick={() => router.push('/user')} />
+                  <BaseButton label="My info" onClick={() => router.push(`/user/${currentUser.id}`)} />
                   <BaseButton label="Sign out" onClick={() => router.push(`${BACKEND_ADDR}/logout`)} />
                 </Grid>
               </>

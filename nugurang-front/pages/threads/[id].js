@@ -109,7 +109,6 @@ function Thread(threadId) {
   const thread = responses[0].data.getThread;
   const articles = responses[0].data.getThread.getArticles;
 
-            console.log(articles);
   return (
     <Layout>
       <SectionTitleBar title="Boards" backButton backButtonLink="/boards" />

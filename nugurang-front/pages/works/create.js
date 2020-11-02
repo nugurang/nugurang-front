@@ -104,6 +104,9 @@ function CreateWork() {
         onSubmit={async (e) => {
           e.preventDefault();
           const workRes = await createWork({ variables: {project: router.query.project, name: newName.current.value}});
+          console.log(workRes);
+          console.log(newName.current.value);
+
           let workId = workRes.data.createWork.id;
           router.push(`/works/${workId}`);
         }}

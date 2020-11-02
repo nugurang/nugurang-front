@@ -8,6 +8,8 @@ import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import Layout from '../../components/Layout';
 import BaseButton from '../../components/BaseButton';
 import HonorBadgeGrid from '../../components/HonorBadgeGrid';
+import GraphQlError from '../../components/GraphQlError';
+import Loading from '../../components/Loading';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import UserInfoBox from '../../components/UserInfoBox';
@@ -66,7 +68,34 @@ const TEST_HONOR_BADGE_LIST = [
     image: "/static/images/sample_1.jpg",
     score: "4000000",
   },
-]
+];
+
+
+export const GET_USER = gql`
+  query getUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      name
+      email
+      biography
+      totalHonor
+      image {
+        id
+        address
+      }
+      blog {
+        id
+      }
+      getFollowings(page: 0, pageSize: 100) {
+        id
+      }
+      getFollowers(page: 0, pageSize: 100) {
+        id
+      }
+    }
+  }
+`;
+
 
 export const GET_CURRENT_USER = gql`
   query {
@@ -78,30 +107,53 @@ export const GET_CURRENT_USER = gql`
   }
 `;
 
-function User() {
+function UserInfo() {
   const router = useRouter();
-  const { loading: queryLoading, error: queryError, data } = useQuery(GET_CURRENT_USER);
-  if (queryLoading) return <p>Loading...</p>;
-  if (queryError) return <p>Error :(</p>;
+  const responses = [
+    useQuery(GET_USER, {variables: {id: router.query.id}}), useQuery(GET_CURRENT_USER)
+  ];
+  const errorResponse = responses.find((response) => response.error)
+  if (errorResponse)
+    return <GraphQlError error={errorResponse.error} />
+
+  if (responses.some((response) => response.loading))
+    return <Loading />;
+
+  const user = responses[0].data.getUser;
+  const currentUser = responses[1].data.currentUser;
 
   return (
     <Layout>
 
-      <SectionTitleBar title="My info" backButton />
+      {
+        user.id === currentUser.id
+        ? (
+          <SectionTitleBar title="My info" backButton />
+        )
+        : (
+          <SectionTitleBar title="User info" backButton />
+        )
+      }
 
       <SectionBox border={false}>
         <UserInfoBox
-          name={data.currentUser.name}
-          image={data.currentUser.image ? data.currentUser.image.address : null}
-          bio={data.currentUser.biography || "No biography"}
-          followers={TEST_USER.followers}
-          followings={TEST_USER.followings}
+          name={user.name}
+          image={user.image ? user.image.address : null}
+          bio={user.biography || "No biography"}
+          followers={user.getFollowers}
+          followings={user.getFollowings}
           dense={false}
         />
         <Grid container direction="row" justify="flex-end">
           <Grid item align="right">
-            <BaseButton label="My followers" onClick={() => router.push('/user/follow')} />
-            <BaseButton label="Sign out" onClick={() => router.push('/signout')} />
+            <BaseButton label="My followers" onClick={() => router.push(`/user/$(router.query.id)/follow`)} />
+            {
+              user.id === currentUser.id
+              ? (
+                <BaseButton label="Sign out" onClick={() => router.push('/signout')} />
+              )
+              : ( <></> )
+            }
           </Grid>
         </Grid>
       </SectionBox>
@@ -109,8 +161,8 @@ function User() {
 
       <SectionBox
         titleBar={(
-          <SectionTitleBar title="New blog thread" icon=<BookIcon />>
-            <BaseButton label="Visit blog" />
+          <SectionTitleBar title="Latest blog thread" icon=<BookIcon />>
+            <BaseButton label="Visit blog" onClick={() => router.push(`/blog/$(router.query.id)`)}/>
           </SectionTitleBar>
         )}
       >
@@ -120,8 +172,8 @@ function User() {
 
       <SectionBox
         titleBar={(
-          <SectionTitleBar title="My honor badges" icon=<EmojiEventsIcon />>
-            <BaseButton label="More" onClick={() => router.push('/user/honor')} />
+          <SectionTitleBar title="Honor badges" icon=<EmojiEventsIcon />>
+            <BaseButton label="More" onClick={() => router.push(`/user/$(router.query.id)/honor`)} />
           </SectionTitleBar>
         )}
       >
@@ -132,4 +184,4 @@ function User() {
   );
 }
 
-export default withAuth(User);
+export default withAuth(UserInfo);

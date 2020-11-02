@@ -70,9 +70,9 @@ export default function UserInfoBox({ bio, dense, followers, followings, image, 
             </Typography>
             <Box display={dense ? "none" : "block"}>
               <Typography className={classes.followersTypography}>
-                {followers}
+                {followers.length}
                 {' followers, '}
-                {followings}
+                {followings.length}
                 {' followings'}
               </Typography>
             </Box>
