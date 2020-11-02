@@ -44,7 +44,7 @@ function Welcome() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Welcome!" icon=<CheckIcon />/>
+      <SectionTitleBar title="Welcome!" icon=<CheckIcon /> />
       <Box mt="50%">
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">

@@ -7,9 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import EmailIcon from '@material-ui/icons/Email';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ImageIcon from '@material-ui/icons/Image';
-import PersonIcon from '@material-ui/icons/Person';
 
 import Layout from '../../components/Layout';
 import BaseButton from '../../components/BaseButton';
@@ -18,8 +17,8 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
+import withAuth from '../../components/withAuth';
 
-const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27';
 
 const useStyles = makeStyles(() => ({
   box: {
@@ -58,42 +57,48 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const CHECK_OAUTH2_USER = gql`
-  query {
-    currentOAuth2User {
+export const GET_BOARD = gql`
+  query getBoardByName($name: String!) {
+    getBoardByName(name: $name) {
       id
-      name
-      email
     }
   }
 `;
 
 export const CREATE_IMAGE = gql`
-  mutation createImage($address: String! ) {
+  mutation createImage($address: String!) {
     createImage (address: $address) {
       id
     }
   }
 `;
 
-export const CREATE_USER = gql`
-  mutation createUser($name: String!, $email: String!, $biography: String, $image: ID ) {
-    createUser (name: $name, email: $email, biography: $biography, image: $image) {
+export const CREATE_THREAD = gql`
+  mutation createThread($board: ID!, $name: String!) {
+    createThread (board: $board, name: $name) {
       id
     }
   }
 `;
 
-function SignUp() {
+export const CREATE_ARTICLE = gql`
+  mutation createArticle($thread: ID!, $content: String!) {
+    createArticle (thread: $thread, content: $content) {
+      id
+    }
+  }
+`;
+
+function CreateThread() {
   const router = useRouter();
   const classes = useStyles();
-  const newName = useRef(null);
-  const newEmail = useRef(null);
+  const newTitle = useRef(null);
+  const newContent = useRef(null);
   const newImageAddress = useRef(null);
 
-  const results = [[null, useQuery(CHECK_OAUTH2_USER)], useMutation(CREATE_IMAGE), useMutation(CREATE_USER)];
-  const userData = results[0][1].data;
-  const [getOAuth2User, createImage, createUser] = results.map(result => result[0]);
+  const results = [[null, useQuery(GET_BOARD, {variables: {name: router.query.board}})], useMutation(CREATE_IMAGE), useMutation(CREATE_THREAD), useMutation(CREATE_ARTICLE)];
+  const [getBoard, createImage, createThread, createArticle] = results.map(result => result[0]);
+  const boardData = results[0][1].data;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -101,12 +106,12 @@ function SignUp() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  function handleNewNameChange() {
-    newName.current.focus();
+  function handleNewTitleChange() {
+    newTitle.current.focus();
   }
 
-  function handleNewEmailChange() {
-    newEmail.current.focus();
+  function handleNewContentChange() {
+    newContent.current.focus();
   }
 
   function handleNewImageAddressChange() {
@@ -115,41 +120,41 @@ function SignUp() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Sign up" backButton />
-      <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />}>
+      <SectionTitleBar title="Create new thread" backButton />
+
+      <SectionBox titleBar={<SectionTitleBar title="Add title" icon=<GroupAddIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
                   className={classes.textField}
-                  defaultValue={userData.currentOAuth2User.name}
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newName}
-                  label="Enter username"
+                  inputRef={newTitle}
+                  label="Enter title"
                   variant="outlined"
-                  onClick={handleNewNameChange}
+                  onClick={handleNewTitleChange}
                 />
               </FormControl>
             </Grid>
           </Grid>
         </Box>
       </SectionBox>
-      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />}>
+
+      <SectionBox titleBar={<SectionTitleBar title="Add content" icon=<GroupAddIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
                   className={classes.textField}
-                  defaultValue={userData.currentOAuth2User.email}
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newEmail}
-                  label="Enter email"
+                  inputRef={newContent}
+                  label="Enter content"
                   variant="outlined"
-                  onClick={handleNewEmailChange}
+                  onClick={handleNewContentChange}
                 />
               </FormControl>
             </Grid>
@@ -158,7 +163,7 @@ function SignUp() {
       </SectionBox>
 
 
-      <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />}>
+      <SectionBox titleBar={<SectionTitleBar title="Add image link" icon=<ImageIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
@@ -178,17 +183,22 @@ function SignUp() {
         </Box>
       </SectionBox>
 
+
       <form
         onSubmit={async (e) => {
           e.preventDefault();
           let image;
           if (newImageAddress.current.value) {
-            const res = await createImage({ variables: { address: newImageAddress.current.value }});
-            image = res.data.createImage.id;
+            const imageRes = await createImage({ variables: { address: newImageAddress.current.value }});
+            image = imageRes.data.createImage.id;
           }
-          await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
-          router.push('/signup/welcome');
+          let boardId = boardData.getBoardByName.id;
+          const threadRes = await createThread({ variables: {board: boardId, name: newTitle.current.value}});
+          let threadId = threadRes.data.createThread.id;
+          const articleRes = await createArticle({ variables: {thread: threadId, title: newTitle.current.value, content: newContent.current.value}});
+          router.push(`/threads/${threadId}`);
         }}
+
       >
         <Box className={classes.box} align="center">
           <BaseButton
@@ -201,4 +211,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default withAuth(CreateThread);

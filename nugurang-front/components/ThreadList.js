@@ -38,57 +38,83 @@ const useStyles = makeStyles(() => ({
     textOverflow: "ellipsis",
     wordWrap: "break-word",
   },
+  noContentsTypography: {
+    fontFamily: "Ubuntu",
+    fontSize: 20,
+    fontWeight: 400,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
+  },
 }));
 
 export default function ThreadList({ items }) {
   const classes = useStyles();
   const router = useRouter();
   return (
-    <List>
-      {[items].flat().map((item) => (
-        <Grid item key={item.id}>
-          <ListItem
-            alignItems="flex-start"
-            button
-            onClick={() => router.push(`/threads/${item.id}`)}
-          >
-            <Grid container>
-              <Grid item>
-                <ListItemAvatar>
-                  <Avatar className={classes.avatar}
-                    alt={item.user.name}
-                    src={item.image?.address}
-                    variant="circle"
-                  />
-                </ListItemAvatar>
-              </Grid>
-              <Grid item xs>
-                <Box display="flex" flexWrap="wrap">
-                  <ListItemText
-                    primary={(
-                      <Box display={item.name ? "block" : "none"}>
-                        <Typography className={classes.listPrimaryTypography}>
-                          {item.name}
-                        </Typography>
+    <>
+      {
+        items
+        ? (
+          <List>
+            {[items].flat().map((item) => (
+              <Grid item key={item.id}>
+                <ListItem
+                  alignItems="flex-start"
+                  button
+                  onClick={() => router.push(`/threads/${item.id}`)}
+                >
+                  <Grid container>
+                    <Grid item>
+                      <ListItemAvatar>
+                        <Avatar className={classes.avatar}
+                          alt={item.user.name}
+                          src={item.image?.address}
+                          variant="circle"
+                        />
+                      </ListItemAvatar>
+                    </Grid>
+                    <Grid item xs>
+                      <Box display="flex" flexWrap="wrap">
+                        <ListItemText
+                          primary={(
+                            <Box display={item.name ? "block" : "none"}>
+                              <Typography className={classes.listPrimaryTypography}>
+                                {item.name}
+                              </Typography>
+                            </Box>
+                          )}
+                          secondary={(
+                            <Box display={item.content ? "block" : "none"}>
+                              <Typography className={classes.listSecondaryTypography}>
+                                {item.content}
+                              </Typography>
+                            </Box>
+                          )}
+                        />
                       </Box>
-                    )}
-                    secondary={(
-                      <Box display={item.content ? "block" : "none"}>
-                        <Typography className={classes.listSecondaryTypography}>
-                          {item.content}
-                        </Typography>
-                      </Box>
-                    )}
-                  />
-                </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <StatCounterBox image={item.image} upCount={item.upCount} />
+                    </Grid>
+                  </Grid>
+                </ListItem>
               </Grid>
-              <Grid item xs={12}>
-                <StatCounterBox image={item.image} upCount={item.upCount} />
-              </Grid>
+            ))}
+          </List>
+          )
+        : (
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <Typography className={classes.noContentsTypography} align="center">
+                No contents :(
+              </Typography>
             </Grid>
-          </ListItem>
-        </Grid>
-))}
-    </List>
+          </Grid>
+        )
+
+      }
+
+    </>
   );
 }

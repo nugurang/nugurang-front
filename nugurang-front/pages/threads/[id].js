@@ -31,7 +31,7 @@ const TEST_ARTICLE_LIST = [
     id: 0,
     author: TEST_USER,
     title: "Test title",
-    content: "Content and moressssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+    content: "Content and more",
     image: TEST_IMAGE,
     like: 3,
     topic: "Test topic",
@@ -109,9 +109,10 @@ function Thread(threadId) {
   const thread = responses[0].data.getThread;
   const articles = responses[0].data.getThread.getArticles;
 
+            console.log(articles);
   return (
     <Layout>
-      <SectionTitleBar title="Boards" backButton/>
+      <SectionTitleBar title="Boards" backButton backButtonLink="/boards" />
 
       <SectionBox>
         <ThreadBox

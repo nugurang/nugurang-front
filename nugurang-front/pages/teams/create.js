@@ -79,7 +79,7 @@ function CreateTeam() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Create new team" backButton/>
+      <SectionTitleBar title="Create new team" backButton />
 
       <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
         <Box className={classes.box}>

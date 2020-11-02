@@ -84,11 +84,11 @@ function Teams() {
       <SectionTitleBar title="Teams" backButton backButtonLink="/home" />
 
       <SectionBox
-        titleBar={
+        titleBar={(
           <SectionTitleBar title="My teams" icon={<GroupIcon />}>
             <BaseIconButton icon=<AddIcon onClick={() => router.push('/teams/create')} /> />
           </SectionTitleBar>
-        }
+        )}
       >
         <TeamList items={TEST_TEAM_LIST} />
       </SectionBox>

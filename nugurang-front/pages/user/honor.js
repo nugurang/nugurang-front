@@ -74,7 +74,7 @@ export default function Home() {
   return (
     <Layout>
 
-      <SectionTitleBar title="My honor badges" backButton backButtonLink="/user"/>
+      <SectionTitleBar title="My honor badges" backButton backButtonLink="/user" />
 
       <SectionBox>
         <HonorBadgeGrid items={TEST_HONOR_BADGE_LIST} />

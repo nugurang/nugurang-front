@@ -87,7 +87,7 @@ function User() {
   return (
     <Layout>
 
-      <SectionTitleBar title="My info" backButton/>
+      <SectionTitleBar title="My info" backButton />
 
       <SectionBox border={false}>
         <UserInfoBox

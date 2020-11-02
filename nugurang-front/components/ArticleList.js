@@ -54,7 +54,7 @@ export default function ArticleList({ items }) {
             onClick={item.onClick}
           >
             <Grid container>
-              <Grid item >
+              <Grid item>
                 <Avatar className={classes.avatar}
                   alt={item.user.name}
                   src={item.user.avatar}

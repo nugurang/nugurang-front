@@ -97,7 +97,7 @@ function More() {
   }
   return (
     <Layout>
-      <SectionTitleBar title="More" backButton backButtonLink="/home"/>
+      <SectionTitleBar title="More" backButton backButtonLink="/home" />
 
       <SectionBox border={false}>
         <Grid container alignItems="center">
