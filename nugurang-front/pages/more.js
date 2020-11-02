@@ -63,7 +63,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export const CHECK_USER = gql`
+export const GET_CURRENT_USER = gql`
   query {
     currentUser {
       id
@@ -83,7 +83,7 @@ export const CHECK_USER = gql`
 function More() {
   const router = useRouter();
   const classes = useStyles();
-  const { loading, error, data } = useQuery(CHECK_USER);
+  const { loading, error, data } = useQuery(GET_CURRENT_USER);
   if (loading)  {
     return (<p>Loading...</p>);
   }

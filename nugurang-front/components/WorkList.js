@@ -8,7 +8,7 @@ import 'array-flat-polyfill';
 import UserGroupInfoCard from './UserGroupInfoCard'
 
 
-export default function ProjectList({ items }) {
+export default function WorkList({ items }) {
   const router = useRouter();
   return (
     <>
@@ -28,7 +28,7 @@ export default function ProjectList({ items }) {
                       primary={item.name}
                       secondary={item.name}
                       users={item.users}
-                      onClick={() => router.push(`/projects/${item.id}`)}
+                      onClick={() => router.push(`/works/${item.id}`)}
                     />
                   </Grid>
                 </Grid>

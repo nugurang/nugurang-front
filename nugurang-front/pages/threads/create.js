@@ -198,7 +198,6 @@ function CreateThread() {
           const articleRes = await createArticle({ variables: {thread: threadId, title: newTitle.current.value, content: newContent.current.value}});
           router.push(`/threads/${threadId}`);
         }}
-
       >
         <Box className={classes.box} align="center">
           <BaseButton

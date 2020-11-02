@@ -11,26 +11,41 @@ import UserGroupInfoCard from './UserGroupInfoCard'
 export default function TeamList({ items }) {
   const router = useRouter();
   return (
-    <List>
-      {[items].flat().map((item) => (
-        <ListItem
-          key={item.id}
-          alignItems="flex-start"
-          button
-          onClick={() => router.push(`/teams/${item.id}`)}
-        >
-          <Grid container alignItems="center" direction="row" justify="flex-start">
-            <Grid item xs>
-              <UserGroupInfoCard
-                title={item.name}
-                primary={item.name}
-                secondary={item.name}
-                users={item.users}
-              />
+    <>
+      {
+        items
+        ? (
+          <List>
+            {[items].flat().map((item) => (
+              <ListItem
+                key={item.id}
+                alignItems="flex-start"
+              >
+                <Grid container alignItems="center" direction="row" justify="flex-start">
+                  <Grid item xs>
+                    <UserGroupInfoCard
+                      title={item.name}
+                      primary={item.name}
+                      secondary={item.name}
+                      users={item.users}
+                      onClick={() => router.push(`/teams/${item.id}`)}
+                    />
+                  </Grid>
+                </Grid>
+              </ListItem>
+            ))}
+          </List>
+          )
+        : (
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <Typography className={classes.noContentsTypography} align="center">
+                No contents :(
+              </Typography>
             </Grid>
           </Grid>
-        </ListItem>
-      ))}
-    </List>
+        )
+      }
+    </>
   );
 }

@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const CHECK_OAUTH2_USER = gql`
+export const GET_CURRENT_OAUTH2_USER = gql`
   query {
     currentOAuth2User {
       id
@@ -91,7 +91,7 @@ function SignUp() {
   const newEmail = useRef(null);
   const newImageAddress = useRef(null);
 
-  const results = [[null, useQuery(CHECK_OAUTH2_USER)], useMutation(CREATE_IMAGE), useMutation(CREATE_USER)];
+  const results = [[null, useQuery(GET_CURRENT_OAUTH2_USER)], useMutation(CREATE_IMAGE), useMutation(CREATE_USER)];
   const userData = results[0][1].data;
   const [getOAuth2User, createImage, createUser] = results.map(result => result[0]);
 

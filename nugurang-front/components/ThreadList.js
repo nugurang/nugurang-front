@@ -112,9 +112,7 @@ export default function ThreadList({ items }) {
             </Grid>
           </Grid>
         )
-
       }
-
     </>
   );
 }
