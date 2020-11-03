@@ -46,8 +46,10 @@ const GET_THREADS = gql`
           address
         }
       }
-      image {
-        address
+      firstArticle {
+        images {
+          address
+        }
       }
     }
   }
@@ -66,8 +68,10 @@ const GET_HOT_THREADS = gql`
           address
         }
       }
-      image {
-        address
+      firstArticle {
+        images {
+          address
+        }
       }
     }
   }

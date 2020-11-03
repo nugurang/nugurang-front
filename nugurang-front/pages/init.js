@@ -73,6 +73,15 @@ const CREATE_PROJECT = gql`
   }
 `
 
+const CREATE_WORK = gql`
+  mutation CreateWork($project: ID!, $name: String!, $order: Int) {
+    createWork(project: $project, name: $name, order: $order) {
+      id
+      name
+    }
+  }
+`
+
 function Init({client}) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState();
@@ -88,6 +97,11 @@ function Init({client}) {
         variables: {team: createTeam.data.createTeam.id, name: 'Capstone-Project'}
       });
       console.log(createProject);
+      const createWork = await client.mutate({
+        mutation: CREATE_WORK,
+        variables: {project: createProject.data.createProject.id, name: 'Sprint1'}
+      });
+      console.log(createWork);
       for (const name of ALL_POSITIONS) {
         const createPosition = await client.mutate({mutation: CREATE_POSITION, variables: {name}});
         console.log(createPosition);

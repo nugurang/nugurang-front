@@ -31,8 +31,10 @@ const GET_BOARD = gql`
             address
           }
         }
-        image {
-          address
+        firstArticle {
+          images {
+            address
+          }
         }
       }
     }
