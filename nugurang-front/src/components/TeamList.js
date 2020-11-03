@@ -27,7 +27,7 @@ export default function TeamList({ items, link=null, buttonLink=null }) {
                       title={item.name}
                       primary={item.name}
                       secondary={item.name}
-                      users={item.users}
+                      users={item.getUsers}
                       onClick={() => link ? router.push(`${link}/${item.id}`) : null}
                       onAddButtonClick={() => buttonLink ? router.push({pathname: `${buttonLink}`, query: { team: item.id }}) : null}
                     />

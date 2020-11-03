@@ -5,9 +5,12 @@ import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import ViewListIcon from '@material-ui/icons/ViewList';
 
 import Layout from '../../components/Layout';
 import BaseButton from '../../components/BaseButton';
@@ -55,8 +58,8 @@ const useStyles = makeStyles(() => ({
 
 
 export const CREATE_TASK = gql`
-  mutation createTask($work: ID!, $name: String!) {
-    createTask (work: $work, name: $name) {
+  mutation createTask($task: TaskInput!) {
+    createTask (task: $task) {
       id
     }
   }
@@ -66,14 +69,19 @@ function CreateTask() {
   const router = useRouter();
   const classes = useStyles();
   const newName = useRef(null);
+  const [newProgress, setNewProgress] = React.useState('TODO');
 
   const [
     createTask,
     { loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREATE_TEAM);
+  ] = useMutation(CREATE_TASK);
 
   function handleNewNameChange() {
     newName.current.focus();
+  }
+
+  const handleNewProgressChange = (event) => {
+    setNewProgress(event.target.value);
   }
 
   return (
@@ -81,41 +89,47 @@ function CreateTask() {
 
       <SectionTitleBar title="Create new task" backButton />
 
-      <SectionBox titleBar={<SectionTitleBar title="Add task name" icon=<GroupAddIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newName}
-                  label="Enter task name"
-                  variant="outlined"
-                  onClick={handleNewNameChange}
-                />
-              </FormControl>
-            </Grid>
+
+      <SectionBox titleBar={<SectionTitleBar title="Add task" icon=<ViewListIcon /> />} border={false}>
+        <Grid container spacing={2} alignItems="center" direction="row" justify="space-between">
+          <Grid item>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel>Progress</InputLabel>
+              <Select
+                value={newProgress}
+                defaultValue="TODO"
+                onChange={handleNewProgressChange}
+                label="Progress"
+              >
+                <MenuItem value="TODO">To do</MenuItem>
+                <MenuItem value="DOING">Doing</MenuItem>
+                <MenuItem value="DONE">Done</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
-        </Box>
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                className={classes.textField}
+                inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                inputRef={newName}
+                label="Enter task name"
+                variant="outlined"
+                onClick={handleNewNameChange}
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
       </SectionBox>
 
 
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          const taskRes = await createTask({ variables: {work: router.query.work, name: newName.current.value}});
+          const taskRes = await createTask({ variables: {task: {work: router.query.work, name: newName.current.value}}});
           let taskId = taskRes.data.createTask.id;
           router.push(`/tasks/${taskId}`);
-        }}
-      >
-
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          createTask({ variables: {work: router.query.work, name: newName.current.value}});
-          router.push('/teams');
         }}
       >
         <Box className={classes.box} align="center">
@@ -132,4 +146,4 @@ function CreateTask() {
   );
 }
 
-export default withAuth(CreateTeam);
+export default withAuth(CreateTask);

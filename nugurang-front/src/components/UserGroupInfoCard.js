@@ -118,7 +118,7 @@ export default function UserGroupInfoCard({ primary, secondary, title, users, on
               <Grid item align="right">
                 <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
                   {users.map(user => (
-                    <Avatar key={user.id} alt={user.name} src={user.image} />
+                    <Avatar key={user.id} alt={user.name} src={user.image ? user.image.address : null} />
                   ))}
                 </AvatarGroup>
               </Grid>
