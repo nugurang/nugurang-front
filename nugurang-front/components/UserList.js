@@ -114,7 +114,7 @@ export default function UserList({ items, link=null }) {
                   <Grid item justify="flex-start">
                     <Avatar className={classes.avatar}
                       alt={item.name}
-                      src={item.image.address}
+                      src={item.image ? item.image.address : null}
                       variant="circle"
                     />
                   </Grid>
