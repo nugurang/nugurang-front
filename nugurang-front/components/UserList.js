@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import { useRouter } from 'next/router';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -93,16 +94,22 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function UserList({ items }) {
+export default function UserList({ items, link=null }) {
+  const router = useRouter();
   const classes = useStyles();
   return (
     <>
       {
-        items
+        (items && (items.length != 0))
         ? (
           <List>
             {[items].flat().map((item) => (
-              <ListItem key={item.id} alignItems="flex-start" button onClick={item.onClick}>
+              <ListItem
+                key={item.id}
+                alignItems="flex-start"
+                button
+                onClick={() => link ? router.push(`${link}/${item.id}`) : null}
+              >
                 <Grid container spacing={2} alignItems="flex-start" direction="row" justify="flex-start">
                   <Grid item justify="flex-start">
                     <Avatar className={classes.avatar}
@@ -135,7 +142,7 @@ export default function UserList({ items }) {
           <Grid container spacing={2} justify="center">
             <Grid item>
               <Typography className={classes.noContentsTypography} align="center">
-                No contents :(
+                No users :(
               </Typography>
             </Grid>
           </Grid>

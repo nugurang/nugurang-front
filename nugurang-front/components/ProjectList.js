@@ -29,6 +29,7 @@ export default function ProjectList({ items }) {
                       secondary={item.name}
                       users={item.users}
                       onClick={() => router.push(`/projects/${item.id}`)}
+                      onAddButtonClick={() => router.push({pathname: "/projects/invite", query: { id: item.id }})}
                     />
                   </Grid>
                 </Grid>

@@ -52,28 +52,16 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function WorkInfoBox({ name, opened, users, dense="false" }) {
+export default function WorkInfoBox({ work, dense=false }) {
   const classes = useStyles();
   return (
     <Box className={classes.box}>
       <Grid container spacing={2} alignItems="center" justify="center">
         <Grid item container spacing={2} alignItems="center" justify="flex-start">
-          <Grid item align="right">
-            <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
-              {users.map(user => (
-                <Avatar key={user.id} alt={user.name} src={user.image} />
-              ))}
-            </AvatarGroup>
-          </Grid>
           <Grid item>
             <Typography className={classes.nameTypography}>
-              {name}
+              {work.name}
             </Typography>
-            <Box display={dense ? "none" : "block"}>
-              <Typography className={classes.followersTypography}>
-                Hi
-              </Typography>
-            </Box>
           </Grid>
         </Grid>
       </Grid>

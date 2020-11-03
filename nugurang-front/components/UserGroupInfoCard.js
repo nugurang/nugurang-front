@@ -85,7 +85,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function UserGroupInfoCard({ primary, secondary, title, users, onClick=null }) {
+export default function UserGroupInfoCard({ primary, secondary, title, users, onClick=null, onAddButtonClick=null}) {
   const classes = useStyles();
   return (
     <Card variant="outlined">
@@ -126,11 +126,13 @@ export default function UserGroupInfoCard({ primary, secondary, title, users, on
           )
           : ( <></> )
         }
+        <Box display={onAddButtonClick ? "block" : "none"}>
         <Grid item align="right">
-          <IconButton color="primary" aria-label="upload picture" component="span">
+          <IconButton color="primary" aria-label="upload picture" component="span" onClick={onAddButtonClick}>
             <AddCircleIcon className={classes.iconButton} />
           </IconButton>
         </Grid>
+        </Box>
       </Grid>
     </Card>
   );

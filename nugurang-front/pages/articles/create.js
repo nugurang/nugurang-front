@@ -7,12 +7,15 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import TextsmsIcon from '@material-ui/icons/Textsms';
 
 import Layout from '../../components/Layout';
 import BaseButton from '../../components/BaseButton';
+import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
+import Loading from '../../components/Loading';
+import GraphQlError from '../../components/GraphQlError';
 import withAuth from '../../components/withAuth';
 
 
@@ -53,35 +56,38 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
-export const CREATE_TEAM = gql`
-  mutation createTeam($name: String!) {
-    createTeam (name: $name) {
+export const CREATE_ARTICLE = gql`
+  mutation createArticle($article: ArticleInput!, $thread: ID!) {
+    createArticle (article: $article, thread: $thread) {
       id
     }
   }
 `;
 
-function CreateTeam() {
+function CreateArticle() {
   const router = useRouter();
   const classes = useStyles();
-  const newName = useRef(null);
+  const newContent = useRef(null);
 
-  const [
-    createTeam,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREATE_TEAM);
+  const results = [useMutation(CREATE_ARTICLE)];
+  const [createArticle] = results.map(result => result[0]);
+  const boardData = results[0][1].data;
 
-  function handleNewNameChange() {
-    newName.current.focus();
+  if (results.some(result => result[1].loading))
+    return <Loading />;
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />
+
+  function handleNewContentChange() {
+    newContent.current.focus();
   }
 
   return (
     <Layout>
+      <SectionTitleBar title="Comment" backButton />
 
-      <SectionTitleBar title="Create new team" backButton backButtonLink="/teams" />
-
-      <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
+      <SectionBox titleBar={<SectionTitleBar title="Leave comment" icon=<TextsmsIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
@@ -90,10 +96,10 @@ function CreateTeam() {
                   className={classes.textField}
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newName}
-                  label="Enter team name"
+                  inputRef={newContent}
+                  label="Enter comment"
                   variant="outlined"
-                  onClick={handleNewNameChange}
+                  onClick={handleNewContentChange}
                 />
               </FormControl>
             </Grid>
@@ -102,10 +108,10 @@ function CreateTeam() {
       </SectionBox>
 
       <form
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          createTeam({ variables: {name: newName.current.value}});
-          router.push('/teams');
+          const articleRes = await createArticle({ variables: {article: {content: newContent.current.value, images: []}}, thread: router.query.thread});
+          router.push(`/threads/${router.query.thread}`);
         }}
       >
         <Box className={classes.box} align="center">
@@ -115,11 +121,8 @@ function CreateTeam() {
           />
         </Box>
       </form>
-      {mutationLoading && <p>Loading...</p>}
-      {mutationError && <p>Error :( Please try again</p>}
-
     </Layout>
   );
 }
 
-export default withAuth(CreateTeam);
+export default withAuth(CreateArticle);

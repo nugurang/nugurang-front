@@ -129,20 +129,15 @@ export default function TeamInfo() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Team info" backButton="true" backButtonLink="/teams"/>
+      <SectionTitleBar title="Team info" backButton="true" backButtonLink="/teams">
+        <BaseButton label="Create project" onClick={() => router.push({pathname: "/projects/create", query: { team: router.query.id }})} />
+      </SectionTitleBar>
         <SectionBox border={false}>
         <>
           <Grid item xs={12}>
-            <TeamInfoBox
-              name={team.name}
-              bio="Test team bio"
-              users={team.getUsers}
-              dense={false}
-            />
+            <TeamInfoBox team={team} />
           </Grid>
-          <Grid item xs align="right">
-            <BaseButton label="Create project" onClick={() => router.push({pathname: "/projects/create", query: { team: router.query.id }})} />
-          </Grid>
+          <Grid item xs align="right"/>
         </>
       </SectionBox>
 
@@ -150,9 +145,12 @@ export default function TeamInfo() {
       <BaseTabs tabProps={TAB_PROPS}>
         <ProjectList
           items={team.projects}
+          link="/projects"
+          buttonLink="/projects/invite"
         />
         <UserList
           items={team.getUsers}
+          link="/user"
         />
       </BaseTabs>
 

@@ -1,10 +1,15 @@
 import React from 'react';
+import {useRouter} from 'next/router';
+import { gql, useQuery } from '@apollo/client';
 
-import Layout from '../../components/Layout';
-import BaseTabs from '../../components/BaseTabs';
-import SectionBox from '../../components/SectionBox';
-import SectionTitleBar from '../../components/SectionTitleBar';
-import UserList from '../../components/UserList';
+import Layout from '../../../components/Layout';
+import BaseTabs from '../../../components/BaseTabs';
+import GraphQlError from '../../../components/GraphQlError';
+import Loading from '../../../components/Loading';
+import SectionBox from '../../../components/SectionBox';
+import SectionTitleBar from '../../../components/SectionTitleBar';
+import UserList from '../../../components/UserList';
+import withAuth from '../../../components/withAuth';
 
 
 const TEST_FOLLOWING_LIST = [
@@ -100,20 +105,49 @@ const TAB_PROPS = [
 ]
 
 
-export default function Follow() {
-  /* const data = getData(); */
+export const GET_USER = gql`
+  query getUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      getFollowings(page: 0, pageSize: 100) {
+        id
+      }
+      getFollowers(page: 0, pageSize: 100) {
+        id
+      }
+    }
+  }
+`;
+
+
+function Follow() {
+  const router = useRouter();
+  const responses = [
+    useQuery(GET_USER, {variables: {id: router.query.id}})
+  ];
+  const errorResponse = responses.find((response) => response.error)
+  if (errorResponse)
+    return <GraphQlError error={errorResponse.error} />
+
+  if (responses.some((response) => response.loading))
+    return <Loading />;
+
+  const user = responses[0].data.getUser;
+
   return (
     <Layout>
 
-      <SectionTitleBar title="Followings" backButton backButtonLink="/user" />
+      <SectionTitleBar title="Follow" backButton />
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
           <UserList
-            items={TEST_FOLLOWING_LIST}
+            items={user.getFollowings}
+            link="/user"
           />
           <UserList
-            items={TEST_FOLLOWERS_LIST}
+            items={user.getFollowers}
+            link="/user"
           />
         </BaseTabs>
       </SectionBox>
@@ -121,3 +155,5 @@ export default function Follow() {
     </Layout>
   );
 }
+
+export default withAuth(Follow);

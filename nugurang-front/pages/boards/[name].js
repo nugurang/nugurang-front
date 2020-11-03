@@ -66,11 +66,14 @@ function Board() {
   return (
     <Layout>
       <SectionTitleBar title="Boards" backButton>
-        <BaseButton label="Create thread" onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.name }})} />
       </SectionTitleBar>
 
       <SectionBox
-        titleBar={<SectionTitleBar title={router.query.name} icon={<AssignmentIcon />} />}
+        titleBar={
+          <SectionTitleBar title={router.query.name} icon={<AssignmentIcon />}>
+            <BaseButton label="Create thread" onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.name }})} />
+          </SectionTitleBar>
+        }
       >
         <ThreadList items={threads} />
       </SectionBox>

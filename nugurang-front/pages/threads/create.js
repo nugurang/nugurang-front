@@ -74,20 +74,13 @@ export const CREATE_IMAGE = gql`
 `;
 
 export const CREATE_THREAD = gql`
-  mutation createThread($board: ID!, $name: String!) {
-    createThread (board: $board, name: $name) {
+  mutation createThread($thread: ThreadInput!) {
+    createThread (thread: $thread) {
       id
     }
   }
 `;
 
-export const CREATE_ARTICLE = gql`
-  mutation createArticle($thread: ID!, $content: String!) {
-    createArticle (thread: $thread, content: $content) {
-      id
-    }
-  }
-`;
 
 function CreateThread() {
   const router = useRouter();
@@ -96,7 +89,7 @@ function CreateThread() {
   const newContent = useRef(null);
   const newImageAddress = useRef(null);
 
-  const results = [[null, useQuery(GET_BOARD, {variables: {name: router.query.board}})], useMutation(CREATE_IMAGE), useMutation(CREATE_THREAD), useMutation(CREATE_ARTICLE)];
+  const results = [[null, useQuery(GET_BOARD, {variables: {name: router.query.board}})], useMutation(CREATE_IMAGE), useMutation(CREATE_THREAD)];
   const [getBoard, createImage, createThread, createArticle] = results.map(result => result[0]);
   const boardData = results[0][1].data;
 
@@ -193,10 +186,8 @@ function CreateThread() {
             image = imageRes.data.createImage.id;
           }
           let boardId = boardData.getBoardByName.id;
-          const threadRes = await createThread({ variables: {board: boardId, name: newTitle.current.value}});
-          let threadId = threadRes.data.createThread.id;
-          const articleRes = await createArticle({ variables: {thread: threadId, title: newTitle.current.value, content: newContent.current.value}});
-          router.push(`/threads/${threadId}`);
+          const threadRes = await createThread({ variables: {thread: {board: boardId, name: newTitle.current.value, article: {title: newTitle.current.value, content: newContent.current.value, images: []}}}});
+          router.push(`/threads/${threadRes.data.createThread.id}`);
         }}
       >
         <Box className={classes.box} align="center">

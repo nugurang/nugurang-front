@@ -52,46 +52,30 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function TeamInfoBox({ bio, dense, name, users }) {
+export default function TeamInfoBox({ team, dense=false }) {
   const classes = useStyles();
   return (
     <Box className={classes.box}>
       <Grid container spacing={2} alignItems="center" justify="center">
         <Grid item container spacing={2} alignItems="center" justify="flex-start">
           {
-            users
+            team.getUsers
             ? (
-              <>
-            <Grid item align="right">
-              <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
-                {users.map(user => (
-                  <Avatar key={user.id} alt={user.name} src={user.image} />
-                ))}
-              </AvatarGroup>
-            </Grid>
-              </>
+              <Grid item align="right">
+                <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
+                  {team.getUsers.map(user => (
+                    <Avatar key={user.id} alt={user.name} src={user.image} />
+                  ))}
+                </AvatarGroup>
+              </Grid>
             )
             : ( <></> )
           }
           <Grid item>
             <Typography className={classes.nameTypography}>
-              {name}
+              {team.name}
             </Typography>
-            <Box display={dense ? "none" : "block"}>
-              <Typography className={classes.followersTypography}>
-                Hi
-              </Typography>
-            </Box>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Box display={dense ? "none" : "block"}>
-            <Paper className={classes.bioPaper} variant='outlined'>
-              <Typography className={classes.bioTypography}>
-                {bio}
-              </Typography>
-            </Paper>
-          </Box>
         </Grid>
       </Grid>
     </Box>

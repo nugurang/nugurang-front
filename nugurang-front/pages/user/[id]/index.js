@@ -5,16 +5,16 @@ import Grid from'@material-ui/core/Grid';
 import BookIcon from '@material-ui/icons/Book';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
-import Layout from '../../components/Layout';
-import BaseButton from '../../components/BaseButton';
-import HonorBadgeGrid from '../../components/HonorBadgeGrid';
-import GraphQlError from '../../components/GraphQlError';
-import Loading from '../../components/Loading';
-import SectionBox from '../../components/SectionBox';
-import SectionTitleBar from '../../components/SectionTitleBar';
-import UserInfoBox from '../../components/UserInfoBox';
-import ThreadList from '../../components/ThreadList';
-import withAuth from '../../components/withAuth';
+import Layout from '../../../components/Layout';
+import BaseButton from '../../../components/BaseButton';
+import HonorBadgeGrid from '../../../components/HonorBadgeGrid';
+import GraphQlError from '../../../components/GraphQlError';
+import Loading from '../../../components/Loading';
+import SectionBox from '../../../components/SectionBox';
+import SectionTitleBar from '../../../components/SectionTitleBar';
+import UserInfoBox from '../../../components/UserInfoBox';
+import ThreadList from '../../../components/ThreadList';
+import withAuth from '../../../components/withAuth';
 
 
 const TEST_USER = {
@@ -127,31 +127,18 @@ function UserInfo() {
 
       {
         user.id === currentUser.id
-        ? (
-          <SectionTitleBar title="My info" backButton />
-        )
-        : (
-          <SectionTitleBar title="User info" backButton />
-        )
+        ? <SectionTitleBar title="My info" backButton />
+        : <SectionTitleBar title="User info" backButton />
       }
 
       <SectionBox border={false}>
-        <UserInfoBox
-          name={user.name}
-          image={user.image ? user.image.address : null}
-          bio={user.biography || "No biography"}
-          followers={user.getFollowers}
-          followings={user.getFollowings}
-          dense={false}
-        />
+        <UserInfoBox user={user}/>
         <Grid container direction="row" justify="flex-end">
           <Grid item align="right">
-            <BaseButton label="My followers" onClick={() => router.push(`/user/$(router.query.id)/follow`)} />
+            <BaseButton label="My followers" onClick={() => router.push(`/user/${router.query.id}/follow`)} />
             {
               user.id === currentUser.id
-              ? (
-                <BaseButton label="Sign out" onClick={() => router.push('/signout')} />
-              )
+              ? <BaseButton label="Sign out" onClick={() => router.push('/signout')} />
               : ( <></> )
             }
           </Grid>
@@ -162,18 +149,18 @@ function UserInfo() {
       <SectionBox
         titleBar={(
           <SectionTitleBar title="Latest blog thread" icon=<BookIcon />>
-            <BaseButton label="Visit blog" onClick={() => router.push(`/blog/$(router.query.id)`)}/>
+            <BaseButton label="Visit blog" onClick={() => router.push(`/blog/${router.query.id}`)}/>
           </SectionTitleBar>
         )}
       >
-        <ThreadList items={TEST_BLOG_THREAD} />
+        <ThreadList items={TEST_BLOG_THREAD}/>
       </SectionBox>
 
 
       <SectionBox
         titleBar={(
           <SectionTitleBar title="Honor badges" icon=<EmojiEventsIcon />>
-            <BaseButton label="More" onClick={() => router.push(`/user/$(router.query.id)/honor`)} />
+            <BaseButton label="More" onClick={() => router.push(`/user/${router.query.id}/honor`)} />
           </SectionTitleBar>
         )}
       >

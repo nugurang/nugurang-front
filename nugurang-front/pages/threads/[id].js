@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 
-import withAuth from '../../components/withAuth';
-import Loading from '../../components/Loading';
+import BaseButton from '../../components/BaseButton';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
+import Loading from '../../components/Loading';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
 import ThreadBox from '../../components/ThreadBox';
+import withAuth from '../../components/withAuth';
 
 
 const TEST_AVATAR = "/static/images/sample_1.jpg";
@@ -75,11 +76,28 @@ const GET_THREAD = gql`
     getThread(id: $id) {
       id
       name
+      firstArticle {
+        id
+        user {
+          id
+          name
+          image {
+            id
+            address
+          }
+        }
+        title
+        content
+      }
       getArticles(page: 0, pageSize: 100) {
         id
         user {
           id
           name
+          image {
+            id
+            address
+          }
         }
         title
         content
@@ -111,11 +129,13 @@ function Thread(threadId) {
 
   return (
     <Layout>
-      <SectionTitleBar title="Boards" backButton backButtonLink="/boards" />
+      <SectionTitleBar title="Thread" backButton backButtonLink="/boards">
+        <BaseButton label="Leave comment" onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})} />
+      </SectionTitleBar>
 
       <SectionBox>
         <ThreadBox
-          articleLeader={articles[0]}
+          articleLeader={thread.firstArticle}
           articles={articles.slice(1)}
           like={3}
           topic="Test topic"

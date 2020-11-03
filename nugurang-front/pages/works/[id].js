@@ -130,26 +130,58 @@ const TAB_PROPS = [
   },
 ]
 
+const GET_WORK = gql`
+  query getWork($id: ID!) {
+    getWork(id: $id) {
+      id
+      project {
+        id
+      }
+      name
+      opened
+      order
+      tasks {
+        id
+        name
+        difficulty
+        order
+        progress
+        honors
+        users {
+          id
+          name
+          image {
+            id
+            address
+          }
+        }
+      }
+    }
+  }
+`;
+
 
 export default function WorkInfo() {
-  /* const data = getData(); */
+  const router = useRouter();
+  const responses = [
+    useQuery(GET_WORK, {variables: {id: router.query.id}}),
+  ];
+  const errorResponse = responses.find((response) => response.error)
+  if (errorResponse)
+    return <GraphQlError error={errorResponse.error} />
+  if (responses.some((response) => response.loading))
+    return <Loading />;
+  const work = responses[0].data ? responses[0].data.getWork : null;
+
   return (
     <Layout>
-      <SectionTitleBar title="Work info" backButton="true" />
-        <SectionBox border={false}>
-        <>
-          <Grid item xs={12}>
-            <WorkInfoBox
-              name="Test work"
-              opened="True"
-              users={TEST_USER_LIST}
-              dense={false}
-            />
-          </Grid>
-          <Grid item xs align="right">
-            <BaseButton label="Create task" onClick={() => router.push({pathname: "/tasks/create", query: { work: router.query.name }})} />
-          </Grid>
-        </>
+      <SectionTitleBar title="Work info" backButton="true" backButtonLink={`/projects/${work.project.id}`}>
+        <BaseButton label="Create task" onClick={() => router.push({pathname: "/tasks/create", query: { work: router.query.name }})} />
+      </SectionTitleBar>
+      <SectionBox border={false}>
+        <Grid item xs={12}>
+          <WorkInfoBox work={work} />
+        </Grid>
       </SectionBox>
 
 

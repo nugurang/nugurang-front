@@ -51,7 +51,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function UserInfoBox({ bio, dense, followers, followings, image, name }) {
+export default function UserInfoBox({ user, dense=false }) {
   const classes = useStyles();
   return (
     <Box className={classes.box}>
@@ -59,20 +59,20 @@ export default function UserInfoBox({ bio, dense, followers, followings, image, 
         <Grid item container spacing={2} alignItems="center" justify="flex-start">
           <Grid item>
             <Avatar className={classes.avatar}
-              alt={name}
-              src={image}
+              alt={user.name}
+              src={user.image ? user.image.address : null}
               variant="circle"
             />
           </Grid>
           <Grid item>
             <Typography className={classes.nameTypography}>
-              {name}
+              {user.name}
             </Typography>
             <Box display={dense ? "none" : "block"}>
               <Typography className={classes.followersTypography}>
-                {followers.length}
+                {user.getFollowers.length}
                 {' followers, '}
-                {followings.length}
+                {user.getFollowings.length}
                 {' followings'}
               </Typography>
             </Box>
@@ -82,7 +82,7 @@ export default function UserInfoBox({ bio, dense, followers, followings, image, 
           <Box display={dense ? "none" : "block"}>
             <Paper className={classes.bioPaper} variant='outlined'>
               <Typography className={classes.bioTypography}>
-                {bio}
+                {user.biography || "No biography"}
               </Typography>
             </Paper>
           </Box>

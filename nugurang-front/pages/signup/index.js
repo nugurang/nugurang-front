@@ -93,7 +93,7 @@ function SignUp() {
 
   const results = [[null, useQuery(GET_CURRENT_OAUTH2_USER)], useMutation(CREATE_IMAGE), useMutation(CREATE_USER)];
   const userData = results[0][1].data;
-  const [getOAuth2User, createImage, createUser] = results.map(result => result[0]);
+  const [getCurrentOAuth2User, createImage, createUser] = results.map(result => result[0]);
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -156,8 +156,6 @@ function SignUp() {
           </Grid>
         </Box>
       </SectionBox>
-
-
       <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">

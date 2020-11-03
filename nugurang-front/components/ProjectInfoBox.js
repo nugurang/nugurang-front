@@ -28,60 +28,32 @@ const useStyles = makeStyles(() => ({
     fontWeight: 400,
     margin: '0rem',
   },
-  followersTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 18,
-    fontWeight: 300,
-    margin: '0rem',
-  },
-  bioTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 24,
-    fontWeight: 300,
-    margin: '0rem 1rem',
-    wordWrap: 'break-word',
-  },
-  bioPaper: {
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0.5rem',
-    padding: '0.5rem',
-    variant: 'outlined',
-  },
 }));
 
 
-export default function ProjectInfoBox({ event, name, users, dense="false" }) {
+export default function ProjectInfoBox({ project, dense="false" }) {
   const classes = useStyles();
   return (
     <Box className={classes.box}>
       <Grid container spacing={2} alignItems="center" justify="center">
         <Grid item container spacing={2} alignItems="center" justify="flex-start">
           {
-            users
+            project.getUsers
             ? (
-              <>
-                <Grid item align="right">
-                  <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
-                    {users.map(user => (
-                      <Avatar key={user.id} alt={user.name} src={user.image} />
-                    ))}
-                  </AvatarGroup>
-                </Grid>
-              </>
+              <Grid item align="right">
+                <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
+                  {project.getUsers.map(user => (
+                    <Avatar key={user.id} alt={user.name} src={user.image} />
+                  ))}
+                </AvatarGroup>
+              </Grid>
             )
             : ( <></> )
           }
           <Grid item>
             <Typography className={classes.nameTypography}>
-              {name}
+              {project.name}
             </Typography>
-            <Box display={dense ? "none" : "block"}>
-              <Typography className={classes.followersTypography}>
-                Hi
-              </Typography>
-            </Box>
           </Grid>
         </Grid>
       </Grid>

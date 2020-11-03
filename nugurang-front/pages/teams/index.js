@@ -125,7 +125,7 @@ function Teams() {
           </SectionTitleBar>
         )}
       >
-        <TeamList items={teams} />
+        <TeamList items={teams} link="/teams" buttonLink="/teams/invite"/>
       </SectionBox>
     </Layout>
   );

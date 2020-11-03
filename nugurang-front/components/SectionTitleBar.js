@@ -64,7 +64,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function SectionTitleBar({ avatar, circleIcon, children, icon, title, avatarDescription=null, backButton=false, backButtonLink=null, bottomBar=false }) {
+export default function SectionTitleBar({ avatar, children, icon, title, avatarDescription=null, backButton=false, backButtonLink=null, bottomBar=false, circleIcon=true }) {
   const router = useRouter();
   const classes = useStyles();
   let key = 0;

@@ -19,36 +19,16 @@ import withAuth from '../components/withAuth';
 import Loading from '../components/Loading';
 
 
-const TEST_USER = {
-  id: 0,
-  name: "Test User",
-  email: "Test email",
-  image: "/static/images/sample_1.jpg",
-  bio: "Test bio",
-  followers: 5,
-  followings: 10,
-}
-
 const TEST_MORE_MENU_LIST = [
   {
     id: 1,
-    title: "Message",
-    link: "home",
+    title: "Initialize database",
+    link: "init",
   },
   {
     id: 2,
-    title: "Display",
-    link: "home",
-  },
-  {
-    id: 3,
-    title: "Notification",
-    link: "home",
-  },
-  {
-    id: 4,
-    title: "General",
-    link: "home",
+    title: "Component overview",
+    link: "comp-ov",
   },
 ];
 
@@ -74,9 +54,16 @@ export const GET_CURRENT_USER = gql`
       name
       email
       image {
+        id
         address
       }
       biography
+      getFollowers(page:0, pageSize:100) {
+        id
+      }
+      getFollowings(page:0, pageSize:100) {
+        id
+      }
     }
   }
 `;
@@ -119,14 +106,7 @@ function More() {
             : (
               <>
                 <Grid item xs={12}>
-                  <UserInfoBox
-                    name={currentUser.name}
-                    image={currentUser.image ? currentUser.image.address : null}
-                    bio={currentUser.biography}
-                    followers={currentUser.followers}
-                    followings={currentUser.followings}
-                    dense
-                  />
+                  <UserInfoBox user={currentUser} dense/>
                 </Grid>
                 <Grid item xs align="right">
                   <BaseButton label="My info" onClick={() => router.push(`/user/${currentUser.id}`)} />
