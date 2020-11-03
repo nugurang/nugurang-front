@@ -1,7 +1,10 @@
 import { gql } from '@apollo/client';
 import { withApollo } from '@apollo/react-hoc';
 import { loremIpsum } from 'lorem-ipsum';
+import { makeStyles } from '@material-ui/styles';
 import { useEffect, useState } from 'react';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
@@ -9,6 +12,17 @@ import withAuth from '../components/withAuth';
 import { ALL_BOARDS } from '../src/config';
 
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
+
+
+const useStyles = makeStyles(() => ({
+  typography: {
+    fontSize: 30,
+    fontWeight: 400,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    wordWrap: "break-word",
+  },
+}));
 
 const GET_BOARDS = gql`
   query GetBoardsByNames($names: [String]!) {
@@ -88,6 +102,7 @@ const CREATE_WORK = gql`
 function Init({client}) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState();
+  const classes = useStyles();
 
   const init = async () => {
     if (error || done)
@@ -171,11 +186,14 @@ function Init({client}) {
     return <GraphQlError error={error} />;
 
   if (!done)
-    return <Loading />
+    return <Loading circular="true"/>
 
   return (
     <Layout>
-      <h1>Initialization Done</h1>
+      <Typography>Initialization done.</Typography>
+      <Button variant="outlined" color="primary" href="/home">
+        Go Home
+      </Button>
     </Layout>
   );
 }
