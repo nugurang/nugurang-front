@@ -33,6 +33,9 @@ const CREATE_THREAD = gql`
     createThread(thread: $thread) {
       id
       name
+      firstArticle {
+        id
+      }
     }
   }
 `;
