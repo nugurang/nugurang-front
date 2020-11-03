@@ -18,10 +18,11 @@ import StatCounterBox from './StatCounterBox';
 
 const useStyles = makeStyles(() => ({
   avatar: {
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     color: "black",
-    height: '2.5rem',
-    width: '2.5rem',
+    height: '2rem',
+    width: '2rem',
+    margin: '0rem 0.5rem',
   },
   authorTypography: {
     fontFamily: "Ubuntu",
@@ -72,7 +73,7 @@ export default function ArticleLeader({ article, like, topic, view, vote, onClic
             <Grid item>
               <Avatar className={classes.avatar}
                 alt={article.user.name}
-                src={article.user.avatar}
+                src={article.user.image ? article.user.image.address : null}
                 variant="circle"
               />
             </Grid>

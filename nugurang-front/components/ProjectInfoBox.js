@@ -28,42 +28,21 @@ const useStyles = makeStyles(() => ({
     fontWeight: 400,
     margin: '0rem',
   },
-  followersTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 18,
-    fontWeight: 300,
-    margin: '0rem',
-  },
-  bioTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 24,
-    fontWeight: 300,
-    margin: '0rem 1rem',
-    wordWrap: 'break-word',
-  },
-  bioPaper: {
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0.5rem',
-    padding: '0.5rem',
-    variant: 'outlined',
-  },
 }));
 
 
-export default function TeamInfoBox({ team, dense=false }) {
+export default function ProjectInfoBox({ project, dense="false" }) {
   const classes = useStyles();
   return (
     <Box className={classes.box}>
       <Grid container spacing={2} alignItems="center" justify="center">
         <Grid item container spacing={2} alignItems="center" justify="flex-start">
           {
-            team.getUsers
+            project.getUsers
             ? (
               <Grid item align="right">
                 <AvatarGroup className={classes.avatarGroup} max={3} spacing="small">
-                  {team.getUsers.map(user => (
+                  {project.getUsers.map(user => (
                     <Avatar key={user.id} alt={user.name} src={user.image} />
                   ))}
                 </AvatarGroup>
@@ -73,7 +52,7 @@ export default function TeamInfoBox({ team, dense=false }) {
           }
           <Grid item>
             <Typography className={classes.nameTypography}>
-              {team.name}
+              {project.name}
             </Typography>
           </Grid>
         </Grid>

@@ -28,7 +28,7 @@ export default function ThankYou() {
   const classes = useStyles();
   return (
     <Layout>
-      <SectionTitleBar title="Review completed!"/>
+      <SectionTitleBar title="Review completed!" />
       <Box mt="50%">
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">

@@ -64,6 +64,7 @@ const useStyles = makeStyles(() => ({
 
 export default function ThreadBox({ articleLeader, articles, like, topic, view, vote }) {
   const classes = useStyles();
+            console.log(articleLeader);
   return (
     <>
       <Box className={classes.box}>

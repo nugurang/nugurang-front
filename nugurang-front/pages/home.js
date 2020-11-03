@@ -19,6 +19,19 @@ import ThreadGrid from '../components/ThreadGrid';
 import ThreadList from '../components/ThreadList';
 import withAuth from '../components/withAuth';
 
+export const GET_CURRENT_USER = gql`
+  query {
+    currentUser {
+      id
+      name
+      image {
+        id
+        address
+      }
+    }
+  }
+`;
+
 const GET_THREADS = gql`
   query GetThreads($boardNames: [String]!) {
     getThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
@@ -66,6 +79,7 @@ const GET_HOT_THREADS = gql`
 function Home() {
   const router = useRouter();
   const responses = [
+    useQuery(GET_CURRENT_USER),
     useQuery(GET_HOT_THREADS, {variables: {boardNames: COMMON_BOARDS}}),
     useQuery(GET_THREADS, {variables: {boardNames: EVENT_BOARDS}}),
   ];
@@ -77,8 +91,9 @@ function Home() {
   if (responses.some((response) => response.loading))
     return <Loading />;
 
-  const hotThreads = responses[0].data.getHotThreadsByBoardNames;
-  const recentEvents = responses[1].data.getThreadsByBoardNames;
+  const currentUser = responses[0].data.currentUser;
+  const hotThreads = responses[1].data.getHotThreadsByBoardNames;
+  const recentEvents = responses[2].data.getThreadsByBoardNames;
 
   return (
     <Layout>
@@ -99,9 +114,7 @@ function Home() {
 
       <SectionBox
         titleBar={(
-          <SectionTitleBar title="Hot threads" icon=<WhatshotIcon />>
-            <BaseButton label="More" />
-          </SectionTitleBar>
+          <SectionTitleBar title="Hot threads" icon=<WhatshotIcon />/>
         )}
       >
         <ThreadList items={hotThreads} />
@@ -109,9 +122,7 @@ function Home() {
 
       <SectionBox
         titleBar={(
-          <SectionTitleBar title="Recent events" icon=<TrendingUpIcon />>
-            <BaseButton label="More" />
-          </SectionTitleBar>
+          <SectionTitleBar title="Recent events" icon=<TrendingUpIcon />/>
         )}
       >
         <ThreadGrid items={recentEvents} />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -51,41 +52,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function UserInfoBox({ user, dense=false }) {
+export default function WorkInfoBox({ work, dense=false }) {
   const classes = useStyles();
   return (
     <Box className={classes.box}>
       <Grid container spacing={2} alignItems="center" justify="center">
         <Grid item container spacing={2} alignItems="center" justify="flex-start">
           <Grid item>
-            <Avatar className={classes.avatar}
-              alt={user.name}
-              src={user.image ? user.image.address : null}
-              variant="circle"
-            />
-          </Grid>
-          <Grid item>
             <Typography className={classes.nameTypography}>
-              {user.name}
+              {work.name}
             </Typography>
-            <Box display={dense ? "none" : "block"}>
-              <Typography className={classes.followersTypography}>
-                {user.getFollowers.length}
-                {' followers, '}
-                {user.getFollowings.length}
-                {' followings'}
-              </Typography>
-            </Box>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Box display={dense ? "none" : "block"}>
-            <Paper className={classes.bioPaper} variant='outlined'>
-              <Typography className={classes.bioTypography}>
-                {user.biography || "No biography"}
-              </Typography>
-            </Paper>
-          </Box>
         </Grid>
       </Grid>
     </Box>

@@ -54,23 +54,23 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export const CREATE_TEAM = gql`
-  mutation createTeam($name: String!) {
-    createTeam (name: $name) {
+export const CREATE_PROJECT = gql`
+  mutation createProject($team: ID!, $name: String!) {
+    createProject (team: $team, name: $name) {
       id
     }
   }
 `;
 
-function CreateTeam() {
+function CreateProject() {
   const router = useRouter();
   const classes = useStyles();
   const newName = useRef(null);
 
   const [
-    createTeam,
+    createProject,
     { loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREATE_TEAM);
+  ] = useMutation(CREATE_PROJECT);
 
   function handleNewNameChange() {
     newName.current.focus();
@@ -79,9 +79,9 @@ function CreateTeam() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Create new team" backButton backButtonLink="/teams" />
+      <SectionTitleBar title="Create new project" backButton />
 
-      <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
+      <SectionBox titleBar={<SectionTitleBar title="Add project name" icon=<GroupAddIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
@@ -91,7 +91,7 @@ function CreateTeam() {
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                   inputRef={newName}
-                  label="Enter team name"
+                  label="Enter project name"
                   variant="outlined"
                   onClick={handleNewNameChange}
                 />
@@ -100,12 +100,12 @@ function CreateTeam() {
           </Grid>
         </Box>
       </SectionBox>
-
       <form
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          createTeam({ variables: {name: newName.current.value}});
-          router.push('/teams');
+          const projectRes = await createProject({ variables: {team: router.query.team, name: newName.current.value}});
+          let projectId = projectRes.data.createProject.id;
+          router.push(`/projects/${projectId}`);
         }}
       >
         <Box className={classes.box} align="center">
@@ -122,4 +122,4 @@ function CreateTeam() {
   );
 }
 
-export default withAuth(CreateTeam);
+export default withAuth(CreateProject);

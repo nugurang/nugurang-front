@@ -14,10 +14,11 @@ import StatCounterBox from './StatCounterBox';
 
 const useStyles = makeStyles(() => ({
   avatar: {
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     color: "black",
-    height: '2.5rem',
-    width: '2.5rem',
+    height: '2rem',
+    width: '2rem',
+    margin: '0.5rem 0.5rem',
   },
   cardMedia: {
     height: 0,
@@ -53,11 +54,11 @@ export default function ArticleList({ items }) {
             button
             onClick={item.onClick}
           >
-            <Grid container>
-              <Grid item >
+            <Grid container alignItems="flex-start">
+              <Grid item>
                 <Avatar className={classes.avatar}
                   alt={item.user.name}
-                  src={item.user.avatar}
+                  src={item.user.image ? item.user.image.address : null}
                   variant="circle"
                 />
               </Grid>

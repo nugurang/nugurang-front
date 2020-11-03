@@ -26,34 +26,23 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export const CHECK_USER = gql`
-  query {
-    currentUser {
-      name
-    }
-  }
-`;
 
-function Welcome() {
+function JoinTeam() {
   const router = useRouter();
   const classes = useStyles();
 
-  const { loading: queryLoading, error: queryError, data } = useQuery(CHECK_USER);
-  if (queryLoading) return <p>Loading...</p>;
-  if (queryError) return <p>Error :(</p>;
-
   return (
     <Layout>
-      <SectionTitleBar title="Welcome!" icon=<CheckIcon /> />
+      <SectionTitleBar title="Invitation" backButton />
       <Box mt="50%">
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
-            <Typography className={classes.typography}>Welcome, {data.currentUser.name}!</Typography>
-            <Typography className={classes.typography}>Your account is created.</Typography>
+            <Typography className={classes.typography}>Would you like to join?</Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Box className={classes.box} align="center">
-              <BaseButton label="Go home" onClick={() => router.push('/home')} />
+              <BaseButton label="Accept" onClick={() => router.push('/home')} />
+              <BaseButton label="Decline" onClick={() => router.push('/home')} />
             </Box>
           </Grid>
         </Grid>
@@ -62,4 +51,4 @@ function Welcome() {
   );
 }
 
-export default withAuth(Welcome);
+export default withAuth(JoinTeam);

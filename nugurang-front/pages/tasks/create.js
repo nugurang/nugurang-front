@@ -54,21 +54,21 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export const CREATE_TEAM = gql`
-  mutation createTeam($name: String!) {
-    createTeam (name: $name) {
+export const CREATE_TASK = gql`
+  mutation createTask($work: ID!, $name: String!) {
+    createTask (work: $work, name: $name) {
       id
     }
   }
 `;
 
-function CreateTeam() {
+function CreateTask() {
   const router = useRouter();
   const classes = useStyles();
   const newName = useRef(null);
 
   const [
-    createTeam,
+    createTask,
     { loading: mutationLoading, error: mutationError },
   ] = useMutation(CREATE_TEAM);
 
@@ -79,9 +79,9 @@ function CreateTeam() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Create new team" backButton backButtonLink="/teams" />
+      <SectionTitleBar title="Create new task" backButton />
 
-      <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
+      <SectionBox titleBar={<SectionTitleBar title="Add task name" icon=<GroupAddIcon /> />}>
         <Box className={classes.box}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
@@ -91,7 +91,7 @@ function CreateTeam() {
                   inputProps={{ style: { fontFamily: "Ubuntu" } }}
                   InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                   inputRef={newName}
-                  label="Enter team name"
+                  label="Enter task name"
                   variant="outlined"
                   onClick={handleNewNameChange}
                 />
@@ -101,10 +101,20 @@ function CreateTeam() {
         </Box>
       </SectionBox>
 
+
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const taskRes = await createTask({ variables: {work: router.query.work, name: newName.current.value}});
+          let taskId = taskRes.data.createTask.id;
+          router.push(`/tasks/${taskId}`);
+        }}
+      >
+
       <form
         onSubmit={e => {
           e.preventDefault();
-          createTeam({ variables: {name: newName.current.value}});
+          createTask({ variables: {work: router.query.work, name: newName.current.value}});
           router.push('/teams');
         }}
       >

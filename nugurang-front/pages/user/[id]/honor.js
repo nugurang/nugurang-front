@@ -1,11 +1,11 @@
 import React from 'react';
 /* import { gql, useQuery } from '@apollo/client'; */
 
-import Layout from '../../components/Layout';
+import Layout from '../../../components/Layout';
 
-import HonorBadgeGrid from '../../components/HonorBadgeGrid';
-import SectionBox from '../../components/SectionBox';
-import SectionTitleBar from '../../components/SectionTitleBar';
+import HonorBadgeGrid from '../../../components/HonorBadgeGrid';
+import SectionBox from '../../../components/SectionBox';
+import SectionTitleBar from '../../../components/SectionTitleBar';
 
 
 const TEST_HONOR_BADGE_LIST = [

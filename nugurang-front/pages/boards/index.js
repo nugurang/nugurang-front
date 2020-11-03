@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
 import 'array-flat-polyfill';
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
 import BaseCard from '../../components/BaseCard';
 import BaseSwitch from '../../components/BaseSwitch';
 import Layout from '../../components/Layout';
@@ -115,12 +115,14 @@ function Boards() {
         (
           <>
             <Grid container spacing={2}>
-              {[EVENT_BOARDS].flat().map((board) => 
-                <Grid item key={++key} xs={6} align="center">
-                  <BaseCard onClick={() => router.push(`/boards/${board}`)}>
-                    <Typography className={classes.typography}>{board}</Typography>
-                  </BaseCard>
-                </Grid>
+              {[EVENT_BOARDS].flat().map((board) =>
+                (
+                  <Grid item key={++key} xs={6} align="center">
+                    <BaseCard onClick={() => router.push(`/boards/${board}`)}>
+                      <Typography className={classes.typography}>{board}</Typography>
+                    </BaseCard>
+                  </Grid>
+                )
               )}
             </Grid>
 
@@ -141,12 +143,14 @@ function Boards() {
         : (
           <>
             <Grid container spacing={2}>
-              {[COMMON_BOARDS].flat().map((board) => 
-                <Grid item key={++key} xs={6} align="center">
-                  <BaseCard onClick={() => router.push(`/boards/${board}`)}>
-                    <Typography className={classes.typography}>{board}</Typography>
-                  </BaseCard>
-                </Grid>
+              {[COMMON_BOARDS].flat().map((board) =>
+                (
+                  <Grid item key={++key} xs={6} align="center">
+                    <BaseCard onClick={() => router.push(`/boards/${board}`)}>
+                      <Typography className={classes.typography}>{board}</Typography>
+                    </BaseCard>
+                  </Grid>
+                )
               )}
             </Grid>
             <SectionBox
