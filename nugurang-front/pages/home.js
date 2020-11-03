@@ -83,7 +83,7 @@ function Home() {
   return (
     <Layout>
       <SectionTitleBar title="Home" icon=<HomeIcon />>
-        <BaseIconButton icon=<NotificationsIcon onClick={() => router.push('/notification')} /> />
+        <BaseIconButton icon=<NotificationsIcon onClick={() => router.push('/notifications')} /> />
         <BaseIconButton icon=<PersonIcon onClick={() => router.push('/user')} /> />
       </SectionTitleBar>
 

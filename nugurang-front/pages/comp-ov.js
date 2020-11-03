@@ -23,6 +23,7 @@ import BaseTextField from '../components/BaseTextField';
 import HonorBadgeBox from '../components/HonorBadgeBox';
 import HonorBadgeGrid from '../components/HonorBadgeGrid';
 import ImageUploadingBox from '../components/ImageUploadingBox';
+import NotificationList from '../components/NotificationList';
 import ProjectList from '../components/ProjectList';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
@@ -314,6 +315,27 @@ const TEST_THREAD_LIST = [
     vote: 5,
   },
 ]
+
+const TEST_NOTIFICATION_LIST = [
+  {
+    id: 0,
+    title: "New Comments",
+    content: "I don't think so",
+    createdAt: "11/01 13:11",
+  },
+  {
+    id: 1,
+    title: "New Comments",
+    content: "I agree with you",
+    createdAt: "11/02 15:23",
+  },
+  {
+    id: 2,
+    title: "New Comments",
+    content: "I don't know",
+    createdAt: "11/03 21:42",
+    },
+];
 
 
 
@@ -672,6 +694,12 @@ export default function ComponentOverview() {
       <Overview title="UserList">
         <UserList
           items={TEST_USER_LIST}
+        />
+      </Overview>
+
+      <Overview title="NotificationList">
+        <NotificationList
+          items={TEST_NOTIFICATION_LIST}
         />
       </Overview>
 
