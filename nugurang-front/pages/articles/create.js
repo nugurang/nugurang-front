@@ -71,7 +71,6 @@ function CreateArticle() {
 
   const results = [useMutation(CREATE_ARTICLE)];
   const [createArticle] = results.map(result => result[0]);
-  const boardData = results[0][1].data;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -110,7 +109,7 @@ function CreateArticle() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          const articleRes = await createArticle({ variables: {article: {content: newContent.current.value, images: []}}, thread: router.query.thread});
+          await createArticle({ variables: {article: {content: newContent.current.value, images: []}, thread: router.query.thread}});
           router.push(`/threads/${router.query.thread}`);
         }}
       >
