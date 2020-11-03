@@ -12,87 +12,6 @@ import UserList from '../../../components/UserList';
 import withAuth from '../../../components/withAuth';
 
 
-const TEST_FOLLOWING_LIST = [
-  {
-    id: 0,
-    name: "Test Following 1",
-    email: "Test email",
-    image: "/static/images/sample_1.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 1,
-    name: "Test Following 2",
-    email: "Test email",
-    image: "/static/images/sample_2.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 2,
-    name: "Test Following 3",
-    email: "Test email",
-    image: "/static/images/sample_3.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 3,
-    name: "Test Following 4",
-    email: "Test email",
-    image: "/static/images/sample_4.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-]
-
-
-const TEST_FOLLOWERS_LIST = [
-  {
-    id: 0,
-    name: "Test Follower 1",
-    email: "Test email",
-    image: "/static/images/sample_1.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 1,
-    name: "Test Follower 2",
-    email: "Test email",
-    image: "/static/images/sample_2.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 2,
-    name: "Test Follower 3",
-    email: "Test email",
-    image: "/static/images/sample_3.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 3,
-    name: "Test Follower 4",
-    email: "Test email",
-    image: "/static/images/sample_4.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-]
-
-
-
 const TAB_PROPS = [
   {
     id: 0,
@@ -111,16 +30,30 @@ export const GET_USER = gql`
       id
       getFollowings(page: 0, pageSize: 100) {
         id
+        name
+        image{
+          id
+          address
+        }
+        email
+        biography
       }
       getFollowers(page: 0, pageSize: 100) {
         id
+        name
+        image{
+          id
+          address
+        }
+        email
+        biography
       }
     }
   }
 `;
 
 
-function Follow() {
+function Follows() {
   const router = useRouter();
   const responses = [
     useQuery(GET_USER, {variables: {id: router.query.id}})
@@ -137,7 +70,7 @@ function Follow() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Follow" backButton />
+      <SectionTitleBar title="Follows" backButton />
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
@@ -156,4 +89,4 @@ function Follow() {
   );
 }
 
-export default withAuth(Follow);
+export default withAuth(Follows);

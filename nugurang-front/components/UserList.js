@@ -110,11 +110,11 @@ export default function UserList({ items, link=null }) {
                 button
                 onClick={() => link ? router.push(`${link}/${item.id}`) : null}
               >
-                <Grid container spacing={2} alignItems="flex-start" direction="row" justify="flex-start">
+                <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
                   <Grid item justify="flex-start">
                     <Avatar className={classes.avatar}
                       alt={item.name}
-                      src={item.image}
+                      src={item.image.address}
                       variant="circle"
                     />
                   </Grid>
@@ -125,11 +125,6 @@ export default function UserList({ items, link=null }) {
                     <Box display={item.email ? "block" : "none"}>
                       <Typography className={classes.cardPrimaryTypography}>
                         {item.email}
-                      </Typography>
-                    </Box>
-                    <Box display={item.bio ? "block" : "none"}>
-                      <Typography className={classes.cardSecondaryTypography}>
-                        {item.bio}
                       </Typography>
                     </Box>
                   </Grid>

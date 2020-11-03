@@ -1,6 +1,7 @@
 import React from 'react';
 import {useRouter} from 'next/router';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import Box from'@material-ui/core/Box';
 import Grid from'@material-ui/core/Grid';
 import BookIcon from '@material-ui/icons/Book';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
@@ -107,10 +108,17 @@ export const GET_CURRENT_USER = gql`
   }
 `;
 
+export const CREATE_FOLLOWING = gql`
+  mutation createFollowing($user: ID!) {
+    createFollowing(user: $user)
+  }
+`;
+
+
 function UserInfo() {
   const router = useRouter();
   const responses = [
-    useQuery(GET_USER, {variables: {id: router.query.id}}), useQuery(GET_CURRENT_USER)
+    useQuery(GET_USER, {variables: {id: router.query.id}}), useQuery(GET_CURRENT_USER), useMutation(CREATE_FOLLOWING)
   ];
   const errorResponse = responses.find((response) => response.error)
   if (errorResponse)
@@ -121,6 +129,7 @@ function UserInfo() {
 
   const user = responses[0].data.getUser;
   const currentUser = responses[1].data.currentUser;
+  const createFollowing = responses[2][0];
 
   return (
     <Layout>
@@ -135,11 +144,42 @@ function UserInfo() {
         <UserInfoBox user={user}/>
         <Grid container direction="row" justify="flex-end">
           <Grid item align="right">
-            <BaseButton label="My followers" onClick={() => router.push(`/user/${router.query.id}/follow`)} />
+            <BaseButton label="Follows" onClick={() => router.push(`/user/${router.query.id}/follows`)} />
+          </Grid>
+          <Grid item align="right">
             {
               user.id === currentUser.id
               ? <BaseButton label="Sign out" onClick={() => router.push('/signout')} />
-              : ( <></> )
+              : (
+                <>
+                  <Box display={true ? "block" : "none"}>
+                    <form
+                      onSubmit={e => {
+                        e.preventDefault();
+                        createFollowing({ variables: {user: router.query.id}});
+                      }}
+                    >
+                      <BaseButton
+                        label="Follow"
+                        type="submit"
+                      />
+                    </form>
+                  </Box>
+                  <Box display={true ? "none" : "block"}>
+                    <form
+                      onSubmit={e => {
+                        e.preventDefault();
+                        createFollowing({ variables: {user: router.query.id}});
+                      }}
+                    >
+                      <BaseButton
+                        label="Unfollow"
+                        type="submit"
+                      />
+                    </form>
+                  </Box>
+                </>
+              )
             }
           </Grid>
         </Grid>
