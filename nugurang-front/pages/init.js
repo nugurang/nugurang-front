@@ -29,8 +29,8 @@ const CREATE_BOARD = gql`
 `;
 
 const CREATE_THREAD = gql`
-  mutation CreateThread($board: ID!, $name: String!) {
-    createThread(board: $board, name: $name) {
+  mutation CreateThread($thread: ThreadInput!) {
+    createThread(thread: $thread) {
       id
       name
     }
@@ -38,8 +38,8 @@ const CREATE_THREAD = gql`
 `;
 
 const CREATE_ARTICLE = gql`
-  mutation CreateArticle($article: ArticleInput!) {
-    createArticle(article: $article) {
+  mutation CreateArticle($article: ArticleInput!, $thread: ID!, $parent: ID) {
+    createArticle(article: $article, thread: $thread, parent: $parent) {
       id
       title
     }
@@ -113,26 +113,39 @@ function Init({client}) {
       const getBoards = await client.query({query: GET_BOARDS, variables: {names: ALL_BOARDS}})
       for (const board of getBoards.data.getBoardsByNames.map(board => board.id)) {
         for (let i = 0; i < 10; ++i) {
-          const createThread = await client.mutate({mutation: CREATE_THREAD, variables: {board, name: loremIpsum()}});
+          const createThread = await client.mutate({
+            mutation: CREATE_THREAD,
+              variables: {
+                thread: {
+                  name: loremIpsum(),
+                  article: {
+                    title: loremIpsum(),
+                    content: loremIpsum(),
+                    images: []
+                  },
+                  board
+                }
+              }
+          });
           const createArticle = await client.mutate({
             mutation: CREATE_ARTICLE,
             variables: {
               article: {
-                thread: createThread.data.createThread.id,
                 title: loremIpsum(),
                 content: loremIpsum(),
                 images: []
-              }
+              },
+              thread: createThread.data.createThread.id
             }
           });
 
-          for (let i = 0; i < 10; ++i) {
+          for (let i = 0; i < 5; ++i) {
             const createComment = await client.mutate({
               mutation: CREATE_ARTICLE,
               variables: {
+                thread: createThread.data.createThread.id,
+                parent: createArticle.data.createArticle.id,
                 article: {
-                  thread: createThread.data.createThread.id,
-                  parent: createArticle.data.createArticle.id,
                   content: loremIpsum(),
                   images: []
                 }
