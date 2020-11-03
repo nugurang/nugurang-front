@@ -145,8 +145,17 @@ const GET_WORK = gql`
         name
         difficulty
         order
-        progress
-        honors
+        progress {
+          id
+          name
+        }
+        honors {
+          honor
+          position {
+            id
+            name
+          }
+        }
         users {
           id
           name
