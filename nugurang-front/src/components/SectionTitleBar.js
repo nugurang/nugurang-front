@@ -11,55 +11,13 @@ import 'array-flat-polyfill';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles(() => ({
-  avatar: {
-    backgroundColor: "transparent",
-    color: "black",
-    height: '2rem',
-    width: '2rem',
-  },
-  backButton: {
-    backgroundColor: "transparent",
-    color: "black",
-  },
-  box: {
-    border: '0rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0.5rem',
-    padding: '0rem',
-    variant: 'outlined',
-  },
-  button: {
-    background: '#FEFEFE',
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    color: 'default',
-    variant: 'outlined',
-  },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
+  margin: {
+    margin: '0.5rem 0',
   },
   hr: {
     borderColor: 'rgba(0, 0, 0, 0.25)',
     height: '0.1rem',
     margin: '0.5rem',
-  },
-  iconButton: {
-    color: 'black',
-  },
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 28,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
   },
 }));
 
@@ -69,42 +27,36 @@ export default function SectionTitleBar({ avatar, children, icon, title, avatarD
   const classes = useStyles();
   let key = 0;
   return (
-    <Box className={classes.box}>
+    <Box className={classes.margin}>
       <Grid container alignItems="center" justify="flex-start">
         <Grid container spacing={1} alignItems="center">
           <Grid item>
             <Box display={backButton ? "block" : "none"}>
               <IconButton
-                className={classes.backButton}
+                aria-label="back"
                 edge="start"
                 onClick={() => {backButtonLink ? router.push(backButtonLink) : router.back()}}
-                color="inherit"
-                aria-label="back"
               >
                 <ArrowBackIcon />
               </IconButton>
             </Box>
-
             <Box display={avatar && !icon ? "block" : "none"}>
-              <Avatar className={classes.avatar}
+              <Avatar
                 alt={avatarDescription || null}
                 src={avatar}
                 variant={circleIcon ? "circle" : "square"}
               />
             </Box>
             <Box display={icon && !avatar ? "block" : "none"}>
-              <IconButton className={classes.iconButton}>
+              <IconButton>
                 {icon}
               </IconButton>
             </Box>
-
           </Grid>
           <Grid item xs>
-            <Box>
-              <Typography className={classes.typography}>
-                {title}
-              </Typography>
-            </Box>
+            <Typography variant="h6">
+              {title}
+            </Typography>
           </Grid>
           <Grid item>
             <Box display={children ? "block" : "none"}>

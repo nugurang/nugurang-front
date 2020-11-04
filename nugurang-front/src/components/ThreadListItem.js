@@ -11,31 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import StatCounterBox from './StatCounterBox';
 
 const useStyles = makeStyles(() => ({
-  avatar: {
-    backgroundColor: "white",
-    color: "black",
-    height: '2.5rem',
-    width: '2.5rem',
-  },
   cardMedia: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-  },
-  listPrimaryTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 20,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  listSecondaryTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 14,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
   },
 }));
 
@@ -51,7 +29,7 @@ export default function ArticleListItemElement({ author, content, image, like, o
       <Grid container>
         <Grid item>
           <ListItemAvatar>
-            <Avatar className={classes.avatar}
+            <Avatar
               alt={name}
               src={image}
               variant="circle"
@@ -63,15 +41,11 @@ export default function ArticleListItemElement({ author, content, image, like, o
             <ListItemText
               primary={(
                 <Box display={author ? "block" : "none"}>
-                  <Typography className={classes.listPrimaryTypography}>
-                    {author}
-                  </Typography>
+                  <Typography variant="body2">{author}</Typography>
                 </Box>
               )}
               secondary={(
-                <Typography className={classes.listSecondaryTypography}>
-                  {content}
-                </Typography>
+                <Typography variant="body1">{content}</Typography>
               )}
             />
           </Box>

@@ -3,16 +3,17 @@ import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+
 import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
 
 import Layout from '../../components/Layout';
-import BaseButton from '../../components/BaseButton';
 import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -116,64 +117,60 @@ function SignUp() {
   return (
     <Layout>
       <SectionTitleBar title="Sign up" backButton />
-      <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  defaultValue={userData.currentOAuth2User.name}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newName}
-                  label="Enter username"
-                  variant="outlined"
-                  onClick={handleNewNameChange}
-                />
-              </FormControl>
-            </Grid>
+      <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />} border={false}>
+        <Grid container spacing={2} alignItems="center" justify="space-between">
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                className={classes.textField}
+                defaultValue={userData.currentOAuth2User.name}
+                inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                inputRef={newName}
+                label="Enter username"
+                variant="outlined"
+                onClick={handleNewNameChange}
+              />
+            </FormControl>
           </Grid>
-        </Box>
+        </Grid>
       </SectionBox>
-      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  defaultValue={userData.currentOAuth2User.email}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newEmail}
-                  label="Enter email"
-                  variant="outlined"
-                  onClick={handleNewEmailChange}
-                />
-              </FormControl>
-            </Grid>
+
+      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />} border={false}>
+        <Grid container spacing={2} alignItems="center" justify="space-between">
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                className={classes.textField}
+                defaultValue={userData.currentOAuth2User.email}
+                inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                inputRef={newEmail}
+                label="Enter email"
+                variant="outlined"
+                onClick={handleNewEmailChange}
+              />
+            </FormControl>
           </Grid>
-        </Box>
+        </Grid>
       </SectionBox>
-      <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newImageAddress}
-                  label="Enter image link"
-                  variant="outlined"
-                  onClick={handleNewImageAddressChange}
-                />
-              </FormControl>
-            </Grid>
+
+      <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />} border={false}>
+        <Grid container spacing={2} alignItems="center" justify="space-between">
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                className={classes.textField}
+                inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                inputRef={newImageAddress}
+                label="Enter image link"
+                variant="outlined"
+                onClick={handleNewImageAddressChange}
+              />
+            </FormControl>
           </Grid>
-        </Box>
+        </Grid>
       </SectionBox>
 
       <form
@@ -189,10 +186,7 @@ function SignUp() {
         }}
       >
         <Box className={classes.box} align="center">
-          <BaseButton
-            label="Submit"
-            type="submit"
-          />
+          <Button type="submit">Submit</Button>
         </Box>
       </form>
     </Layout>

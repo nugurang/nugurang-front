@@ -1,10 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import { gql, useMutation, useLazyQuery } from '@apollo/client';
 
-import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +18,7 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamList from '../../components/TeamList';
 import UserInfoBox from '../../components/UserInfoBox'
+import UserList from '../../components/UserList'
 import withAuth from '../../components/withAuth';
 
 
@@ -40,6 +41,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+
 export const GET_USER_BY_NAME = gql`
   query getUserByName($name: String!) {
     getUserByName(name: $name) {
@@ -54,25 +56,15 @@ export const GET_USER_BY_NAME = gql`
   }
 `;
 
-export const UPDATE_TEAM = gql`
-  mutation updateTeam($team: ID!, $name: String!, $users: [ID]!) {
-    updateTeam(team: $team, name: $name, users: $users) {
-      team {
-        id
-      }
-    }
-  }
-`;
 
-
-function InviteUserToTeam() {
+function FindUser() {
   const router = useRouter();
   const classes = useStyles();
   const keywordName = useRef(null);
 
-  const results = [[null, useLazyQuery(GET_USER_BY_NAME)], useMutation(UPDATE_TEAM)];
-  const [getUserByName, updateTeam] = results.map(result => result[0]);
-  const user = results[0][1].data;
+  const results = [[null, useLazyQuery(GET_USER_BY_NAME)]];
+  const [getUserByName] = results.map(result => result[0]);
+  const users = results[0][1].data;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -86,7 +78,7 @@ function InviteUserToTeam() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Invite user" backButton />
+      <SectionTitleBar title="Find user" backButton />
       <SectionBox border={false}>
         <Grid container spacing={2} alignItems="center" justify="space-between">
           <Grid item xs>
@@ -114,16 +106,16 @@ function InviteUserToTeam() {
         </Grid>
       </SectionBox>
       {
-        user
+        users
         ? (
           <SectionBox>
-            <UserInfoBox user={user}/>
+            <UserList items={users}/>
           </SectionBox>
         )
-        : <></>
+        : <>No one found</>
       }
     </Layout>
   );
 }
 
-export default withAuth(InviteUserToTeam);
+export default withAuth(FindUser);

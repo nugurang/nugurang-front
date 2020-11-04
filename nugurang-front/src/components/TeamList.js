@@ -5,6 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import 'array-flat-polyfill';
 
+import NoContentsBox from './NoContentsBox'
 import UserGroupInfoCard from './UserGroupInfoCard'
 
 
@@ -17,10 +18,7 @@ export default function TeamList({ items, link=null, buttonLink=null }) {
         ? (
           <List>
             {[items].flat().map((item) => (
-              <ListItem
-                key={item.id}
-                alignItems="flex-start"
-              >
+              <ListItem key={item.id} alignItems="flex-start">
                 <Grid container alignItems="center" direction="row" justify="flex-start">
                   <Grid item xs>
                     <UserGroupInfoCard
@@ -38,13 +36,7 @@ export default function TeamList({ items, link=null, buttonLink=null }) {
           </List>
           )
         : (
-          <Grid container spacing={2} justify="center">
-            <Grid item>
-              <Typography className={classes.noContentsTypography} align="center">
-                No contents :(
-              </Typography>
-            </Grid>
-          </Grid>
+           <NoContentsBox/>
         )
       }
     </>

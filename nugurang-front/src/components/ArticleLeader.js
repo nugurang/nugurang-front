@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -16,47 +15,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BaseImage from './BaseImage';
 import StatCounterBox from './StatCounterBox';
 
-const useStyles = makeStyles(() => ({
-  avatar: {
-    backgroundColor: "transparent",
-    color: "black",
-    height: '2rem',
-    width: '2rem',
-    margin: '0rem 0.5rem',
-  },
-  authorTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 20,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  titleTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 26,
-    fontWeight: 500,
-    overflow: "hidden",
-    margin: "0.5rem",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  contentTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 20,
-    fontWeight: 300,
-    overflow: "hidden",
-    margin: "0.5rem",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
-
-
 export default function ArticleLeader({ article, like, topic, view, vote, onClick="null" }) {
-  const classes = useStyles();
   return (
-    <Box className={classes.box}>
+    <Box>
       <Box display={article.image ? "block" : "none"}>
         <BaseImage
           image={article.image}
@@ -71,7 +32,7 @@ export default function ArticleLeader({ article, like, topic, view, vote, onClic
         >
           <Grid container alignItems="center">
             <Grid item>
-              <Avatar className={classes.avatar}
+              <Avatar
                 alt={article.user.name}
                 src={article.user.image ? article.user.image.address : null}
                 variant="circle"
@@ -79,14 +40,12 @@ export default function ArticleLeader({ article, like, topic, view, vote, onClic
             </Grid>
             <Grid item xs>
               <Box display={article.user ? "block" : "none"}>
-                <Typography className={classes.authorTypography}>
-                  {article.user.name}
-                </Typography>
+                <Typography variant="subtitle1">{article.user.name}</Typography>
               </Box>
             </Grid>
             <Grid item xs={12}>
               <Box display={article.title ? "block" : "none"}>
-                <Typography className={classes.titleTypography}>
+                <Typography variant="h6">
                   {article.title}
                 </Typography>
               </Box>
@@ -94,11 +53,9 @@ export default function ArticleLeader({ article, like, topic, view, vote, onClic
           </Grid>
         </AccordionSummary>
         <AccordionDetails>
-          <Grid container>
+          <Grid container spacing={2}>
             <Grid item xs>
-              <Typography className={classes.contentTypography}>
-                {article.content}
-              </Typography>
+              <Typography variant="body1">{article.content}</Typography>
             </Grid>
             <Grid item xs={12}>
               <StatCounterBox topic={topic} view={view} like={like} vote={vote} />

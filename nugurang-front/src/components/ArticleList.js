@@ -13,32 +13,9 @@ import 'array-flat-polyfill';
 import StatCounterBox from './StatCounterBox';
 
 const useStyles = makeStyles(() => ({
-  avatar: {
-    backgroundColor: "transparent",
-    color: "black",
-    height: '2rem',
-    width: '2rem',
-    margin: '0.5rem 0.5rem',
-  },
   cardMedia: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-  },
-  listPrimaryTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 20,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  listSecondaryTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
   },
 }));
 
@@ -56,7 +33,7 @@ export default function ArticleList({ items }) {
           >
             <Grid container alignItems="flex-start">
               <Grid item>
-                <Avatar className={classes.avatar}
+                <Avatar
                   alt={item.user.name}
                   src={item.user.image ? item.user.image.address : null}
                   variant="circle"
@@ -67,14 +44,14 @@ export default function ArticleList({ items }) {
                   <ListItemText
                     primary={(
                       <Box display={item.user? "block" : "none"}>
-                        <Typography className={classes.listPrimaryTypography}>
+                        <Typography variant="body1">
                           {item.user.name}
                         </Typography>
                       </Box>
                     )}
                     secondary={(
                       <Box display={item.content ? "block" : "none"}>
-                        <Typography className={classes.listSecondaryTypography}>
+                        <Typography variant="body2">
                           {item.content}
                         </Typography>
                       </Box>

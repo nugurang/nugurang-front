@@ -2,11 +2,11 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 
+import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import GroupIcon from '@material-ui/icons/Group';
 
-import BaseButton from '../../components/BaseButton';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import SectionBox from '../../components/SectionBox';
@@ -121,7 +121,7 @@ function Teams() {
       <SectionBox
         titleBar={(
           <SectionTitleBar title="My teams" icon={<GroupIcon />}>
-            <BaseButton label="Create team" onClick={() => router.push('/teams/create')} />
+            <Button onClick={() => router.push('/teams/create')}>Create team</Button>
           </SectionTitleBar>
         )}
         border={false}

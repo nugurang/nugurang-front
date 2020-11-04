@@ -2,34 +2,39 @@ import { gql, useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 
+import FullScreenDialogBox from '../../components/FullScreenDialogBox';
+import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
-
-import BaseButton from '../../components/BaseButton';
+import Loading from '../../components/Loading';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
 
 
 const useStyles = makeStyles(() => ({
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 30,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
+  avatar: {
+    fontSize: 48,
+    height: '7.5rem',
+    margin: '0rem',
+    width: '7.5rem'
   },
 }));
 
-
-export const CHECK_USER = gql`
+export const GET_CURRENT_USER = gql`
   query {
     currentUser {
+      id
       name
+      image {
+        id
+        address
+      }
     }
   }
 `;
@@ -38,26 +43,42 @@ function Welcome() {
   const router = useRouter();
   const classes = useStyles();
 
-  const { loading: queryLoading, error: queryError, data } = useQuery(CHECK_USER);
-  if (queryLoading) return <p>Loading...</p>;
-  if (queryError) return <p>Error :(</p>;
+  const responses = [
+    useQuery(GET_CURRENT_USER)
+  ];
+  const errorResponse = responses.find((response) => response.error)
+  if (errorResponse)
+    return <GraphQlError error={errorResponse.error} />
+  if (responses.some((response) => response.loading))
+    return <Loading />;
 
+  const currentUser = responses[0].data.currentUser;
+
+  
   return (
     <Layout>
-      <SectionTitleBar title="Welcome!" icon=<CheckIcon /> />
-      <Box mt="50%">
+      <FullScreenDialogBox titleBar=<SectionTitleBar title="Welcome" icon=<CheckIcon /> />>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
-            <Typography className={classes.typography}>Welcome, {data.currentUser.name}!</Typography>
-            <Typography className={classes.typography}>Your account is created.</Typography>
+            <Avatar className={classes.avatar}
+              alt={currentUser.name}
+              src={currentUser.image ? currentUser.image.address : null}
+              variant="circle"
+            />
           </Grid>
           <Grid item xs={12} align="center">
-            <Box className={classes.box} align="center">
-              <BaseButton label="Go home" onClick={() => router.push('/home')} />
+            <Typography variant="h4">Welcome, {currentUser.name}!</Typography>
+          </Grid>
+          <Grid item xs={12} align="center">
+            <Typography variant="h5">Your account is created.</Typography>
+          </Grid>
+          <Grid item xs={12} align="center">
+            <Box align="center">
+              <Button onClick={() => router.push('/home')}>Go home</Button>
             </Box>
           </Grid>
         </Grid>
-      </Box>
+      </FullScreenDialogBox>
     </Layout>
   );
 }

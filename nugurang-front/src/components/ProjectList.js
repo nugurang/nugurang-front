@@ -5,6 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import 'array-flat-polyfill';
 
+import NoContentsBox from './NoContentsBox'
 import UserGroupInfoCard from './UserGroupInfoCard'
 
 
@@ -37,15 +38,7 @@ export default function ProjectList({ items }) {
             ))}
           </List>
           )
-        : (
-          <Grid container spacing={2} justify="center">
-            <Grid item>
-              <Typography className={classes.noContentsTypography} align="center">
-                No contents :(
-              </Typography>
-            </Grid>
-          </Grid>
-        )
+        : <NoContentsBox />
       }
     </>
   );

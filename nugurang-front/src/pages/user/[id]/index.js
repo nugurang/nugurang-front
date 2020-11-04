@@ -2,12 +2,12 @@ import React from 'react';
 import {useRouter} from 'next/router';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import Box from'@material-ui/core/Box';
+import Button from'@material-ui/core/Button';
 import Grid from'@material-ui/core/Grid';
 import BookIcon from '@material-ui/icons/Book';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 import Layout from '../../../components/Layout';
-import BaseButton from '../../../components/BaseButton';
 import HonorBadgeGrid from '../../../components/HonorBadgeGrid';
 import GraphQlError from '../../../components/GraphQlError';
 import Loading from '../../../components/Loading';
@@ -144,12 +144,12 @@ function UserInfo() {
         <UserInfoBox user={user}/>
         <Grid container direction="row" justify="flex-end">
           <Grid item align="right">
-            <BaseButton label="Follows" onClick={() => router.push(`/user/${router.query.id}/follows`)} />
+            <Button  onClick={() => router.push(`/user/${router.query.id}/follows`)}>Follows</Button>
           </Grid>
           <Grid item align="right">
             {
               user.id === currentUser.id
-              ? <BaseButton label="Sign out" onClick={() => router.push('/signout')} />
+              ? <Button onClick={() => router.push('/signout')}>Sign out</Button>
               : (
                 <>
                   <Box display={true ? "block" : "none"}>
@@ -159,10 +159,7 @@ function UserInfo() {
                         createFollowing({ variables: {user: router.query.id}});
                       }}
                     >
-                      <BaseButton
-                        label="Follow"
-                        type="submit"
-                      />
+                      <Button type="submit">Follow</Button>
                     </form>
                   </Box>
                   <Box display={true ? "none" : "block"}>
@@ -172,10 +169,7 @@ function UserInfo() {
                         createFollowing({ variables: {user: router.query.id}});
                       }}
                     >
-                      <BaseButton
-                        label="Unfollow"
-                        type="submit"
-                      />
+                      <Button type="submit">Unfollow</Button>
                     </form>
                   </Box>
                 </>
@@ -189,7 +183,7 @@ function UserInfo() {
       <SectionBox
         titleBar={(
           <SectionTitleBar title="Latest blog thread" icon=<BookIcon />>
-            <BaseButton label="Visit blog" onClick={() => router.push(`/blog/${router.query.id}`)}/>
+            <Button onClick={() => router.push(`/blog/${router.query.id}`)}>Blog</Button>
           </SectionTitleBar>
         )}
       >
@@ -200,7 +194,7 @@ function UserInfo() {
       <SectionBox
         titleBar={(
           <SectionTitleBar title="Honor badges" icon=<EmojiEventsIcon />>
-            <BaseButton label="More" onClick={() => router.push(`/user/${router.query.id}/honor`)} />
+            <Button onClick={() => router.push(`/user/${router.query.id}/honor`)}>More</Button>
           </SectionTitleBar>
         )}
       >

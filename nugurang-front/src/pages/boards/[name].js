@@ -2,12 +2,12 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
+import Button from '@material-ui/core/Button';
 
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
-import BaseButton from '../../components/BaseButton';
 import BaseSwitch from '../../components/BaseSwitch';
 import Layout from '../../components/Layout';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -71,7 +71,7 @@ function Board() {
       <SectionBox
         titleBar={
           <SectionTitleBar title={router.query.name} icon={<AssignmentIcon />}>
-            <BaseButton label="Create thread" onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.name }})} />
+            <Button onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.name }})}>Create thread</Button>
           </SectionTitleBar>
         }
       >

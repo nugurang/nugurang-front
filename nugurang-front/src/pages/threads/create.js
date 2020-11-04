@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -11,7 +12,6 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ImageIcon from '@material-ui/icons/Image';
 
 import Layout from '../../components/Layout';
-import BaseButton from '../../components/BaseButton';
 import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -191,10 +191,7 @@ function CreateThread() {
         }}
       >
         <Box className={classes.box} align="center">
-          <BaseButton
-            label="Submit"
-            type="submit"
-          />
+          <Button type="submit">Submit</Button>
         </Box>
       </form>
     </Layout>

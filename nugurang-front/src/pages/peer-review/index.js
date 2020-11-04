@@ -3,12 +3,12 @@ import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import Layout from '../../components/Layout';
 
-import BaseButton from '../../components/BaseButton';
 import BaseMultiSelect from '../../components/BaseMultiSelect';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -151,7 +151,7 @@ export default function PeerReviewIndex() {
         )
       )}
       <Box className={classes.box} align="center">
-        <BaseButton label="Submit" onClick={() => router.push('/peer-review/thank-you')} />
+        <Button onClick={() => router.push('/peer-review/thank-you')}>Submit</Button>
       </Box>
     </Layout>
   );

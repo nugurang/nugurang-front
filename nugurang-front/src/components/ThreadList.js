@@ -9,42 +9,14 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import { useRouter } from 'next/router';
+
+import NoContentsBox from './NoContentsBox';
 import StatCounterBox from './StatCounterBox';
 
 const useStyles = makeStyles(() => ({
-  avatar: {
-    backgroundColor: "white",
-    color: "black",
-    height: '2.5rem',
-    width: '2.5rem',
-  },
   cardMedia: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-  },
-  listPrimaryTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 20,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  listSecondaryTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  noContentsTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 20,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
   },
 }));
 
@@ -67,7 +39,7 @@ export default function ThreadList({ items }) {
                   <Grid container>
                     <Grid item>
                       <ListItemAvatar>
-                        <Avatar className={classes.avatar}
+                        <Avatar
                           alt={item.user.name}
                           src={item.image?.address}
                           variant="circle"
@@ -79,16 +51,12 @@ export default function ThreadList({ items }) {
                         <ListItemText
                           primary={(
                             <Box display={item.name ? "block" : "none"}>
-                              <Typography className={classes.listPrimaryTypography}>
-                                {item.name}
-                              </Typography>
+                              <Typography variant="h6">{item.name}</Typography>
                             </Box>
                           )}
                           secondary={(
                             <Box display={item.content ? "block" : "none"}>
-                              <Typography className={classes.listSecondaryTypography}>
-                                {item.content}
-                              </Typography>
+                              <Typography variant="body1">{item.content}</Typography>
                             </Box>
                           )}
                         />
@@ -103,15 +71,7 @@ export default function ThreadList({ items }) {
             ))}
           </List>
           )
-        : (
-          <Grid container spacing={2} justify="center">
-            <Grid item>
-              <Typography className={classes.noContentsTypography} align="center">
-                No contents :(
-              </Typography>
-            </Grid>
-          </Grid>
-        )
+        : <NoContentsBox/>
       }
     </>
   );

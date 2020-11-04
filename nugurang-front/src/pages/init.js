@@ -3,13 +3,17 @@ import { withApollo } from '@apollo/react-hoc';
 import { loremIpsum } from 'lorem-ipsum';
 import { makeStyles } from '@material-ui/styles';
 import { useEffect, useState } from 'react';
+import {useRouter} from 'next/router';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import GraphQlError from '../components/GraphQlError';
-import Layout from '../components/Layout';
-import Loading from '../components/Loading';
+
+import { ALL_BOARDS } from '../src/config';
 import withAuth from '../components/withAuth';
-import { ALL_BOARDS } from '../config';
+import FullScreenDialogBox from '../components/FullScreenDialogBox';
+import GraphQlError from '../components/GraphQlError';
+import Loading from '../components/Loading';
 
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
 
@@ -189,12 +193,18 @@ function Init({client}) {
     return <Loading circular="true"/>
 
   return (
-    <Layout>
-      <Typography>Initialization done.</Typography>
-      <Button variant="outlined" color="primary" href="/home">
-        Go Home
-      </Button>
-    </Layout>
+    <FullScreenDialogBox>
+      <Grid container spacing={2} alignItems="center" justify="center">
+        <Grid item xs={12} align="center">
+          <Typography variant="h4">Initialization done.</Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Box align="center">
+            <Button onClick={() => router.push(`/home`)}>Go Home</Button>
+          </Box>
+        </Grid>
+      </Grid>
+    </FullScreenDialogBox>
   );
 }
 

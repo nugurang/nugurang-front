@@ -1,48 +1,40 @@
 import { gql, useQuery } from '@apollo/client';
-import { makeStyles } from '@material-ui/styles';
 import {useRouter} from 'next/router';
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import QueueIcon from '@material-ui/icons/Queue';
 
-import { BACKEND_ADDR } from '../config';
-import Layout from '../components/Layout';
-import BaseButton from '../components/BaseButton';
+import { BACKEND_ADDR } from '../src/config';
 import BaseListItem from '../components/BaseListItem';
 import GraphQlError from '../components/GraphQlError';
+import Layout from '../components/Layout';
+import Loading from '../components/Loading';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import UserInfoBox from '../components/UserInfoBox';
 import withAuth from '../components/withAuth';
-import Loading from '../components/Loading';
 
 
 const TEST_MORE_MENU_LIST = [
   {
     id: 1,
-    title: "Initialize database",
-    link: "init",
+    title: "Find user",
+    link: "/user/find",
   },
   {
-    id: 2,
+    id: 101,
+    title: "Initialize database",
+    link: "/init",
+  },
+  {
+    id: 102,
     title: "Component overview",
-    link: "comp-ov",
+    link: "/comp-ov",
   },
 ];
-
-
-const useStyles = makeStyles(() => ({
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 24,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
 
 
 export const GET_CURRENT_USER = gql`
@@ -71,7 +63,6 @@ export const GET_CURRENT_USER = gql`
 
 function More() {
   const router = useRouter();
-  const classes = useStyles();
   const responses = [
     useQuery(GET_CURRENT_USER)
   ];
@@ -96,10 +87,10 @@ function More() {
             ? (
               <>
                 <Grid item xs={12} sm={8}>
-                  <Typography className={classes.typography}>You need to sign in first.</Typography>
+                  <Typography>You need to sign in first.</Typography>
                 </Grid>
                 <Grid item xs={12} sm={4} align="right">
-                  <BaseButton label="Sign in" onClick={() => router.push('/signin')} />
+                  <Button onClick={() => router.push('/signin')} >Sign in</Button>
                 </Grid>
               </>
             )
@@ -109,8 +100,8 @@ function More() {
                   <UserInfoBox user={currentUser} dense/>
                 </Grid>
                 <Grid item xs align="right">
-                  <BaseButton label="My info" onClick={() => router.push(`/user/${currentUser.id}`)} />
-                  <BaseButton label="Sign out" onClick={() => router.push(`${BACKEND_ADDR}/logout`)} />
+                  <Button onClick={() => router.push(`/user/${currentUser.id}`)} >My info</Button>
+                  <Button onClick={() => router.push(`${BACKEND_ADDR}/logout`)} >Sign out</Button>
                 </Grid>
               </>
             )
@@ -118,14 +109,13 @@ function More() {
         </Grid>
       </SectionBox>
 
-
       <SectionBox
         titleBar={
           <SectionTitleBar title="More features" icon=<QueueIcon /> />
         }
       >
         <List>
-          {TEST_MORE_MENU_LIST.map((item) => <BaseListItem item key={item.id} primary={item.title} onClick={() => {router.push(`/${item.link}`)}} />)}
+          {TEST_MORE_MENU_LIST.map((item) => <BaseListItem item key={item.id} primary={item.title} onClick={() => {router.push(`${item.link}`)}} />)}
         </List>
       </SectionBox>
 

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -13,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import ViewListIcon from '@material-ui/icons/ViewList';
 
 import Layout from '../../components/Layout';
-import BaseButton from '../../components/BaseButton';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
@@ -133,10 +133,7 @@ function CreateTask() {
         }}
       >
         <Box className={classes.box} align="center">
-          <BaseButton
-            label="Submit"
-            type="submit"
-          />
+          <Button type="submit">Submit</Button>
         </Box>
       </form>
       {mutationLoading && <p>Loading...</p>}

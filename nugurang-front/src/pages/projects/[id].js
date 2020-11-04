@@ -1,10 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 import Layout from '../../components/Layout';
-import BaseButton from '../../components/BaseButton';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import ProjectInfoBox from '../../components/ProjectInfoBox';
@@ -69,7 +69,7 @@ export default function ProjectInfo() {
     <Layout>
 
       <SectionTitleBar title="Project info" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
-        <BaseButton label="Create work" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})} />
+        <Button onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
       </SectionTitleBar>
       <SectionBox border={false}>
         <>

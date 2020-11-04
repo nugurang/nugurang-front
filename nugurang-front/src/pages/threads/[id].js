@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
+import Button from '@material-ui/core/Button';
 
-import BaseButton from '../../components/BaseButton';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
@@ -130,7 +130,7 @@ function Thread(threadId) {
   return (
     <Layout>
       <SectionTitleBar title="Thread" backButton backButtonLink="/boards">
-        <BaseButton label="Leave comment" onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})} />
+        <Button onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
       </SectionTitleBar>
 
       <SectionBox>
