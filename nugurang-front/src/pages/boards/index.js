@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
@@ -10,6 +11,7 @@ import 'array-flat-polyfill';
 
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
 import withAuth from '../../components/withAuth';
+import CallingCard from '../../components/CallingCard';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 import BaseCard from '../../components/BaseCard';
@@ -114,13 +116,13 @@ function Boards() {
       { showEvents ?
         (
           <>
-            <Grid container spacing={2}>
+            <Grid container>
               {[EVENT_BOARDS].flat().map((board) =>
                 (
                   <Grid item key={++key} xs={6} align="center">
-                    <BaseCard onClick={() => router.push(`/boards/${board}`)}>
+                    <CallingCard image="/static/images/sample_1.jpg" onClick={() => router.push(`/boards/${board}`)}>
                       <Typography className={classes.typography}>{board}</Typography>
-                    </BaseCard>
+                    </CallingCard>
                   </Grid>
                 )
               )}
@@ -142,17 +144,18 @@ function Boards() {
         )
         : (
           <>
-            <Grid container spacing={2}>
+            <Grid container>
               {[COMMON_BOARDS].flat().map((board) =>
                 (
                   <Grid item key={++key} xs={6} align="center">
-                    <BaseCard onClick={() => router.push(`/boards/${board}`)}>
+                    <CallingCard image="/static/images/sample_1.jpg" onClick={() => router.push(`/boards/${board}`)}>
                       <Typography className={classes.typography}>{board}</Typography>
-                    </BaseCard>
+                    </CallingCard>
                   </Grid>
                 )
               )}
             </Grid>
+
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
             >

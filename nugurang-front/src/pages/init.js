@@ -106,6 +106,7 @@ const CREATE_WORK = gql`
 function Init({client}) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState();
+  const router = useRouter();
   const classes = useStyles();
 
   const init = async () => {

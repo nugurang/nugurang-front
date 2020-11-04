@@ -27,49 +27,47 @@ export default function SectionTitleBar({ avatar, children, icon, title, avatarD
   const classes = useStyles();
   let key = 0;
   return (
-    <Box className={classes.margin}>
-      <Grid container alignItems="center" justify="flex-start">
-        <Grid container spacing={1} alignItems="center">
-          <Grid item>
-            <Box display={backButton ? "block" : "none"}>
-              <IconButton
-                aria-label="back"
-                edge="start"
-                onClick={() => {backButtonLink ? router.push(backButtonLink) : router.back()}}
-              >
-                <ArrowBackIcon />
-              </IconButton>
-            </Box>
-            <Box display={avatar && !icon ? "block" : "none"}>
-              <Avatar
-                alt={avatarDescription || null}
-                src={avatar}
-                variant={circleIcon ? "circle" : "square"}
-              />
-            </Box>
-            <Box display={icon && !avatar ? "block" : "none"}>
-              <IconButton>
-                {icon}
-              </IconButton>
-            </Box>
-          </Grid>
-          <Grid item xs>
-            <Typography variant="h6">
-              {title}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Box display={children ? "block" : "none"}>
-              <Grid container alignItems="flex-end">
-                {[children].flat().map((child) => <Grid item key={++key}>{child}</Grid>)}
-              </Grid>
-            </Box>
-          </Grid>
+    <div className={classes.margin}>
+      <Grid container spacing={1} alignItems="center" justify="flex-start">
+        <Grid item>
+          <Box display={backButton ? "block" : "none"}>
+            <IconButton
+              aria-label="back"
+              edge="start"
+              onClick={() => {backButtonLink ? router.push(backButtonLink) : router.back()}}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+          </Box>
+          <Box display={avatar && !icon ? "block" : "none"}>
+            <Avatar
+              alt={avatarDescription || null}
+              src={avatar}
+              variant={circleIcon ? "circle" : "square"}
+            />
+          </Box>
+          <Box display={icon && !avatar ? "block" : "none"}>
+            <IconButton>
+              {icon}
+            </IconButton>
+          </Box>
+        </Grid>
+        <Grid item xs>
+          <Typography variant="h6">
+            {title}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Box display={children ? "block" : "none"}>
+            <Grid container alignItems="flex-end">
+              {[children].flat().map((child) => <Grid item key={++key}>{child}</Grid>)}
+            </Grid>
+          </Box>
         </Grid>
       </Grid>
       <Box display={bottomBar ? "block" : "none"}>
         <hr className={classes.hr} />
       </Box>
-    </Box>
+    </div>
   );
 }

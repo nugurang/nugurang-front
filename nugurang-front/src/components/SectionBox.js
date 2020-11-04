@@ -24,7 +24,7 @@ export default function SectionBox({ children, border=true, titleBar=null, }) {
   return (
     <Box className={classes.margin}>
       {titleBar ? titleBar : null}
-      <Paper className={border ? null : classes.borderlessPaper} elevation={0}>
+      <Paper className={border ? null : classes.borderlessPaper} elevation={border ? 1 : 0}>
         {[children].flat().map((child) => <div key={++key}>{child}</div>)}
       </Paper>
     </Box>

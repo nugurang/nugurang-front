@@ -11,7 +11,7 @@ export default function FullScreenDialogBox({ children, titleBar=null }) {
       <Box display={titleBar ? "block" : "none"}>
         {titleBar}
       </Box>
-      <Box mt="50%">
+      <Box mt="40%">
         {[children].flat().map((child) => <div key={++key}>{child}</div>)}
       </Box>
     </>

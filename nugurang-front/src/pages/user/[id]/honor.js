@@ -1,11 +1,15 @@
 import React from 'react';
-/* import { gql, useQuery } from '@apollo/client'; */
+import {useRouter} from 'next/router';
+import { gql, useQuery } from '@apollo/client';
 
 import Layout from '../../../components/Layout';
 
+import GraphQlError from '../../../components/GraphQlError';
 import HonorBadgeGrid from '../../../components/HonorBadgeGrid';
+import Loading from '../../../components/Loading';
 import SectionBox from '../../../components/SectionBox';
 import SectionTitleBar from '../../../components/SectionTitleBar';
+import withAuth from '../../../components/withAuth';
 
 
 const TEST_HONOR_BADGE_LIST = [
@@ -36,45 +40,39 @@ const TEST_HONOR_BADGE_LIST = [
 ]
 
 
-/*
-function getData() {
-  const { loading, error, data } = useQuery(gql`
-    query {
-      userInfo {
-        getUser(
-          id: {userId}
-        ) {
+export const GET_USER = gql`
+  query getUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      honors {
+        honor
+        position {
           id
           name
-          email
-          image
-          biography
-          followers
-          followings
-          blog {
-            id
-            threads
-          }
-          honors
         }
       }
     }
-  `);
-  if (loading)
-    return (<p>Loading...</p>);
-  if (error) {
-    console.log(error);
   }
-  return data;
-}
-*/
+`;
 
-export default function Home() {
-  /* const data = getData(); */
+function Honor() {
+  const router = useRouter();
+  const responses = [
+    useQuery(GET_USER, {variables: {id: router.query.id}})
+  ];
+  const errorResponse = responses.find((response) => response.error)
+  if (errorResponse)
+    return <GraphQlError error={errorResponse.error} />
+
+  if (responses.some((response) => response.loading))
+    return <Loading />;
+
+  const user = responses[0].data.getUser;
+
   return (
     <Layout>
 
-      <SectionTitleBar title="My honor badges" backButton backButtonLink="/user" />
+      <SectionTitleBar title="Honor badges" backButton />
 
       <SectionBox>
         <HonorBadgeGrid items={TEST_HONOR_BADGE_LIST} />
@@ -83,3 +81,5 @@ export default function Home() {
     </Layout>
   );
 }
+
+export default withAuth(Honor);
