@@ -132,28 +132,24 @@ export default function TeamInfo() {
       <SectionTitleBar title="Team info" backButton="true" backButtonLink="/teams">
         <Button onClick={() => router.push({pathname: "/projects/create", query: { team: router.query.id }})}>Create project</Button>
       </SectionTitleBar>
-        <SectionBox border={false}>
-        <>
-          <Grid item xs={12}>
-            <TeamInfoBox team={team} />
-          </Grid>
-          <Grid item xs align="right"/>
-        </>
+      <SectionBox border={false}>
+        <TeamInfoBox team={team}/>
       </SectionBox>
 
 
-      <BaseTabs tabProps={TAB_PROPS}>
-        <ProjectList
-          items={team.projects}
-          link="/projects"
-          buttonLink="/projects/invite"
-        />
-        <UserList
-          items={team.getUsers}
-          link="/user"
-        />
-      </BaseTabs>
-
+      <SectionBox>
+        <BaseTabs tabProps={TAB_PROPS}>
+          <ProjectList
+            items={team.projects}
+            link="/projects"
+            buttonLink="/projects/invite"
+          />
+          <UserList
+            items={team.getUsers}
+            link="/user"
+          />
+        </BaseTabs>
+      </SectionBox>
 
     </Layout>
   );

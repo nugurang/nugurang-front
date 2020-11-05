@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import { gql, useMutation, useLazyQuery } from '@apollo/client';
 
@@ -8,37 +7,20 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
 import SearchIcon from '@material-ui/icons/Search';
 
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import NoContentsBox from '../../components/NoContentsBox'
 import SearchBox from '../../components/SearchBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamList from '../../components/TeamList';
-import UserInfoBox from '../../components/UserInfoBox'
+import UserList from '../../components/UserList'
 import withAuth from '../../components/withAuth';
 
-
-const useStyles = makeStyles(() => ({
-  box: {
-    border: '0rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0rem',
-    padding: '1rem',
-    variant: 'outlined',
-  },
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 28,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
 
 export const GET_USER_BY_NAME = gql`
   query getUserByName($name: String!) {
@@ -49,6 +31,13 @@ export const GET_USER_BY_NAME = gql`
       image {
         id
         address
+      }
+      biography
+      getFollowers(page:0, pageSize:100) {
+        id
+      }
+      getFollowings(page:0, pageSize:100) {
+        id
       }
     }
   }
@@ -67,12 +56,13 @@ export const UPDATE_TEAM = gql`
 
 function InviteUserToTeam() {
   const router = useRouter();
-  const classes = useStyles();
   const keywordName = useRef(null);
 
-  const results = [[null, useLazyQuery(GET_USER_BY_NAME)], useMutation(UPDATE_TEAM)];
+  const results = [useLazyQuery(GET_USER_BY_NAME), useMutation(UPDATE_TEAM)];
   const [getUserByName, updateTeam] = results.map(result => result[0]);
-  const user = results[0][1].data;
+
+  const userData = results[0][1].data;
+  const users = userData && userData.getUserByName ? [userData.getUserByName] : null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -92,9 +82,6 @@ function InviteUserToTeam() {
           <Grid item xs>
             <FormControl fullWidth variant="filled">
               <TextField
-                className={classes.textField}
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                 inputRef={keywordName}
                 label="Enter username"
                 variant="outlined"
@@ -104,7 +91,10 @@ function InviteUserToTeam() {
           </Grid>
           <Grid item>
             <form
-              onSubmit={() => getUserByName({ variables: {name: keywordName.current.value}})}
+              onSubmit={async (e) => {
+                e.preventDefault();
+                await getUserByName({ variables: {name: keywordName.current.value}})}
+              }
             >
               <IconButton type="submit" aria-label="search">
                 <SearchIcon />
@@ -113,15 +103,22 @@ function InviteUserToTeam() {
           </Grid>
         </Grid>
       </SectionBox>
-      {
-        user
-        ? (
-          <SectionBox>
-            <UserInfoBox user={user}/>
-          </SectionBox>
-        )
-        : <></>
-      }
+
+      <SectionBox
+        titleBar={
+          <SectionTitleBar title="Result" icon=<FindInPageIcon /> />
+        }
+      >
+        {
+          users
+          ? (
+            <SectionBox>
+              <UserList items={users} link="/user"/>
+            </SectionBox>
+          )
+          : <NoContentsBox/>
+        }
+      </SectionBox>
     </Layout>
   );
 }

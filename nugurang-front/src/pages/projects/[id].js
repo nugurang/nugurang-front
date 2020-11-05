@@ -72,24 +72,21 @@ export default function ProjectInfo() {
         <Button onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
       </SectionTitleBar>
       <SectionBox border={false}>
-        <>
-          <Grid item xs={12}>
-            <ProjectInfoBox project={project} />
-          </Grid>
-        </>
+        <ProjectInfoBox project={project} />
       </SectionBox>
 
-
-      <BaseTabs tabProps={TAB_PROPS}>
-        <WorkList
-          items={project.works}
-        />
-        <UserList
-          items={users}
-          link="/user"
-        />
-      </BaseTabs>
-
+      <SectionBox>
+        <BaseTabs tabProps={TAB_PROPS}>
+          <WorkList
+            items={project.works}
+            link="/works"
+          />
+          <UserList
+            items={users}
+            link="/user"
+          />
+        </BaseTabs>
+      </SectionBox>
 
     </Layout>
   );

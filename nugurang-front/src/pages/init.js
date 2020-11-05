@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client';
 import { withApollo } from '@apollo/react-hoc';
 import { loremIpsum } from 'lorem-ipsum';
-import { makeStyles } from '@material-ui/styles';
 import { useEffect, useState } from 'react';
 import {useRouter} from 'next/router';
 import Box from '@material-ui/core/Box';
@@ -17,16 +16,6 @@ import Loading from '../components/Loading';
 
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
 
-
-const useStyles = makeStyles(() => ({
-  typography: {
-    fontSize: 30,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
 
 const GET_BOARDS = gql`
   query GetBoardsByNames($names: [String]!) {
@@ -107,7 +96,6 @@ function Init({client}) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState();
   const router = useRouter();
-  const classes = useStyles();
 
   const init = async () => {
     if (error || done)
@@ -191,7 +179,7 @@ function Init({client}) {
     return <GraphQlError error={error} />;
 
   if (!done)
-    return <Loading circular="true"/>
+    return <Loading circular={true}/>
 
   return (
     <FullScreenDialogBox>

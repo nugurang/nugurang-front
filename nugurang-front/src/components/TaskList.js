@@ -9,21 +9,29 @@ import UserGroupInfoCard from './UserGroupInfoCard'
 
 export default function TaskList({ items }) {
   return (
-    <List>
-      {[items].flat().map((item) => (
-        <ListItem key={item.id} alignItems="flex-start" button onClick={item.onClick}>
-          <Grid container alignItems="center" direction="row" justify="flex-start">
-            <Grid item xs>
-              <UserGroupInfoCard
-                title={item.name}
-                primary={item.name}
-                secondary={item.name}
-                users={item.users}
-              />
-            </Grid>
-          </Grid>
-        </ListItem>
-      ))}
-    </List>
+    <>
+      {
+        items
+        ? (
+          <List>
+            {[items].flat().map((item) => (
+              <ListItem key={item.id} alignItems="flex-start">
+                <Grid container alignItems="center" direction="row" justify="flex-start">
+                  <Grid item xs>
+                    <UserGroupInfoCard
+                      title={item.name}
+                      primary={item.name}
+                      secondary={item.name}
+                      users={item.users}
+                    />
+                  </Grid>
+                </Grid>
+              </ListItem>
+            ))}
+          </List>
+          )
+        : <NoContentsBox/>
+      }
+    </>
   );
 }

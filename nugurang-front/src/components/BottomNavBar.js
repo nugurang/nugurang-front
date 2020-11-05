@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function BottomNavBar(props) {
+export default function BottomNavBar() {
   const router = useRouter();
   const classes = useStyles();
   let key = 0;
@@ -56,7 +56,3 @@ export default function BottomNavBar(props) {
     </AppBar>
   );
 }
-
-BottomNavBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};

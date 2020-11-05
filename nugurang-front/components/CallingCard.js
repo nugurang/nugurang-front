@@ -43,7 +43,7 @@ export default function CallingCard({ children, image=null, onClick=null }) {
               ) : null
             }
           </Grid>
-          <Grid item>
+          <Grid item xs={8}>
             <CardContent>
               {[children].flat().map((child) => <div key={++key}>{child}</div>)}
             </CardContent>

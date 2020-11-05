@@ -1,5 +1,4 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -16,44 +15,6 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
 
 
-const useStyles = makeStyles(() => ({
-  box: {
-    border: '0rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0rem',
-    padding: '1rem',
-    variant: 'outlined',
-  },
-  button: {
-    background: '#FEFEFE',
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    color: 'default',
-    margin: '0.5rem',
-    padding: '0.5rem 3rem',
-    variant: 'outlined',
-  },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 28,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
-
-
 export const CREATE_TEAM = gql`
   mutation createTeam($name: String!) {
     createTeam (name: $name) {
@@ -64,7 +25,6 @@ export const CREATE_TEAM = gql`
 
 function CreateTeam() {
   const router = useRouter();
-  const classes = useStyles();
   const newName = useRef(null);
 
   const [
@@ -82,36 +42,34 @@ function CreateTeam() {
       <SectionTitleBar title="Create new team" backButton backButtonLink="/teams" />
 
       <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newName}
-                  label="Enter team name"
-                  variant="outlined"
-                  onClick={handleNewNameChange}
-                />
-              </FormControl>
-            </Grid>
+        <Grid container spacing={2} alignItems="center" justify="space-between">
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                inputRef={newName}
+                label="Enter team name"
+                variant="outlined"
+                onClick={handleNewNameChange}
+              />
+            </FormControl>
           </Grid>
-        </Box>
+          <Grid item xs={12}>
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                createTeam({ variables: {name: newName.current.value}});
+                router.push('/teams');
+              }}
+            >
+              <Box align="center">
+                <Button type="submit">Submit</Button>
+              </Box>
+            </form>
+          </Grid>
+        </Grid>
       </SectionBox>
-
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          createTeam({ variables: {name: newName.current.value}});
-          router.push('/teams');
-        }}
-      >
-        <Box className={classes.box} align="center">
-          <Button type="submit">Submit</Button>
-        </Box>
-      </form>
       {mutationLoading && <p>Loading...</p>}
       {mutationError && <p>Error :( Please try again</p>}
 

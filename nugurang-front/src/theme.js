@@ -41,6 +41,7 @@ const theme = createMuiTheme({
       text: {
         border: '0.15rem solid #9778ec40',
         borderRadius: 5,
+        color: "#5738AC",
         height: "2.5rem",
         margin: '0.5rem',
         padding: '0 1.5rem',
@@ -62,6 +63,11 @@ const theme = createMuiTheme({
     MuiCssBaseline: {
       "@global": {
         '@font-face': ["Ubuntu"],
+      },
+    },
+    MuiDivider: {
+      root: {
+        border: '0.05rem solid #9778ec40',
       },
     },
     MuiIconButton: {

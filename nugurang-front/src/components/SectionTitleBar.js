@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router'
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -47,9 +48,7 @@ export default function SectionTitleBar({ avatar, children, icon, title, avatarD
             />
           </Box>
           <Box display={icon && !avatar ? "block" : "none"}>
-            <IconButton>
-              {icon}
-            </IconButton>
+            {icon}
           </Box>
         </Grid>
         <Grid item xs>
@@ -66,7 +65,7 @@ export default function SectionTitleBar({ avatar, children, icon, title, avatarD
         </Grid>
       </Grid>
       <Box display={bottomBar ? "block" : "none"}>
-        <hr className={classes.hr} />
+        <Divider/>
       </Box>
     </div>
   );

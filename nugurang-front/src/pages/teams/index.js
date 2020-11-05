@@ -124,7 +124,6 @@ function Teams() {
             <Button onClick={() => router.push('/teams/create')}>Create team</Button>
           </SectionTitleBar>
         )}
-        border={false}
       >
         <TeamList items={teams} link="/teams" buttonLink="/teams/invite"/>
       </SectionBox>

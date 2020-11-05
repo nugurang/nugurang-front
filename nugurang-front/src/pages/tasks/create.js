@@ -1,5 +1,4 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -19,44 +18,6 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
 
 
-const useStyles = makeStyles(() => ({
-  box: {
-    border: '0rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0rem',
-    padding: '1rem',
-    variant: 'outlined',
-  },
-  button: {
-    background: '#FEFEFE',
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    color: 'default',
-    margin: '0.5rem',
-    padding: '0.5rem 3rem',
-    variant: 'outlined',
-  },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 28,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
-
-
 export const CREATE_TASK = gql`
   mutation createTask($task: TaskInput!) {
     createTask (task: $task) {
@@ -67,7 +28,6 @@ export const CREATE_TASK = gql`
 
 function CreateTask() {
   const router = useRouter();
-  const classes = useStyles();
   const newName = useRef(null);
   const [newProgress, setNewProgress] = React.useState('TODO');
 
@@ -89,11 +49,10 @@ function CreateTask() {
 
       <SectionTitleBar title="Create new task" backButton />
 
-
-      <SectionBox titleBar={<SectionTitleBar title="Add task" icon=<ViewListIcon /> />} border={false}>
+      <SectionBox titleBar={<SectionTitleBar title="Add task" icon=<ViewListIcon /> />}>
         <Grid container spacing={2} alignItems="center" direction="row" justify="space-between">
           <Grid item>
-            <FormControl variant="outlined" className={classes.formControl}>
+            <FormControl variant="outlined">
               <InputLabel>Progress</InputLabel>
               <Select
                 value={newProgress}
@@ -110,7 +69,6 @@ function CreateTask() {
           <Grid item xs>
             <FormControl fullWidth variant="filled">
               <TextField
-                className={classes.textField}
                 inputProps={{ style: { fontFamily: "Ubuntu" } }}
                 InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                 inputRef={newName}
@@ -120,22 +78,22 @@ function CreateTask() {
               />
             </FormControl>
           </Grid>
+          <Grid item xs={12}>
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const taskRes = await createTask({ variables: {task: {work: router.query.work, name: newName.current.value}}});
+                let taskId = taskRes.data.createTask.id;
+                router.push(`/tasks/${taskId}`);
+              }}
+            >
+              <Box align="center">
+                <Button type="submit">Submit</Button>
+              </Box>
+            </form>
+          </Grid>
         </Grid>
       </SectionBox>
-
-
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          const taskRes = await createTask({ variables: {task: {work: router.query.work, name: newName.current.value}}});
-          let taskId = taskRes.data.createTask.id;
-          router.push(`/tasks/${taskId}`);
-        }}
-      >
-        <Box className={classes.box} align="center">
-          <Button type="submit">Submit</Button>
-        </Box>
-      </form>
       {mutationLoading && <p>Loading...</p>}
       {mutationError && <p>Error :( Please try again</p>}
 

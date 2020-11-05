@@ -18,10 +18,7 @@ export default function WorkList({ items }) {
         ? (
           <List>
             {[items].flat().map((item) => (
-              <ListItem
-                key={item.id}
-                alignItems="flex-start"
-              >
+              <ListItem key={item.id} alignItems="flex-start">
                 <Grid container alignItems="center" direction="row" justify="flex-start">
                   <Grid item xs>
                     <UserGroupInfoCard

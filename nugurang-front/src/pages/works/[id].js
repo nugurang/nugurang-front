@@ -1,10 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 import Layout from '../../components/Layout';
-import BaseButton from '../../components/BaseButton';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import SectionBox from '../../components/SectionBox';
@@ -185,26 +185,28 @@ export default function WorkInfo() {
   return (
     <Layout>
       <SectionTitleBar title="Work info" backButton="true" backButtonLink={`/projects/${work.project.id}`}>
-        <BaseButton label="Create task" onClick={() => router.push({pathname: "/tasks/create", query: { work: router.query.name }})} />
+        <Button onClick={() => router.push({pathname: "/tasks/create", query: { work: router.query.name }})}>
+          Create task
+        </Button>
       </SectionTitleBar>
       <SectionBox border={false}>
-        <Grid item xs={12}>
-          <WorkInfoBox work={work} />
-        </Grid>
+        <WorkInfoBox work={work} />
       </SectionBox>
 
 
-      <BaseTabs tabProps={TAB_PROPS}>
-        <TaskList
-          items={TEST_TASK_TODO_LIST}
-        />
-        <TaskList
-          items={TEST_TASK_DOING_LIST}
-        />
-        <TaskList
-          items={TEST_TASK_DONE_LIST}
-        />
-      </BaseTabs>
+      <SectionBox>
+        <BaseTabs tabProps={TAB_PROPS}>
+          <TaskList
+            items={TEST_TASK_TODO_LIST}
+          />
+          <TaskList
+            items={TEST_TASK_DOING_LIST}
+          />
+          <TaskList
+            items={TEST_TASK_DONE_LIST}
+          />
+        </BaseTabs>
+      </SectionBox>
 
 
     </Layout>

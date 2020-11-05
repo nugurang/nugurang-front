@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -10,7 +11,6 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 
 import ArticleList from '../components/ArticleList';
 import ArticleListItem from '../components/ArticleListItem';
-import BaseButton from '../components/BaseButton';
 import BaseCard from '../components/BaseCard';
 import BaseIconButton from '../components/BaseIconButton';
 import BaseImage from '../components/BaseImage';
@@ -50,12 +50,13 @@ const TEST_IMAGE = "/static/images/sample_2.jpg";
 
 const TEST_USER = {
   id: 0,
-  name: "Test User",
+  oauth2Provider: "Test OAuth2 Provider"
+  oauth2Id: "testoauth2id"
+  name: "Test User name",
   email: "Test email",
+  biography: "Test biography",
+  totalHonor: 10,
   image: "/static/images/sample_1.jpg",
-  bio: "Test bio",
-  followers: 5,
-  followings: 10,
 };
 
 const TEST_USER_LIST = [
@@ -400,8 +401,21 @@ export default function ComponentOverview() {
   return (
     <Container maxWidth="sm">
 
+
       <Typography className={classes.pageTitleTypography}>
-        Components testing area
+        Basic components testing area
+      </Typography>
+
+
+      <Overview title="Button">
+        <Button>Test label</Button>
+      </Overview>
+
+
+
+
+      <Typography className={classes.pageTitleTypography}>
+        Custom components testing area
       </Typography>
 
 
@@ -423,15 +437,6 @@ export default function ComponentOverview() {
       <Overview title="ArticleList">
         <ArticleList
           items={TEST_ARTICLE_LIST}
-        />
-      </Overview>
-
-
-      <Overview title="BaseButton">
-        <BaseButton
-          label="Test label"
-          startIcon={TEST_ICON}
-          endIcon={TEST_ICON}
         />
       </Overview>
 
