@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { BACKEND_ADDR } from '../src/config';
+import { BACKEND_ADDR } from '../config';
 import Layout from '../components/Layout';
 import BaseListItem from '../components/BaseListItem';
 import GraphQlError from '../components/GraphQlError';

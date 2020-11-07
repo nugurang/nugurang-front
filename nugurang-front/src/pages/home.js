@@ -9,7 +9,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
-import { COMMON_BOARDS, EVENT_BOARDS } from '../src/config';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../config';
 import withAuth from '../components/withAuth';
 import BaseIconButton from '../components/BaseIconButton';
 import GraphQlError from '../components/GraphQlError';
@@ -33,8 +33,9 @@ export const GET_CURRENT_USER = gql`
   }
 `;
 
-const GET_THREADS = gql`
-  query GetThreads($boardNames: [String]!) {
+
+const GET_THREADS_BY_BOARD_NAMES = gql`
+  query GetThreadsByBoardNames($boardNames: [String]!) {
     getThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
       id
       name
@@ -55,8 +56,8 @@ const GET_THREADS = gql`
   }
 `;
 
-const GET_HOT_THREADS = gql`
-  query GetHotThreads($boardNames: [String]!) {
+const GET_HOT_THREADS_BY_BOARD_NAMES = gql`
+  query GetHotThreadsByBoardNames($boardNames: [String]!) {
     getHotThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
       id
       name
@@ -78,12 +79,13 @@ const GET_HOT_THREADS = gql`
 `;
 
 
+
 function Home() {
   const router = useRouter();
   const responses = [
     useQuery(GET_CURRENT_USER),
-    useQuery(GET_HOT_THREADS, {variables: {boardNames: COMMON_BOARDS}}),
-    useQuery(GET_THREADS, {variables: {boardNames: EVENT_BOARDS}}),
+    useQuery(GET_HOT_THREADS_BY_BOARD_NAMES, {variables: {boardNames: COMMON_BOARDS}}),
+    useQuery(GET_THREADS_BY_BOARD_NAMES, {variables: {boardNames: EVENT_BOARDS}}),
   ];
 
   const errorResponse = responses.find((response) => response.error)

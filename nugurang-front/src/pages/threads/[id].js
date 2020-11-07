@@ -89,6 +89,19 @@ const GET_THREAD = gql`
         title
         content
       }
+      event {
+        id
+        title
+        content
+        images {
+          id
+          address
+        }
+        recruitingStart
+        recruitingEnd
+        eventStart
+        eventEnd
+      }
       getArticles(page: 0, pageSize: 100) {
         id
         user {
@@ -143,7 +156,6 @@ function Thread(threadId) {
           vote={5}
         />
       </SectionBox>
-
     </Layout>
   );
 }

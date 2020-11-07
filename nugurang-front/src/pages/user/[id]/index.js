@@ -3,6 +3,7 @@ import {useRouter} from 'next/router';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import Box from'@material-ui/core/Box';
 import Button from'@material-ui/core/Button';
+import ButtonGroup from'@material-ui/core/ButtonGroup';
 import Grid from'@material-ui/core/Grid';
 import BookIcon from '@material-ui/icons/Book';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
@@ -144,37 +145,22 @@ function UserInfo() {
         <UserInfoBox user={user}/>
         <Grid container direction="row" justify="flex-end">
           <Grid item align="right">
-            <Button  onClick={() => router.push(`/user/${router.query.id}/follows`)}>Follows</Button>
-          </Grid>
-          <Grid item align="right">
-            {
-              user.id === currentUser.id
-              ? <Button onClick={() => router.push('/signout')}>Sign out</Button>
-              : (
-                <>
-                  <Box display={true ? "block" : "none"}>
-                    <form
-                      onSubmit={e => {
-                        e.preventDefault();
-                        createFollowing({ variables: {user: router.query.id}});
-                      }}
-                    >
-                      <Button type="submit">Follow</Button>
-                    </form>
-                  </Box>
-                  <Box display={true ? "none" : "block"}>
-                    <form
-                      onSubmit={e => {
-                        e.preventDefault();
-                        createFollowing({ variables: {user: router.query.id}});
-                      }}
-                    >
-                      <Button type="submit">Unfollow</Button>
-                    </form>
-                  </Box>
-                </>
-              )
-            }
+
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                createFollowing({ variables: {user: router.query.id}});
+              }}
+            >
+              <ButtonGroup color="primary">
+                <Button onClick={() => router.push(`/user/${router.query.id}/follows`)}>
+                  People
+                </Button>
+                <Button type="submit">
+                  Follow
+                </Button>
+              </ButtonGroup>
+            </form>
           </Grid>
         </Grid>
       </SectionBox>

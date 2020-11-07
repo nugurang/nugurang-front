@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { ALL_BOARDS } from '../src/config';
+import { ALL_BOARDS } from '../config';
 import withAuth from '../components/withAuth';
 import FullScreenDialogBox from '../components/FullScreenDialogBox';
 import GraphQlError from '../components/GraphQlError';

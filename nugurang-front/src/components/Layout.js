@@ -6,7 +6,7 @@ import BottomNavBar from './BottomNavBar'
 
 const useStyles = makeStyles(() => ({
   layoutBox: {
-    margin: "0rem 0rem 7.5rem 0rem",
+    margin: "0rem 0rem 2.5rem 0rem",
     minHeight: "85vh",
   },
 }));

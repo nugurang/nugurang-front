@@ -16,67 +16,6 @@ import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 
 
-const TEST_USER_LIST = [
-  {
-    id: 0,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_1.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 1,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_2.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 2,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_3.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 3,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_4.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-]
-
-
-
-const TEST_PROJECT_LIST = [
-  {
-    id: 0,
-    name: "Test project 1",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 1,
-    name: "Test project 2",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 2,
-    name: "Test project 3",
-    users: TEST_USER_LIST,
-  },
-]
-
-
-
 const TAB_PROPS = [
   {
     id: 0,

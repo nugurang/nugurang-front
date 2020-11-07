@@ -2,12 +2,13 @@ import { gql, useQuery } from '@apollo/client';
 import {useRouter} from 'next/router';
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import QueueIcon from '@material-ui/icons/Queue';
 
-import { BACKEND_ADDR } from '../src/config';
+import { BACKEND_ADDR } from '../config';
 import BaseListItem from '../components/BaseListItem';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
@@ -23,6 +24,11 @@ const TEST_MORE_MENU_LIST = [
     id: 1,
     title: "Find user",
     link: "/user/find",
+  },
+  {
+    id: 2,
+    title: "Manage my info",
+    link: "/user/update",
   },
   {
     id: 101,
@@ -90,7 +96,9 @@ function More() {
                   <Typography>You need to sign in first.</Typography>
                 </Grid>
                 <Grid item xs={12} sm={4} align="right">
-                  <Button onClick={() => router.push('/signin')} >Sign in</Button>
+                  <ButtonGroup color="primary">
+                    <Button onClick={() => router.push('/signin')} >Sign in</Button>
+                  </ButtonGroup>
                 </Grid>
               </>
             )
@@ -100,8 +108,10 @@ function More() {
                   <UserInfoBox user={currentUser} dense/>
                 </Grid>
                 <Grid item xs align="right">
-                  <Button onClick={() => router.push(`/user/${currentUser.id}`)} >My info</Button>
-                  <Button onClick={() => router.push(`${BACKEND_ADDR}/logout`)} >Sign out</Button>
+                  <ButtonGroup color="primary">
+                    <Button onClick={() => router.push(`/user/${currentUser.id}`)} >My info</Button>
+                    <Button onClick={() => router.push(`${BACKEND_ADDR}/logout`)} >Sign out</Button>
+                  </ButtonGroup>
                 </Grid>
               </>
             )
