@@ -14,7 +14,7 @@ export default function TeamList({ items, link=null, buttonLink=null }) {
   return (
     <>
       {
-        items
+        items && items.length > 0
         ? (
           <List>
             {[items].flat().map((item) => (

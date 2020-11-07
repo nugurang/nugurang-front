@@ -1,5 +1,4 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -20,51 +19,6 @@ import GraphQlError from '../../components/GraphQlError';
 import withAuth from '../../components/withAuth';
 
 
-const useStyles = makeStyles(() => ({
-  box: {
-    border: '0rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0rem',
-    padding: '1rem',
-    variant: 'outlined',
-  },
-  button: {
-    background: '#FEFEFE',
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    color: 'default',
-    margin: '0.5rem',
-    padding: '0.5rem 3rem',
-    variant: 'outlined',
-  },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 28,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
-
-export const GET_BOARD = gql`
-  query getBoardByName($name: String!) {
-    getBoardByName(name: $name) {
-      id
-    }
-  }
-`;
-
 export const CREATE_IMAGE = gql`
   mutation createImage($address: String!) {
     createImage (address: $address) {
@@ -84,14 +38,15 @@ export const CREATE_THREAD = gql`
 
 function CreateThread() {
   const router = useRouter();
-  const classes = useStyles();
   const newTitle = useRef(null);
   const newContent = useRef(null);
   const newImageAddress = useRef(null);
 
-  const results = [[null, useQuery(GET_BOARD, {variables: {name: router.query.board}})], useMutation(CREATE_IMAGE), useMutation(CREATE_THREAD)];
-  const [getBoard, createImage, createThread, createArticle] = results.map(result => result[0]);
-  const boardData = results[0][1].data;
+  const results = [
+    useMutation(CREATE_IMAGE),
+    useMutation(CREATE_THREAD)
+  ];
+  const [createImage, createThread] = results.map(result => result[0]);
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -116,64 +71,49 @@ function CreateThread() {
       <SectionTitleBar title="Create new thread" backButton />
 
       <SectionBox titleBar={<SectionTitleBar title="Add title" icon=<GroupAddIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newTitle}
-                  label="Enter title"
-                  variant="outlined"
-                  onClick={handleNewTitleChange}
-                />
-              </FormControl>
-            </Grid>
+        <Grid container spacing={2} alignItems="center" justify="space-between">
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                inputRef={newTitle}
+                label="Enter title"
+                variant="outlined"
+                onClick={handleNewTitleChange}
+              />
+            </FormControl>
           </Grid>
-        </Box>
+        </Grid>
       </SectionBox>
 
       <SectionBox titleBar={<SectionTitleBar title="Add content" icon=<GroupAddIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newContent}
-                  label="Enter content"
-                  variant="outlined"
-                  onClick={handleNewContentChange}
-                />
-              </FormControl>
-            </Grid>
+        <Grid container spacing={2} alignItems="center" justify="space-between">
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                inputRef={newContent}
+                label="Enter content"
+                variant="outlined"
+                onClick={handleNewContentChange}
+              />
+            </FormControl>
           </Grid>
-        </Box>
+        </Grid>
       </SectionBox>
 
 
       <SectionBox titleBar={<SectionTitleBar title="Add image link" icon=<ImageIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newImageAddress}
-                  label="Enter image link"
-                  variant="outlined"
-                  onClick={handleNewImageAddressChange}
-                />
-              </FormControl>
-            </Grid>
+        <Grid container spacing={2} alignItems="center" justify="space-between">
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                inputRef={newImageAddress}
+                label="Enter image link"
+                variant="outlined"
+                onClick={handleNewImageAddressChange}
+              />
+            </FormControl>
           </Grid>
-        </Box>
+        </Grid>
       </SectionBox>
 
 
@@ -185,12 +125,12 @@ function CreateThread() {
             const imageRes = await createImage({ variables: { address: newImageAddress.current.value }});
             image = imageRes.data.createImage.id;
           }
-          let boardId = boardData.getBoardByName.id;
-          const threadRes = await createThread({ variables: {thread: {board: boardId, name: newTitle.current.value, article: {title: newTitle.current.value, content: newContent.current.value, images: []}}}});
+          console.log(newTitle.current.value);
+          const threadRes = await createThread({ variables: { thread: {board: router.query.board, name: newTitle.current.value, article: {title: newTitle.current.value, content: newContent.current.value, images: [image]}}}});
           router.push(`/threads/${threadRes.data.createThread.id}`);
         }}
       >
-        <Box className={classes.box} align="center">
+        <Box align="center">
           <Button type="submit">Submit</Button>
         </Box>
       </form>

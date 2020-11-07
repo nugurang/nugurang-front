@@ -4,16 +4,16 @@ import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-import Layout from '../../components/Layout';
+import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
+import Layout from '../../components/Layout';
+import Loading from '../../components/Loading';
 import ProjectList from '../../components/ProjectList';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamInfoBox from '../../components/TeamInfoBox';
 import UserList from '../../components/UserList';
-import withAuth from '../../components/withAuth';
-import Loading from '../../components/Loading';
 
 
 const TAB_PROPS = [

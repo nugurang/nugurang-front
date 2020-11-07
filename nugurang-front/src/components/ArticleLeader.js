@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -16,6 +17,7 @@ import BaseImage from './BaseImage';
 import StatCounterBox from './StatCounterBox';
 
 export default function ArticleLeader({ article, like, topic, view, vote, onClick="null" }) {
+  const router = useRouter();
   return (
     <Box>
       <Box display={article.image ? "block" : "none"}>
@@ -31,18 +33,22 @@ export default function ArticleLeader({ article, like, topic, view, vote, onClic
           id="panel1a-header"
         >
           <Grid container alignItems="center">
-            <Grid item>
-              <Avatar
-                alt={article.user.name}
-                src={article.user.image ? article.user.image.address : null}
-                variant="circle"
-              />
-            </Grid>
-            <Grid item xs>
-              <Box display={article.user ? "block" : "none"}>
-                <Typography variant="subtitle1">{article.user.name}</Typography>
-              </Box>
-            </Grid>
+            <div onClick={() => router.push(`/user/${article.user.id}`)}>
+              <Grid item>
+                <Avatar
+                  alt={article.user.name}
+                  src={article.user.image ? article.user.image.address : null}
+                  variant="circle"
+                />
+              </Grid>
+            </div>
+            <div onClick={() => router.push(`/user/${article.user.id}`)}>
+              <Grid item xs>
+                <Box display={article.user ? "block" : "none"}>
+                  <Typography variant="subtitle1">{article.user.name}</Typography>
+                </Box>
+              </Grid>
+            </div>
             <Grid item xs={12}>
               <Box display={article.title ? "block" : "none"}>
                 <Typography variant="h6">

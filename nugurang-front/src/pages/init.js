@@ -92,6 +92,15 @@ const CREATE_WORK = gql`
   }
 `
 
+const CREATE_TASK = gql`
+  mutation CreateTask($task: TaskInput!) {
+    CreateTask(task: $task) {
+      id
+      name
+    }
+  }
+`
+
 function Init({client}) {
   const [done, setDone] = useState(false);
   const [error, setError] = useState();

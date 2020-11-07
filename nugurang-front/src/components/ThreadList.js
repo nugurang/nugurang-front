@@ -26,7 +26,7 @@ export default function ThreadList({ items }) {
   return (
     <>
       {
-        items
+        items && items.length > 0
         ? (
           <List>
             {[items].flat().map((item) => (
@@ -41,7 +41,7 @@ export default function ThreadList({ items }) {
                       <ListItemAvatar>
                         <Avatar
                           alt={item.user.name}
-                          src={item.image?.address}
+                          src={item.user.image ? item.user.image.address : null}
                           variant="circle"
                         />
                       </ListItemAvatar>

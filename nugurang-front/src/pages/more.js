@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import QueueIcon from '@material-ui/icons/Queue';
 
 import { BACKEND_ADDR } from '../config';
+import withAuth from '../components/withAuth';
 import BaseListItem from '../components/BaseListItem';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
@@ -21,31 +22,6 @@ import Loading from '../components/Loading';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import UserInfoBox from '../components/UserInfoBox';
-import withAuth from '../components/withAuth';
-
-
-const TEST_MORE_MENU_LIST = [
-  {
-    id: 1,
-    title: "Find user",
-    link: "/user/find",
-  },
-  {
-    id: 2,
-    title: "Manage my info",
-    link: "/user/update",
-  },
-  {
-    id: 101,
-    title: "Initialize database",
-    link: "/init",
-  },
-  {
-    id: 102,
-    title: "Component overview",
-    link: "/comp-ov",
-  },
-];
 
 
 export const GET_CURRENT_USER = gql`
@@ -167,7 +143,10 @@ function More() {
         }
       >
         <List>
-          {TEST_MORE_MENU_LIST.map((item) => <BaseListItem item key={item.id} primary={item.title} onClick={() => {router.push(`${item.link}`)}} />)}
+          <BaseListItem primary="Find user" onClick={() => {router.push(`/user/find`)}} />
+          <BaseListItem primary="Manage my info" onClick={() => {router.push(`/user/update`)}} />
+          <BaseListItem primary="Initialize database" onClick={() => {router.push(`/init`)}} />
+          <BaseListItem primary="Component overview" onClick={() => {router.push(`/comp-ov`)}} />
         </List>
       </SectionBox>
 

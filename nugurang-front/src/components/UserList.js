@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
+import 'array-flat-polyfill';
 
 import NoContentsBox from './NoContentsBox'
 
@@ -24,7 +25,7 @@ export default function UserList({ items, link=null }) {
   return (
     <>
       {
-        (items && (items.length != 0))
+        items && items.length > 0
         ? (
           <List>
             {[items].flat().map((item) => (

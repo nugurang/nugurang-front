@@ -15,7 +15,7 @@ export default function ProjectList({ items }) {
   return (
     <>
       {
-        items
+        items && items.length > 0
         ? (
           <List>
             {[items].flat().map((item) => (

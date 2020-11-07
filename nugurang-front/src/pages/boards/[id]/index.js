@@ -61,6 +61,7 @@ function Board() {
   if (responses.some((response) => response.loading))
     return <Loading />;
 
+  const board = responses[0].data.getBoard ? responses[0].data.getBoard : null;
   const threads = responses[0].data.getBoard ? responses[0].data.getBoard.getThreads : null;
 
   return (
@@ -69,7 +70,7 @@ function Board() {
 
       <SectionBox
         titleBar={
-          <SectionTitleBar title={router.query.board} icon={<AssignmentIcon />}>
+          <SectionTitleBar title={board.name} icon={<AssignmentIcon />}>
             <Button onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.id }})}>Create thread</Button>
           </SectionTitleBar>
         }

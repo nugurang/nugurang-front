@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -21,6 +22,7 @@ const useStyles = makeStyles(() => ({
 
 
 export default function ArticleList({ items }) {
+  const router = useRouter();
   const classes = useStyles();
   return (
     <List>
@@ -32,22 +34,26 @@ export default function ArticleList({ items }) {
             onClick={item.onClick}
           >
             <Grid container alignItems="flex-start">
-              <Grid item>
-                <Avatar
-                  alt={item.user.name}
-                  src={item.user.image ? item.user.image.address : null}
-                  variant="circle"
-                />
-              </Grid>
+              <div onClick={() => router.push(`/user/${item.user.id}`)}>
+                <Grid item>
+                  <Avatar
+                    alt={item.user.name}
+                    src={item.user.image ? item.user.image.address : null}
+                    variant="circle"
+                  />
+                </Grid>
+              </div>
               <Grid item xs={10}>
                 <Box display="flex" flexWrap="wrap">
                   <ListItemText
                     primary={(
-                      <Box display={item.user? "block" : "none"}>
-                        <Typography variant="body1">
-                          {item.user.name}
-                        </Typography>
-                      </Box>
+                      <div onClick={() => router.push(`/user/${item.user.id}`)}>
+                        <Box display={item.user? "block" : "none"}>
+                          <Typography variant="body1">
+                            {item.user.name}
+                          </Typography>
+                        </Box>
+                      </div>
                     )}
                     secondary={(
                       <Box display={item.content ? "block" : "none"}>
