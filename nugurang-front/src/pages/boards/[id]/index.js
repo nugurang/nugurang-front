@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Button from '@material-ui/core/Button';
 
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../../src/config';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../../config';
 import withAuth from '../../../components/withAuth';
 import Loading from '../../../components/Loading';
 import GraphQlError from '../../../components/GraphQlError';

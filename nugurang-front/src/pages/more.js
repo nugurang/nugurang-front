@@ -3,6 +3,11 @@ import {useRouter} from 'next/router';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
@@ -69,6 +74,8 @@ export const GET_CURRENT_USER = gql`
 
 function More() {
   const router = useRouter();
+  const [open, setOpen] = React.useState(false);
+
   const responses = [
     useQuery(GET_CURRENT_USER)
   ];
@@ -80,6 +87,14 @@ function More() {
     return <Loading />;
 
   const currentUser = responses[0].data.currentUser;
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 
   return (
@@ -109,9 +124,36 @@ function More() {
                 </Grid>
                 <Grid item xs align="right">
                   <ButtonGroup color="primary">
-                    <Button onClick={() => router.push(`/user/${currentUser.id}`)} >My info</Button>
-                    <Button onClick={() => router.push(`${BACKEND_ADDR}/logout`)} >Sign out</Button>
+                    <Button onClick={() => router.push(`/user/${currentUser.id}`)} >
+                      My info
+                    </Button>
+                    <Button onClick={handleClickOpen}>
+                      Sign out
+                    </Button>
                   </ButtonGroup>
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <DialogTitle id="alert-dialog-title">
+                      {"Sign out"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                        Are you sure to sign out?
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={() => router.push(`${BACKEND_ADDR}/logout`)} color="primary" autoFocus>
+                        Yes
+                      </Button>
+                      <Button onClick={handleClose} color="primary" autoFocus>
+                        No
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                 </Grid>
               </>
             )

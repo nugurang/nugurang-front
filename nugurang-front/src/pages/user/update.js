@@ -1,9 +1,14 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +18,8 @@ import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
 
+import withAuth from '../../components/withAuth';
+import BaseTabs from '../../components/BaseTabs';
 import Layout from '../../components/Layout';
 import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
@@ -22,55 +29,34 @@ import GraphQlError from '../../components/GraphQlError';
 
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27';
 
-const useStyles = makeStyles(() => ({
-  box: {
-    border: '0rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0rem',
-    padding: '1rem',
-    variant: 'outlined',
-  },
-  button: {
-    background: '#FEFEFE',
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    color: 'default',
-    margin: '0.5rem',
-    padding: '0.5rem 3rem',
-    variant: 'outlined',
-  },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 28,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
 
-export const GET_CURRENT_OAUTH2_USER = gql`
-  query {
-    currentOAuth2User {
+const TAB_PROPS = [
+  {
+    id: 0,
+    label: "Profile",
+  },
+  {
+    id: 1,
+    label: "Security",
+  },
+]
+
+export const CURRENT_USER = gql`
+  query currentUser {
+    currentUser {
       id
       name
       email
+      image {
+        id
+        address
+      }
     }
   }
 `;
 
 export const CREATE_IMAGE = gql`
-  mutation createImage($address: String! ) {
+  mutation createImage($address: String!) {
     createImage (address: $address) {
       id
     }
@@ -85,20 +71,22 @@ export const CREATE_USER = gql`
   }
 `;
 
-function SignUp() {
+
+function update() {
   const router = useRouter();
-  const classes = useStyles();
   const newName = useRef(null);
   const newEmail = useRef(null);
   const newImageAddress = useRef(null);
+  const [open, setOpen] = React.useState(false);
 
   const results = [
-    [null, useQuery(GET_CURRENT_OAUTH2_USER)],
+    [null, useQuery(CURRENT_USER)],
     useMutation(CREATE_IMAGE),
     useMutation(CREATE_USER)
   ];
+  const [currentUser, createImage, createUser] = results.map(result => result[0]);
+  console.log(results[0][1]);
   const userData = results[0][1].data;
-  const [getCurrentOAuth2User, createImage, createUser] = results.map(result => result[0]);
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -118,83 +106,121 @@ function SignUp() {
     newImageAddress.current.focus();
   }
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Layout>
-      <SectionTitleBar title="Sign up" backButton />
-      <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />} border={false}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                className={classes.textField}
-                defaultValue={userData.currentOAuth2User.name}
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                inputRef={newName}
-                label="Enter username"
-                variant="outlined"
-                onClick={handleNewNameChange}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </SectionBox>
 
-      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />} border={false}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                className={classes.textField}
-                defaultValue={userData.currentOAuth2User.email}
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                inputRef={newEmail}
-                label="Enter email"
-                variant="outlined"
-                onClick={handleNewEmailChange}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </SectionBox>
+      <SectionTitleBar title="Change info" backButton />
 
-      <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />} border={false}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                className={classes.textField}
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                inputRef={newImageAddress}
-                label="Enter image link"
-                variant="outlined"
-                onClick={handleNewImageAddressChange}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </SectionBox>
+      <BaseTabs tabProps={TAB_PROPS}>
+        <div>
+          <SectionBox titleBar={<SectionTitleBar title="Change username" icon=<PersonIcon /> />} border={false}>
+            <Grid container spacing={2} alignItems="center" justify="space-between">
+              <Grid item xs>
+                <FormControl fullWidth variant="filled">
+                  <TextField
+                    defaultValue={userData.currentUser.name}
+                    inputRef={newName}
+                    label="Enter username"
+                    variant="outlined"
+                    onClick={handleNewNameChange}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+          </SectionBox>
 
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          let image;
-          if (newImageAddress.current.value) {
-            const res = await createImage({ variables: { address: newImageAddress.current.value }});
-            image = res.data.createImage.id;
-          }
-          await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
-          router.push('/signup/welcome');
-        }}
-      >
-        <Box className={classes.box} align="center">
-          <Button type="submit">Submit</Button>
-        </Box>
-      </form>
+          <SectionBox titleBar={<SectionTitleBar title="Change email" icon=<EmailIcon /> />} border={false}>
+            <Grid container spacing={2} alignItems="center" justify="space-between">
+              <Grid item xs>
+                <FormControl fullWidth variant="filled">
+                  <TextField
+                    defaultValue={userData.currentUser.email}
+                    inputRef={newEmail}
+                    label="Enter email"
+                    variant="outlined"
+                    onClick={handleNewEmailChange}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+          </SectionBox>
+
+          <SectionBox titleBar={<SectionTitleBar title="Change user image link" icon=<ImageIcon /> />} border={false}>
+            <Grid container spacing={2} alignItems="center" justify="space-between">
+              <Grid item xs>
+                <FormControl fullWidth variant="filled">
+                  <TextField
+                    defaultValue={userData.currentUser.image ? userData.currentUser.image.address : null}
+                    inputRef={newImageAddress}
+                    label="Enter image link"
+                    variant="outlined"
+                    onClick={handleNewImageAddressChange}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+          </SectionBox>
+
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              let image;
+              if (newImageAddress.current.value) {
+                const res = await createImage({ variables: { address: newImageAddress.current.value }});
+                image = res.data.createImage.id;
+              }
+              await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
+              router.push('/signup/welcome');
+            }}
+          >
+            <Box align="center">
+              <Button type="submit">Submit</Button>
+            </Box>
+          </form>
+        </div>
+
+        <div>
+          <SectionBox titleBar={<SectionTitleBar title="Delete user" icon=<ImageIcon /> />} border={false}>
+            <Typography>Warning: this action CANNOT be undone.</Typography>
+          </SectionBox>
+          <Box align="center">
+            <Button onClick={handleClickOpen}>
+              Delete account
+            </Button>
+          </Box>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Denied"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                No you can't leave :D
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus>
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+
+      </BaseTabs>
     </Layout>
   );
 }
 
-export default SignUp;
+export default withAuth(update);

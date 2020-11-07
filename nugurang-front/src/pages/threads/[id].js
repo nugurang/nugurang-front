@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
