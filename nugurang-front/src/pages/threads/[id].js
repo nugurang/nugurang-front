@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
 
 import BaseButton from '../../components/BaseButton';
 import GraphQlError from '../../components/GraphQlError';

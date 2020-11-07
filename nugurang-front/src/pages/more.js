@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import QueueIcon from '@material-ui/icons/Queue';
 
-import { BACKEND_ADDR } from '../src/config';
+import { BACKEND_ADDR } from '../config';
 import Layout from '../components/Layout';
 import BaseButton from '../components/BaseButton';
 import BaseListItem from '../components/BaseListItem';

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
 
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';

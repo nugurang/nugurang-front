@@ -8,7 +8,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import 'array-flat-polyfill';
 
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../src/config';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';

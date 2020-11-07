@@ -9,7 +9,7 @@ import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
 import withAuth from '../components/withAuth';
-import { ALL_BOARDS } from '../src/config';
+import { ALL_BOARDS } from '../config';
 
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
 

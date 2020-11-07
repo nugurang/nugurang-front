@@ -5,7 +5,7 @@ import BaseListItem from '../components/BaseListItem';
 import Layout from '../components/Layout';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
-import { BACKEND_ADDR } from '../src/config';
+import { BACKEND_ADDR } from '../config';
 
 export default function SignIn() {
   const router = useRouter();

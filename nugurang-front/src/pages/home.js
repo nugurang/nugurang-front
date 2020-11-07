@@ -7,7 +7,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
-import { COMMON_BOARDS, EVENT_BOARDS } from '../src/config';
+import { COMMON_BOARDS, EVENT_BOARDS } from '../config';
 import BaseButton from '../components/BaseButton';
 import BaseIconButton from '../components/BaseIconButton';
 import GraphQlError from '../components/GraphQlError';
