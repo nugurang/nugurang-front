@@ -1,14 +1,21 @@
-import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/styles';
+import Box from '@material-ui/core/Box';
 import Typography from'@material-ui/core/Typography';
 
+const useStyles = makeStyles(() => ({
+  margin: {
+  	align: "center",
+    margin: "2rem",
+  },
+}));
+
 export default function NoContentsBox() {
+  const classes = useStyles();
   return (
-    <Grid container spacing={2} justify="center">
-      <Grid item>
-        <Typography align="center" variant="h6">
-          No contents :(
-        </Typography>
-      </Grid>
-    </Grid>
+  	<Box className={classes.margin}>
+      <Typography align="center" variant="h6">
+        No contents :(
+      </Typography>
+    </Box>
   );
 }

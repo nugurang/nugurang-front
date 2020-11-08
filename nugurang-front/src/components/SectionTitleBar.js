@@ -13,7 +13,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles(() => ({
   margin: {
-    margin: '0.5rem 0',
+    margin: '0.5rem 0rem',
   },
   hr: {
     borderColor: 'rgba(0, 0, 0, 0.25)',

@@ -19,7 +19,6 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     top: 'auto',
     bottom: 0,
-    margin: 0,
     padding: "0.5rem",
   },
   bottomNavigation: {

@@ -1,7 +1,9 @@
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
+import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HomeIcon from '@material-ui/icons/Home';
@@ -12,7 +14,6 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 import { COMMON_BOARDS, EVENT_BOARDS } from '../config';
 import withAuth from '../components/withAuth';
-import BaseIconButton from '../components/BaseIconButton';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
@@ -103,8 +104,14 @@ function Home() {
   return (
     <Layout>
       <SectionTitleBar title="Home" icon=<HomeIcon />>
-        <BaseIconButton icon=<NotificationsIcon onClick={() => router.push('/notifications')} /> />
-        <BaseIconButton icon=<PersonIcon onClick={() => router.push(`/user/${currentUser.id}`)} /> />
+        <IconButton aria-label="show 17 new notifications" color="inherit">
+          <Badge badgeContent={17} color="secondary">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <IconButton onClick={() => router.push(`/user/${currentUser.id}`)} >
+          <PersonIcon />
+        </IconButton>
       </SectionTitleBar>
 
       <Grid container>
