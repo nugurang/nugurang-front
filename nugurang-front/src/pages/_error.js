@@ -21,8 +21,8 @@ export default function ErrorPage({ errorCode }) {
             <Typography>Something went wrong.</Typography>
           </Grid>
           <Grid item xs={12} align="center">
-            <Box className={classes.box} align="center">
-              <Button onClick={() => router.push('/home')} >Go home</Button>
+            <Box align="center">
+              <Button onClick={() => router.push('/home')}>Go home</Button>
             </Box>
           </Grid>
         </Grid>

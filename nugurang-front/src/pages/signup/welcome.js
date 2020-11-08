@@ -52,9 +52,8 @@ function Welcome() {
   if (responses.some((response) => response.loading))
     return <Loading />;
 
-  const currentUser = responses[0].data.currentUser;
+  const {currentUser} = responses[0].data;
 
-  
   return (
     <Layout>
       <FullScreenDialogBox titleBar=<SectionTitleBar title="Welcome" icon=<CheckIcon /> />>
@@ -67,7 +66,11 @@ function Welcome() {
             />
           </Grid>
           <Grid item xs={12} align="center">
-            <Typography variant="h4">Welcome, {currentUser.name}!</Typography>
+            <Typography variant="h4">
+              Welcome,
+              {currentUser.name}
+              !
+            </Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Typography variant="h5">Your account is created.</Typography>

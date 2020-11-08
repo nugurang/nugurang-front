@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Loading({ circular }) {
   const classes = useStyles();
   return (
-  	<Layout>
-  	  {
+    <Layout>
+      {
         circular
         ? <Backdrop className={classes.backdrop} open="true"><CircularProgress className={classes.circularProgress} /></Backdrop>
         : <LinearProgress />
       }
-  	</Layout>
+    </Layout>
   );
 }

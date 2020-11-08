@@ -65,7 +65,7 @@ export default function SectionTitleBar({ avatar, children, icon, title, backBut
         </Grid>
       </Grid>
       <Box display={bottomBar ? "block" : "none"}>
-        <Divider/>
+        <Divider />
       </Box>
     </div>
   );

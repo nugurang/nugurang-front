@@ -2,15 +2,13 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 
 import Layout from '../../components/Layout';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import TaskList from '../../components/TaskList';
-import UserList from '../../components/UserList';
+import TaskInfoCardGrid from '../../components/TaskInfoCardGrid';
 import WorkInfoBox from '../../components/WorkInfoBox';
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
@@ -170,7 +168,7 @@ const GET_WORK = gql`
 `;
 
 
-export default function WorkInfo() {
+function WorkInfo() {
   const router = useRouter();
   const responses = [
     useQuery(GET_WORK, {variables: {id: router.query.id}}),
@@ -192,23 +190,15 @@ export default function WorkInfo() {
       <SectionBox border={false}>
         <WorkInfoBox work={work} />
       </SectionBox>
-
-
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <TaskList
-            items={TEST_TASK_TODO_LIST}
-          />
-          <TaskList
-            items={TEST_TASK_DOING_LIST}
-          />
-          <TaskList
-            items={TEST_TASK_DONE_LIST}
-          />
+          <TaskInfoCardGrid items={TEST_TASK_TODO_LIST} xs={12} sm={6} md={4} />
+          <TaskInfoCardGrid items={TEST_TASK_DOING_LIST} xs={12} sm={6} md={4} />
+          <TaskInfoCardGrid items={TEST_TASK_DONE_LIST} xs={12} sm={6} md={4} />
         </BaseTabs>
       </SectionBox>
-
-
     </Layout>
   );
 }
+
+export default withAuth(CreateWork);

@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function ThreadGrid({ items }) {
+export default function ThreadGrid({ items, xs=12, sm=null, md=null, lg=null, xl=null }) {
   const classes = useStyles();
   const router = useRouter();
   return (
@@ -29,54 +29,61 @@ export default function ThreadGrid({ items }) {
       {
         items && items.length > 0
         ? (
-        <Grid container alignments="center" justify="flex-start">
-          {[items].flat().map((item) => (
-            <Grid item xs={12} sm={6} key={item.id}>
-              <Card
-                onClick={() => router.push(`/threads/${item.id}`)}
-                variant="outlined"
+          <Grid container alignments="center" justify="flex-start">
+            {[items].flat().map((item) => (
+              <Grid item
+                key={item.id}
+                xs={xs || 12}
+                sm={sm || xs || 12}
+                md={md || sm || xs || 12}
+                lg={lg || md || sm || xs || 12}
+                xl={xl || lg || md || sm || xs || 12}
               >
-                <CardActionArea>
-                  <Box display={item.image ? "block" : "none"}>
-                    <CardMedia className={classes.cardMedia}
-                      image={item.image}
-                      title={item.imageTitle ? item.imageTitle : null}
-                    />
-                  </Box>
-                  <CardContent>
-                    <Grid container spacing={1} alignItems="center" direction="row">
-                      <Grid item>
-                        <Avatar
-                          src={item.user.image ? item.user.image.address : null}
-                          variant="circle"
-                        />
+                <Card
+                  onClick={() => router.push(`/threads/${item.id}`)}
+                  variant="outlined"
+                >
+                  <CardActionArea>
+                    <Box display={item.image ? "block" : "none"}>
+                      <CardMedia className={classes.cardMedia}
+                        image={item.image}
+                        title={item.imageTitle ? item.imageTitle : null}
+                      />
+                    </Box>
+                    <CardContent>
+                      <Grid container spacing={1} alignItems="center" direction="row">
+                        <Grid item>
+                          <Avatar
+                            src={item.user.image ? item.user.image.address : null}
+                            variant="circle"
+                          />
+                        </Grid>
+                        <Grid item>
+                          <Box display={item.name ? "block" : "none"}>
+                            <Typography variant="h6">
+                              {item.name}
+                            </Typography>
+                          </Box>
+                          <Box display={item.author ? "block" : "none"}>
+                            <Typography variant="body1">
+                              {item.author}
+                            </Typography>
+                          </Box>
+                        </Grid>
                       </Grid>
-                      <Grid item>
-                        <Box display={item.name ? "block" : "none"}>
-                          <Typography variant="h6">
-                            {item.name}
-                          </Typography>
-                        </Box>
-                        <Box display={item.author ? "block" : "none"}>
-                          <Typography variant="body1">
-                            {item.author}
-                          </Typography>
-                        </Box>
+                      <Grid container justify="flex-end">
+                        <Grid item align="right">
+                          <StatCounterBox compact image={item.image} upCount={item.upCount} />
+                        </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid container justify="flex-end">
-                      <Grid item align="right">
-                        <StatCounterBox compact image={item.image} upCount={item.upCount} />
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
           ))}
-        </Grid>
+          </Grid>
         )
-        : <NoContentsBox/>
+        : <NoContentsBox />
       }
     </>
   );

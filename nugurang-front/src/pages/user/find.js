@@ -1,9 +1,7 @@
-import React, { useRef, useState } from 'react'
-import { useRouter } from 'next/router';
-import { gql, useMutation, useLazyQuery } from '@apollo/client';
+import React, { useRef } from 'react'
+import { gql, useLazyQuery } from '@apollo/client';
 
 import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
@@ -14,11 +12,9 @@ import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox'
-import SearchBox from '../../components/SearchBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import TeamList from '../../components/TeamList';
-import UserList from '../../components/UserList'
+import UserInfoCardGrid from '../../components/UserInfoCardGrid'
 import withAuth from '../../components/withAuth';
 
 export const GET_USER_BY_NAME = gql`
@@ -44,7 +40,6 @@ export const GET_USER_BY_NAME = gql`
 
 
 function FindUser() {
-  const router = useRouter();
   const keywordName = useRef(null);
 
   const results = [useLazyQuery(GET_USER_BY_NAME)];
@@ -84,8 +79,7 @@ function FindUser() {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
-                await getUserByName({ variables: {name: keywordName.current.value}})}
-              }
+                await getUserByName({ variables: {name: keywordName.current.value}})}}
             >
               <IconButton type="submit" aria-label="search">
                 <SearchIcon />
@@ -103,11 +97,11 @@ function FindUser() {
         {
           users
           ? (
-            <SectionBox>
-              <UserList items={users} link="/user"/>
+            <SectionBox border={false}>
+              <UserInfoCardGrid items={users} link="/user" xs={12} sm={6} md={4} />
             </SectionBox>
           )
-          : <NoContentsBox/>
+          : <NoContentsBox />
         }
       </SectionBox>
     </Layout>

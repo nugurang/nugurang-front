@@ -1,19 +1,14 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import Button from '@material-ui/core/Button';
 
-import { COMMON_BOARDS, EVENT_BOARDS } from '../../../config';
 import withAuth from '../../../components/withAuth';
 import Loading from '../../../components/Loading';
 import GraphQlError from '../../../components/GraphQlError';
-import BaseSwitch from '../../../components/BaseSwitch';
 import Layout from '../../../components/Layout';
 import SectionTitleBar from '../../../components/SectionTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import ThreadGrid from '../../../components/ThreadGrid';
-import ThreadList from '../../../components/ThreadList';
 
 
 export const GET_USER = gql`
@@ -54,8 +49,6 @@ function UserThreads() {
   ];
   const user = results[0][1].data ? results[0][1].data.getUser : null;
   const threads = results[0][1].data ? results[0][1].data.getUser.getThreads : null;
-  const [getUser] = results.map(result => result[0]);
-  console.log(threads);
   if (results.some(result => result[1].loading))
     return <Loading />;
   const errorResult = results.find(result => result[1].error);
@@ -64,14 +57,14 @@ function UserThreads() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Threads" backButton/>
+      <SectionTitleBar title="Threads" backButton />
 
       <SectionBox
         titleBar={
           <SectionTitleBar title={user.name} icon={<AssignmentIcon />} />
         }
       >
-        <ThreadList items={threads} />
+        <ThreadGrid items={threads} xs={12} sm={6} md={4} />
       </SectionBox>
 
     </Layout>

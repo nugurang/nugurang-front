@@ -72,7 +72,7 @@ function Notifications(){
 
     if (responses.some((response) => response.loading))
       return <Loading />;
-    //const notifications = responses[0].data;
+
     return(
       <Layout>
         <SectionTitleBar title="Notifications" backButton />

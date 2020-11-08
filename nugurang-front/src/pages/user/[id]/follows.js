@@ -8,7 +8,7 @@ import GraphQlError from '../../../components/GraphQlError';
 import Loading from '../../../components/Loading';
 import SectionBox from '../../../components/SectionBox';
 import SectionTitleBar from '../../../components/SectionTitleBar';
-import UserList from '../../../components/UserList';
+import UserInfoCardGrid from '../../../components/UserInfoCardGrid';
 import withAuth from '../../../components/withAuth';
 
 
@@ -74,14 +74,8 @@ function Follows() {
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <UserList
-            items={user.getFollowings}
-            link="/user"
-          />
-          <UserList
-            items={user.getFollowers}
-            link="/user"
-          />
+          <UserInfoCardGrid items={user.getFollowings} link="/user" xs={12} sm={6} md={4} />
+          <UserInfoCardGrid items={user.getFollowers} link="/user" xs={12} sm={6} md={4} />
         </BaseTabs>
       </SectionBox>
 

@@ -2,7 +2,6 @@ import React, { useRef } from 'react'
 import { useRouter } from 'next/router';
 import { gql, useMutation, useLazyQuery } from '@apollo/client';
 
-import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,11 +13,9 @@ import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox'
-import SearchBox from '../../components/SearchBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import TeamList from '../../components/TeamList';
-import UserList from '../../components/UserList'
+import UserInfoCardGrid from '../../components/UserInfoCardGrid'
 import withAuth from '../../components/withAuth';
 
 
@@ -93,8 +90,7 @@ function InviteUserToTeam() {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
-                await getUserByName({ variables: {name: keywordName.current.value}})}
-              }
+                await getUserByName({ variables: {name: keywordName.current.value}})}}
             >
               <IconButton type="submit" aria-label="search">
                 <SearchIcon />
@@ -113,10 +109,10 @@ function InviteUserToTeam() {
           users
           ? (
             <SectionBox>
-              <UserList items={users} link="/user"/>
+              <UserInfoCardGrid items={users} link="/user" xs={12} sm={6} md={4} />
             </SectionBox>
           )
-          : <NoContentsBox/>
+          : <NoContentsBox />
         }
       </SectionBox>
     </Layout>

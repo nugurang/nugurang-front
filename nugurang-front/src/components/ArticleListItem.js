@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -10,16 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import StatCounterBox from './StatCounterBox';
 
-const useStyles = makeStyles(() => ({
-  cardMedia: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-}));
-
-
 export default function ArticleListItem({ author, avatar, content, image, like, onClick, topic, view, vote }) {
-  const classes = useStyles();
   return (
     <ListItem
       alignItems="flex-start"

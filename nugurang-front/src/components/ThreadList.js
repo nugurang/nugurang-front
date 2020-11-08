@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -13,15 +12,7 @@ import { useRouter } from 'next/router';
 import NoContentsBox from './NoContentsBox';
 import StatCounterBox from './StatCounterBox';
 
-const useStyles = makeStyles(() => ({
-  cardMedia: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-}));
-
 export default function ThreadList({ items }) {
-  const classes = useStyles();
   const router = useRouter();
   return (
     <>
@@ -71,7 +62,7 @@ export default function ThreadList({ items }) {
             ))}
           </List>
           )
-        : <NoContentsBox/>
+        : <NoContentsBox />
       }
     </>
   );

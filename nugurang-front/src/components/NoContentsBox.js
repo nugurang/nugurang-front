@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import Typography from'@material-ui/core/Typography';
 
-export default function NoContentsBox({ label=null, image=null }) {
+export default function NoContentsBox() {
   return (
     <Grid container spacing={2} justify="center">
       <Grid item>

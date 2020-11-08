@@ -48,7 +48,7 @@ export default function UserGroupInfoCard({ primary, secondary, title, users, on
         <Box display={onAddButtonClick ? "block" : "none"}>
           <Grid item align="right">
             <IconButton color="primary" aria-label="invite user" component="span" onClick={onAddButtonClick}>
-              <AddCircleIcon/>
+              <AddCircleIcon />
             </IconButton>
           </Grid>
         </Box>

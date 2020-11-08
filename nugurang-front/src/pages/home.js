@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HomeIcon from '@material-ui/icons/Home';
@@ -95,7 +96,7 @@ function Home() {
   if (responses.some((response) => response.loading))
     return <Loading />;
 
-  const currentUser = responses[0].data.currentUser;
+  const {currentUser} = responses[0].data;
   const hotThreads = responses[1].data.getHotThreadsByBoardNames;
   const recentEvents = responses[2].data.getThreadsByBoardNames;
 
@@ -106,31 +107,37 @@ function Home() {
         <BaseIconButton icon=<PersonIcon onClick={() => router.push(`/user/${currentUser.id}`)} /> />
       </SectionTitleBar>
 
-      <SectionBox
-        titleBar={(
-          <SectionTitleBar title="Starred threads" icon=<FavoriteIcon />>
-            <Button disabled>More</Button>
-          </SectionTitleBar>
-        )}
-      >
-        <ThreadList items={hotThreads} />
-      </SectionBox>
-
-      <SectionBox
-        titleBar={(
-          <SectionTitleBar title="Hot threads" icon=<WhatshotIcon />/>
-        )}
-      >
-        <ThreadList items={hotThreads} />
-      </SectionBox>
-
-      <SectionBox
-        titleBar={(
-          <SectionTitleBar title="Recent events" icon=<TrendingUpIcon />/>
-        )}
-      >
-        <ThreadGrid items={recentEvents} />
-      </SectionBox>
+      <Grid container>
+        <Grid item xs={12} md={6}>
+          <SectionBox
+            titleBar={(
+              <SectionTitleBar title="Starred threads" icon=<FavoriteIcon />>
+                <Button disabled>More</Button>
+              </SectionTitleBar>
+            )}
+          >
+            <ThreadList items={hotThreads} />
+          </SectionBox>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <SectionBox
+            titleBar={(
+              <SectionTitleBar title="Hot threads" icon=<WhatshotIcon /> />
+            )}
+          >
+            <ThreadList items={hotThreads} />
+          </SectionBox>
+        </Grid>
+        <Grid item xs={12}>
+          <SectionBox
+            titleBar={(
+              <SectionTitleBar title="Recent events" icon=<TrendingUpIcon /> />
+            )}
+          >
+            <ThreadGrid items={recentEvents} xs={12} sm={6} md={4} />
+          </SectionBox>
+        </Grid>
+      </Grid>
 
     </Layout>
   );

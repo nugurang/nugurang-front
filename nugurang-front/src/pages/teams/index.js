@@ -3,82 +3,15 @@ import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import GroupIcon from '@material-ui/icons/Group';
 
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import TeamList from '../../components/TeamList';
+import TeamInfoCardGrid from '../../components/TeamInfoCardGrid';
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
-
-
-const TEST_TEAM_LIST = [
-  {
-    id: 0,
-    name: "Test team name",
-    users:[
-      {
-        id: 1,
-        name: "User 1",
-        image: "/static/images/sample_2.jpg",
-        followers: 10,
-        followings: 20,
-        bio: "Bio"
-      },
-      {
-        id: 2,
-        name: "User 2",
-        image: "/static/images/sample_3.jpg",
-        followers: 10,
-        followings: 20,
-        bio: "Bio"
-      },
-      {
-        id: 3,
-        name: "User 3",
-        image: "/static/images/sample_4.jpg",
-        followers: 10,
-        followings: 20,
-        bio: "Bio"
-      },
-    ],
-  },
-  {
-    id: 1,
-    name: "Test team name",
-    users:[
-      {
-        id: 1,
-        name: "User 1",
-        image: "/static/images/sample_2.jpg",
-        followers: 10,
-        followings: 20,
-        bio: "Bio"
-      },
-      {
-        id: 2,
-        name: "User 2",
-        image: "/static/images/sample_3.jpg",
-        followers: 10,
-        followings: 20,
-        bio: "Bio"
-      },
-      {
-        id: 3,
-        name: "User 3",
-        image: "/static/images/sample_4.jpg",
-        followers: 10,
-        followings: 20,
-        bio: "Bio"
-      },
-    ],
-  },
-]
-
 
 
 export const GET_CURRENT_USER = gql`
@@ -125,7 +58,7 @@ function Teams() {
           </SectionTitleBar>
         )}
       >
-        <TeamList items={teams} link="/teams" buttonLink="/teams/invite"/>
+        <TeamInfoCardGrid items={teams} link="/teams" addButtonLink="/teams/invite" xs={12} sm={6} md={4} />
       </SectionBox>
     </Layout>
   );

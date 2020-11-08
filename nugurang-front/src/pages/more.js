@@ -65,7 +65,7 @@ function More() {
   if (responses.some((response) => response.loading))
     return <Loading />;
 
-  const currentUser = responses[0].data.currentUser;
+  const {currentUser} = responses[0].data;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -80,96 +80,102 @@ function More() {
     <Layout>
       <SectionTitleBar title="More" backButton backButtonLink="/home" />
 
-      <SectionBox border={false}>
-        <Grid container alignItems="center">
-          {
-            !currentUser
-            ? (
-              <>
-                <Grid item xs={12} sm={8}>
-                  <Typography>You need to sign in first.</Typography>
-                </Grid>
-                <Grid item xs={12} sm={4} align="right">
-                  <ButtonGroup color="primary">
-                    <Button onClick={() => router.push('/signin')} >Sign in</Button>
-                  </ButtonGroup>
-                </Grid>
-              </>
-            )
-            : (
-              <>
-                <Grid item xs={12}>
-                  <UserInfoBox user={currentUser} dense/>
-                </Grid>
-                <Grid item xs align="right">
-                  <ButtonGroup color="primary">
-                    <Button onClick={() => router.push(`/user/${currentUser.id}`)} >
-                      My info
-                    </Button>
-                    <Button onClick={handleClickOpen}>
-                      Sign out
-                    </Button>
-                  </ButtonGroup>
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    <DialogTitle id="alert-dialog-title">
-                      {"Sign out"}
-                    </DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-description">
-                        Are you sure to sign out?
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={() => router.push(`${BACKEND_ADDR}/logout`)} color="primary" autoFocus>
-                        Yes
-                      </Button>
-                      <Button onClick={handleClose} color="primary" autoFocus>
-                        No
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </Grid>
-              </>
-            )
-          }
+      <Grid container>
+        <Grid item xs={12} md={6} lg={4}>
+          <SectionBox border={false}>
+            <Grid container alignItems="center">
+              {
+                !currentUser
+                ? (
+                  <>
+                    <Grid item xs={12} sm={8}>
+                      <Typography>You need to sign in first.</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={4} align="right">
+                      <ButtonGroup color="primary">
+                        <Button onClick={() => router.push('/signin')}>Sign in</Button>
+                      </ButtonGroup>
+                    </Grid>
+                  </>
+                )
+                : (
+                  <>
+                    <Grid item xs={12}>
+                      <UserInfoBox user={currentUser} dense />
+                    </Grid>
+                    <Grid item xs align="right">
+                      <ButtonGroup color="primary">
+                        <Button onClick={() => router.push(`/user/${currentUser.id}`)}>
+                          My info
+                        </Button>
+                        <Button onClick={handleClickOpen}>
+                          Sign out
+                        </Button>
+                      </ButtonGroup>
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                      >
+                        <DialogTitle id="alert-dialog-title">
+                          Sign out
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText id="alert-dialog-description">
+                            Are you sure to sign out?
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={() => router.push(`${BACKEND_ADDR}/logout`)} color="primary" autoFocus>
+                            Yes
+                          </Button>
+                          <Button onClick={handleClose} color="primary" autoFocus>
+                            No
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                    </Grid>
+                  </>
+                )
+              }
+            </Grid>
+          </SectionBox>
         </Grid>
-      </SectionBox>
+        <Grid item xs={12} md={6} lg={8}>
 
-      <SectionBox
-        titleBar={
-          <SectionTitleBar title="Search tools" icon=<QueueIcon /> />
-        }
-      >
-        <List>
-          <BaseListItem primary="Find user" onClick={() => {router.push(`/user/find`)}} />
-        </List>
-      </SectionBox>
+          <SectionBox
+            titleBar={
+              <SectionTitleBar title="Search tools" icon=<QueueIcon /> />
+            }
+          >
+            <List>
+              <BaseListItem primary="Find user" onClick={() => {router.push(`/user/find`)}} />
+            </List>
+          </SectionBox>
 
-      <SectionBox
-        titleBar={
-          <SectionTitleBar title="Settings" icon=<SettingsIcon /> />
-        }
-      >
-        <List>
-          <BaseListItem primary="Manage my info" onClick={() => {router.push(`/user/update`)}} />
-        </List>
-      </SectionBox>
+          <SectionBox
+            titleBar={
+              <SectionTitleBar title="Settings" icon=<SettingsIcon /> />
+            }
+          >
+            <List>
+              <BaseListItem primary="Manage my info" onClick={() => {router.push(`/user/update`)}} />
+            </List>
+          </SectionBox>
 
-      <SectionBox
-        titleBar={
-          <SectionTitleBar title="Developer options" icon=<CodeIcon /> />
-        }
-      >
-        <List>
-          <BaseListItem primary="Initialize database" onClick={() => {router.push(`/init`)}} />
-          <BaseListItem primary="Component overview" onClick={() => {router.push(`/comp-ov`)}} />
-        </List>
-      </SectionBox>
+          <SectionBox
+            titleBar={
+              <SectionTitleBar title="Developer options" icon=<CodeIcon /> />
+            }
+          >
+            <List>
+              <BaseListItem primary="Initialize database" onClick={() => {router.push(`/init`)}} />
+              <BaseListItem primary="Component overview" onClick={() => {router.push(`/comp-ov`)}} />
+            </List>
+          </SectionBox>
+        </Grid>
+      </Grid>
 
     </Layout>
   );

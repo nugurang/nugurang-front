@@ -2,18 +2,17 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
-import ProjectList from '../../components/ProjectList';
+import ProjectInfoCardGrid from '../../components/ProjectInfoCardGrid';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamInfoBox from '../../components/TeamInfoBox';
-import UserList from '../../components/UserList';
+import UserInfoCardGrid from '../../components/UserInfoCardGrid';
 
 
 const TAB_PROPS = [
@@ -52,7 +51,7 @@ const GET_TEAM = gql`
   }
 `;
 
-export default function TeamInfo() {
+function TeamInfo() {
   const router = useRouter();
   const responses = [
     useQuery(GET_TEAM, {variables: {id: router.query.id}}),
@@ -72,24 +71,19 @@ export default function TeamInfo() {
         <Button onClick={() => router.push({pathname: "/projects/create", query: { team: router.query.id }})}>Create project</Button>
       </SectionTitleBar>
       <SectionBox border={false}>
-        <TeamInfoBox team={team}/>
+        <TeamInfoBox team={team} />
       </SectionBox>
 
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <ProjectList
-            items={team.projects}
-            link="/projects"
-            buttonLink="/projects/invite"
-          />
-          <UserList
-            items={team.getUsers}
-            link="/user"
-          />
+          <ProjectInfoCardGrid items={team.projects} link="/projects" addButtonLink="/projects/invite" xs={12} sm={6} md={4} />
+          <UserInfoCardGrid items={team.getUsers} link="/user" xs={12} sm={6} md={4} />
         </BaseTabs>
       </SectionBox>
 
     </Layout>
   );
 }
+
+export default withAuth(TeamInfo);

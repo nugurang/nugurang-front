@@ -1,13 +1,11 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 
-export default function TeamInfoBox({ team, dense=false }) {
+export default function TeamInfoBox({ team }) {
   return (
     <Grid container spacing={2} alignItems="center" justify="center">
       <Grid item container spacing={2} alignItems="center" justify="flex-start">

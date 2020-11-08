@@ -20,7 +20,7 @@ export default function Layout({ children, title }) {
           <title>{title || 'Nugurang'}</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
-        <Container maxWidth="sm">
+        <Container maxWidth="lg">
           {children}
         </Container>
       </Box>

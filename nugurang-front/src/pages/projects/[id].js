@@ -2,7 +2,6 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
@@ -12,8 +11,8 @@ import Loading from '../../components/Loading';
 import ProjectInfoBox from '../../components/ProjectInfoBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import UserList from '../../components/UserList';
-import WorkList from '../../components/WorkList';
+import UserInfoCardGrid from '../../components/UserInfoCardGrid';
+import WorkInfoCardGrid from '../../components/WorkInfoCardGrid';
 
 
 const TAB_PROPS = [
@@ -67,7 +66,6 @@ function ProjectInfo() {
 
   return (
     <Layout>
-
       <SectionTitleBar title="Project info" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
         <Button onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
       </SectionTitleBar>
@@ -77,14 +75,8 @@ function ProjectInfo() {
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <WorkList
-            items={project.works}
-            link="/works"
-          />
-          <UserList
-            items={users}
-            link="/user"
-          />
+          <WorkInfoCardGrid items={project.works} link="/works" xs={12} sm={6} md={4} />
+          <UserInfoCardGrid items={users} link="/user" xs={12} sm={6} md={4} />
         </BaseTabs>
       </SectionBox>
 

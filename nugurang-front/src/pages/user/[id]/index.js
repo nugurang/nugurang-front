@@ -1,7 +1,6 @@
 import React from 'react';
 import {useRouter} from 'next/router';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import Box from'@material-ui/core/Box';
 import Button from'@material-ui/core/Button';
 import ButtonGroup from'@material-ui/core/ButtonGroup';
 import Grid from'@material-ui/core/Grid';
@@ -158,60 +157,66 @@ function UserInfo() {
         ? <SectionTitleBar title="My info" backButton />
         : <SectionTitleBar title="User info" backButton />
       }
-      <SectionBox border={false}>
-        <UserInfoBox user={user}/>
-        <Grid container direction="row" justify="flex-end">
-          <Grid item align="right">
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                createFollowing({ variables: {user: router.query.id}});
-              }}
-            >
-              <ButtonGroup color="primary">
-                <Button onClick={() => router.push(`/user/${router.query.id}/follows`)}>
-                  People
-                </Button>
-                <Button type="submit">
-                  Follow
-                </Button>
-              </ButtonGroup>
-            </form>
-          </Grid>
+
+      <Grid container>
+        <Grid item xs={12} md={6} lg={4}>
+          <SectionBox border={false}>
+            <UserInfoBox user={user} />
+            <Grid container direction="row" justify="flex-end">
+              <Grid item align="right">
+                <form
+                  onSubmit={e => {
+                    e.preventDefault();
+                    createFollowing({ variables: {user: router.query.id}});
+                  }}
+                >
+                  <ButtonGroup color="primary">
+                    <Button onClick={() => router.push(`/user/${router.query.id}/follows`)}>
+                      People
+                    </Button>
+                    <Button type="submit">
+                      Follow
+                    </Button>
+                  </ButtonGroup>
+                </form>
+              </Grid>
+            </Grid>
+          </SectionBox>
         </Grid>
-      </SectionBox>
+        <Grid item xs={12} md={6} lg={8}>
+          <SectionBox
+            titleBar={(
+              <SectionTitleBar title="Recent threads" icon=<AssignmentIcon />>
+                <Button onClick={() => router.push(`/user/${router.query.id}/threads`)}>More</Button>
+              </SectionTitleBar>
+            )}
+          >
+            <ThreadList items={user.getThreads} />
+          </SectionBox>
 
-      <SectionBox
-        titleBar={(
-          <SectionTitleBar title="Recent threads" icon=<AssignmentIcon />>
-            <Button onClick={() => router.push(`/user/${router.query.id}/threads`)}>More</Button>
-          </SectionTitleBar>
-        )}
-      >
-        <ThreadList items={user.getThreads}/>
-      </SectionBox>
-
-      <SectionBox
-        titleBar={(
-          <SectionTitleBar title="Recent blog updates" icon=<BookIcon />>
-            <Button onClick={() => router.push(`/blog/${router.query.id}`)}>Visit</Button>
-          </SectionTitleBar>
-        )}
-      >
-        <ThreadList items={TEST_BLOG_THREAD}/>
-      </SectionBox>
+          <SectionBox
+            titleBar={(
+              <SectionTitleBar title="Recent blog updates" icon=<BookIcon />>
+                <Button onClick={() => router.push(`/blog/${router.query.id}`)}>Visit</Button>
+              </SectionTitleBar>
+            )}
+          >
+            <ThreadList items={TEST_BLOG_THREAD} />
+          </SectionBox>
 
 
-      <SectionBox
-        titleBar={(
-          <SectionTitleBar title="Honor badges" icon=<EmojiEventsIcon />>
-            <Button onClick={() => router.push(`/user/${router.query.id}/honor`)}>More</Button>
-          </SectionTitleBar>
-        )}
-      >
-        <HonorBadgeGrid items={TEST_HONOR_BADGE_LIST} />
-      </SectionBox>
-
+          <SectionBox
+            titleBar={(
+              <SectionTitleBar title="Honor badges" icon=<EmojiEventsIcon />>
+                <Button onClick={() => router.push(`/user/${router.query.id}/honor`)}>More</Button>
+              </SectionTitleBar>
+            )}
+          >
+            <HonorBadgeGrid items={TEST_HONOR_BADGE_LIST} />
+          </SectionBox>
+          
+        </Grid>
+      </Grid>
     </Layout>
   );
 }

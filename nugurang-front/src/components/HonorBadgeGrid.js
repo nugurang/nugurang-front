@@ -35,7 +35,7 @@ export default function ThreadGrid({ items }) {
         <Grid item xs={4} sm={3} key={item.id}>
           <Card className={classes.card} variant="outlined">
             <CardActionArea>
-              <CardMedia className={classes.cardMedia} image={item.image} name={item.name}/>
+              <CardMedia className={classes.cardMedia} image={item.image} name={item.name} />
               <Typography className={classes.cardScoreTypography} variant="subtitle2">{item.score}</Typography>
               <Typography align="center" variant="subtitle1">{item.name}</Typography>
             </CardActionArea>

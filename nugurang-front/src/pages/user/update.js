@@ -1,6 +1,5 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -21,14 +20,10 @@ import PersonIcon from '@material-ui/icons/Person';
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import Layout from '../../components/Layout';
-import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
-
-const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27';
-
 
 const TAB_PROPS = [
   {
@@ -85,7 +80,6 @@ function update() {
     useMutation(CREATE_USER)
   ];
   const [currentUser, createImage, createUser] = results.map(result => result[0]);
-  console.log(results[0][1]);
   const userData = results[0][1].data;
 
   if (results.some(result => result[1].loading))
@@ -203,11 +197,11 @@ function update() {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Denied"}
+              Denied
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                No you can't leave :D
+                No you cannot leave :D
               </DialogContentText>
             </DialogContent>
             <DialogActions>

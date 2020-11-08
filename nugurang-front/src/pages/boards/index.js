@@ -1,7 +1,7 @@
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient , gql, useLazyQuery, useQuery } from "@apollo/client";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { gql, useLazyQuery, useQuery } from '@apollo/client';
+
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -108,55 +108,61 @@ function Boards() {
   const boardData = results[4][1].data;
 
   let key = 0;
-  let currentBoards = showEvents ? EVENT_BOARDS : COMMON_BOARDS;
+  const currentBoard = showEvents ? EVENT_BOARDS : COMMON_BOARDS;
   return (
     <Layout>
       <SectionTitleBar title="Boards" backButton />
-
-            <SectionBox
-              titleBar={
+      <Grid container>
+        <Grid item xs={12}>
+          <SectionBox
+            titleBar={
+              (
                 <SectionTitleBar title="Categories" icon={<CategoryIcon />}>
                   <BaseSwitch label="Show events" checked={showEvents} onChange={toggleShowEvents} />
                 </SectionTitleBar>
-              }
-            >
-              <Grid container>
-                {[currentBoards].flat().map((boardName) =>
-                  (
-                    <Grid item key={++key} xs={6} align="center">
-                      <CallingCard
-                        image="/static/images/sample_1.jpg"
-                        onClick={async (e) => {
-                          e.preventDefault();
-                          console.log(boardName);
-                          const { data } = await client.query({
-                            query: GET_BOARD_BY_NAME,
-                            variables: { name: boardName },
-                          });
-                          const boardId = data.getBoardByName.id;
-                          router.push(`/boards/${boardId}`);
-                        }}
-                      >
-                        <Typography variant="body1">{boardName}</Typography>
-                      </CallingCard>
-                    </Grid>
-                  )
-                )}
-              </Grid>
-            </SectionBox>
-
-            <SectionBox
-              titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
-            >
-              <ThreadList items={hotThreads} />
-            </SectionBox>
-
-            <SectionBox
-              titleBar={<SectionTitleBar title="Recent Threads" icon={<TrendingUpIcon />} />}
-            >
-              <ThreadList items={recentThreads} />
-            </SectionBox>
-
+              )
+            }
+          >
+            <Grid container>
+              {[currentBoard].flat().map((boardName) =>
+                (
+                  <Grid item key={++key} xs={6} sm={4} md={2} align="center">
+                    <CallingCard
+                      image="/static/images/sample_1.jpg"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        console.log(boardName);
+                        const { data } = await client.query({
+                          query: GET_BOARD_BY_NAME,
+                          variables: { name: boardName },
+                        });
+                        const boardId = data.getBoardByName.id;
+                        router.push(`/boards/${boardId}`);
+                      }}
+                    >
+                      <Typography variant="body1">{boardName}</Typography>
+                    </CallingCard>
+                  </Grid>
+                )
+              )}
+            </Grid>
+          </SectionBox>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <SectionBox
+            titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
+          >
+            <ThreadList items={hotThreads} />
+          </SectionBox>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <SectionBox
+            titleBar={<SectionTitleBar title="Recent Threads" icon={<TrendingUpIcon />} />}
+          >
+            <ThreadList items={recentThreads} />
+          </SectionBox>
+        </Grid>
+      </Grid>
     </Layout>
   );
 }

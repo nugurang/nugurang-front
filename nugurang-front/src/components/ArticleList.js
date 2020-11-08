@@ -1,29 +1,19 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import 'array-flat-polyfill';
 
 import StatCounterBox from './StatCounterBox';
 
-const useStyles = makeStyles(() => ({
-  cardMedia: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-}));
-
 
 export default function ArticleList({ items }) {
   const router = useRouter();
-  const classes = useStyles();
   return (
     <List>
       {[items].flat().map((item) => (

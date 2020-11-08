@@ -188,7 +188,7 @@ function Init({client}) {
     return <GraphQlError error={error} />;
 
   if (!done)
-    return <Loading circular={true}/>
+    return <Loading circular="true" />
 
   return (
     <FullScreenDialogBox>

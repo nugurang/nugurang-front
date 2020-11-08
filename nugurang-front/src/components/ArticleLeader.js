@@ -6,9 +6,6 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -16,7 +13,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BaseImage from './BaseImage';
 import StatCounterBox from './StatCounterBox';
 
-export default function ArticleLeader({ article, like, topic, view, vote, onClick="null" }) {
+export default function ArticleLeader({ article, like, topic, view, vote }) {
   const router = useRouter();
   return (
     <Box>

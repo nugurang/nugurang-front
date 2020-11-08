@@ -1,4 +1,4 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -9,7 +9,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import ViewListIcon from '@material-ui/icons/ViewList';
 
 import Layout from '../../components/Layout';
@@ -83,7 +82,7 @@ function CreateTask() {
               onSubmit={async (e) => {
                 e.preventDefault();
                 const taskRes = await createTask({ variables: {task: {work: router.query.work, name: newName.current.value}}});
-                let taskId = taskRes.data.createTask.id;
+                const taskId = taskRes.data.createTask.id;
                 router.push(`/tasks/${taskId}`);
               }}
             >

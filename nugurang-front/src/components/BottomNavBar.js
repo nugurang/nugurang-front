@@ -42,7 +42,6 @@ function HideOnScroll(props) {
 
 HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
-  window: PropTypes.func,
 };
 
 
@@ -59,7 +58,10 @@ export default function BottomNavBar(props) {
   ].map(([label, value, icon]) => {
       return (
         <BottomNavigationAction
-          key={++key} label={label} value={value} icon={icon}
+          key={++key}
+          label={label}
+          value={value}
+          icon={icon}
           onClick={() => {router.push(`/${value}`)}}
         />
       )

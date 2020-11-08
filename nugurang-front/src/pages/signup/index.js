@@ -6,20 +6,17 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 
 import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
 
 import Layout from '../../components/Layout';
-import ImageUploadingBox from '../../components/ImageUploadingBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 
-const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27';
 
 export const GET_CURRENT_OAUTH2_USER = gql`
   query {
@@ -49,7 +46,6 @@ export const CREATE_USER = gql`
 
 function SignUp() {
   const router = useRouter();
-  const classes = useStyles();
   const newName = useRef(null);
   const newEmail = useRef(null);
   const newImageAddress = useRef(null);
@@ -88,7 +84,7 @@ function SignUp() {
           <Grid item xs>
             <FormControl fullWidth variant="filled">
               <TextField
-                defaultValue={userData.currentOAuth2User.name} }}
+                defaultValue={userData.currentOAuth2User.name}
                 inputRef={newName}
                 label="Enter username"
                 variant="outlined"

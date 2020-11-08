@@ -30,7 +30,7 @@ function ShowImage() {
   const image = responses[0].data.getImage;
 
   return (
-    <img src={image.address}/>
+    <img src={image.address} alt="Image clicked by user" />
   );
 }
 
