@@ -23,7 +23,7 @@ export default function UserInfoBox({ user, dense=false }) {
     <Box className={classes.box}>
       <Grid container spacing={2} alignItems="center" justify="center">
         <Grid item container spacing={2} alignItems="center" justify="flex-start">
-          <div onClick={() => router.push(`/images/${user.image.id}`)}>
+          <div onClick={() => router.push(`/image/${user.image.id}`)}>
             <Grid item>
               <Avatar className={classes.avatar}
                 alt={user.name}

@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import Button from '@material-ui/core/Button';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Button from '@material-ui/core/Button';
 
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../../config';
 import withAuth from '../../../components/withAuth';
@@ -16,11 +16,15 @@ import ThreadGrid from '../../../components/ThreadGrid';
 import ThreadList from '../../../components/ThreadList';
 
 
-const GET_BOARD = gql`
-  query GetBoard($id: ID!) {
-    getBoard(id: $id) {
+export const GET_USER = gql`
+  query getUser($id: ID!) {
+    getUser(id: $id) {
       id
       name
+      image {
+        id
+        address
+      }
       getThreads(page: 0, pageSize: 5) {
         id
         name
@@ -43,36 +47,28 @@ const GET_BOARD = gql`
 `;
 
 
-function Board() {
+function UserThreads() {
   const router = useRouter();
-  const [showEvents, setShowEvents] = useState(false);
-  const toggleShowEvents = () => {
-    setShowEvents((prev) => !prev);
-  };
-
-  const responses = [
-    useQuery(GET_BOARD, {variables: {id: router.query.id}}),
+  const results = [
+    [null, useQuery(GET_USER, {variables: {id: router.query.id}})],
   ];
-
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-
-  if (responses.some((response) => response.loading))
+  const user = results[0][1].data ? results[0][1].data.getUser : null;
+  const threads = results[0][1].data ? results[0][1].data.getUser.getThreads : null;
+  const [getUser] = results.map(result => result[0]);
+  console.log(threads);
+  if (results.some(result => result[1].loading))
     return <Loading />;
-
-  const board = responses[0].data.getBoard ? responses[0].data.getBoard : null;
-  const threads = responses[0].data.getBoard ? responses[0].data.getBoard.getThreads : null;
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />
 
   return (
     <Layout>
-      <SectionTitleBar title="Boards" backButton/>
+      <SectionTitleBar title="Threads" backButton/>
 
       <SectionBox
         titleBar={
-          <SectionTitleBar title={board.name} icon={<AssignmentIcon />}>
-            <Button onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.id }})}>Create thread</Button>
-          </SectionTitleBar>
+          <SectionTitleBar title={user.name} icon={<AssignmentIcon />} />
         }
       >
         <ThreadList items={threads} />
@@ -82,4 +78,4 @@ function Board() {
   );
 }
 
-export default withAuth(Board);
+export default withAuth(UserThreads);

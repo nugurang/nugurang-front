@@ -109,7 +109,7 @@ function Home() {
       <SectionBox
         titleBar={(
           <SectionTitleBar title="Starred threads" icon=<FavoriteIcon />>
-            <Button>More</Button>
+            <Button disabled>More</Button>
           </SectionTitleBar>
         )}
       >

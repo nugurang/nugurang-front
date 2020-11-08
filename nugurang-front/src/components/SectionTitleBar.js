@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function SectionTitleBar({ avatar, children, icon, title, avatarDescription=null, backButton=false, backButtonLink=null, bottomBar=false, circleIcon=true }) {
+export default function SectionTitleBar({ avatar, children, icon, title, backButton=false, backButtonLink=null, bottomBar=false, circleIcon=true }) {
   const router = useRouter();
   const classes = useStyles();
   let key = 0;
@@ -42,7 +42,7 @@ export default function SectionTitleBar({ avatar, children, icon, title, avatarD
           </Box>
           <Box display={avatar && !icon ? "block" : "none"}>
             <Avatar
-              alt={avatarDescription || null}
+              alt={title || null}
               src={avatar}
               variant={circleIcon ? "circle" : "square"}
             />

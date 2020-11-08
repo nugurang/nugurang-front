@@ -1,5 +1,4 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -21,43 +20,6 @@ import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27';
-
-const useStyles = makeStyles(() => ({
-  box: {
-    border: '0rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0rem',
-    padding: '1rem',
-    variant: 'outlined',
-  },
-  button: {
-    background: '#FEFEFE',
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    color: 'default',
-    margin: '0.5rem',
-    padding: '0.5rem 3rem',
-    variant: 'outlined',
-  },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 28,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
 
 export const GET_CURRENT_OAUTH2_USER = gql`
   query {
@@ -126,10 +88,7 @@ function SignUp() {
           <Grid item xs>
             <FormControl fullWidth variant="filled">
               <TextField
-                className={classes.textField}
-                defaultValue={userData.currentOAuth2User.name}
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                defaultValue={userData.currentOAuth2User.name} }}
                 inputRef={newName}
                 label="Enter username"
                 variant="outlined"
@@ -145,10 +104,7 @@ function SignUp() {
           <Grid item xs>
             <FormControl fullWidth variant="filled">
               <TextField
-                className={classes.textField}
                 defaultValue={userData.currentOAuth2User.email}
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                 inputRef={newEmail}
                 label="Enter email"
                 variant="outlined"
@@ -164,9 +120,6 @@ function SignUp() {
           <Grid item xs>
             <FormControl fullWidth variant="filled">
               <TextField
-                className={classes.textField}
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
                 inputRef={newImageAddress}
                 label="Enter image link"
                 variant="outlined"
@@ -189,7 +142,7 @@ function SignUp() {
           router.push('/signup/welcome');
         }}
       >
-        <Box className={classes.box} align="center">
+        <Box align="center">
           <Button type="submit">Submit</Button>
         </Box>
       </form>

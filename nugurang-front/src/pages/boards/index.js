@@ -5,7 +5,7 @@ import { gql, useLazyQuery, useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ListIcon from '@material-ui/icons/List';
+import CategoryIcon from '@material-ui/icons/Category';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import 'array-flat-polyfill';
@@ -115,7 +115,7 @@ function Boards() {
 
             <SectionBox
               titleBar={
-                <SectionTitleBar title="Categories" icon={<ListIcon />}>
+                <SectionTitleBar title="Categories" icon={<CategoryIcon />}>
                   <BaseSwitch label="Show events" checked={showEvents} onChange={toggleShowEvents} />
                 </SectionTitleBar>
               }

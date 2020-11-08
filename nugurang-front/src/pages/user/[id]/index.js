@@ -5,6 +5,7 @@ import Box from'@material-ui/core/Box';
 import Button from'@material-ui/core/Button';
 import ButtonGroup from'@material-ui/core/ButtonGroup';
 import Grid from'@material-ui/core/Grid';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import BookIcon from '@material-ui/icons/Book';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
@@ -88,6 +89,23 @@ export const GET_USER = gql`
       blog {
         id
       }
+      getThreads(page: 0, pageSize: 3) {
+        id
+        name
+        upCount
+        commentCount
+        user {
+          name
+          image {
+            address
+          }
+        }
+        firstArticle {
+          images {
+            address
+          }
+        }
+      }
       getFollowings(page: 0, pageSize: 100) {
         id
       }
@@ -99,8 +117,8 @@ export const GET_USER = gql`
 `;
 
 
-export const GET_CURRENT_USER = gql`
-  query {
+export const CURRENT_USER = gql`
+  query currentUser{
     currentUser {
       id
       name
@@ -118,34 +136,32 @@ export const CREATE_FOLLOWING = gql`
 
 function UserInfo() {
   const router = useRouter();
-  const responses = [
-    useQuery(GET_USER, {variables: {id: router.query.id}}), useQuery(GET_CURRENT_USER), useMutation(CREATE_FOLLOWING)
+  const results = [
+    [null, useQuery(GET_USER, {variables: {id: router.query.id}})],
+    [null, useQuery(CURRENT_USER)],
+    useMutation(CREATE_FOLLOWING)
   ];
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
+  const user = results[0][1].data ? results[0][1].data.getUser : null;
+  const currentUser = results[1][1].data ? results[1][1].data.currentUser : null;
+  const [getUser, getCurrentUser, createFollowing] = results.map(result => result[0]);
 
-  if (responses.some((response) => response.loading))
+  if (results.some(result => result[1].loading))
     return <Loading />;
-
-  const user = responses[0].data.getUser;
-  const currentUser = responses[1].data.currentUser;
-  const createFollowing = responses[2][0];
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />
 
   return (
     <Layout>
-
       {
         user.id === currentUser.id
         ? <SectionTitleBar title="My info" backButton />
         : <SectionTitleBar title="User info" backButton />
       }
-
       <SectionBox border={false}>
         <UserInfoBox user={user}/>
         <Grid container direction="row" justify="flex-end">
           <Grid item align="right">
-
             <form
               onSubmit={e => {
                 e.preventDefault();
@@ -165,11 +181,20 @@ function UserInfo() {
         </Grid>
       </SectionBox>
 
+      <SectionBox
+        titleBar={(
+          <SectionTitleBar title="Recent threads" icon=<AssignmentIcon />>
+            <Button onClick={() => router.push(`/user/${router.query.id}/threads`)}>More</Button>
+          </SectionTitleBar>
+        )}
+      >
+        <ThreadList items={user.getThreads}/>
+      </SectionBox>
 
       <SectionBox
         titleBar={(
-          <SectionTitleBar title="Latest blog thread" icon=<BookIcon />>
-            <Button onClick={() => router.push(`/blog/${router.query.id}`)}>Blog</Button>
+          <SectionTitleBar title="Recent blog updates" icon=<BookIcon />>
+            <Button onClick={() => router.push(`/blog/${router.query.id}`)}>Visit</Button>
           </SectionTitleBar>
         )}
       >

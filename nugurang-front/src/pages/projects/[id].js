@@ -4,16 +4,16 @@ import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-import Layout from '../../components/Layout';
+import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
+import Layout from '../../components/Layout';
+import Loading from '../../components/Loading';
 import ProjectInfoBox from '../../components/ProjectInfoBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import UserList from '../../components/UserList';
 import WorkList from '../../components/WorkList';
-import withAuth from '../../components/withAuth';
-import Loading from '../../components/Loading';
 
 
 const TAB_PROPS = [
@@ -52,7 +52,7 @@ const GET_PROJECT = gql`
   }
 `;
 
-export default function ProjectInfo() {
+function ProjectInfo() {
   const router = useRouter();
   const responses = [
     useQuery(GET_PROJECT, {variables: {id: router.query.id}}),
@@ -91,3 +91,5 @@ export default function ProjectInfo() {
     </Layout>
   );
 }
+
+export default withAuth(ProjectInfo);

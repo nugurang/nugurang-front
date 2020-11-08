@@ -11,6 +11,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
+
+import CodeIcon from '@material-ui/icons/Code';
+import SettingsIcon from '@material-ui/icons/Settings';
 import QueueIcon from '@material-ui/icons/Queue';
 
 import { BACKEND_ADDR } from '../config';
@@ -139,12 +142,30 @@ function More() {
 
       <SectionBox
         titleBar={
-          <SectionTitleBar title="More features" icon=<QueueIcon /> />
+          <SectionTitleBar title="Search tools" icon=<QueueIcon /> />
         }
       >
         <List>
           <BaseListItem primary="Find user" onClick={() => {router.push(`/user/find`)}} />
+        </List>
+      </SectionBox>
+
+      <SectionBox
+        titleBar={
+          <SectionTitleBar title="Settings" icon=<SettingsIcon /> />
+        }
+      >
+        <List>
           <BaseListItem primary="Manage my info" onClick={() => {router.push(`/user/update`)}} />
+        </List>
+      </SectionBox>
+
+      <SectionBox
+        titleBar={
+          <SectionTitleBar title="Developer options" icon=<CodeIcon /> />
+        }
+      >
+        <List>
           <BaseListItem primary="Initialize database" onClick={() => {router.push(`/init`)}} />
           <BaseListItem primary="Component overview" onClick={() => {router.push(`/comp-ov`)}} />
         </List>
