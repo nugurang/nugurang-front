@@ -10,6 +10,7 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import CreateIcon from '@material-ui/icons/Create';
 import Layout from '../components/Layout';
 import ImageUploadingBox from '../components/ImageUploadingBox';
+import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import ResponsiveDialog from '../components/ResponsiveDialog';
@@ -69,7 +70,7 @@ export default function Edit() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Write" backButton="true" />
+      <PageTitleBar title="Write" backButton="true" />
 
 
       <SectionBox titleBar={<SectionTitleBar title="Add image" icon=<AddAPhotoIcon /> />}>

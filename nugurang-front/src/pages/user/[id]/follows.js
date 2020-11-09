@@ -6,8 +6,8 @@ import Layout from '../../../components/Layout';
 import BaseTabs from '../../../components/BaseTabs';
 import GraphQlError from '../../../components/GraphQlError';
 import Loading from '../../../components/Loading';
+import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
-import SectionTitleBar from '../../../components/SectionTitleBar';
 import UserInfoCardGrid from '../../../components/UserInfoCardGrid';
 import withAuth from '../../../components/withAuth';
 
@@ -21,7 +21,7 @@ const TAB_PROPS = [
     id: 1,
     label: "Followers",
   },
-]
+];
 
 
 export const GET_USER = gql`
@@ -70,7 +70,7 @@ function Follows() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Follows" backButton />
+      <PageTitleBar title="Follows" backButton />
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>

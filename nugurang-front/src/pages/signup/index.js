@@ -12,6 +12,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
 
 import Layout from '../../components/Layout';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
@@ -78,7 +79,7 @@ function SignUp() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Sign up" backButton />
+      <PageTitleBar title="Sign up" backButton />
       <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />} border={false}>
         <Grid container spacing={2} alignItems="center" justify="space-between">
           <Grid item xs>

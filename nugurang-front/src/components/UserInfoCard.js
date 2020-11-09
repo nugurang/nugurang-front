@@ -23,7 +23,9 @@ export default function UserInfoCard({ user, onClick=null }) {
                   alt={user.name}
                   src={user.image ? user.image.address : null}
                   variant="circle"
-                />
+                >
+                  {user.name.charAt(0).toUpperCase()}
+                </Avatar>
               </Grid>
               <Grid item xs justify="flex-start">
                 <Typography variant="body1">

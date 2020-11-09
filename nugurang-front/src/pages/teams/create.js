@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 import Layout from '../../components/Layout';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
@@ -38,7 +39,7 @@ function CreateTeam() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Create new team" backButton backButtonLink="/teams" />
+      <PageTitleBar title="Create new team" backButton backButtonLink="/teams" />
 
       <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
         <Grid container spacing={2} alignItems="center" justify="space-between">

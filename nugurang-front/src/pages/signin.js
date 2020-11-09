@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import BaseListItem from '../components/BaseListItem';
 import Layout from '../components/Layout';
 import SectionBox from '../components/SectionBox';
-import SectionTitleBar from '../components/SectionTitleBar';
+import PageTitleBar from '../components/PageTitleBar';
 import { BACKEND_ADDR } from '../config';
 
 export default function SignIn() {
@@ -36,7 +36,7 @@ export default function SignIn() {
   return (
     <Layout>
       <SectionBox
-        titleBar={<SectionTitleBar title="Sign In" backButton />}
+        titleBar={<PageTitleBar title="Sign In" backButton />}
       >
         <List>
           {TEST_SIGNIN_LIST.map(

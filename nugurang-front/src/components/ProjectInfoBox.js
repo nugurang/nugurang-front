@@ -15,7 +15,7 @@ export default function ProjectInfoBox({ project }) {
             <Grid item align="right">
               <AvatarGroup max={3} spacing="small">
                 {project.getUsers.map(user => (
-                  <Avatar key={user.id} alt={user.name} src={user.image} />
+                  <Avatar key={user.id} alt={user.name} src={user.image ? user.image.address : null} />
                 ))}
               </AvatarGroup>
             </Grid>

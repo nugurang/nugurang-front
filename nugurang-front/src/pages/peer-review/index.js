@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Layout from '../../components/Layout';
 
 import BaseMultiSelect from '../../components/BaseMultiSelect';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 
@@ -84,7 +85,7 @@ export default function PeerReviewIndex() {
   const router = useRouter();
   return (
     <Layout>
-      <SectionTitleBar title="Peer review" backButton />
+      <PageTitleBar title="Peer review" backButton />
       {TEST_USER_LIST.flat().map((item) => (
         <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image} circleIcon="true" />}>
           <Grid container spacing={2}>

@@ -12,6 +12,7 @@ import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox'
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import UserInfoCardGrid from '../../components/UserInfoCardGrid'
@@ -62,7 +63,7 @@ function FindUser() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Find user" backButton />
+      <PageTitleBar title="Find user" backButton />
       <SectionBox border={false}>
         <Grid container spacing={2} alignItems="center" justify="space-between">
           <Grid item xs>

@@ -5,6 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import 'array-flat-polyfill';
 
 const useStyles = makeStyles(() => ({
   cardMedia: {
@@ -27,15 +28,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function ThreadGrid({ items }) {
+export default function HonorBadgeGrid({ items }) {
   const classes = useStyles();
   return (
     <Grid container alignments="center" justify="flex-start">
       {[items].flat().map((item) => (
-        <Grid item xs={4} sm={3} key={item.id}>
+        <Grid item key={item.id} xs={4} sm={3} md={2}>
           <Card className={classes.card} variant="outlined">
             <CardActionArea>
-              <CardMedia className={classes.cardMedia} image={item.image} name={item.name} />
+              <CardMedia className={classes.cardMedia} image={item.image ? item.image.address : null} name={item.name} />
               <Typography className={classes.cardScoreTypography} variant="subtitle2">{item.score}</Typography>
               <Typography align="center" variant="subtitle1">{item.name}</Typography>
             </CardActionArea>

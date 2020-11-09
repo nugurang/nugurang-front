@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import Layout from '../../components/Layout';
-import SectionTitleBar from '../../components/SectionTitleBar';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import NotificationList from '../../components/NotificationList';
 import Loading from '../../components/Loading';
@@ -75,7 +75,7 @@ function Notifications(){
 
     return(
       <Layout>
-        <SectionTitleBar title="Notifications" backButton />
+        <PageTitleBar title="Notifications" backButton />
         <SectionBox>
           <NotificationList items={TEST_NOTIFICATION_LIST} />
         </SectionBox>

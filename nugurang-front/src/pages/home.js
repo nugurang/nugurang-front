@@ -17,6 +17,7 @@ import withAuth from '../components/withAuth';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
+import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import ThreadGrid from '../components/ThreadGrid';
@@ -103,7 +104,7 @@ function Home() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Home" icon=<HomeIcon />>
+      <PageTitleBar title="Home" icon=<HomeIcon />>
         <IconButton aria-label="show 17 new notifications" color="inherit">
           <Badge badgeContent={17} color="secondary">
             <NotificationsIcon />
@@ -112,7 +113,7 @@ function Home() {
         <IconButton onClick={() => router.push(`/user/${currentUser.id}`)} >
           <PersonIcon />
         </IconButton>
-      </SectionTitleBar>
+      </PageTitleBar>
 
       <Grid container>
         <Grid item xs={12} md={6}>

@@ -8,6 +8,7 @@ import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import PageTitleBar from '../../components/PageTitleBar';
 import ProjectInfoBox from '../../components/ProjectInfoBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -66,9 +67,10 @@ function ProjectInfo() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Project info" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
+      <PageTitleBar title="Project info" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
         <Button onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
-      </SectionTitleBar>
+      </PageTitleBar>
+      
       <SectionBox border={false}>
         <ProjectInfoBox project={project} />
       </SectionBox>

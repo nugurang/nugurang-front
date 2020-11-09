@@ -10,7 +10,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import Layout from '../../components/Layout';
 
 import FullScreenDialogBox from '../../components/FullScreenDialogBox';
-import SectionTitleBar from '../../components/SectionTitleBar';
+import PageTitleBar from '../../components/PageTitleBar';
 
 
 const useStyles = makeStyles(() => ({
@@ -30,7 +30,7 @@ export default function ThankYou() {
   const classes = useStyles();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<SectionTitleBar title="Review completed" icon=<CheckIcon /> />>
+      <FullScreenDialogBox titleBar=<PageTitleBar title="Review completed" icon=<CheckIcon /> />>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography className={classes.typography}>Thank you for your cooperation!</Typography>

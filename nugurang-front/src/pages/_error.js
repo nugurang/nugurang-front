@@ -7,14 +7,14 @@ import Typography from '@material-ui/core/Typography';
 
 import FullScreenDialogBox from '../components/FullScreenDialogBox';
 import Layout from '../components/Layout';
-import SectionTitleBar from '../components/SectionTitleBar';
+import PageTitleBar from '../components/PageTitleBar';
 
 
 export default function ErrorPage({ errorCode }) {
   const router = useRouter();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<SectionTitleBar title="Error!" backButton />>
+      <FullScreenDialogBox titleBar=<PageTitleBar title="Error!" backButton />>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography>{errorCode}</Typography>

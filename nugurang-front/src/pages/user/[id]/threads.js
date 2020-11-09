@@ -6,6 +6,7 @@ import withAuth from '../../../components/withAuth';
 import Loading from '../../../components/Loading';
 import GraphQlError from '../../../components/GraphQlError';
 import Layout from '../../../components/Layout';
+import PageTitleBar from '../../../components/PageTitleBar';
 import SectionTitleBar from '../../../components/SectionTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import ThreadGrid from '../../../components/ThreadGrid';
@@ -57,7 +58,7 @@ function UserThreads() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Threads" backButton />
+      <PageTitleBar title="Threads" backButton />
 
       <SectionBox
         titleBar={

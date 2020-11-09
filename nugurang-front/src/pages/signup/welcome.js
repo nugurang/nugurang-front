@@ -13,7 +13,7 @@ import FullScreenDialogBox from '../../components/FullScreenDialogBox';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
-import SectionTitleBar from '../../components/SectionTitleBar';
+import PageTitleBar from '../../components/PageTitleBar';
 import withAuth from '../../components/withAuth';
 
 
@@ -56,20 +56,20 @@ function Welcome() {
 
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<SectionTitleBar title="Welcome" icon=<CheckIcon /> />>
+      <FullScreenDialogBox titleBar=<PageTitleBar title="Welcome" icon=<CheckIcon /> />>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Avatar className={classes.avatar}
               alt={currentUser.name}
               src={currentUser.image ? currentUser.image.address : null}
               variant="circle"
-            />
+            >
+              {currentUser.name.charAt(0).toUpperCase()}
+            </Avatar>
           </Grid>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              Welcome,
-              {currentUser.name}
-              !
+              Welcome, {currentUser.name}!
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">

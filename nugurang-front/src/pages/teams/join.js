@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 import FullScreenDialogBox from '../../components/FullScreenDialogBox';
 import Layout from '../../components/Layout';
-import SectionTitleBar from '../../components/SectionTitleBar';
+import PageTitleBar from '../../components/PageTitleBar';
 import withAuth from '../../components/withAuth';
 
 
@@ -15,7 +15,7 @@ function Chatting() {
   const router = useRouter();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<SectionTitleBar title="Invitation" backButton />>
+      <FullScreenDialogBox titleBar=<PageTitleBar title="Invitation" backButton />>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography variant="h4">Are you sure to join?</Typography>

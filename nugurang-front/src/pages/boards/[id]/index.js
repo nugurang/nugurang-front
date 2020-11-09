@@ -8,6 +8,7 @@ import withAuth from '../../../components/withAuth';
 import Loading from '../../../components/Loading';
 import GraphQlError from '../../../components/GraphQlError';
 import Layout from '../../../components/Layout';
+import PageTitleBar from '../../../components/PageTitleBar';
 import SectionTitleBar from '../../../components/SectionTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import ThreadGrid from '../../../components/ThreadGrid';
@@ -63,7 +64,7 @@ function Board() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Boards" backButton />
+      <PageTitleBar title="Boards" backButton />
 
       <SectionBox
         titleBar={

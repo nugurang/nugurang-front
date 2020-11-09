@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
 import ThreadBox from '../../components/ThreadBox';
@@ -83,9 +84,9 @@ function Thread(threadId) {
 
   return (
     <Layout>
-      <SectionTitleBar title="Thread" backButton backButtonLink="/boards">
+      <PageTitleBar title="Thread" backButton backButtonLink="/boards">
         <Button onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
-      </SectionTitleBar>
+      </PageTitleBar>
 
       <SectionBox>
         <ThreadBox

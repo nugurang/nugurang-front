@@ -1,5 +1,4 @@
 import { gql, useMutation } from '@apollo/client';
-import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -10,49 +9,12 @@ import TextField from '@material-ui/core/TextField';
 import TextsmsIcon from '@material-ui/icons/Textsms';
 
 import Layout from '../../components/Layout';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
-import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 import withAuth from '../../components/withAuth';
 
-
-const useStyles = makeStyles(() => ({
-  box: {
-    border: '0rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    margin: '0rem',
-    padding: '1rem',
-    variant: 'outlined',
-  },
-  button: {
-    background: '#FEFEFE',
-    border: '0.1rem solid',
-    borderColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    color: 'default',
-    margin: '0.5rem',
-    padding: '0.5rem 3rem',
-    variant: 'outlined',
-  },
-  buttonTypography: {
-    fontFamily: "Ubuntu",
-    fontSize: 16,
-    fontWeight: 400,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-  typography: {
-    fontFamily: "Ubuntu",
-    fontSize: 28,
-    fontWeight: 300,
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    wordWrap: "break-word",
-  },
-}));
 
 export const CREATE_ARTICLE = gql`
   mutation createArticle($article: ArticleInput!, $thread: ID!) {
@@ -84,24 +46,19 @@ function CreateArticle() {
     <Layout>
       <SectionTitleBar title="Comment" backButton />
 
-      <SectionBox titleBar={<SectionTitleBar title="Leave comment" icon=<TextsmsIcon /> />}>
-        <Box className={classes.box}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  className={classes.textField}
-                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                  inputRef={newContent}
-                  label="Enter comment"
-                  variant="outlined"
-                  onClick={handleNewContentChange}
-                />
-              </FormControl>
-            </Grid>
+      <SectionBox titleBar={<PageTitleBar title="Leave comment" icon=<TextsmsIcon /> />}>
+        <Grid container spacing={2} alignItems="center" justify="space-between">
+          <Grid item xs>
+            <FormControl fullWidth variant="filled">
+              <TextField
+                inputRef={newContent}
+                label="Enter comment"
+                variant="outlined"
+                onClick={handleNewContentChange}
+              />
+            </FormControl>
           </Grid>
-        </Box>
+        </Grid>
       </SectionBox>
 
       <form
@@ -111,7 +68,7 @@ function CreateArticle() {
           router.push(`/threads/${router.query.thread}`);
         }}
       >
-        <Box className={classes.box} align="center">
+        <Box align="center">
           <Button type="submit">Submit</Button>
         </Box>
       </form>

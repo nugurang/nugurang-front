@@ -22,6 +22,7 @@ import BaseListItem from '../components/BaseListItem';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
+import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import UserInfoBox from '../components/UserInfoBox';
@@ -78,7 +79,7 @@ function More() {
 
   return (
     <Layout>
-      <SectionTitleBar title="More" backButton backButtonLink="/home" />
+      <PageTitleBar title="More" backButton backButtonLink="/home" />
 
       <Grid container>
         <Grid item xs={12} md={6} lg={4}>

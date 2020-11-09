@@ -12,12 +12,13 @@ import 'array-flat-polyfill';
 
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
 import withAuth from '../../components/withAuth';
-import CallingCard from '../../components/CallingCard';
-import Loading from '../../components/Loading';
-import GraphQlError from '../../components/GraphQlError';
 import BaseCard from '../../components/BaseCard';
 import BaseSwitch from '../../components/BaseSwitch';
+import CallingCard from '../../components/CallingCard';
+import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
+import Loading from '../../components/Loading';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
 import ThreadGrid from '../../components/ThreadGrid';
@@ -111,7 +112,7 @@ function Boards() {
   const currentBoard = showEvents ? EVENT_BOARDS : COMMON_BOARDS;
   return (
     <Layout>
-      <SectionTitleBar title="Boards" backButton />
+      <PageTitleBar title="Boards" backButton />
       <Grid container>
         <Grid item xs={12}>
           <SectionBox

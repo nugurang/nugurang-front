@@ -7,6 +7,7 @@ import GroupIcon from '@material-ui/icons/Group';
 
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamInfoCardGrid from '../../components/TeamInfoCardGrid';
@@ -49,7 +50,7 @@ function Teams() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Teams" backButton backButtonLink="/home" />
+      <PageTitleBar title="Teams" backButton backButtonLink="/home" />
 
       <SectionBox
         titleBar={(

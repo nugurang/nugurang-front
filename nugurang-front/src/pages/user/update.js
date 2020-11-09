@@ -20,6 +20,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import Layout from '../../components/Layout';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
@@ -111,7 +112,7 @@ function update() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Change info" backButton />
+      <PageTitleBar title="Change info" backButton />
 
       <BaseTabs tabProps={TAB_PROPS}>
         <div>

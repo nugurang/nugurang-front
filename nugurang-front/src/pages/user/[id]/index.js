@@ -12,6 +12,7 @@ import Layout from '../../../components/Layout';
 import HonorBadgeGrid from '../../../components/HonorBadgeGrid';
 import GraphQlError from '../../../components/GraphQlError';
 import Loading from '../../../components/Loading';
+import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import SectionTitleBar from '../../../components/SectionTitleBar';
 import UserInfoBox from '../../../components/UserInfoBox';
@@ -154,8 +155,8 @@ function UserInfo() {
     <Layout>
       {
         user.id === currentUser.id
-        ? <SectionTitleBar title="My info" backButton />
-        : <SectionTitleBar title="User info" backButton />
+        ? <PageTitleBar title="My info" backButton />
+        : <PageTitleBar title="User info" backButton />
       }
 
       <Grid container>

@@ -8,6 +8,7 @@ import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import PageTitleBar from '../../components/PageTitleBar';
 import ProjectInfoCardGrid from '../../components/ProjectInfoCardGrid';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -67,9 +68,9 @@ function TeamInfo() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Team info" backButton="true" backButtonLink="/teams">
+      <PageTitleBar title="Team info" backButton="true" backButtonLink="/teams">
         <Button onClick={() => router.push({pathname: "/projects/create", query: { team: router.query.id }})}>Create project</Button>
-      </SectionTitleBar>
+      </PageTitleBar>
       <SectionBox border={false}>
         <TeamInfoBox team={team} />
       </SectionBox>

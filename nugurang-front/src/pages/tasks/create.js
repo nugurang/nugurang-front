@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import ViewListIcon from '@material-ui/icons/ViewList';
 
 import Layout from '../../components/Layout';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
@@ -46,7 +47,7 @@ function CreateTask() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Create new task" backButton />
+      <PageTitleBar title="Create new task" backButton />
 
       <SectionBox titleBar={<SectionTitleBar title="Add task" icon=<ViewListIcon /> />}>
         <Grid container spacing={2} alignItems="center" direction="row" justify="space-between">

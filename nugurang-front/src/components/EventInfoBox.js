@@ -23,8 +23,6 @@ export default function EventInfoBox({ event, dense=false }) {
       <Accordion variant="outlined" defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
         >
           <Grid container spacing={2} alignItems="center" justify="flex-start">
             <Grid item>

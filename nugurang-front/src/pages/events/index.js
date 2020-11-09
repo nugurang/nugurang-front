@@ -9,6 +9,7 @@ import EventInfoBox from '../../components/EventInfoBox';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
 import ThreadGrid from '../../components/ThreadGrid';
@@ -74,7 +75,7 @@ function Event() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Event" backButton />
+      <PageTitleBar title="Event" backButton />
 
       <SectionBox>
         <EventInfoBox event={TEST_EVENT} />

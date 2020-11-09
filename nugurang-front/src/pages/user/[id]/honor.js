@@ -7,8 +7,8 @@ import Layout from '../../../components/Layout';
 import GraphQlError from '../../../components/GraphQlError';
 import HonorBadgeGrid from '../../../components/HonorBadgeGrid';
 import Loading from '../../../components/Loading';
+import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
-import SectionTitleBar from '../../../components/SectionTitleBar';
 import withAuth from '../../../components/withAuth';
 
 
@@ -72,7 +72,7 @@ function Honor() {
   return (
     <Layout>
 
-      <SectionTitleBar title="Honor badges" backButton />
+      <PageTitleBar title="Honor badges" backButton />
 
       <SectionBox>
         <HonorBadgeGrid items={TEST_HONOR_BADGE_LIST} />

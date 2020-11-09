@@ -29,7 +29,9 @@ export default function UserInfoBox({ user, dense=false }) {
                 alt={user.name}
                 src={user.image ? user.image.address : null}
                 variant="circle"
-              />
+              >
+                {user.name.charAt(0).toUpperCase()}
+              </Avatar>
             </Grid>
           </div>
           <Grid item>

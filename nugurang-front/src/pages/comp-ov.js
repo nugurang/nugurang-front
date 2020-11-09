@@ -9,335 +9,861 @@ import Typography from '@material-ui/core/Typography';
 
 import GitHubIcon from '@material-ui/icons/GitHub';
 
+import ArticleLeader from '../components/ArticleLeader';
 import ArticleList from '../components/ArticleList';
-import ArticleListItem from '../components/ArticleListItem';
 import BaseCard from '../components/BaseCard';
-import BaseIconButton from '../components/BaseIconButton';
 import BaseImage from '../components/BaseImage';
 import BaseListItem from '../components/BaseListItem';
 import BaseMultiSelect from '../components/BaseMultiSelect';
 import BaseSelect from '../components/BaseSelect';
 import BaseSwitch from '../components/BaseSwitch';
 import BaseTabs from '../components/BaseTabs';
-import BaseTextField from '../components/BaseTextField';
-import HonorBadgeBox from '../components/HonorBadgeBox';
+import CallingCard from '../components/CallingCard';
+import EventInfoBox from '../components/EventInfoBox';
 import HonorBadgeGrid from '../components/HonorBadgeGrid';
 import ImageUploadingBox from '../components/ImageUploadingBox';
+import NoContentsBox from '../components/NoContentsBox';
 import NotificationList from '../components/NotificationList';
-import ProjectList from '../components/ProjectList';
+import PageTitleBar from '../components/PageTitleBar';
+import ProjectInfoBox from '../components/ProjectInfoBox';
+import ProjectInfoCardGrid from '../components/ProjectInfoCardGrid';
+import ResponsiveDialog from '../components/ResponsiveDialog';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import StatCounterBox from '../components/StatCounterBox';
+import TaskInfoCardGrid from '../components/TaskInfoCardGrid';
 import TeamInfoBox from '../components/TeamInfoBox';
-import TeamList from '../components/TeamList';
+import TeamInfoCardGrid from '../components/TeamInfoCardGrid';
 import ThreadBox from '../components/ThreadBox';
 import ThreadGrid from '../components/ThreadGrid';
 import ThreadList from '../components/ThreadList';
-import UserInfoBox from '../components/UserInfoBox';
 import UserGroupInfoCard from '../components/UserGroupInfoCard';
-import UserList from '../components/UserList';
+import UserInfoBox from '../components/UserInfoBox';
+import UserInfoCard from '../components/UserInfoCard';
+import UserInfoCardGrid from '../components/UserInfoCardGrid';
+import WorkInfoBox from '../components/WorkInfoBox';
+import WorkInfoCardGrid from '../components/WorkInfoCardGrid';
 
 /* ------------------------ Test data zone start ------------------------- */
 
 /* const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1516541196182-6bdb0516ed27'; */
 
 
-const TEST_AVATAR = "/static/images/sample_1.jpg";
-const TEST_ICON = <GitHubIcon style={{ fontSize: 30 }} />;
-const TEST_IMAGE = "/static/images/sample_2.jpg";
+const COMP_OV_ICON = <GitHubIcon style={{ fontSize: 30 }} />;
+const COMP_OV_IMAGE_ADDRESS = "/static/images/sample_1.jpg";
 
 
 
-const TEST_USER = {
+const ARTICLE_LEADER_ARTICLE = {
   id: 0,
-  oauth2Provider: "Test OAuth2 Provider"
-  oauth2Id: "testoauth2id"
-  name: "Test User name",
-  email: "Test email",
-  biography: "Test biography",
-  totalHonor: 10,
-  image: "/static/images/sample_1.jpg",
+  content: "Test article content",
+  viewCount: 10,
+  createdAt: "2020-09-01 00:00:00",
+  modifiedAt: "2020-09-02 00:00:00",
+  title: "Test article title",
+  user: {
+    id: 0,
+    name: "Test user name",
+    image: {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  },
+  parent: null,
+  images: [
+    {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  ],
 };
 
-const TEST_USER_LIST = [
+
+const ARTICLE_LIST_ITEMS = [
   {
     id: 0,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_1.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
+    content: "Test article content 1",
+    viewCount: 10,
+    createdAt: "2020-09-01 00:00:00",
+    modifiedAt: "2020-09-02 00:00:00",
+    title: "Test article title",
+    user: {
+      id: 0,
+      name: "Test user name",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    parent: null,
+    images: [
+      {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    ],
+  },
+  {
+    id: 0,
+    content: "Test article content 2",
+    viewCount: 10,
+    createdAt: "2020-09-01 00:00:00",
+    modifiedAt: "2020-09-02 00:00:00",
+    title: "Test article title",
+    user: {
+      id: 0,
+      name: "Test user name",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    parent: null,
+    images: [
+      {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    ],
+  },
+];
+
+const BASE_MULTI_SELECT_ITEMS = [
+  {
+    id: 0,
+    label: "Position A",
+    value: "a",
   },
   {
     id: 1,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_2.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
+    label: "Position B",
+    value: "b",
   },
   {
     id: 2,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_3.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
+    label: "Position C",
+    value: "c",
   },
   {
     id: 3,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_4.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
+    label: "Position D",
+    value: "d",
   },
 ]
 
-
-
-const TEST_PROJECT_LIST = [
+const BASE_SELECT_ITEMS = [
   {
     id: 0,
-    name: "Test project name",
-    users: TEST_USER_LIST,
+    label: "Position A",
+    value: "a",
   },
   {
     id: 1,
-    name: "Test project name",
-    users: TEST_USER_LIST,
+    label: "Position B",
+    value: "b",
   },
   {
     id: 2,
-    name: "Test project name",
-    users: TEST_USER_LIST,
-  },
-]
-
-
-
-const TEST_TEAM_LIST = [
-  {
-    id: 0,
-    name: "Test team name",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 1,
-    name: "Test team name",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 2,
-    name: "Test team name",
-    users: TEST_USER_LIST,
-  },
-]
-
-const TEST_ARTICLE_LIST = [
-  {
-    id: 0,
-    user: TEST_USER,
-    title: "Ignored",
-    content: "Content and more",
-    image: TEST_IMAGE,
-    like: 3,
-    topic: "Test topic",
-    view: 4,
-    vote: 5,
-  },
-  {
-    id: 1,
-    user: TEST_USER,
-    title: "Ignored",
-    content: "Content and more",
-    image: TEST_IMAGE,
-    like: 3,
-    topic: "Test topic",
-    view: 4,
-    vote: 5,
-  },
-  {
-    id: 2,
-    user: TEST_USER,
-    title: "Ignored",
-    content: "Content and more",
-    image: TEST_IMAGE,
-    like: 3,
-    topic: "Test topic",
-    view: 4,
-    vote: 5,
-  },
-]
-
-
-const TEST_BASE_MULTI_SELECT_LIST = [
-  {
-    id: 0,
-    label: "Pikachu",
-    value: "pikachu",
-  },
-  {
-    id: 1,
-    label: "Raichu",
-    value: "raichu",
-  },
-  {
-    id: 2,
-    label: "Charmander",
-    value: "charmander",
+    label: "Position C",
+    value: "c",
   },
   {
     id: 3,
-    label: "Squirtle",
-    value: "squirtle",
+    label: "Position D",
+    value: "d",
   },
-]
+];
 
-
-const TEST_BASE_SWITCH_LIST = [
+const BASE_TAB_TAB_PROPS = [
   {
     id: 0,
-    value: "Value 1"
+    label: "Following",
   },
   {
     id: 1,
-    value: "Value 2"
+    label: "Followers",
   },
-  {
-    id: 2,
-    value: "Value 3"
-  },
-]
+];
 
-
-const TEST_HONOR_BADGE_LIST = [
-  {
-    id: 0,
-    name: "Pikachu",
-    image: TEST_IMAGE,
-    score: "1000000",
-  },
-  {
-    id: 1,
-    name: "Raichu",
-    image: TEST_IMAGE,
-    score: "2000000",
-  },
-  {
-    id: 2,
-    name: "Charmander",
-    image: TEST_IMAGE,
-    score: "3000000",
-  },
-  {
-    id: 3,
-    name: "Squirtle",
-    image: TEST_IMAGE,
-    score: "4000000",
-  },
-]
-
-
-const TEST_TAB_PROPS_LIST = [
-  {
-    id: 0,
-    label: "Test tab 1",
-  },
-  {
-    id: 1,
-    label: "Test tab 2",
-  },
-  {
-    id: 2,
-    label: "Test tab 3",
-  },
-  {
-    id: 3,
-    label: "Test tab 4",
-  },
-  {
-    id: 4,
-    label: "Test tab 5",
-  },
-]
-
-const TEST_THREAD = {
+const EVENT_INFO_BOX_EVENT = {
   id: 0,
-  user: "Test user",
-  avatar: TEST_AVATAR,
-  title: "Test title",
-  content: "Content and more",
-  image: TEST_IMAGE,
-  like: 3,
-  topic: "Test topic",
-  view: 4,
-  vote: 5,
+  title: "Test event title",
+  content: "Test event content",
+  images: [
+    {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  ],
+  recruitingStart: "2020-09-01 00:00:00",
+  recruitingEnd: "2020-09-02 00:00:00",
+  eventStart: "2020-09-03 00:00:00",
+  eventEnd: "2020-09-04 00:00:00",
 };
-const TEST_THREAD_LIST = [
+
+const HONOR_BADGE_GRID_ITEMS = [
   {
     id: 0,
-    user: TEST_USER,
-    avatar: TEST_AVATAR,
-    title: "Test title",
-    content: "Content and more",
-    image: TEST_IMAGE,
-    like: 3,
-    topic: "Test topic",
-    view: 4,
-    vote: 5,
+    name: "Test honor 1",
+    image: {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+    score: 100,
   },
   {
     id: 1,
-    user: TEST_USER,
-    avatar: TEST_AVATAR,
-    title: "Test title",
-    content: "Content and more",
-    image: TEST_IMAGE,
-    like: 3,
-    topic: "Test topic",
-    view: 4,
-    vote: 5,
+    name: "Test honor 2",
+    image: {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+    score: 200,
   },
-  {
-    id: 2,
-    user: TEST_USER,
-    avatar: TEST_AVATAR,
-    title: "Test title",
-    content: "Content and more",
-    image: TEST_IMAGE,
-    like: 3,
-    topic: "Test topic",
-    view: 4,
-    vote: 5,
-  },
-]
+];
 
-const TEST_NOTIFICATION_LIST = [
+const NOTIFICATION_LIST_ITEMS = [
   {
     id: 0,
     title: "New Comments",
     content: "I don't think so",
     createdAt: "11/01 13:11",
+    link: "/threads/904",
   },
   {
     id: 1,
     title: "New Comments",
     content: "I agree with you",
     createdAt: "11/02 15:23",
+    link: "/threads/896",
   },
   {
     id: 2,
     title: "New Comments",
     content: "I don't know",
-    createdAt: "11/03 21:42",
+    createdAt: "11/04 18:37",
+    link: "/threads/896",
     },
+  {
+    id: 3,
+    title: "New Comments",
+    content: "I don't know",
+    createdAt: "11/05 11:52",
+    link: "/threads/896",
+    },
+  {
+    id: 4,
+    title: "New Comments",
+    content: "I don't know",
+    createdAt: "11/06 7:26",
+    link: "/threads/896",
+  },
 ];
 
+
+const PROJECT_INFO_BOX_PROJECT = {
+  id: 0,
+  name: "Test project",
+  getUsers: [
+    {
+      id: 0,
+      name: "Test user 1",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    {
+      id: 1,
+      name: "Test user 2",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    {
+      id: 2,
+      name: "Test user 3",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    {
+      id: 3,
+      name: "Test user 4",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+  ],
+  event: {
+    id: 0,
+    title: "Test event title",
+    content: "Test event content",
+    images: [
+      {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    ],
+    recruitingStart: "2020-09-01 00:00:00",
+    recruitingEnd: "2020-09-02 00:00:00",
+    eventStart: "2020-09-03 00:00:00",
+    eventEnd: "2020-09-04 00:00:00",
+  },
+  works: [
+    {
+      id: 0,
+      name: "Test work 1",
+      opened: true,
+      order: 0,
+    },
+    {
+      id: 1,
+      name: "Test work 2",
+      opened: true,
+      order: 1,
+    },
+    {
+      id: 2,
+      name: "Test work 3",
+      opened: false,
+      order: 2,
+    },
+  ],
+};
+
+const TEAM_INFO_BOX_TEAM = {
+  id: 0,
+  name: "Test team",
+  projects: [
+    {
+      id: 0,
+      name: "Test project 1",
+    },
+    {
+      id: 1,
+      name: "Test project 2",
+    },
+    {
+      id: 2,
+      name: "Test project 3",
+    },
+  ],
+  getUsers: [
+    {
+      id: 0,
+      name: "Test user 1",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    {
+      id: 1,
+      name: "Test user 2",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    {
+      id: 2,
+      name: "Test user 3",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    {
+      id: 3,
+      name: "Test user 4",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+  ],
+};
+
+
+const THREAD_BOX_ARTICLE_LEADER = {
+  id: 0,
+  content: "Test article leader content",
+  viewCount: 10,
+  createdAt: "2020-09-01 00:00:00",
+  modifiedAt: "2020-09-02 00:00:00",
+  title: "Test article title",
+  user: {
+    id: 0,
+    name: "Test user name",
+    image: {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  },
+  parent: null,
+  images: [
+    {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  ],
+};
+
+
+const THREAD_BOX_ARTICLES = [
+  {
+    id: 0,
+    content: "Test article content 1",
+    viewCount: 10,
+    createdAt: "2020-09-01 00:00:00",
+    modifiedAt: "2020-09-02 00:00:00",
+    title: "Test article title",
+    user: {
+      id: 0,
+      name: "Test user name",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    parent: null,
+    images: [
+      {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    ],
+  },
+  {
+    id: 0,
+    content: "Test article content 2",
+    viewCount: 10,
+    createdAt: "2020-09-01 00:00:00",
+    modifiedAt: "2020-09-02 00:00:00",
+    title: "Test article title",
+    user: {
+      id: 0,
+      name: "Test user name",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    parent: null,
+    images: [
+      {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    ],
+  },
+];
+
+const THREAD_GRID_ITEMS = [
+  {
+    id: 0,
+    name: "Test thread 1",
+    user: {
+      id: 0,
+      name: "Test user name",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    team: null,
+    event: null,
+    firstArticle: {
+      id: 0,
+      content: "First article",
+      viewCount: 10,
+      createdAt: "2020-09-01 00:00:00",
+      modifiedAt: "2020-09-02 00:00:00",
+      title: "First article title",
+      user: {
+        id: 0,
+        name: "Test user name",
+        image: {
+          id: 0,
+          address: {COMP_OV_IMAGE_ADDRESS},
+        },
+      },
+      parent: null,
+      images: [
+        {
+          id: 0,
+          address: {COMP_OV_IMAGE_ADDRESS},
+        },
+      ],
+    },
+    getArticles: {
+
+    },
+    upCount: 1,
+    downCount: 2,
+    starCount: 3,
+    commentCount: 4,
+  },
+  {
+    id: 0,
+    name: "Test thread 2",
+    user: {
+      id: 0,
+      name: "Test user name",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    team: null,
+    event: null,
+    firstArticle: {
+      id: 0,
+      content: "First article",
+      viewCount: 10,
+      createdAt: "2020-09-01 00:00:00",
+      modifiedAt: "2020-09-02 00:00:00",
+      title: "First article title",
+      user: {
+        id: 0,
+        name: "Test user name",
+        image: {
+          id: 0,
+          address: {COMP_OV_IMAGE_ADDRESS},
+        },
+      },
+      parent: null,
+      images: [
+        {
+          id: 0,
+          address: {COMP_OV_IMAGE_ADDRESS},
+        },
+      ],
+    },
+    getArticles: {
+
+    },
+    upCount: 1,
+    downCount: 2,
+    starCount: 3,
+    commentCount: 4,
+  },
+];
+
+const THREAD_LIST_ITEMS = [
+  {
+    id: 0,
+    name: "Test thread 1",
+    user: {
+      id: 0,
+      name: "Test user name",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    team: null,
+    event: null,
+    firstArticle: {
+      id: 0,
+      content: "First article",
+      viewCount: 10,
+      createdAt: "2020-09-01 00:00:00",
+      modifiedAt: "2020-09-02 00:00:00",
+      title: "First article title",
+      user: {
+        id: 0,
+        name: "Test user name",
+        image: {
+          id: 0,
+          address: {COMP_OV_IMAGE_ADDRESS},
+        },
+      },
+      parent: null,
+      images: [
+        {
+          id: 0,
+          address: {COMP_OV_IMAGE_ADDRESS},
+        },
+      ],
+    },
+    getArticles: {
+
+    },
+    upCount: 1,
+    downCount: 2,
+    starCount: 3,
+    commentCount: 4,
+  },
+  {
+    id: 0,
+    name: "Test thread 2",
+    user: {
+      id: 0,
+      name: "Test user name",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    team: null,
+    event: null,
+    firstArticle: {
+      id: 0,
+      content: "First article",
+      viewCount: 10,
+      createdAt: "2020-09-01 00:00:00",
+      modifiedAt: "2020-09-02 00:00:00",
+      title: "First article title",
+      user: {
+        id: 0,
+        name: "Test user name",
+        image: {
+          id: 0,
+          address: {COMP_OV_IMAGE_ADDRESS},
+        },
+      },
+      parent: null,
+      images: [
+        {
+          id: 0,
+          address: {COMP_OV_IMAGE_ADDRESS},
+        },
+      ],
+    },
+    getArticles: {
+
+    },
+    upCount: 1,
+    downCount: 2,
+    starCount: 3,
+    commentCount: 4,
+  },
+];
+
+
+const USER_GROUP_INFO_CARD_USERS = [
+  {
+    id: 0,
+    name: "Test user 1",
+    image: {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  },
+  {
+    id: 0,
+    name: "Test user 2",
+    image: {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  },
+  {
+    id: 0,
+    name: "Test user 3",
+    image: {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  },
+  {
+    id: 0,
+    name: "Test user 4",
+    image: {
+      id: 0,
+      address: {COMP_OV_IMAGE_ADDRESS},
+    },
+  },
+]
+
+
+
+const USER_INFO_BOX_USER = {
+  id: 0,
+  oauth2Provider: "GITHUB",
+  oauth2Id: "testoauth2id",
+  name: "Test user 1",
+  email: "Test email",
+  biography: "Test biography",
+  totalHonor: 1000,
+  honors: [
+    {
+      honor: 10,
+      position: {
+        id: 0,
+        name: "Test position 1",
+      },
+    },
+    {
+      honor: 20,
+      position: {
+        id: 0,
+        name: "Test position 2",
+      },
+    },
+  ],
+  image: {
+    id: 0,
+    address: {COMP_OV_IMAGE_ADDRESS},
+  },
+  blog: null,
+  getTeams: [
+    {
+      id: 0,
+      name: "Test team 1",
+    },
+    {
+      id: 1,
+      name: "Test team 2",
+    },
+  ],
+  getFollowings: [
+    {
+      id: 0,
+      name: "Test following 1",
+      email: "Test email",
+      biography: "Test biography",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    {
+      id: 1,
+      name: "Test following 2",
+      email: "Test email",
+      biography: "Test biography",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+  ],
+  getFollowers: [
+    {
+      id: 0,
+      name: "Test follower 1",
+      email: "Test email",
+      biography: "Test biography",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+    {
+      id: 1,
+      name: "Test follower 2",
+      email: "Test email",
+      biography: "Test biography",
+      image: {
+        id: 0,
+        address: {COMP_OV_IMAGE_ADDRESS},
+      },
+    },
+  ],
+};
+
+
+const USER_INFO_CARD_USER = {
+  id: 0,
+  oauth2Provider: "GITHUB",
+  oauth2Id: "testoauth2id",
+  name: "Test user 1",
+  email: "Test email",
+  biography: "Test biography",
+  totalHonor: 1000,
+  honors: [
+    {
+      honor: 10,
+      position: {
+        id: 0,
+        name: "Test position 1",
+      },
+    },
+    {
+      honor: 20,
+      position: {
+        id: 0,
+        name: "Test position 2",
+      },
+    },
+  ],
+  image: {
+    id: 0,
+    address: {COMP_OV_IMAGE_ADDRESS},
+  },
+};
+
+
+const WORK_INFO_BOX_WORK = {
+  id: 0,
+  name: "Test work",
+  opened: true,
+  tasks: [
+    {
+      id: 0,
+      name: "Test work 1",
+      difficurty: 1,
+      order: 0,
+      progress: {
+        id: 0,
+        name: "Test progress",
+      },
+      honors: [
+        {
+          honor: 10,
+          position: {
+            id: 0,
+            name: "Test position",
+          }
+        }
+      ]
+    },
+    {
+      id: 1,
+      name: "Test work 2",
+      difficurty: 2,
+      order: 1,
+      progress: {
+        id: 0,
+        name: "Test progress",
+      },
+      honors: [
+        {
+          honor: 10,
+          position: {
+            id: 0,
+            name: "Test position",
+          }
+        }
+      ]
+    },
+    {
+      id: 2,
+      name: "Test work 3",
+      difficurty: 3,
+      order: 2,
+      progress: {
+        id: 0,
+        name: "Test progress",
+      },
+      honors: [
+        {
+          honor: 10,
+          position: {
+            id: 0,
+            name: "Test position",
+          }
+        }
+      ]
+    },
+  ],
+};
 
 
 /* ------------------------- Test data zone end -------------------------- */
@@ -419,13 +945,10 @@ export default function ComponentOverview() {
       </Typography>
 
 
-      <Overview title="ArticleListItem">
-        <ArticleListItem
-          user="Test user"
-          avatar={TEST_AVATAR}
-          title="Ignored"
-          content="Content and more"
-          image={TEST_IMAGE}
+
+      <Overview title="ArticleLeader">
+        <ArticleLeader
+          article={ARTICLE_LEADER_ARTICLE}
           like={3}
           topic="Test topic"
           view={4}
@@ -433,61 +956,55 @@ export default function ComponentOverview() {
         />
       </Overview>
 
-
       <Overview title="ArticleList">
         <ArticleList
-          items={TEST_ARTICLE_LIST}
+          items={ARTICLE_LIST_ITEMS}
         />
       </Overview>
 
-
-      <Overview title="BasdCard">
+      <Overview title="BaseCard">
         <BaseCard
-          imageTitle="imageTitle"
-          image={TEST_IMAGE}
+          image={COMP_OV_IMAGE_ADDRESS}
+          imageTitle="Test image title"
+          onClick={() => alert('onClick')}
         >
-          <BaseIconButton icon={TEST_ICON} />
+          <Typography>Test children</Typography>
         </BaseCard>
       </Overview>
 
-
-      <Overview title="BaseIconButton">
-        <BaseIconButton
-          icon={TEST_ICON}
-        />
-      </Overview>
-
-
       <Overview title="BaseImage">
         <BaseImage
-          image={TEST_IMAGE}
-          imageTitle="Image title"
+          image={COMP_OV_IMAGE_ADDRESS}
+          imageTitle="Test image title"
+          onClick={() => alert('onClick')}
         />
       </Overview>
 
-
-      <Overview title="BaseListItem-Avatar">
+      <Overview title="BaseListItem">
         <BaseListItem
-          avatar={TEST_IMAGE}
-          avatarDescription="Icon description"
-          primary="Primary"
-          secondary="Secondary"
-          circleIcon
+          primary="Test primary"
+          secondary="Test secondary"
+          avatar={COMP_OV_IMAGE_ADDRESS}
+          onClick={() => alert('onClick')}
+          circleIcon={true}
+          dense={false}
         />
       </Overview>
 
-      <Overview title="BaseListItem-Icon">
+      <Overview title="BaseListItem - Dense">
         <BaseListItem
-          icon={TEST_ICON}
-          primary="Primary"
-          secondary="Secondary"
-          circleIcon
+          primary="Test primary"
+          secondary="Test secondary"
+          icon={COMP_OV_IMAGE_ADDRESS}
+          onClick={() => alert('onClick')}
+          circleIcon={true}
+          dense={true}
         />
       </Overview>
 
       <Overview title="BaseMultiSelect">
         <BaseMultiSelect
-          items={TEST_BASE_MULTI_SELECT_LIST}
+          items={BASE_MULTI_SELECT_ITEMS}
           label="Test Label"
           placeholder="Test Placeholder"
           onChange={refreshBaseSelect}
@@ -498,7 +1015,7 @@ export default function ComponentOverview() {
       <Overview title="BaseSelect">
         <BaseSelect
           label="Test label"
-          items={TEST_BASE_SWITCH_LIST}
+          items={BASE_SELECT_ITEMS}
           value={baseSelectValue}
           onChange={refreshBaseSelect}
         />
@@ -517,199 +1034,189 @@ export default function ComponentOverview() {
           )
           : (
             <Typography>Deactivated</Typography>
-          )}
+          )
+        }
       </Overview>
 
-
       <Overview title="BaseTabs">
-        <BaseTabs tabProps={TEST_TAB_PROPS_LIST}>
-          <BaseTextField label="Test textField 1" />
-          <BaseTextField label="Test textField 2" />
-          <BaseTextField label="Test textField 3" />
-          <BaseTextField label="Test textField 4" />
-          <BaseTextField label="Test textField 5" />
+        <BaseTabs tabProps={BASE_TAB_TAB_PROPS}>
+          <Typography>Test children 1</Typography>
+          <Typography>Test children 2</Typography>
         </BaseTabs>
       </Overview>
 
-
-      <Overview title="BaseTextField">
-        <BaseTextField label="Test label" />
+      <Overview title="CallingCard">
+        <CallingCard image={COMP_OV_IMAGE_ADDRESS} onClick={() => alert('onClick')}>
+          <Typography>Test children 1</Typography>
+          <Typography>Test children 2</Typography>
+        </CallingCard>
       </Overview>
 
 
-      <Overview title="HonorBadgeBox">
-        <HonorBadgeBox
-          name="Pokemon"
-          image={TEST_IMAGE}
-          score="1000000"
-        />
+      <Overview title="EventInfoBox">
+        <EventInfoBox event={EVENT_INFO_BOX_EVENT} dense={false} />
       </Overview>
 
+      <Overview title="EventInfoBox - Dense">
+        <EventInfoBox event={EVENT_INFO_BOX_EVENT} dense={true} />
+      </Overview>
 
       <Overview title="HonorBadgeGrid">
-        <HonorBadgeGrid
-          items={TEST_HONOR_BADGE_LIST}
-        />
+        <HonorBadgeGrid items={HONOR_BADGE_GRID_ITEMS} dense={true} />
       </Overview>
-
 
       <Overview title="ImageUploadingBox">
-        <ImageUploadingBox
-          image={TEST_IMAGE}
-        />
+        <ImageUploadingBox image={COMP_OV_IMAGE_ADDRESS} />
       </Overview>
 
-
-      <Overview title="ProjectList">
-        <ProjectList
-          items={TEST_PROJECT_LIST}
-        />
+      <Overview title="NoContentsBox">
+        <NoContentsBox/>
       </Overview>
 
+      <Overview title="NotificationList">
+        <NotificationList items={NOTIFICATION_LIST_ITEMS} />
+      </Overview>
+
+      <Overview title="PageTitleBar">
+        <PageTitleBar
+          icon={COMP_OV_ICON}
+          title="Test page title"
+          circleIcon={true}
+        >
+          <Typography>Test children</Typography>
+        </PageTitleBar>
+      </Overview>
+
+      <Overview title="PageTitleBar - with BackButton">
+        <PageTitleBar
+          backButton
+          title="Test page title"
+          circleIcon={true}
+        >
+          <Typography>Test children</Typography>
+        </PageTitleBar>
+      </Overview>
+
+      <Overview title="ProjectInfoBox">
+        <ProjectInfoBox project={PROJECT_INFO_BOX_PROJECT}/>
+      </Overview>
+
+      <Overview title="ResponsiveDialog">
+        <ResponsiveDialog />
+      </Overview>
 
       <Overview title="SectionBox">
-        <SectionBox
-          titleBar={(
-            <SectionTitleBar
-              title="Test title"
-              icon={TEST_ICON}
-            >
-              <BaseIconButton icon={TEST_ICON} />
-            </SectionTitleBar>
-          )}
-        >
-          <BaseIconButton icon={TEST_ICON} />
+        <SectionBox>
+          <Typography>Test children</Typography>
         </SectionBox>
       </Overview>
 
+      <Overview title="SectionBox - with SectionTitleBar">
+        <SectionBox
+            titleBar={
+              <SectionTitleBar title="Test title" icon={COMP_OV_ICON} />
+            }
+        >
+          <Typography>Test children</Typography>
+        </SectionBox>
+      </Overview>
 
       <Overview title="SectionTitleBar">
         <SectionTitleBar
-          title="Test title"
-          icon={TEST_ICON}
+          icon={COMP_OV_ICON}
+          title="Test page title"
+          circleIcon={true}
         >
-          <BaseTextField label="Test label" />
+          <Typography>Test children</Typography>
         </SectionTitleBar>
       </Overview>
-
-
-
-      <Overview title="SectionTitleBar-WithBackButton">
-        <SectionTitleBar
-          title="Test title"
-          icon={TEST_ICON}
-          backButton
-        >
-          <BaseTextField label="Test label" />
-        </SectionTitleBar>
-      </Overview>
-
 
       <Overview title="StatCounterBox">
         <StatCounterBox
-          comment={3}
-          image={TEST_IMAGE}
-          like={4}
+          commentCount={1}
+          image={true}
+          upCount={2}
           topic="Test topic"
-          view={5}
-          vote={6}
+          view={3}
+          vote={4}
         />
       </Overview>
 
+      <Overview title="StatCounterBox - Compact">
+        <StatCounterBox
+          commentCount={1}
+          image={true}
+          upCount={2}
+          topic="Test topic"
+          view={3}
+          vote={4}
+          compact
+        />
+      </Overview>
 
       <Overview title="TeamInfoBox">
-        <TeamInfoBox
-          name="Test team"
-          bio="Test team bio"
-          dense={false}
-          users={TEST_USER_LIST}
-        />
+        <TeamInfoBox team={TEAM_INFO_BOX_TEAM}/>
       </Overview>
-
-
-
-      <Overview title="TeamList">
-        <TeamList
-          items={TEST_TEAM_LIST}
-        />
-      </Overview>
-
 
 
       <Overview title="ThreadBox">
         <ThreadBox
-          title="Test title"
-          user={TEST_USER}
-          content="Test content"
-          image={TEST_IMAGE}
-          articles={TEST_ARTICLE_LIST}
-          accordion
+          articleLeader={THREAD_BOX_ARTICLE_LEADER}
+          articles={THREAD_BOX_ARTICLES}
+          like={1}
+          topic="Test topic"
+          view={2}
+          vote={3}
         />
       </Overview>
-
 
       <Overview title="ThreadGrid">
         <ThreadGrid
-          items={TEST_THREAD_LIST}
+          items={THREAD_GRID_ITEMS}
+          xs={6}
         />
       </Overview>
-
 
       <Overview title="ThreadList">
         <ThreadList
-          items={TEST_THREAD_LIST}
+          items={THREAD_LIST_ITEMS}
         />
       </Overview>
-
-
 
       <Overview title="UserGroupInfoCard">
         <UserGroupInfoCard
-          title="Test title"
           primary="Test primary"
           secondary="Test secondary"
-          users={TEST_USER_LIST}
+          title="Test title"
+          users={USER_GROUP_INFO_CARD_USERS}
+          onClick={() => alert('onClick')}
         />
       </Overview>
 
+      <Overview title="UserGroupInfoCard - with AddButton">
+        <UserGroupInfoCard
+          primary="Test primary"
+          secondary="Test secondary"
+          title="Test title"
+          users={USER_GROUP_INFO_CARD_USERS}
+          onClick={() => alert('onClick')}
+          onAddButtonClick={() => alert('onClick - AddButton')}
+        />
+      </Overview>
 
       <Overview title="UserInfoBox">
-        <UserInfoBox
-          name="Test User"
-          image="/static/images/sample_1.jpg"
-          bio="Test bio"
-          followers={5}
-          followings={10}
-          dense={false}
-        />
+        <UserInfoBox user={USER_INFO_BOX_USER} />
       </Overview>
 
-      <Overview title="UserInfoBox-Dense">
-        <UserInfoBox
-          name="Test User"
-          image="/static/images/sample_1.jpg"
-          bio="Test bio"
-          followers={5}
-          followings={10}
-          dense
-        />
+      <Overview title="UserInfoCard">
+        <UserInfoCard user={USER_INFO_CARD_USER} onClick={() => alert('onClick')} />
       </Overview>
 
-
-      <Overview title="UserList">
-        <UserList
-          items={TEST_USER_LIST}
-        />
+      <Overview title="WorkInfoBox">
+        <WorkInfoBox work={WORK_INFO_BOX_WORK}/>
       </Overview>
-
-      <Overview title="NotificationList">
-        <NotificationList
-          items={TEST_NOTIFICATION_LIST}
-        />
-      </Overview>
-
-
 
     </Container>
   );
 }
+

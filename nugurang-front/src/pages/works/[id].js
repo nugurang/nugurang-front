@@ -3,15 +3,16 @@ import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 
-import Layout from '../../components/Layout';
+import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
+import Layout from '../../components/Layout';
+import Loading from '../../components/Loading';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TaskInfoCardGrid from '../../components/TaskInfoCardGrid';
 import WorkInfoBox from '../../components/WorkInfoBox';
-import withAuth from '../../components/withAuth';
-import Loading from '../../components/Loading';
 
 
 const TEST_USER_LIST = [
@@ -182,11 +183,11 @@ function WorkInfo() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Work info" backButton="true" backButtonLink={`/projects/${work.project.id}`}>
+      <PageTitleBar title="Work info" backButton="true" backButtonLink={`/projects/${work.project.id}`}>
         <Button onClick={() => router.push({pathname: "/tasks/create", query: { work: router.query.name }})}>
           Create task
         </Button>
-      </SectionTitleBar>
+      </PageTitleBar>
       <SectionBox border={false}>
         <WorkInfoBox work={work} />
       </SectionBox>

@@ -10,6 +10,7 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ImageIcon from '@material-ui/icons/Image';
 
 import Layout from '../../components/Layout';
+import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
@@ -66,7 +67,7 @@ function CreateThread() {
 
   return (
     <Layout>
-      <SectionTitleBar title="Create new thread" backButton />
+      <PageTitleBar title="Create new thread" backButton />
 
       <SectionBox titleBar={<SectionTitleBar title="Add title" icon=<GroupAddIcon /> />}>
         <Grid container spacing={2} alignItems="center" justify="space-between">
