@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -114,106 +115,109 @@ function Update() {
 
       <PageTitleBar title="Change info" backButton />
 
-      <BaseTabs tabProps={TAB_PROPS}>
-        <div>
-          <SectionBox titleBar={<SectionTitleBar title="Change username" icon=<PersonIcon /> />} border={false}>
-            <Grid container spacing={2} alignItems="center" justify="space-between">
-              <Grid item xs>
-                <FormControl fullWidth variant="filled">
-                  <TextField
-                    defaultValue={userData.currentUser.name}
-                    inputRef={newName}
-                    label="Enter username"
-                    variant="outlined"
-                    onClick={handleNewNameChange}
-                  />
-                </FormControl>
+      <Container maxWidth="md">
+        <BaseTabs tabProps={TAB_PROPS}>
+          <div>
+            <SectionBox titleBar={<SectionTitleBar title="Change username" icon=<PersonIcon /> />} border={false}>
+              <Grid container spacing={2} alignItems="center" justify="space-between">
+                <Grid item xs>
+                  <FormControl fullWidth variant="filled">
+                    <TextField
+                      defaultValue={userData.currentUser.name}
+                      inputRef={newName}
+                      label="Enter username"
+                      variant="outlined"
+                      onClick={handleNewNameChange}
+                    />
+                  </FormControl>
+                </Grid>
               </Grid>
-            </Grid>
-          </SectionBox>
+            </SectionBox>
 
-          <SectionBox titleBar={<SectionTitleBar title="Change email" icon=<EmailIcon /> />} border={false}>
-            <Grid container spacing={2} alignItems="center" justify="space-between">
-              <Grid item xs>
-                <FormControl fullWidth variant="filled">
-                  <TextField
-                    defaultValue={userData.currentUser.email}
-                    inputRef={newEmail}
-                    label="Enter email"
-                    variant="outlined"
-                    onClick={handleNewEmailChange}
-                  />
-                </FormControl>
+            <SectionBox titleBar={<SectionTitleBar title="Change email" icon=<EmailIcon /> />} border={false}>
+              <Grid container spacing={2} alignItems="center" justify="space-between">
+                <Grid item xs>
+                  <FormControl fullWidth variant="filled">
+                    <TextField
+                      defaultValue={userData.currentUser.email}
+                      inputRef={newEmail}
+                      label="Enter email"
+                      variant="outlined"
+                      onClick={handleNewEmailChange}
+                    />
+                  </FormControl>
+                </Grid>
               </Grid>
-            </Grid>
-          </SectionBox>
+            </SectionBox>
 
-          <SectionBox titleBar={<SectionTitleBar title="Change user image link" icon=<ImageIcon /> />} border={false}>
-            <Grid container spacing={2} alignItems="center" justify="space-between">
-              <Grid item xs>
-                <FormControl fullWidth variant="filled">
-                  <TextField
-                    defaultValue={userData.currentUser.image ? userData.currentUser.image.address : null}
-                    inputRef={newImageAddress}
-                    label="Enter image link"
-                    variant="outlined"
-                    onClick={handleNewImageAddressChange}
-                  />
-                </FormControl>
+            <SectionBox titleBar={<SectionTitleBar title="Change user image link" icon=<ImageIcon /> />} border={false}>
+              <Grid container spacing={2} alignItems="center" justify="space-between">
+                <Grid item xs>
+                  <FormControl fullWidth variant="filled">
+                    <TextField
+                      defaultValue={userData.currentUser.image ? userData.currentUser.image.address : null}
+                      inputRef={newImageAddress}
+                      label="Enter image link"
+                      variant="outlined"
+                      onClick={handleNewImageAddressChange}
+                    />
+                  </FormControl>
+                </Grid>
               </Grid>
-            </Grid>
-          </SectionBox>
+            </SectionBox>
 
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              let image;
-              if (newImageAddress.current.value) {
-                const res = await createImage({ variables: { address: newImageAddress.current.value }});
-                image = res.data.createImage.id;
-              }
-              await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
-              router.push('/signup/welcome');
-            }}
-          >
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                let image;
+                if (newImageAddress.current.value) {
+                  const res = await createImage({ variables: { address: newImageAddress.current.value }});
+                  image = res.data.createImage.id;
+                }
+                await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
+                router.push('/signup/welcome');
+              }}
+            >
+              <Box align="center">
+                <Button type="submit" disabled>Submit</Button>
+              </Box>
+            </form>
+          </div>
+
+          <div>
+            <SectionBox titleBar={<SectionTitleBar title="Delete user" icon=<ImageIcon /> />} border={false}>
+              <Typography>Warning: this action CANNOT be undone.</Typography>
+            </SectionBox>
             <Box align="center">
-              <Button type="submit" disabled>Submit</Button>
-            </Box>
-          </form>
-        </div>
-
-        <div>
-          <SectionBox titleBar={<SectionTitleBar title="Delete user" icon=<ImageIcon /> />} border={false}>
-            <Typography>Warning: this action CANNOT be undone.</Typography>
-          </SectionBox>
-          <Box align="center">
-            <Button onClick={handleClickOpen}>
-              Delete account
-            </Button>
-          </Box>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              Denied
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                No you cannot leave :D
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary" autoFocus>
-                OK
+              <Button onClick={handleClickOpen}>
+                Delete account
               </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
+            </Box>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                Denied
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  No you cannot leave :D
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary" autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
 
-      </BaseTabs>
+        </BaseTabs>
+      </Container>
+
     </Layout>
   );
 }

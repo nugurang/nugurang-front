@@ -1,11 +1,11 @@
 import React from 'react';
 import {useRouter} from 'next/router';
 import { gql, useQuery } from '@apollo/client';
-
-import Layout from '../../../components/Layout';
+import Grid from'@material-ui/core/Grid';
 
 import GraphQlError from '../../../components/GraphQlError';
-import HonorBadgeGrid from '../../../components/HonorBadgeGrid';
+import HonorCard from '../../../components/HonorCard';
+import Layout from '../../../components/Layout';
 import Loading from '../../../components/Loading';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
@@ -16,28 +16,40 @@ const TEST_HONOR_BADGE_LIST = [
   {
     id: 0,
     name: "Pikachu",
-    image: "/static/images/sample_1.jpg",
+    image: {
+      id: 0,
+      address: "/static/images/sample_1.jpg",
+    },
     score: "1000000",
   },
   {
     id: 1,
     name: "Raichu",
-    image: "/static/images/sample_1.jpg",
+    image: {
+      id: 0,
+      address: "/static/images/sample_1.jpg",
+    },
     score: "2000000",
   },
   {
     id: 2,
     name: "Charmander",
-    image: "/static/images/sample_1.jpg",
+    image: {
+      id: 0,
+      address: "/static/images/sample_1.jpg",
+    },
     score: "3000000",
   },
   {
     id: 3,
     name: "Squirtle",
-    image: "/static/images/sample_1.jpg",
+    image: {
+      id: 0,
+      address: "/static/images/sample_1.jpg",
+    },
     score: "4000000",
   },
-]
+];
 
 
 export const GET_USER = gql`
@@ -75,7 +87,9 @@ function Honor() {
       <PageTitleBar title="Honor badges" backButton />
 
       <SectionBox>
-        <HonorBadgeGrid items={TEST_HONOR_BADGE_LIST} />
+        <Grid container>
+          {[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}
+        </Grid>
       </SectionBox>
 
     </Layout>

@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import BaseImage from './BaseImage';
@@ -26,21 +27,29 @@ export default function EventInfoBox({ event, dense=false }) {
         >
           <Grid container spacing={2} alignItems="center" justify="flex-start">
             <Grid item>
-              <Typography variant="h5">{event.title}</Typography>
+              <Typography variant="h5" gutterBottom>{event.title}</Typography>
               <Box display={dense ? "none" : "block"}>
-                <Typography variant="body1">
-                  {"Start: "}
-                  {event.eventStart}
-                  {", End: "}
-                  {event.eventEnd}
-                </Typography>
+                <Grid container alignItems="flex-start" spacing={1}>
+                  <Grid item>
+                    <AccessTimeIcon style={{ fontSize: 24 }} />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1">
+                      {event.eventStart}
+                      {"~"}
+                    </Typography>
+                    <Typography variant="body1">
+                      {event.eventEnd}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Box>
             </Grid>
           </Grid>
         </AccordionSummary>
         <AccordionDetails>
-          <Grid container spacing={2}>
-            <Grid item xs>
+          <Grid container alignItems="flex-start" spacing={1}>
+            <Grid item flexGrow={1}>
               <Typography variant="body1">{event.content}</Typography>
             </Grid>
           </Grid>

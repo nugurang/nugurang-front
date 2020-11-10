@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
@@ -12,8 +13,8 @@ import PageTitleBar from '../../components/PageTitleBar';
 import ProjectInfoBox from '../../components/ProjectInfoBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import UserInfoCardGrid from '../../components/UserInfoCardGrid';
-import WorkInfoCardGrid from '../../components/WorkInfoCardGrid';
+import UserInfoCard from '../../components/UserInfoCard';
+import WorkInfoCard from '../../components/WorkInfoCard';
 
 
 const TAB_PROPS = [
@@ -63,7 +64,10 @@ function ProjectInfo() {
   if (responses.some((response) => response.loading))
     return <Loading />;
   const project = responses[0].data ? responses[0].data.getProject : null;
-  const users = responses[0].data.getTeam ? responses[0].data.getProject.getUsers : null;
+
+  project.works.forEach(function(work){
+    work.onClick = () => router.push(`/works/${work.id}`);
+  });
 
   return (
     <Layout>
@@ -77,8 +81,12 @@ function ProjectInfo() {
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <WorkInfoCardGrid items={project.works} link="/works" xs={12} sm={6} md={4} />
-          <UserInfoCardGrid items={users} link="/user" xs={12} sm={6} md={4} />
+          <Grid container>
+            {[project.works].flat().map((work) => <Grid item xs={12} sm={6} md={4}><WorkInfoCard work={work} /></Grid>)}
+          </Grid>
+          <Grid container>
+            {[project.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}
+          </Grid>
         </BaseTabs>
       </SectionBox>
 

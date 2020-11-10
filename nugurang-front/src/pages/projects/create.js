@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -41,38 +42,40 @@ function CreateProject() {
 
       <PageTitleBar title="Create new project" backButton />
 
-      <SectionBox titleBar={<SectionTitleBar title="Add project name" icon=<GroupAddIcon /> />}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                inputRef={newName}
-                label="Enter project name"
-                variant="outlined"
-                onClick={handleNewNameChange}
-              />
-            </FormControl>
+      <Container maxWidth="md">
+        <SectionBox titleBar={<SectionTitleBar title="Add project name" icon=<GroupAddIcon /> />}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                  inputRef={newName}
+                  label="Enter project name"
+                  variant="outlined"
+                  onClick={handleNewNameChange}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const projectRes = await createProject({ variables: {team: router.query.team, name: newName.current.value}});
+                  const projectId = projectRes.data.createProject.id;
+                  router.push(`/projects/${projectId}`);
+                }}
+              >
+                <Box align="center">
+                  <Button type="submit">Submit</Button>
+                </Box>
+              </form>
+              {mutationLoading && <p>Loading...</p>}
+              {mutationError && <p>Error :( Please try again</p>}
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                const projectRes = await createProject({ variables: {team: router.query.team, name: newName.current.value}});
-                const projectId = projectRes.data.createProject.id;
-                router.push(`/projects/${projectId}`);
-              }}
-            >
-              <Box align="center">
-                <Button type="submit">Submit</Button>
-              </Box>
-            </form>
-            {mutationLoading && <p>Loading...</p>}
-            {mutationError && <p>Error :( Please try again</p>}
-          </Grid>
-        </Grid>
-      </SectionBox>
+        </SectionBox>
+      </Container>
 
     </Layout>
   );

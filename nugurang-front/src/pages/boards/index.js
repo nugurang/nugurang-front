@@ -2,7 +2,9 @@ import { gql , useApolloClient, useLazyQuery, useQuery } from "@apollo/client";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CategoryIcon from '@material-ui/icons/Category';
@@ -21,8 +23,7 @@ import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
-import ThreadGrid from '../../components/ThreadGrid';
-import ThreadList from '../../components/ThreadList';
+import ThreadListItem from '../../components/ThreadListItem';
 
 
 const GET_BOARD_BY_NAME = gql`
@@ -108,6 +109,19 @@ function Boards() {
   const getBoardByName = results[4][0];
   const boardData = results[4][1].data;
 
+  hotThreads.forEach(function(thread){
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
+  hotEvents.forEach(function(thread){
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
+  recentThreads.forEach(function(thread){
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
+  recentEvents.forEach(function(thread){
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
+
   let key = 0;
   const currentBoard = showEvents ? EVENT_BOARDS : COMMON_BOARDS;
   return (
@@ -127,7 +141,7 @@ function Boards() {
             <Grid container>
               {[currentBoard].flat().map((boardName) =>
                 (
-                  <Grid item key={++key} xs={6} sm={4} md={2} align="center">
+                  <Grid item key={++key} xs={6} sm={4} md={3} align="center">
                     <CallingCard
                       image="/static/images/sample_1.jpg"
                       onClick={async (e) => {
@@ -150,19 +164,46 @@ function Boards() {
           </SectionBox>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <SectionBox
-            titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
-          >
-            <ThreadList items={hotThreads} />
-          </SectionBox>
+          <Box display={showEvents ? "none" : "block"}>
+            <SectionBox
+              titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
+            >
+              <List>
+                {[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
+              </List>
+            </SectionBox>
+          </Box>
+          <Box display={showEvents ? "block" : "none"}>
+            <SectionBox
+              titleBar={<SectionTitleBar title="Hot Events" icon={<WhatshotIcon />} />}
+            >
+              <List>
+                {[hotEvents].flat().map((thread) => <ThreadListItem thread={thread} />)}
+              </List>
+            </SectionBox>
+          </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <SectionBox
-            titleBar={<SectionTitleBar title="Recent Threads" icon={<TrendingUpIcon />} />}
-          >
-            <ThreadList items={recentThreads} />
-          </SectionBox>
+          <Box display={showEvents ? "none" : "block"}>
+            <SectionBox
+              titleBar={<SectionTitleBar title="Recent Threads" icon={<TrendingUpIcon />} />}
+            >
+              <List>
+                {[recentThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
+              </List>
+            </SectionBox>
+          </Box>
+          <Box display={showEvents ? "block" : "none"}>
+            <SectionBox
+              titleBar={<SectionTitleBar title="Recent Events" icon={<TrendingUpIcon />} />}
+            >
+              <List>
+                {[recentEvents].flat().map((thread) => <ThreadListItem thread={thread} />)}
+              </List>
+            </SectionBox>
+          </Box>
         </Grid>
+
       </Grid>
     </Layout>
   );

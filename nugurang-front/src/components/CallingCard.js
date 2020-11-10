@@ -18,7 +18,8 @@ const useStyles = makeStyles(() => ({
     variant: 'outlined',
   },
   cardMedia: {
-    height: 0,
+    height: '100%',
+    width: 'auto',
     paddingTop: '100%', // 1:1
   },
 }));
@@ -28,26 +29,24 @@ export default function CallingCard({ children, image=null, onClick=null }) {
   const classes = useStyles();
   let key=0;
   return (
-    <Card variant="outlined">
-      <CardActionArea onClick={onClick || null}>
-        <Grid container direction="row">
-          <Grid item xs={4}>
-            {
-              image ?
-              (
-                <CardMedia className={classes.cardMedia}
-                  image={image}
-                />
-              ) : null
-            }
-          </Grid>
-          <Grid item xs={8}>
-            <CardContent>
-              {[children].flat().map((child) => <div key={++key}>{child}</div>)}
-            </CardContent>
-          </Grid>
+    <Card variant="outlined" onClick = onClick ? onClick : null>
+      <Grid container direction="row">
+        <Grid item xs={3}>
+          {
+            image ?
+            (
+              <CardMedia className={classes.cardMedia}
+                image={image}
+              />
+            ) : null
+          }
         </Grid>
-      </CardActionArea>
+        <Grid item xs={9}>
+          <CardContent>
+            {[children].flat().map((child) => <div key={++key}>{child}</div>)}
+          </CardContent>
+        </Grid>
+      </Grid>
     </Card>
   );
 }

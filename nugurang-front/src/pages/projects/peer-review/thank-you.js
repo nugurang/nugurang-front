@@ -7,10 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 
-import Layout from '../../components/Layout';
+import Layout from '../../../components/Layout';
 
-import FullScreenDialogBox from '../../components/FullScreenDialogBox';
-import PageTitleBar from '../../components/PageTitleBar';
+import FullScreenDialogBox from '../../../components/FullScreenDialogBox';
+import PageTitleBar from '../../../components/PageTitleBar';
 
 
 const useStyles = makeStyles(() => ({

@@ -1,4 +1,5 @@
 import {useRouter} from 'next/router';
+import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 
 import BaseListItem from '../components/BaseListItem';
@@ -38,6 +39,8 @@ export default function SignIn() {
       <SectionBox
         titleBar={<PageTitleBar title="Sign In" backButton />}
       >
+
+      <Container maxWidth="md">
         <List>
           {TEST_SIGNIN_LIST.map(
             (item) => (
@@ -51,6 +54,8 @@ export default function SignIn() {
             )
           )}
         </List>
+      </Container>
+      
       </SectionBox>
     </Layout>
   );

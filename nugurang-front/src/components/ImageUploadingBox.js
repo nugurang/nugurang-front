@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react'
 import { makeStyles } from '@material-ui/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -16,6 +16,27 @@ const useStyles = makeStyles(() => ({
 
 export default function ImageUploadingBox({ image }) {
   const classes = useStyles();
+  const selectedImageAddress = useRef(null);
+
+
+  function handleUploadClick() {
+    var file = event.target.files[0];
+    const reader = new FileReader();
+    var url = reader.readAsDataURL(file);
+
+    reader.onloadend = function(e) {
+      this.setState({
+        selectedImageAddress: [reader.result]
+      });
+    }.bind(this);
+    console.log(url); // Would see a path?
+
+    this.setState({
+      selectedImageAddress: event.target.files[0],
+    });
+  };
+
+
   return (
     <Box className={classes.box}>
       <Grid container alignItems="center" justify="center">
@@ -26,7 +47,7 @@ export default function ImageUploadingBox({ image }) {
         </Grid>
         <Grid container spacing={2} xs={12} sm={4} alignItems="center" justify="space-evenly">
           <Grid item align="center">
-            <Button>Upload image</Button>
+            <Button onClick={handleUploadClick}>Upload image</Button>
           </Grid>
           <Grid item align="center">
             <Button>Delete image</Button>

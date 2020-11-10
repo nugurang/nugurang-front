@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -69,70 +70,73 @@ function CreateThread() {
     <Layout>
       <PageTitleBar title="Create new thread" backButton />
 
-      <SectionBox titleBar={<SectionTitleBar title="Add title" icon=<GroupAddIcon /> />}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                inputRef={newTitle}
-                label="Enter title"
-                variant="outlined"
-                onClick={handleNewTitleChange}
-              />
-            </FormControl>
+      <Container maxWidth="md">
+        <SectionBox titleBar={<SectionTitleBar title="Add title" icon=<GroupAddIcon /> />}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  inputRef={newTitle}
+                  label="Enter title"
+                  variant="outlined"
+                  onClick={handleNewTitleChange}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
-      </SectionBox>
+        </SectionBox>
 
-      <SectionBox titleBar={<SectionTitleBar title="Add content" icon=<GroupAddIcon /> />}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                inputRef={newContent}
-                label="Enter content"
-                variant="outlined"
-                onClick={handleNewContentChange}
-              />
-            </FormControl>
+        <SectionBox titleBar={<SectionTitleBar title="Add content" icon=<GroupAddIcon /> />}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  inputRef={newContent}
+                  label="Enter content"
+                  variant="outlined"
+                  onClick={handleNewContentChange}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
-      </SectionBox>
+        </SectionBox>
 
 
-      <SectionBox titleBar={<SectionTitleBar title="Add image link" icon=<ImageIcon /> />}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                inputRef={newImageAddress}
-                label="Enter image link"
-                variant="outlined"
-                onClick={handleNewImageAddressChange}
-              />
-            </FormControl>
+        <SectionBox titleBar={<SectionTitleBar title="Add image link" icon=<ImageIcon /> />}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  inputRef={newImageAddress}
+                  label="Enter image link"
+                  variant="outlined"
+                  onClick={handleNewImageAddressChange}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
-      </SectionBox>
+        </SectionBox>
 
 
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          let image;
-          if (newImageAddress.current.value) {
-            const imageRes = await createImage({ variables: { address: newImageAddress.current.value }});
-            image = imageRes.data.createImage.id;
-          }
-          console.log(newTitle.current.value);
-          const threadRes = await createThread({ variables: { thread: {board: router.query.board, name: newTitle.current.value, article: {title: newTitle.current.value, content: newContent.current.value, images: [image]}}}});
-          router.push(`/threads/${threadRes.data.createThread.id}`);
-        }}
-      >
-        <Box align="center">
-          <Button type="submit">Submit</Button>
-        </Box>
-      </form>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            let image;
+            if (newImageAddress.current.value) {
+              const imageRes = await createImage({ variables: { address: newImageAddress.current.value }});
+              image = imageRes.data.createImage.id;
+            }
+            console.log(newTitle.current.value);
+            const threadRes = await createThread({ variables: { thread: {board: router.query.board, name: newTitle.current.value, article: {title: newTitle.current.value, content: newContent.current.value, images: [image]}}}});
+            router.push(`/threads/${threadRes.data.createThread.id}`);
+          }}
+        >
+          <Box align="center">
+            <Button type="submit">Submit</Button>
+          </Box>
+        </form>
+      </Container>
+
     </Layout>
   );
 }

@@ -1,11 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 
 const useStyles = makeStyles(() => ({
   cardMedia: {
@@ -28,20 +27,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function HonorBadgeBox({ image, name, score }) {
+export default function HonorCard({ honor }) {
   const classes = useStyles();
   return (
-    <Box>
-      <Card className={classes.card} variant="outlined">
-        <CardActionArea>
-          <CardMedia className={classes.cardMedia}
-            image={image}
-            name={name}
-          />
-          <Typography className={classes.cardScoreTypography} variant="subtitle2">{score}</Typography>
-          <Typography variant="subtitle2">{name}</Typography>
-        </CardActionArea>
-      </Card>
-    </Box>
+    <Card className={classes.card} variant="outlined">
+      <CardActionArea>
+        <CardMedia className={classes.cardMedia} image={honor.image ? honor.image.address : null} name={honor.name} />
+        <Typography className={classes.cardScoreTypography} variant="subtitle2">{honor.score}</Typography>
+        <Typography align="center" variant="subtitle1">{honor.name}</Typography>
+      </CardActionArea>
+    </Card>
   );
 }

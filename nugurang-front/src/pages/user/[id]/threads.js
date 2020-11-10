@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
+import Grid from '@material-ui/core/Grid';
+
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import withAuth from '../../../components/withAuth';
@@ -9,7 +11,8 @@ import Layout from '../../../components/Layout';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionTitleBar from '../../../components/SectionTitleBar';
 import SectionBox from '../../../components/SectionBox';
-import ThreadGrid from '../../../components/ThreadGrid';
+import ThreadCard from '../../../components/ThreadCard';
+import 'array-flat-polyfill';
 
 
 export const GET_USER = gql`
@@ -43,7 +46,7 @@ export const GET_USER = gql`
 `;
 
 
-function UserThreads() {
+function Threads() {
   const router = useRouter();
   const results = [
     [null, useQuery(GET_USER, {variables: {id: router.query.id}})],
@@ -65,11 +68,13 @@ function UserThreads() {
           <SectionTitleBar title={user.name} icon={<AssignmentIcon />} />
         }
       >
-        <ThreadGrid items={threads} xs={12} sm={6} md={4} />
+        <Grid container>
+          {[threads].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><ThreadCard thread={thread} /></Grid>)}
+        </Grid>
       </SectionBox>
 
     </Layout>
   );
 }
 
-export default withAuth(UserThreads);
+export default withAuth(Threads);

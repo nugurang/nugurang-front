@@ -1,15 +1,16 @@
 import React from 'react';
-
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
+import List from '@material-ui/core/List';
+
+import withAuth from '../../components/withAuth';
+import GraphQlError from '../../components/GraphQlError';
+import NotificationListItem from '../../components/NotificationListItem';
 import Layout from '../../components/Layout';
+import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
-import NotificationList from '../../components/NotificationList';
-import Loading from '../../components/Loading';
-import GraphQlError from '../../components/GraphQlError';
-import withAuth from '../../components/withAuth';
 
 const GET_NOTIFICATIONS = gql`
   query GetNotifications {
@@ -77,7 +78,9 @@ function Notifications(){
       <Layout>
         <PageTitleBar title="Notifications" backButton />
         <SectionBox>
-          <NotificationList items={TEST_NOTIFICATION_LIST} />
+          <List>
+            {[TEST_NOTIFICATION_LIST].flat().map((notification) => <NotificationListItem notification={notification} />)}
+          </List>
         </SectionBox>
       </Layout>
     );

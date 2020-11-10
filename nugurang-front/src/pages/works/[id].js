@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
@@ -11,7 +12,7 @@ import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import TaskInfoCardGrid from '../../components/TaskInfoCardGrid';
+import TaskInfoCard from '../../components/TaskInfoCard';
 import WorkInfoBox from '../../components/WorkInfoBox';
 
 
@@ -53,7 +54,6 @@ const TEST_USER_LIST = [
     followings: 10,
   },
 ]
-
 
 
 const TEST_TASK_TODO_LIST = [
@@ -181,6 +181,10 @@ function WorkInfo() {
     return <Loading />;
   const work = responses[0].data ? responses[0].data.getWork : null;
 
+  work.tasks.forEach(function(task){
+    task.onClick = () => router.push(`/tasks/${task.id}`);
+  });
+
   return (
     <Layout>
       <PageTitleBar title="Work info" backButton="true" backButtonLink={`/projects/${work.project.id}`}>
@@ -193,13 +197,19 @@ function WorkInfo() {
       </SectionBox>
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <TaskInfoCardGrid items={TEST_TASK_TODO_LIST} xs={12} sm={6} md={4} />
-          <TaskInfoCardGrid items={TEST_TASK_DOING_LIST} xs={12} sm={6} md={4} />
-          <TaskInfoCardGrid items={TEST_TASK_DONE_LIST} xs={12} sm={6} md={4} />
+          <Grid container>
+            {[TEST_TASK_TODO_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}
+          </Grid>
+          <Grid container>
+            {[TEST_TASK_DOING_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}
+          </Grid>
+          <Grid container>
+            {[TEST_TASK_DONE_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}
+          </Grid>
         </BaseTabs>
       </SectionBox>
     </Layout>
   );
 }
 
-export default withAuth(CreateWork);
+export default withAuth(WorkInfo);

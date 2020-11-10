@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import withAuth from '../../components/withAuth';
 import EventInfoBox from '../../components/EventInfoBox';
@@ -77,22 +78,26 @@ function Event() {
     <Layout>
       <PageTitleBar title="Event" backButton />
 
-      <SectionBox>
-        <EventInfoBox event={TEST_EVENT} />
-      </SectionBox>
-
-      <SectionBox
-        titleBar={
-          (
-            <SectionTitleBar title="Related threads" icon={<AssignmentIcon />}>
-              <Button onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.board, event: router.query.event }})}>Create thread</Button>
-            </SectionTitleBar>
-          )
-        }
-      >
-        <ThreadGrid items={threads} xs={12} sm={6} md={4} />
-      </SectionBox>
-
+      <Grid container>
+        <Grid item xs={12} md={4}>
+          <SectionBox>
+            <EventInfoBox event={TEST_EVENT} />
+          </SectionBox>
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <SectionBox
+            titleBar={
+              (
+                <SectionTitleBar title="Related threads" icon={<AssignmentIcon />}>
+                  <Button onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.board, event: router.query.event }})}>Create thread</Button>
+                </SectionTitleBar>
+              )
+            }
+          >
+            <ThreadGrid items={threads} xs={12} md={6} />
+          </SectionBox>
+        </Grid>
+      </Grid>
     </Layout>
   );
 }

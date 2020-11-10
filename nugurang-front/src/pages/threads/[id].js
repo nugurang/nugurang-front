@@ -2,14 +2,19 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
 
+import TextsmsIcon from '@material-ui/icons/Textsms';
+
+import ArticleLeader from '../../components/ArticleLeader';
+import ArticleListItem from '../../components/ArticleListItem';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
-import ThreadBox from '../../components/ThreadBox';
 import withAuth from '../../components/withAuth';
 
 
@@ -88,16 +93,29 @@ function Thread(threadId) {
         <Button onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
       </PageTitleBar>
 
-      <SectionBox>
-        <ThreadBox
-          articleLeader={thread.firstArticle}
-          articles={articles.slice(1)}
-          like={3}
-          topic="Test topic"
-          view={thread.viewCount}
-          vote={5}
-        />
-      </SectionBox>
+      <Grid container>
+        <Grid item xs={12} md={6}>
+          <SectionBox>
+            { 
+              thread.firstArticle && 
+              <ArticleLeader
+                article={thread.firstArticle}
+                like={3}
+                topic="Test topic"
+                view={thread.viewCount}
+                vote={5}
+              />
+            }
+          </SectionBox>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <SectionBox titleBar={<SectionTitleBar title="Comments" icon=<TextsmsIcon /> />}>
+            <List>
+              {[articles.slice(1)].flat().map((article) => <ArticleListItem article={article} />)}
+            </List>
+          </SectionBox>
+        </Grid>
+      </Grid>
     </Layout>
   );
 }

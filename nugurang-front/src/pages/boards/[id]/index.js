@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import withAuth from '../../../components/withAuth';
@@ -11,7 +13,7 @@ import Layout from '../../../components/Layout';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionTitleBar from '../../../components/SectionTitleBar';
 import SectionBox from '../../../components/SectionBox';
-import ThreadGrid from '../../../components/ThreadGrid';
+import ThreadCard from '../../../components/ThreadCard';
 
 
 const GET_BOARD = gql`
@@ -55,12 +57,15 @@ function Board() {
   const errorResponse = responses.find((response) => response.error)
   if (errorResponse)
     return <GraphQlError error={errorResponse.error} />
-
   if (responses.some((response) => response.loading))
     return <Loading />;
 
   const board = responses[0].data.getBoard ? responses[0].data.getBoard : null;
   const threads = responses[0].data.getBoard ? responses[0].data.getBoard.getThreads : null;
+
+  threads.forEach(function(thread){
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
 
   return (
     <Layout>
@@ -75,7 +80,9 @@ function Board() {
           )
         }
       >
-        <ThreadGrid items={threads} xs={12} sm={6} md={4} />
+        <Grid container>
+          {[threads].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><ThreadCard thread={thread} /></Grid>)}
+        </Grid>
       </SectionBox>
 
     </Layout>

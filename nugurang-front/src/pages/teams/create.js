@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -38,40 +39,41 @@ function CreateTeam() {
 
   return (
     <Layout>
-
       <PageTitleBar title="Create new team" backButton backButtonLink="/teams" />
 
-      <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                inputProps={{ style: { fontFamily: "Ubuntu" } }}
-                InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
-                inputRef={newName}
-                label="Enter team name"
-                variant="outlined"
-                onClick={handleNewNameChange}
-              />
-            </FormControl>
+      <Container maxWidth="md">
+        <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  inputProps={{ style: { fontFamily: "Ubuntu" } }}
+                  InputLabelProps={{ style: { fontFamily: "Ubuntu" } }}
+                  inputRef={newName}
+                  label="Enter team name"
+                  variant="outlined"
+                  onClick={handleNewNameChange}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  createTeam({ variables: {name: newName.current.value}});
+                  router.push('/teams');
+                }}
+              >
+                <Box align="center">
+                  <Button type="submit">Submit</Button>
+                </Box>
+              </form>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                createTeam({ variables: {name: newName.current.value}});
-                router.push('/teams');
-              }}
-            >
-              <Box align="center">
-                <Button type="submit">Submit</Button>
-              </Box>
-            </form>
-          </Grid>
-        </Grid>
-      </SectionBox>
-      {mutationLoading && <p>Loading...</p>}
-      {mutationError && <p>Error :( Please try again</p>}
+        </SectionBox>
+        {mutationLoading && <p>Loading...</p>}
+        {mutationError && <p>Error :( Please try again</p>}
+      </Container>
 
     </Layout>
   );

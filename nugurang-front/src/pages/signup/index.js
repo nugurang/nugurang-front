@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -80,78 +81,73 @@ function SignUp() {
   return (
     <Layout>
       <PageTitleBar title="Sign up" backButton />
-      <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />} border={false}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                defaultValue={userData.currentOAuth2User.name}
-                inputRef={newName}
-                label="Enter username"
-                variant="outlined"
-                onClick={handleNewNameChange}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </SectionBox>
 
-      <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />} border={false}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                defaultValue={userData.currentOAuth2User.email}
-                inputRef={newEmail}
-                label="Enter email"
-                variant="outlined"
-                onClick={handleNewEmailChange}
-              />
-            </FormControl>
+      <Container maxWidth="md">
+        <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />} border={false}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  defaultValue={userData.currentOAuth2User.name}
+                  inputRef={newName}
+                  label="Enter username"
+                  variant="outlined"
+                  onClick={handleNewNameChange}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
-      </SectionBox>
+        </SectionBox>
 
-      <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />} border={false}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                inputRef={newImageAddress}
-                label="Enter image link"
-                variant="outlined"
-                onClick={handleNewImageAddressChange}
-              />
-            </FormControl>
+        <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />} border={false}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  defaultValue={userData.currentOAuth2User.email}
+                  inputRef={newEmail}
+                  label="Enter email"
+                  variant="outlined"
+                  onClick={handleNewEmailChange}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
-      </SectionBox>
+        </SectionBox>
 
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          let image;
-          if (newImageAddress.current.value) {
-            const res = await createImage({ variables: { address: newImageAddress.current.value }});
-            image = res.data.createImage.id;
-          }
-          await createUser({
-            variables: {
-              user: {
-                name: newName.current.value,
-                email: newEmail.current.value,
-                biography: "",
-                image
-              }
+        <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />} border={false}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  inputRef={newImageAddress}
+                  label="Enter image link"
+                  variant="outlined"
+                  onClick={handleNewImageAddressChange}
+                />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </SectionBox>
+
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            let image;
+            if (newImageAddress.current.value) {
+              const res = await createImage({ variables: { address: newImageAddress.current.value }});
+              image = res.data.createImage.id;
             }
-          });
-          router.push('/signup/welcome');
-        }}
-      >
-        <Box align="center">
-          <Button type="submit">Submit</Button>
-        </Box>
-      </form>
+            await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
+            router.push('/signup/welcome');
+          }}
+        >
+          <Box align="center">
+            <Button type="submit">Submit</Button>
+          </Box>
+        </form>
+      </Container>
+
     </Layout>
   );
 }

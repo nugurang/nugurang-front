@@ -34,7 +34,6 @@ import StatCounterBox from '../components/StatCounterBox';
 import TaskInfoCardGrid from '../components/TaskInfoCardGrid';
 import TeamInfoBox from '../components/TeamInfoBox';
 import TeamInfoCardGrid from '../components/TeamInfoCardGrid';
-import ThreadBox from '../components/ThreadBox';
 import ThreadGrid from '../components/ThreadGrid';
 import ThreadList from '../components/ThreadList';
 import UserGroupInfoCard from '../components/UserGroupInfoCard';
@@ -1156,19 +1155,7 @@ export default function ComponentOverview() {
       <Overview title="TeamInfoBox">
         <TeamInfoBox team={TEAM_INFO_BOX_TEAM} />
       </Overview>
-
-
-      <Overview title="ThreadBox">
-        <ThreadBox
-          articleLeader={THREAD_BOX_ARTICLE_LEADER}
-          articles={THREAD_BOX_ARTICLES}
-          like={1}
-          topic="Test topic"
-          view={2}
-          vote={3}
-        />
-      </Overview>
-
+      
       <Overview title="ThreadGrid">
         <ThreadGrid
           items={THREAD_GRID_ITEMS}

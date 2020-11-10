@@ -4,6 +4,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(() => ({
@@ -20,38 +21,43 @@ export default function UserInfoBox({ user, dense=false }) {
   const router = useRouter();
   const classes = useStyles();
   return (
-    <Box className={classes.box}>
-      <Grid container spacing={2} alignItems="center" justify="center">
-        <Grid item container spacing={2} alignItems="center" justify="flex-start">
-          <div onClick={() => router.push(`/image/${user.image.id}`)}>
-            <Grid item>
-              <Avatar className={classes.avatar}
-                alt={user.name}
-                src={user.image ? user.image.address : null}
-                variant="circle"
-              >
-                {user.name.charAt(0).toUpperCase()}
-              </Avatar>
-            </Grid>
-          </div>
+    <>
+      <Box style={{margin: "1rem"}}>
+        <Grid container spacing={2} alignItems="center">
           <Grid item>
-            <Typography variant="h5">{user.name}</Typography>
-            <Box display={dense ? "none" : "block"}>
-              <Typography variant="body1">
-                {user.getFollowers.length}
-                {' followers, '}
-                {user.getFollowings.length}
-                {' followings'}
-              </Typography>
-            </Box>
+            <Grid container spacing={2} alignItems="center" justify="flex-start">
+              <Grid item>
+                <div onClick={() => user.image ? router.push(`/image/${user.image.id}`) : null}>
+                  <Avatar className={classes.avatar}
+                    alt={user.name}
+                    src={user.image ? user.image.address : null}
+                    variant="circle"
+                  >
+                    {user.name.charAt(0).toUpperCase()}
+                  </Avatar>
+                </div>
+              </Grid>
+              <Grid item>
+                <Typography variant="h5">{user.name}</Typography>
+                <Box display={dense ? "none" : "block"}>
+                  <Typography variant="body1">
+                    {user.getFollowers.length}
+                    {' followers, '}
+                    {user.getFollowings.length}
+                    {' followings'}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Box display={dense ? "none" : "block"}>
-            <Typography variant="body1">{user.biography || "No biography :("}</Typography>
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+
+      <Box display={dense ? "none" : "block"}>
+        <Paper elevation={1}>
+          <Typography variant="body1">{user.biography || "No biography :("}</Typography>
+        </Paper>
+      </Box>
+    </>
   );
 }

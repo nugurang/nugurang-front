@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
@@ -9,11 +10,11 @@ import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
-import ProjectInfoCardGrid from '../../components/ProjectInfoCardGrid';
+import ProjectInfoCard from '../../components/ProjectInfoCard';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamInfoBox from '../../components/TeamInfoBox';
-import UserInfoCardGrid from '../../components/UserInfoCardGrid';
+import UserInfoCard from '../../components/UserInfoCard';
 
 
 const TAB_PROPS = [
@@ -65,6 +66,10 @@ function TeamInfo() {
   const team = responses[0].data ? responses[0].data.getTeam : null;
   const users = responses[0].data.getTeam ? responses[0].data.getTeam.getUsers : null;
 
+  team.projects.forEach(function(project){
+    project.onClick = () => router.push(`/projects/${project.id}`);
+  });
+
   return (
     <Layout>
 
@@ -75,11 +80,14 @@ function TeamInfo() {
         <TeamInfoBox team={team} />
       </SectionBox>
 
-
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <ProjectInfoCardGrid items={team.projects} link="/projects" addButtonLink="/projects/invite" xs={12} sm={6} md={4} />
-          <UserInfoCardGrid items={team.getUsers} link="/user" xs={12} sm={6} md={4} />
+          <Grid container>
+            {[team.projects].flat().map((project) => <Grid item xs={12} sm={6} md={4}><ProjectInfoCard project={project} /></Grid>)}
+          </Grid>
+          <Grid container>
+            {[team.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}
+          </Grid>
         </BaseTabs>
       </SectionBox>
 

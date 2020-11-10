@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
 import GroupIcon from '@material-ui/icons/Group';
 
 import GraphQlError from '../../components/GraphQlError';
@@ -10,7 +12,7 @@ import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import TeamInfoCardGrid from '../../components/TeamInfoCardGrid';
+import TeamInfoCard from '../../components/TeamInfoCard';
 import withAuth from '../../components/withAuth';
 import Loading from '../../components/Loading';
 
@@ -48,6 +50,10 @@ function Teams() {
 
   const teams = responses[0].data.currentUser ? responses[0].data.currentUser.getTeams : null;
 
+  teams.forEach(function(team){
+    team.onClick = () => router.push(`/teams/${team.id}`);
+  });
+
   return (
     <Layout>
       <PageTitleBar title="Teams" backButton backButtonLink="/home" />
@@ -59,7 +65,9 @@ function Teams() {
           </SectionTitleBar>
         )}
       >
-        <TeamInfoCardGrid items={teams} link="/teams" addButtonLink="/teams/invite" xs={12} sm={6} md={4} />
+        <Grid container>
+          {[teams].flat().map((team) => <Grid item xs={12} sm={6} md={4}><TeamInfoCard team={team} /></Grid>)}
+        </Grid>
       </SectionBox>
     </Layout>
   );

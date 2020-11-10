@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+
 import IconButton from '@material-ui/core/IconButton';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -20,8 +22,8 @@ import Loading from '../components/Loading';
 import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
-import ThreadGrid from '../components/ThreadGrid';
-import ThreadList from '../components/ThreadList';
+import ThreadCard from '../components/ThreadCard';
+import ThreadListItem from '../components/ThreadListItem';
 
 export const GET_CURRENT_USER = gql`
   query {
@@ -102,10 +104,17 @@ function Home() {
   const hotThreads = responses[1].data.getHotThreadsByBoardNames;
   const recentEvents = responses[2].data.getThreadsByBoardNames;
 
+  hotThreads.forEach(function(thread){
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
+  recentEvents.forEach(function(thread){
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
+
   return (
     <Layout>
       <PageTitleBar title="Home" icon=<HomeIcon />>
-        <IconButton aria-label="show 17 new notifications" color="inherit">
+        <IconButton onClick={() => router.push(`/notifications/${currentUser.id}`)}>
           <Badge badgeContent={17} color="secondary">
             <NotificationsIcon />
           </Badge>
@@ -124,7 +133,9 @@ function Home() {
               </SectionTitleBar>
             )}
           >
-            <ThreadList items={hotThreads} />
+            <List>
+              {[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
+            </List>
           </SectionBox>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -133,7 +144,9 @@ function Home() {
               <SectionTitleBar title="Hot threads" icon=<WhatshotIcon /> />
             )}
           >
-            <ThreadList items={hotThreads} />
+            <List>
+              {[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
+            </List>
           </SectionBox>
         </Grid>
         <Grid item xs={12}>
@@ -142,7 +155,9 @@ function Home() {
               <SectionTitleBar title="Recent events" icon=<TrendingUpIcon /> />
             )}
           >
-            <ThreadGrid items={recentEvents} xs={12} sm={6} md={4} />
+            <Grid container>
+              {[recentEvents].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><ThreadCard thread={thread} /></Grid>)}
+            </Grid>
           </SectionBox>
         </Grid>
       </Grid>

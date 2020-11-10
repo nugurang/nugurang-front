@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { gql, useLazyQuery } from '@apollo/client';
 
+import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,7 +16,7 @@ import NoContentsBox from '../../components/NoContentsBox'
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import UserInfoCardGrid from '../../components/UserInfoCardGrid'
+import UserInfoCard from '../../components/UserInfoCard'
 import withAuth from '../../components/withAuth';
 
 export const GET_USER_BY_NAME = gql`
@@ -40,7 +41,7 @@ export const GET_USER_BY_NAME = gql`
 `;
 
 
-function FindUser() {
+function Find() {
   const keywordName = useRef(null);
 
   const results = [useLazyQuery(GET_USER_BY_NAME)];
@@ -64,49 +65,53 @@ function FindUser() {
   return (
     <Layout>
       <PageTitleBar title="Find user" backButton />
-      <SectionBox border={false}>
-        <Grid container spacing={2} alignItems="center" justify="space-between">
-          <Grid item xs>
-            <FormControl fullWidth variant="filled">
-              <TextField
-                inputRef={keywordName}
-                label="Enter username"
-                variant="outlined"
-                onClick={handleKeywordNameChange}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                await getUserByName({ variables: {name: keywordName.current.value}})}}
-            >
-              <IconButton type="submit" aria-label="search">
-                <SearchIcon />
-              </IconButton>
-            </form>
-          </Grid>
-        </Grid>
-      </SectionBox>
 
-      <SectionBox
-        titleBar={
-          <SectionTitleBar title="Result" icon=<FindInPageIcon /> />
-        }
-      >
-        {
-          users
-          ? (
-            <SectionBox border={false}>
-              <UserInfoCardGrid items={users} link="/user" xs={12} sm={6} md={4} />
-            </SectionBox>
-          )
-          : <NoContentsBox />
-        }
-      </SectionBox>
+      <Container maxWidth="md">
+        <SectionBox border={false}>
+          <Grid container spacing={2} alignItems="center" justify="space-between">
+            <Grid item xs>
+              <FormControl fullWidth variant="filled">
+                <TextField
+                  inputRef={keywordName}
+                  label="Enter username"
+                  variant="outlined"
+                  onClick={handleKeywordNameChange}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  await getUserByName({ variables: {name: keywordName.current.value}})}}
+              >
+                <IconButton type="submit" aria-label="search">
+                  <SearchIcon />
+                </IconButton>
+              </form>
+            </Grid>
+          </Grid>
+        </SectionBox>
+
+        <SectionBox
+          titleBar={
+            <SectionTitleBar title="Result" icon=<FindInPageIcon /> />
+          }
+        >
+          {
+            users
+            ? (
+              <Grid container>
+                {[users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}
+              </Grid>
+            )
+            : <NoContentsBox />
+          }
+        </SectionBox>
+      </Container>
+      
     </Layout>
   );
 }
 
-export default withAuth(FindUser);
+export default withAuth(Find);
