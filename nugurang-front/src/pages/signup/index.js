@@ -38,8 +38,8 @@ export const CREATE_IMAGE = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation createUser($name: String!, $email: String!, $biography: String, $image: ID ) {
-    createUser (name: $name, email: $email, biography: $biography, image: $image) {
+  mutation createUser($user: UserInput!) {
+    createUser (user: $user) {
       id
     }
   }
@@ -135,7 +135,16 @@ function SignUp() {
             const res = await createImage({ variables: { address: newImageAddress.current.value }});
             image = res.data.createImage.id;
           }
-          await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
+          await createUser({
+            variables: {
+              user: {
+                name: newName.current.value,
+                email: newEmail.current.value,
+                biography: "",
+                image
+              }
+            }
+          });
           router.push('/signup/welcome');
         }}
       >
