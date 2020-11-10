@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { gql, useLazyQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
@@ -42,13 +43,14 @@ export const GET_USER_BY_NAME = gql`
 
 
 function Find() {
+  const router = useRouter();
   const keywordName = useRef(null);
 
   const results = [useLazyQuery(GET_USER_BY_NAME)];
   const [getUserByName] = results.map(result => result[0]);
 
   const userData = results[0][1].data;
-  const users = userData && userData.getUserByName ? [userData.getUserByName] : null;
+  const users = userData && userData.getUserByName ? [userData.getUserByName] : [];
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -56,12 +58,14 @@ function Find() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-
-
   function handleKeywordNameChange() {
     keywordName.current.focus();
   }
 
+  users.forEach(function(user){
+    user.onClick = () => router.push(`/user/${user.id}`);
+  });
+  
   return (
     <Layout>
       <PageTitleBar title="Find user" backButton />
@@ -99,12 +103,8 @@ function Find() {
           }
         >
           {
-            users
-            ? (
-              <Grid container>
-                {[users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}
-              </Grid>
-            )
+            users && (users.length)
+            ? <Grid container>{[users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </SectionBox>

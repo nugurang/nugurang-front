@@ -9,6 +9,7 @@ import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import ProjectInfoBox from '../../components/ProjectInfoBox';
 import SectionBox from '../../components/SectionBox';
@@ -68,6 +69,9 @@ function ProjectInfo() {
   project.works.forEach(function(work){
     work.onClick = () => router.push(`/works/${work.id}`);
   });
+  project.getUsers.forEach(function(user){
+    user.onClick = () => router.push(`/user/${user.id}`);
+  });
 
   return (
     <Layout>
@@ -81,12 +85,16 @@ function ProjectInfo() {
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <Grid container>
-            {[project.works].flat().map((work) => <Grid item xs={12} sm={6} md={4}><WorkInfoCard work={work} /></Grid>)}
-          </Grid>
-          <Grid container>
-            {[project.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}
-          </Grid>
+          {
+            project.works && (project.works.length)
+            ? <Grid container>{[project.works].flat().map((work) => <Grid item xs={12} sm={6} md={4}><WorkInfoCard work={work} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
+          {
+            project.getUsers && (project.getUsers.length)
+            ? <Grid container>{[project.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
         </BaseTabs>
       </SectionBox>
 

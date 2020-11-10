@@ -20,6 +20,7 @@ import CallingCard from '../../components/CallingCard';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
@@ -143,6 +144,7 @@ function Boards() {
                 (
                   <Grid item key={++key} xs={6} sm={4} md={3} align="center">
                     <CallingCard
+                      label={boardName}
                       image="/static/images/sample_1.jpg"
                       onClick={async (e) => {
                         e.preventDefault();
@@ -151,12 +153,10 @@ function Boards() {
                           query: GET_BOARD_BY_NAME,
                           variables: { name: boardName },
                         });
-                        const boardId = data.getBoardByName.id;
+                        const boardId = data.getBoardByName ? data.getBoardByName.id : ``;
                         router.push(`/boards/${boardId}`);
                       }}
-                    >
-                      <Typography variant="body1">{boardName}</Typography>
-                    </CallingCard>
+                    />
                   </Grid>
                 )
               )}
@@ -168,18 +168,22 @@ function Boards() {
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Threads" icon={<WhatshotIcon />} />}
             >
-              <List>
-                {[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
-              </List>
+              {
+                hotThreads && (hotThreads.length)
+                ? <List>{[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+                : <NoContentsBox />
+              }
             </SectionBox>
           </Box>
           <Box display={showEvents ? "block" : "none"}>
             <SectionBox
               titleBar={<SectionTitleBar title="Hot Events" icon={<WhatshotIcon />} />}
             >
-              <List>
-                {[hotEvents].flat().map((thread) => <ThreadListItem thread={thread} />)}
-              </List>
+              {
+                hotEvents && (hotEvents.length)
+                ? <List>{[hotEvents].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+                : <NoContentsBox />
+              }
             </SectionBox>
           </Box>
         </Grid>
@@ -188,18 +192,22 @@ function Boards() {
             <SectionBox
               titleBar={<SectionTitleBar title="Recent Threads" icon={<TrendingUpIcon />} />}
             >
-              <List>
-                {[recentThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
-              </List>
+              {
+                recentThreads && (recentThreads.length)
+                ? <List>{[recentThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+                : <NoContentsBox />
+              }
             </SectionBox>
           </Box>
           <Box display={showEvents ? "block" : "none"}>
             <SectionBox
               titleBar={<SectionTitleBar title="Recent Events" icon={<TrendingUpIcon />} />}
             >
-              <List>
-                {[recentEvents].flat().map((thread) => <ThreadListItem thread={thread} />)}
-              </List>
+              {
+                recentEvents && (recentEvents.length)
+                ? <List>{[recentEvents].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+                : <NoContentsBox />
+              }
             </SectionBox>
           </Box>
         </Grid>

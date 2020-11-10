@@ -90,7 +90,8 @@ function Thread(threadId) {
   return (
     <Layout>
       <PageTitleBar title="Thread" backButton backButtonLink="/boards">
-        <Button onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
+        <Button onClick={() => router.push({pathname: "/threads/update", query: { thread: thread.id }})}>Edit</Button>
+        <Button onClick={() => router.push({pathname: "/threads/update", query: { thread: thread.id }})}>Delete</Button>
       </PageTitleBar>
 
       <Grid container>
@@ -109,7 +110,13 @@ function Thread(threadId) {
           </SectionBox>
         </Grid>
         <Grid item xs={12} md={6}>
-          <SectionBox titleBar={<SectionTitleBar title="Comments" icon=<TextsmsIcon /> />}>
+          <SectionBox
+            titleBar={
+              <SectionTitleBar title="Comments" icon=<TextsmsIcon />>
+                <Button onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
+              </SectionTitleBar>
+            }
+          >
             <List>
               {[articles.slice(1)].flat().map((article) => <ArticleListItem article={article} />)}
             </List>

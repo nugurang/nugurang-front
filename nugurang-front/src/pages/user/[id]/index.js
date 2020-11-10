@@ -16,6 +16,7 @@ import Layout from '../../../components/Layout';
 import HonorCard from '../../../components/HonorCard';
 import GraphQlError from '../../../components/GraphQlError';
 import Loading from '../../../components/Loading';
+import NoContentsBox from '../../../components/NoContentsBox';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import SectionTitleBar from '../../../components/SectionTitleBar';
@@ -186,16 +187,14 @@ function UserInfo() {
                     createFollowing({ variables: {user: router.query.id}});
                   }}
                 >
-                  <Box style={{margin: "1rem"}}>
-                    <ButtonGroup color="primary">
-                      <Button onClick={() => router.push(`/user/${router.query.id}/follows`)}>
-                        People
-                      </Button>
-                      <Button type="submit">
-                        Follow
-                      </Button>
-                    </ButtonGroup>
-                  </Box>
+                  <ButtonGroup color="primary">
+                    <Button onClick={() => router.push(`/user/${router.query.id}/follows`)}>
+                      People
+                    </Button>
+                    <Button type="submit">
+                      Follow
+                    </Button>
+                  </ButtonGroup>
                 </form>
               </Grid>
             </Grid>
@@ -209,9 +208,11 @@ function UserInfo() {
               </SectionTitleBar>
             )}
           >
-            <List>
-              {[user.getThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
-            </List>
+            {
+              user.getThreads && (user.getThreads.length)
+              ? <List>{[user.getThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              : <NoContentsBox />
+            }
           </SectionBox>
 
           <SectionBox
@@ -221,11 +222,12 @@ function UserInfo() {
               </SectionTitleBar>
             )}
           >
-            <List>
-              {[TEST_BLOG_THREAD].flat().map((thread) => <ThreadListItem thread={thread} />)}
-            </List>
+            {
+              TEST_BLOG_THREAD && (TEST_BLOG_THREAD.length)
+              ? <List>{[TEST_BLOG_THREAD].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              : <NoContentsBox />
+            }
           </SectionBox>
-
 
           <SectionBox
             titleBar={(
@@ -234,9 +236,11 @@ function UserInfo() {
               </SectionTitleBar>
             )}
           >
-            <Grid container>
-              {[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}
-            </Grid>
+            {
+              TEST_HONOR_BADGE_LIST && (TEST_HONOR_BADGE_LIST.length)
+              ? <Grid container>{[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
           </SectionBox>
 
         </Grid>

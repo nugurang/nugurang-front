@@ -10,6 +10,7 @@ import withAuth from '../../../components/withAuth';
 import Loading from '../../../components/Loading';
 import GraphQlError from '../../../components/GraphQlError';
 import Layout from '../../../components/Layout';
+import NoContentsBox from '../../../components/NoContentsBox';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionTitleBar from '../../../components/SectionTitleBar';
 import SectionBox from '../../../components/SectionBox';
@@ -80,9 +81,11 @@ function Board() {
           )
         }
       >
-        <Grid container>
-          {[threads].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><ThreadCard thread={thread} /></Grid>)}
-        </Grid>
+        {
+          threads && (threads.length)
+          ? <Grid container>{[threads].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><ThreadCard thread={thread} /></Grid>)}</Grid>
+          : <NoContentsBox />
+        }
       </SectionBox>
 
     </Layout>

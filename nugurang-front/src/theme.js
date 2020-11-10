@@ -28,6 +28,7 @@ const theme = createMuiTheme({
     MuiAccordion: {
       root: {
         border: '0rem solid',
+        borderRadius: 5,
       },
     },
     MuiAvatar: {
@@ -45,7 +46,7 @@ const theme = createMuiTheme({
         borderRadius: 5,
         color: "#5738AC",
         height: "2.5rem",
-        margin: '0.5rem',
+        margin: '0 0.5rem',
         padding: '0 1.5rem',
         fontSize: 16,
         fontWeight: 400,
@@ -57,6 +58,7 @@ const theme = createMuiTheme({
     MuiCard: {
       root: {
         border: '0.15rem solid #9778ec40',
+        borderRadius: 5,
         background: "FFF7FF",
         margin: '0.5rem',
         padding: '0',

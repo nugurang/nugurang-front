@@ -22,6 +22,7 @@ import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
+import ResponsiveDialog from '../../components/ResponsiveDialog';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
@@ -60,9 +61,9 @@ export const CREATE_IMAGE = gql`
   }
 `;
 
-export const CREATE_USER = gql`
-  mutation createUser($name: String!, $email: String!, $biography: String, $image: ID ) {
-    createUser (name: $name, email: $email, biography: $biography, image: $image) {
+export const UPDATE_USER = gql`
+  mutation updateUser($id: ID!, $user: UserInput!) {
+    updateUser (id: $id, user: $user) {
       id
     }
   }
@@ -79,10 +80,10 @@ function Update() {
   const results = [
     [null, useQuery(CURRENT_USER)],
     useMutation(CREATE_IMAGE),
-    useMutation(CREATE_USER)
+    useMutation(UPDATE_USER)
   ];
-  const [currentUser, createImage, createUser] = results.map(result => result[0]);
-  const userData = results[0][1].data;
+  const [currentUser, createImage, updateUser] = results.map(result => result[0]);
+  const user = results[0][1].data ? results[0][1].data.currentUser : null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -102,18 +103,10 @@ function Update() {
     newImageAddress.current.focus();
   }
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Layout>
 
-      <PageTitleBar title="Change info" backButton />
+      <PageTitleBar title="Update info" backButton />
 
       <Container maxWidth="md">
         <BaseTabs tabProps={TAB_PROPS}>
@@ -123,7 +116,7 @@ function Update() {
                 <Grid item xs>
                   <FormControl fullWidth variant="filled">
                     <TextField
-                      defaultValue={userData.currentUser.name}
+                      defaultValue={user.name}
                       inputRef={newName}
                       label="Enter username"
                       variant="outlined"
@@ -139,7 +132,7 @@ function Update() {
                 <Grid item xs>
                   <FormControl fullWidth variant="filled">
                     <TextField
-                      defaultValue={userData.currentUser.email}
+                      defaultValue={user.email}
                       inputRef={newEmail}
                       label="Enter email"
                       variant="outlined"
@@ -155,7 +148,7 @@ function Update() {
                 <Grid item xs>
                   <FormControl fullWidth variant="filled">
                     <TextField
-                      defaultValue={userData.currentUser.image ? userData.currentUser.image.address : null}
+                      defaultValue={user.image ? user.image.address : null}
                       inputRef={newImageAddress}
                       label="Enter image link"
                       variant="outlined"
@@ -174,45 +167,25 @@ function Update() {
                   const res = await createImage({ variables: { address: newImageAddress.current.value }});
                   image = res.data.createImage.id;
                 }
-                await createUser({ variables: {name: newName.current.value, email: newEmail.current.value, biography: "", image }});
-                router.push('/signup/welcome');
+                await updateUser({ variables: { id: user.id, user: { name: newName.current.value, email: newEmail.current.value, biography: "", image }}});
+                router.push(`/user/${user.id}`);
               }}
             >
               <Box align="center">
-                <Button type="submit" disabled>Submit</Button>
+                <Button type="submit">Submit</Button>
               </Box>
             </form>
           </div>
 
           <div>
-            <SectionBox titleBar={<SectionTitleBar title="Delete user" icon=<ImageIcon /> />} border={false}>
-              <Typography>Warning: this action CANNOT be undone.</Typography>
+            <SectionBox titleBar={<SectionTitleBar title="Delete user" icon=<ImageIcon /> />}>
+              <Box style={{margin: "1rem"}}>
+                <Typography gutterBottom style={{color: "red"}}>Warning: this action CANNOT be undone.</Typography>
+              </Box>
+              <Box align="center">
+                <ResponsiveDialog label="Delete" title="Denied" content="No you cannot leave :D" />
+              </Box>
             </SectionBox>
-            <Box align="center">
-              <Button onClick={handleClickOpen}>
-                Delete account
-              </Button>
-            </Box>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                Denied
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  No you cannot leave :D
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} color="primary" autoFocus>
-                  OK
-                </Button>
-              </DialogActions>
-            </Dialog>
           </div>
 
         </BaseTabs>

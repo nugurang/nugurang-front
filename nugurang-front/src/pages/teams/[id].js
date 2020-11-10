@@ -9,6 +9,7 @@ import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import ProjectInfoCard from '../../components/ProjectInfoCard';
 import SectionBox from '../../components/SectionBox';
@@ -41,6 +42,7 @@ const GET_TEAM = gql`
           name
           image {
             id
+            address
           }
         }
       }
@@ -48,6 +50,10 @@ const GET_TEAM = gql`
         id
         name
         email
+        image {
+          id
+          address
+        }
       }
     }
   }
@@ -64,10 +70,12 @@ function TeamInfo() {
   if (responses.some((response) => response.loading))
     return <Loading />;
   const team = responses[0].data ? responses[0].data.getTeam : null;
-  const users = responses[0].data.getTeam ? responses[0].data.getTeam.getUsers : null;
 
   team.projects.forEach(function(project){
     project.onClick = () => router.push(`/projects/${project.id}`);
+  });
+  team.getUsers.forEach(function(user){
+    user.onClick = () => router.push(`/user/${user.id}`);
   });
 
   return (
@@ -82,12 +90,16 @@ function TeamInfo() {
 
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <Grid container>
-            {[team.projects].flat().map((project) => <Grid item xs={12} sm={6} md={4}><ProjectInfoCard project={project} /></Grid>)}
-          </Grid>
-          <Grid container>
-            {[team.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}
-          </Grid>
+          {
+            team.projects && (team.projects.length)
+            ? <Grid container>{[team.projects].flat().map((project) => <Grid item xs={12} sm={6} md={4}><ProjectInfoCard project={project} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
+          {
+            team.getUsers && (team.getUsers.length)
+            ? <Grid container>{[team.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
         </BaseTabs>
       </SectionBox>
 

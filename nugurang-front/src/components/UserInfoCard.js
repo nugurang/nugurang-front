@@ -15,7 +15,7 @@ export default function UserInfoCard({ user }) {
   return (
     <Card>
       <Box display="flex" alignItems="center">
-        <CardActionArea onClick={user.onClick ? user.onClick : null} flexGrow={1}>
+        <CardActionArea onClick={() => user.onClick ? user.onClick() : null} flexGrow={1}>
           <CardContent>
             <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
               <Grid item justify="flex-start">

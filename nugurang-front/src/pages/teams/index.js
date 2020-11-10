@@ -9,6 +9,7 @@ import GroupIcon from '@material-ui/icons/Group';
 
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
+import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -65,9 +66,11 @@ function Teams() {
           </SectionTitleBar>
         )}
       >
-        <Grid container>
-          {[teams].flat().map((team) => <Grid item xs={12} sm={6} md={4}><TeamInfoCard team={team} /></Grid>)}
-        </Grid>
+        {
+          teams && (teams.length)
+          ? <Grid container>{[teams].flat().map((team) => <Grid item xs={12} sm={6} md={4}><TeamInfoCard team={team} /></Grid>)}</Grid>
+          : <NoContentsBox />
+        }
       </SectionBox>
     </Layout>
   );

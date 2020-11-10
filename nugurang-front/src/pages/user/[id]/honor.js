@@ -7,6 +7,7 @@ import GraphQlError from '../../../components/GraphQlError';
 import HonorCard from '../../../components/HonorCard';
 import Layout from '../../../components/Layout';
 import Loading from '../../../components/Loading';
+import NoContentsBox from '../../../components/NoContentsBox';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import withAuth from '../../../components/withAuth';
@@ -83,15 +84,14 @@ function Honor() {
 
   return (
     <Layout>
-
       <PageTitleBar title="Honor badges" backButton />
-
       <SectionBox>
-        <Grid container>
-          {[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}
-        </Grid>
+        {
+          recentEvents && (recentEvents.length)
+          ? <Grid container>{[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}</Grid>
+          : <NoContentsBox />
+        }
       </SectionBox>
-
     </Layout>
   );
 }

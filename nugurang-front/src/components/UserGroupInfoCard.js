@@ -15,7 +15,7 @@ export default function UserGroupInfoCard({ primary, secondary, title, users, on
   return (
     <Card>
       <Box display="flex" alignItems="center">
-        <CardActionArea onClick={onClick} flexGrow={1}>
+        <CardActionArea onClick={() => onClick ? onClick() : null} flexGrow={1}>
           <CardContent>
             <Typography variant="h6">
               {title}

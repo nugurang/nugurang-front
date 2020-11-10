@@ -9,6 +9,7 @@ import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
@@ -197,15 +198,21 @@ function WorkInfo() {
       </SectionBox>
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
-          <Grid container>
-            {[TEST_TASK_TODO_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}
-          </Grid>
-          <Grid container>
-            {[TEST_TASK_DOING_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}
-          </Grid>
-          <Grid container>
-            {[TEST_TASK_DONE_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}
-          </Grid>
+          {
+            TEST_TASK_TODO_LIST && (TEST_TASK_TODO_LIST.length)
+            ? <Grid container>{[TEST_TASK_TODO_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
+          {
+            TEST_TASK_DOING_LIST && (TEST_TASK_DOING_LIST.length)
+            ? <Grid container>{[TEST_TASK_DOING_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
+          {
+            TEST_TASK_DONE_LIST && (TEST_TASK_DONE_LIST.length)
+            ? <Grid container>{[TEST_TASK_DONE_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
         </BaseTabs>
       </SectionBox>
     </Layout>

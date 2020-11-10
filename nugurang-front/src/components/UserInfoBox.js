@@ -21,43 +21,53 @@ export default function UserInfoBox({ user, dense=false }) {
   const router = useRouter();
   const classes = useStyles();
   return (
-    <>
-      <Box style={{margin: "1rem"}}>
-        <Grid container spacing={2} alignItems="center">
+    <Box style={{margin: "1rem"}}>
+
+      <Box display={dense ? "none" : "block"}>
+        <Grid container spacing={2} alignItems="center" justify="flex-start">
+          <Grid item xs={12}>
+            <div onClick={() => user.image ? router.push(`/image/${user.image.id}`) : null}>
+              <Avatar className={classes.avatar}
+                alt={user.name}
+                src={user.image ? user.image.address : null}
+                variant="circle"
+              >
+                {user.name.charAt(0).toUpperCase()}
+              </Avatar>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h5">{user.name}</Typography>
+            <Typography variant="body1">{user.email}</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body1">{user.getFollowers.length}{' followers, '}{user.getFollowings.length}{' followings'}</Typography>
+          </Grid>
+        </Grid>
+        <Paper elevation={1} style={{margin: "1rem 0"}}>
+          <Typography variant="body1">{user.biography || "No biography :("}</Typography>
+        </Paper>
+      </Box>
+
+      <Box display={dense ? "block" : "none"}>
+        <Grid container spacing={2} alignItems="center" justify="flex-start">
           <Grid item>
-            <Grid container spacing={2} alignItems="center" justify="flex-start">
-              <Grid item>
-                <div onClick={() => user.image ? router.push(`/image/${user.image.id}`) : null}>
-                  <Avatar className={classes.avatar}
-                    alt={user.name}
-                    src={user.image ? user.image.address : null}
-                    variant="circle"
-                  >
-                    {user.name.charAt(0).toUpperCase()}
-                  </Avatar>
-                </div>
-              </Grid>
-              <Grid item>
-                <Typography variant="h5">{user.name}</Typography>
-                <Box display={dense ? "none" : "block"}>
-                  <Typography variant="body1">
-                    {user.getFollowers.length}
-                    {' followers, '}
-                    {user.getFollowings.length}
-                    {' followings'}
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
+            <div onClick={() => user.image ? router.push(`/image/${user.image.id}`) : null}>
+              <Avatar className={classes.avatar}
+                alt={user.name}
+                src={user.image ? user.image.address : null}
+                variant="circle"
+              >
+                {user.name.charAt(0).toUpperCase()}
+              </Avatar>
+            </div>
+          </Grid>
+          <Grid item>
+            <Typography variant="h5">{user.name}</Typography>
           </Grid>
         </Grid>
       </Box>
 
-      <Box display={dense ? "none" : "block"}>
-        <Paper elevation={1}>
-          <Typography variant="body1">{user.biography || "No biography :("}</Typography>
-        </Paper>
-      </Box>
-    </>
+    </Box>
   );
 }

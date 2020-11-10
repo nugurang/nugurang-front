@@ -19,6 +19,20 @@ const useStyles = makeStyles(() => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
+  singleLineEllipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    "-webkit-line-clamp": 1,
+    "-webkit-box-orient": "vertical"
+  },
+  doubleLineEllipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    "-webkit-line-clamp": 2,
+    "-webkit-box-orient": "vertical"
+  },
 }));
 
 export default function ThreadCard({ thread }) {
@@ -37,24 +51,22 @@ export default function ThreadCard({ thread }) {
           />
         </Box>
         <CardContent>
-          <Grid container spacing={1} alignItems="center" direction="row">
+          <Grid container spacing={1} alignItems="center">
             <Grid item>
-              <Avatar
-                src={thread.user.image ? thread.user.image.address : null}
-                variant="circle"
-              />
+              <Grid container spacing={1} alignItems="center" direction="row">
+                <Grid item>
+                  <Avatar
+                    src={thread.user.image ? thread.user.image.address : null}
+                    variant="circle"
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography variant="body1" className={classes.singleLineEllipsis}>{thread.user.name}</Typography>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item>
-              <Box display={thread.name ? "block" : "none"}>
-                <Typography variant="h6">
-                  {thread.name}
-                </Typography>
-              </Box>
-              <Box display={thread.author ? "block" : "none"}>
-                <Typography variant="body1">
-                  {thread.author}
-                </Typography>
-              </Box>
+              <Typography variant="h6" className={classes.doubleLineEllipsis}>{thread.name}</Typography>
             </Grid>
           </Grid>
           <Grid container justify="flex-end">

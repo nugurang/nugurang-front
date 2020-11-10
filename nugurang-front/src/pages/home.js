@@ -19,6 +19,7 @@ import withAuth from '../components/withAuth';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
+import NoContentsBox from '../components/NoContentsBox';
 import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
@@ -47,12 +48,16 @@ const GET_THREADS_BY_BOARD_NAMES = gql`
       upCount
       commentCount
       user {
+        id
         name
         image {
           address
         }
       }
       firstArticle {
+        id
+        title
+        content
         images {
           address
         }
@@ -69,12 +74,16 @@ const GET_HOT_THREADS_BY_BOARD_NAMES = gql`
       upCount
       commentCount
       user {
+        id
         name
         image {
           address
         }
       }
       firstArticle {
+        id
+        title
+        content
         images {
           address
         }
@@ -133,9 +142,11 @@ function Home() {
               </SectionTitleBar>
             )}
           >
-            <List>
-              {[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
-            </List>
+            {
+              hotThreads && (hotThreads.length)
+              ? <List>{[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              : <NoContentsBox />
+            }
           </SectionBox>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -144,9 +155,11 @@ function Home() {
               <SectionTitleBar title="Hot threads" icon=<WhatshotIcon /> />
             )}
           >
-            <List>
-              {[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}
-            </List>
+            {
+              hotThreads && (hotThreads.length)
+              ? <List>{[hotThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              : <NoContentsBox />
+            }
           </SectionBox>
         </Grid>
         <Grid item xs={12}>
@@ -155,9 +168,11 @@ function Home() {
               <SectionTitleBar title="Recent events" icon=<TrendingUpIcon /> />
             )}
           >
-            <Grid container>
-              {[recentEvents].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><ThreadCard thread={thread} /></Grid>)}
-            </Grid>
+            {
+              recentEvents && (recentEvents.length)
+              ? <Grid container>{[recentEvents].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><ThreadCard thread={thread} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
           </SectionBox>
         </Grid>
       </Grid>

@@ -13,7 +13,7 @@ export default function TeamInfoCard({ team }) {
       secondary={team.name}
       title={team.title}
       users={team.users}
-      onClick={() => team.onClick ? team.onClick : router.push(`/teams/${team.id}`)}
+      onClick={() => team.onClick ? team.onClick() : null}
       onAddButtonClick={() => router.push({pathname: `/teams/invite`, query: { id: team.id }})}
     />
   );

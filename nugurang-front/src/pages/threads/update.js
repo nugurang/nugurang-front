@@ -8,9 +8,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
-import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
-import PersonIcon from '@material-ui/icons/Person';
+import NotesIcon from '@material-ui/icons/Notes';
+import TitleIcon from '@material-ui/icons/Title';
 
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
@@ -18,47 +18,58 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
+import withAuth from '../../components/withAuth';
 
 
-export const CURRENT_OAUTH2_USER = gql`
-  query {
-    currentOAuth2User {
+export const GET_THREAD = gql`
+  query getThread($id: ID!) {
+    getThread (id: $id) {
       id
       name
-      email
+      firstArticle {
+        id
+        title
+        content
+        images {
+          id
+          address
+        }
+      }
     }
   }
 `;
 
 export const CREATE_IMAGE = gql`
-  mutation createImage($address: String! ) {
+  mutation createImage($address: String!) {
     createImage (address: $address) {
       id
     }
   }
 `;
 
-export const CREATE_USER = gql`
-  mutation createUser($user: UserInput!) {
-    createUser (user: $user) {
+export const UPDATE_THREAD = gql`
+  mutation updateThread($id: ID!, $thread: ThreadInput!) {
+    updateThread (id: $id, thread: $thread) {
       id
     }
   }
 `;
 
-function SignUp() {
+
+function Update() {
   const router = useRouter();
-  const newName = useRef(null);
-  const newEmail = useRef(null);
+  const newTitle = useRef(null);
+  const newContent = useRef(null);
   const newImageAddress = useRef(null);
 
   const results = [
-    [null, useQuery(CURRENT_OAUTH2_USER)],
+    [null, useQuery(GET_THREAD, {variables: {id: router.query.thread}})],
     useMutation(CREATE_IMAGE),
-    useMutation(CREATE_USER)
+    useMutation(UPDATE_THREAD)
   ];
-  const user = results[0][1].data ? results[0][1].data.currentOAuth2User : null;
-  const [getCurrentOAuth2User, createImage, createUser] = results.map(result => result[0]);
+  const [getThread, createImage, updateThread] = results.map(result => result[0]);
+  const thread = results[0][1].data ? results[0][1].data.getThread : null;
+  const firstArticle = results[0][1].data ? results[0][1].data.getThread.firstArticle : null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -66,12 +77,12 @@ function SignUp() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  function handleNewNameChange() {
-    newName.current.focus();
+  function handleNewTitleChange() {
+    newTitle.current.focus();
   }
 
-  function handleNewEmailChange() {
-    newEmail.current.focus();
+  function handleNewContentChange() {
+    newContent.current.focus();
   }
 
   function handleNewImageAddressChange() {
@@ -80,46 +91,48 @@ function SignUp() {
 
   return (
     <Layout>
-      <PageTitleBar title="Sign up" backButton />
+      <PageTitleBar title="Edit thread" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />} border={false}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit title" icon=<TitleIcon /> />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={user.name}
-                  inputRef={newName}
-                  label="Enter username"
+                  defaultValue={firstArticle.title}
+                  inputRef={newTitle}
+                  label="Enter title"
                   variant="outlined"
-                  onClick={handleNewNameChange}
+                  onClick={handleNewTitleChange}
                 />
               </FormControl>
             </Grid>
           </Grid>
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />} border={false}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit content" icon=<NotesIcon /> />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={user.email}
-                  inputRef={newEmail}
-                  label="Enter email"
+                  defaultValue={firstArticle.content}
+                  inputRef={newContent}
+                  label="Enter content"
                   variant="outlined"
-                  onClick={handleNewEmailChange}
+                  onClick={handleNewContentChange}
                 />
               </FormControl>
             </Grid>
           </Grid>
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />} border={false}>
+
+        <SectionBox titleBar={<SectionTitleBar title="Edit image link" icon=<ImageIcon /> />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
+                  defaultValue={firstArticle.image ? firstArticle.image.address : null}
                   inputRef={newImageAddress}
                   label="Enter image link"
                   variant="outlined"
@@ -130,16 +143,18 @@ function SignUp() {
           </Grid>
         </SectionBox>
 
+
         <form
           onSubmit={async (e) => {
             e.preventDefault();
             let image;
             if (newImageAddress.current.value) {
-              const res = await createImage({ variables: { address: newImageAddress.current.value }});
-              image = res.data.createImage.id;
+              const imageRes = await createImage({ variables: { address: newImageAddress.current.value }});
+              image = imageRes.data.createImage.id;
             }
-            await createUser({ variables: { user: { name: newName.current.value, email: newEmail.current.value, biography: "", image }}});
-            router.push(`/signup/welcome`);
+            console.log(newTitle.current.value);
+            const threadRes = await updateThread({ variables: { id: thread.id, thread: {firstAarticle: {content: newContent.current.value, images: []}}}});
+            router.push(`/threads/${threadRes.data.createThread.id}`);
           }}
         >
           <Box align="center">
@@ -152,4 +167,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default withAuth(Update);
