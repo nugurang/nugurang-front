@@ -69,7 +69,10 @@ function Welcome() {
           </Grid>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              Welcome, {currentUser.name}!
+              Welcome,
+              {' '}
+              {currentUser.name}
+              !
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">

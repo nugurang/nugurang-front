@@ -19,7 +19,7 @@ const link = from([
 ]);
 
 const graphQlClient = new ApolloClient({
-  ssr: typeof(window) === 'undefined',
+  ssrMode: typeof(window) === 'undefined',
   cache: new InMemoryCache(),
   link,
   defaultOptions: {

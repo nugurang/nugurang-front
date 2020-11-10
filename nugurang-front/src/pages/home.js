@@ -110,7 +110,7 @@ function Home() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <IconButton onClick={() => router.push(`/user/${currentUser.id}`)} >
+        <IconButton onClick={() => router.push(`/user/${currentUser.id}`)}>
           <PersonIcon />
         </IconButton>
       </PageTitleBar>

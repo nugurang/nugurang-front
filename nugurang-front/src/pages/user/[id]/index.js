@@ -215,7 +215,7 @@ function UserInfo() {
           >
             <HonorBadgeGrid items={TEST_HONOR_BADGE_LIST} />
           </SectionBox>
-          
+
         </Grid>
       </Grid>
     </Layout>

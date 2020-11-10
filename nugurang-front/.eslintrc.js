@@ -32,6 +32,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    "jsx-a11y/img-redundant-alt": "off",
     "no-await-in-loop": "off",
     "no-plusplus": "off",
     "no-restricted-syntax": "off",

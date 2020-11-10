@@ -986,7 +986,7 @@ export default function ComponentOverview() {
           secondary="Test secondary"
           avatar={COMP_OV_IMAGE_ADDRESS}
           onClick={() => alert('onClick')}
-          circleIcon={true}
+          circleIcon
           dense={false}
         />
       </Overview>
@@ -997,8 +997,8 @@ export default function ComponentOverview() {
           secondary="Test secondary"
           icon={COMP_OV_IMAGE_ADDRESS}
           onClick={() => alert('onClick')}
-          circleIcon={true}
-          dense={true}
+          circleIcon
+          dense
         />
       </Overview>
 
@@ -1034,8 +1034,7 @@ export default function ComponentOverview() {
           )
           : (
             <Typography>Deactivated</Typography>
-          )
-        }
+          )}
       </Overview>
 
       <Overview title="BaseTabs">
@@ -1058,11 +1057,11 @@ export default function ComponentOverview() {
       </Overview>
 
       <Overview title="EventInfoBox - Dense">
-        <EventInfoBox event={EVENT_INFO_BOX_EVENT} dense={true} />
+        <EventInfoBox event={EVENT_INFO_BOX_EVENT} dense />
       </Overview>
 
       <Overview title="HonorBadgeGrid">
-        <HonorBadgeGrid items={HONOR_BADGE_GRID_ITEMS} dense={true} />
+        <HonorBadgeGrid items={HONOR_BADGE_GRID_ITEMS} dense />
       </Overview>
 
       <Overview title="ImageUploadingBox">
@@ -1070,7 +1069,7 @@ export default function ComponentOverview() {
       </Overview>
 
       <Overview title="NoContentsBox">
-        <NoContentsBox/>
+        <NoContentsBox />
       </Overview>
 
       <Overview title="NotificationList">
@@ -1081,7 +1080,7 @@ export default function ComponentOverview() {
         <PageTitleBar
           icon={COMP_OV_ICON}
           title="Test page title"
-          circleIcon={true}
+          circleIcon
         >
           <Typography>Test children</Typography>
         </PageTitleBar>
@@ -1091,14 +1090,14 @@ export default function ComponentOverview() {
         <PageTitleBar
           backButton
           title="Test page title"
-          circleIcon={true}
+          circleIcon
         >
           <Typography>Test children</Typography>
         </PageTitleBar>
       </Overview>
 
       <Overview title="ProjectInfoBox">
-        <ProjectInfoBox project={PROJECT_INFO_BOX_PROJECT}/>
+        <ProjectInfoBox project={PROJECT_INFO_BOX_PROJECT} />
       </Overview>
 
       <Overview title="ResponsiveDialog">
@@ -1113,8 +1112,8 @@ export default function ComponentOverview() {
 
       <Overview title="SectionBox - with SectionTitleBar">
         <SectionBox
-            titleBar={
-              <SectionTitleBar title="Test title" icon={COMP_OV_ICON} />
+          titleBar={
+            <SectionTitleBar title="Test title" icon={COMP_OV_ICON} />
             }
         >
           <Typography>Test children</Typography>
@@ -1125,7 +1124,7 @@ export default function ComponentOverview() {
         <SectionTitleBar
           icon={COMP_OV_ICON}
           title="Test page title"
-          circleIcon={true}
+          circleIcon
         >
           <Typography>Test children</Typography>
         </SectionTitleBar>
@@ -1134,7 +1133,7 @@ export default function ComponentOverview() {
       <Overview title="StatCounterBox">
         <StatCounterBox
           commentCount={1}
-          image={true}
+          image
           upCount={2}
           topic="Test topic"
           view={3}
@@ -1145,7 +1144,7 @@ export default function ComponentOverview() {
       <Overview title="StatCounterBox - Compact">
         <StatCounterBox
           commentCount={1}
-          image={true}
+          image
           upCount={2}
           topic="Test topic"
           view={3}
@@ -1155,7 +1154,7 @@ export default function ComponentOverview() {
       </Overview>
 
       <Overview title="TeamInfoBox">
-        <TeamInfoBox team={TEAM_INFO_BOX_TEAM}/>
+        <TeamInfoBox team={TEAM_INFO_BOX_TEAM} />
       </Overview>
 
 
@@ -1213,7 +1212,7 @@ export default function ComponentOverview() {
       </Overview>
 
       <Overview title="WorkInfoBox">
-        <WorkInfoBox work={WORK_INFO_BOX_WORK}/>
+        <WorkInfoBox work={WORK_INFO_BOX_WORK} />
       </Overview>
 
     </Container>

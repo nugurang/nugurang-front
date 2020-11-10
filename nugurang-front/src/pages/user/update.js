@@ -68,7 +68,7 @@ export const CREATE_USER = gql`
 `;
 
 
-function update() {
+function Update() {
   const router = useRouter();
   const newName = useRef(null);
   const newEmail = useRef(null);
@@ -218,4 +218,4 @@ function update() {
   );
 }
 
-export default withAuth(update);
+export default withAuth(Update);

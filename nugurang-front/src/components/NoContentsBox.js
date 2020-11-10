@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
 export default function NoContentsBox() {
   const classes = useStyles();
   return (
-  	<Box className={classes.margin}>
+    <Box className={classes.margin}>
       <Typography align="center" variant="h6">
         No contents :(
       </Typography>
