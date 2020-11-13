@@ -36,7 +36,9 @@ export default function ArticleLeader({ article, like, topic, view, vote }) {
                   alt={article.user.name}
                   src={article.user.image ? article.user.image.address : null}
                   variant="circle"
-                />
+                  >
+                    {article.user.name.charAt(0).toUpperCase()}
+                  </Avatar>
               </Grid>
             </div>
             <div onClick={() => router.push(`/user/${article.user.id}`)}>

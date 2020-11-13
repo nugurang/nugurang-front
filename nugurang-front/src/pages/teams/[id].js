@@ -4,6 +4,8 @@ import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
+import AddIcon from '@material-ui/icons/Add';
+
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
@@ -82,8 +84,12 @@ function TeamInfo() {
     <Layout>
 
       <PageTitleBar title="Team info" backButton="true" backButtonLink="/teams">
-        <Button onClick={() => router.push({pathname: "/projects/create", query: { team: router.query.id }})}>Create project</Button>
+        <Button variant="" onClick={() => router.push({pathname: "/projects/create", query: { team: router.query.id }})}>
+          <AddIcon />
+          Project
+        </Button>
       </PageTitleBar>
+
       <SectionBox border={false}>
         <TeamInfoBox team={team} />
       </SectionBox>

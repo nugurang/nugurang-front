@@ -8,7 +8,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 
 export default function UserGroupInfoCard({ primary, secondary, title, users, onClick=null, onAddButtonClick=null}) {
@@ -54,7 +55,7 @@ export default function UserGroupInfoCard({ primary, secondary, title, users, on
         <Box display={onAddButtonClick ? "block" : "none"}>
           <Grid item align="right">
             <IconButton color="primary" aria-label="invite user" component="span" onClick={onAddButtonClick}>
-              <AddCircleIcon />
+              <PersonAddIcon style={{color: "black"}}/>
             </IconButton>
           </Grid>
         </Box>

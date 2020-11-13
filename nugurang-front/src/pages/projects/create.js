@@ -67,7 +67,7 @@ function CreateProject() {
                 }}
               >
                 <Box align="center">
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" variant="outlined">Submit</Button>
                 </Box>
               </form>
               {mutationLoading && <p>Loading...</p>}

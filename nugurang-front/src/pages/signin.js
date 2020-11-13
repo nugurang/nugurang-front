@@ -1,6 +1,10 @@
 import {useRouter} from 'next/router';
+import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 
 import BaseListItem from '../components/BaseListItem';
 import Layout from '../components/Layout';
@@ -10,53 +14,42 @@ import { BACKEND_ADDR } from '../config';
 
 export default function SignIn() {
   const router = useRouter();
-  const TEST_SIGNIN_LIST = [
+  const SIGNIN_LIST = [
     {
       id: 1,
       name: "Facebook",
-      primary: "Sign in with Facebook",
-      avatar: "/static/favicons/favicon-facebook.png",
-      onClick: () => alert('facebook not supported')
+      title: "Sign in with Facebook",
+      image: "/static/favicons/favicon-facebook.png",
+      onClick: () => alert('Facebook not supported')
     },
     {
       id: 2,
       name: "GitHub",
-      primary: "Sign in with GitHub",
-      avatar: "/static/favicons/favicon-github.png",
+      title: "Sign in with GitHub",
+      image: "/static/favicons/favicon-github.png",
       onClick: () => router.push(`${BACKEND_ADDR}/oauth2/authorization/github`)
     },
     {
       id: 3,
       name: "Kakao",
-      primary: "Sign in with Kakao",
-      avatar: "/static/favicons/favicon-kakao.png",
+      title: "Sign in with Kakao",
+      image: "/static/favicons/favicon-kakao.png",
       onClick: () => router.push(`${BACKEND_ADDR}/oauth2/authorization/kakao`)
     },
 ];
 
   return (
     <Layout>
-      <SectionBox
-        titleBar={<PageTitleBar title="Sign In" backButton />}
-      >
-
-      <Container maxWidth="md">
-        <List>
-          {TEST_SIGNIN_LIST.map(
-            (item) => (
-              <BaseListItem
-                key={item.id}
-                avatar={item.avatar}
-                avatarDescription={item.name}
-                primary={item.primary}
-                onClick={item.onClick}
-              />
-            )
-          )}
-        </List>
+      <PageTitleBar title="Sign In" backButton />
+      <Container maxWidth="sm">
+        <SectionBox>
+            {
+              SIGNIN_LIST && (SIGNIN_LIST.length)
+              ? <List container>{[SIGNIN_LIST].flat().map((item) => <BaseListItem avatar={item.image} primary={item.title} onClick={item.onClick} />)}</List>
+              : <NoContentsBox />
+            }
+        </SectionBox>
       </Container>
-      
-      </SectionBox>
     </Layout>
   );
 }

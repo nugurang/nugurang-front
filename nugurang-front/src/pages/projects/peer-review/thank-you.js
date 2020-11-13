@@ -37,7 +37,7 @@ export default function ThankYou() {
           </Grid>
           <Grid item xs={12} align="center">
             <Box className={classes.box} align="center">
-              <Button onClick={() => router.push('/home')}>Go home</Button>
+              <Button variant="outlined" onClick={() => router.push('/home')}>Go home</Button>
             </Box>
           </Grid>
         </Grid>

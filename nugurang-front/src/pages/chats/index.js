@@ -22,7 +22,7 @@ function Chatting() {
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button onClick={() => router.back()}>Go back</Button>
+              <Button variant="outlined" onClick={() => router.back()}>Go back</Button>
             </Box>
           </Grid>
         </Grid>

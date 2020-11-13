@@ -8,7 +8,7 @@ import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
+import Loading from '../../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import ProjectInfoBox from '../../components/ProjectInfoBox';
@@ -76,7 +76,7 @@ function ProjectInfo() {
   return (
     <Layout>
       <PageTitleBar title="Project info" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
-        <Button onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
+        <Button variant="outlined" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
       </PageTitleBar>
 
       <SectionBox border={false}>

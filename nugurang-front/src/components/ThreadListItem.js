@@ -48,7 +48,9 @@ export default function ThreadListItem({ thread }) {
                   alt={thread.user.name}
                   src={thread.user.image ? thread.user.image.address : null}
                   variant="circle"
-                />
+                >
+                  {thread.user.name.charAt(0).toUpperCase()}
+                </Avatar>
               </ListItemAvatar>
             </Grid>
             <Grid item>

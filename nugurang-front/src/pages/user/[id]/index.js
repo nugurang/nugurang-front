@@ -3,12 +3,13 @@ import {useRouter} from 'next/router';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import Box from'@material-ui/core/Box';
 import Button from'@material-ui/core/Button';
-import ButtonGroup from'@material-ui/core/ButtonGroup';
 import Grid from'@material-ui/core/Grid';
+import IconButton from'@material-ui/core/IconButton';
 import List from'@material-ui/core/List';
 
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import BookIcon from '@material-ui/icons/Book';
+import EditIcon from '@material-ui/icons/Edit';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 import withAuth from '../../../components/withAuth';
@@ -47,8 +48,6 @@ const TEST_BLOG_THREAD = [
     vote: 5,
   }
 ];
-
-
 
 const TEST_HONOR_BADGE_LIST = [
   {
@@ -158,6 +157,7 @@ function UserInfo() {
     useMutation(CREATE_FOLLOWING)
   ];
   const user = results[0][1].data ? results[0][1].data.getUser : null;
+  const recentThreads = results[0][1].data ? results[0][1].data.getUser.getThreads : [];
   const currentUser = results[1][1].data ? results[1][1].data.currentUser : null;
   const [getUser, getCurrentUser, createFollowing] = results.map(result => result[0]);
 
@@ -165,13 +165,23 @@ function UserInfo() {
     return <Loading />;
   const errorResult = results.find(result => result[1].error);
   if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />
+    return <GraphQlError error={errorResult[1].error} />;
+
+  recentThreads.forEach(function(thread){
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
 
   return (
     <Layout>
       {
         user.id === currentUser.id
-        ? <PageTitleBar title="My info" backButton />
+        ? (
+          <PageTitleBar title="My info" backButton >
+            <IconButton onClick={() => router.push(`/user/update`)}>
+              <EditIcon />
+            </IconButton>
+          </PageTitleBar>
+        )
         : <PageTitleBar title="User info" backButton />
       }
 
@@ -187,14 +197,14 @@ function UserInfo() {
                     createFollowing({ variables: {user: router.query.id}});
                   }}
                 >
-                  <ButtonGroup color="primary">
-                    <Button onClick={() => router.push(`/user/${router.query.id}/follows`)}>
+                  <Box style={{margin: "1rem"}}>
+                    <Button variant="outlined" onClick={() => router.push(`/user/${router.query.id}/follows`)}>
                       People
                     </Button>
-                    <Button type="submit">
+                    <Button variant="outlined" type="submit">
                       Follow
                     </Button>
-                  </ButtonGroup>
+                  </Box>
                 </form>
               </Grid>
             </Grid>
@@ -210,7 +220,7 @@ function UserInfo() {
           >
             {
               user.getThreads && (user.getThreads.length)
-              ? <List>{[user.getThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              ? <List>{[recentThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
               : <NoContentsBox />
             }
           </SectionBox>
@@ -218,7 +228,7 @@ function UserInfo() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Recent blog updates" icon=<BookIcon />>
-                <Button onClick={() => router.push(`/blog/${router.query.id}`)}>Visit</Button>
+                <Button variant="outlined" onClick={() => router.push(`/blog/${router.query.id}`)}>Visit</Button>
               </SectionTitleBar>
             )}
           >
@@ -232,13 +242,13 @@ function UserInfo() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Honor badges" icon=<EmojiEventsIcon />>
-                <Button onClick={() => router.push(`/user/${router.query.id}/honor`)}>More</Button>
+                <Button variant="outlined" onClick={() => router.push(`/user/${router.query.id}/honor`)}>More</Button>
               </SectionTitleBar>
             )}
           >
             {
               TEST_HONOR_BADGE_LIST && (TEST_HONOR_BADGE_LIST.length)
-              ? <Grid container>{[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}</Grid>
+              ? <Grid container>{[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} md={3}><HonorCard honor={honor} /></Grid>)}</Grid>
               : <NoContentsBox />
             }
           </SectionBox>

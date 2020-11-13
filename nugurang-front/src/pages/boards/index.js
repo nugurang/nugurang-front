@@ -114,31 +114,25 @@ function Boards() {
     thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
   hotEvents.forEach(function(thread){
-    thread.onClick = () => router.push(`/threads/${thread.id}`);
+    thread.onClick = () => router.push(`/events/${thread.id}`);
   });
   recentThreads.forEach(function(thread){
     thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
   recentEvents.forEach(function(thread){
-    thread.onClick = () => router.push(`/threads/${thread.id}`);
+    thread.onClick = () => router.push(`/events/${thread.id}`);
   });
 
   let key = 0;
   const currentBoard = showEvents ? EVENT_BOARDS : COMMON_BOARDS;
   return (
     <Layout>
-      <PageTitleBar title="Boards" backButton />
+      <PageTitleBar title="Boards" backButton>
+        <BaseSwitch label="Show events" checked={showEvents} onChange={toggleShowEvents} />
+      </PageTitleBar>
       <Grid container>
         <Grid item xs={12}>
-          <SectionBox
-            titleBar={
-              (
-                <SectionTitleBar title="Categories" icon={<CategoryIcon />}>
-                  <BaseSwitch label="Show events" checked={showEvents} onChange={toggleShowEvents} />
-                </SectionTitleBar>
-              )
-            }
-          >
+          <SectionBox titleBar=<SectionTitleBar title="Categories" icon={<CategoryIcon />} />>
             <Grid container>
               {[currentBoard].flat().map((boardName) =>
                 (

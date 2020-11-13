@@ -1,5 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
+import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,7 +11,6 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import PersonIcon from '@material-ui/icons/Person';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
@@ -26,8 +26,8 @@ import SectionTitleBar from '../components/SectionTitleBar';
 import ThreadCard from '../components/ThreadCard';
 import ThreadListItem from '../components/ThreadListItem';
 
-export const GET_CURRENT_USER = gql`
-  query {
+export const CURRENT_USER = gql`
+  query CurrentUser {
     currentUser {
       id
       name
@@ -96,41 +96,44 @@ const GET_HOT_THREADS_BY_BOARD_NAMES = gql`
 
 function Home() {
   const router = useRouter();
-  const responses = [
-    useQuery(GET_CURRENT_USER),
-    useQuery(GET_HOT_THREADS_BY_BOARD_NAMES, {variables: {boardNames: COMMON_BOARDS}}),
-    useQuery(GET_THREADS_BY_BOARD_NAMES, {variables: {boardNames: EVENT_BOARDS}}),
+  const results = [
+    [null, useQuery(CURRENT_USER)],
+    [null, useQuery(GET_HOT_THREADS_BY_BOARD_NAMES, {variables: {boardNames: COMMON_BOARDS}})],
+    [null, useQuery(GET_THREADS_BY_BOARD_NAMES, {variables: {boardNames: EVENT_BOARDS}})],
   ];
+  const user = results[0][1].data ? results[0][1].data.currentUser : null;
+  const hotThreads = results[1][1].data ? results[1][1].data.getHotThreadsByBoardNames : [];
+  const recentEvents = results[2][1].data ? results[2][1].data.getThreadsByBoardNames : [];
 
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-
-  if (responses.some((response) => response.loading))
+  if (results.some(result => result[1].loading))
     return <Loading />;
-
-  const {currentUser} = responses[0].data;
-  const hotThreads = responses[1].data.getHotThreadsByBoardNames;
-  const recentEvents = responses[2].data.getThreadsByBoardNames;
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />;
 
   hotThreads.forEach(function(thread){
     thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
   recentEvents.forEach(function(thread){
-    thread.onClick = () => router.push(`/threads/${thread.id}`);
+    thread.onClick = () => router.push(`/events/${thread.id}`);
   });
 
   return (
     <Layout>
       <PageTitleBar title="Home" icon=<HomeIcon />>
-        <IconButton onClick={() => router.push(`/notifications/${currentUser.id}`)}>
+        <IconButton onClick={() => router.push(`/notifications/${user.id}`)}>
           <Badge badgeContent={17} color="secondary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <IconButton onClick={() => router.push(`/user/${currentUser.id}`)}>
-          <PersonIcon />
-        </IconButton>
+        <Avatar
+          alt={user.name}
+          src={user.image ? user.image.address : null}
+          onClick={() => router.push(`/user/${user.id}`)}
+          variant="circle"
+        >
+          {user.name.charAt(0).toUpperCase()}
+        </Avatar>
       </PageTitleBar>
 
       <Grid container>
@@ -138,7 +141,7 @@ function Home() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Starred threads" icon=<FavoriteIcon />>
-                <Button disabled>More</Button>
+                <Button variant="outlined" disabled>More</Button>
               </SectionTitleBar>
             )}
           >

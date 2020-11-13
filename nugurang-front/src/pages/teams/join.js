@@ -22,8 +22,8 @@ function Chatting() {
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button color="primary" onClick={() => router.back()}>Accept</Button>
-              <Button color="error" onClick={() => router.back()}>Decline</Button>
+              <Button variant="outlined" color="primary" onClick={() => router.back()}>Accept</Button>
+              <Button variant="outlined" color="error" onClick={() => router.back()}>Decline</Button>
             </Box>
           </Grid>
         </Grid>

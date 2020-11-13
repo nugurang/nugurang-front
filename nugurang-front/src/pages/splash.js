@@ -50,7 +50,7 @@ export default function Splash() {
 
         <div style={{ margin: 20 }}>
           <Grid item xs={12} align="center">
-            <Button onClick={() => router.push('/signin')}>Sign in</Button>
+            <Button variant="outlined" onClick={() => router.push('/signin')}>Sign in</Button>
           </Grid>
         </div>
 

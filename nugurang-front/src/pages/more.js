@@ -2,7 +2,6 @@ import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -13,7 +12,6 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 
 import CodeIcon from '@material-ui/icons/Code';
-import SettingsIcon from '@material-ui/icons/Settings';
 import QueueIcon from '@material-ui/icons/Queue';
 
 import { BACKEND_ADDR } from '../config';
@@ -28,7 +26,7 @@ import SectionTitleBar from '../components/SectionTitleBar';
 import UserInfoBox from '../components/UserInfoBox';
 
 
-export const GET_CURRENT_USER = gql`
+export const CURRENT_USER = gql`
   query {
     currentUser {
       id
@@ -56,17 +54,37 @@ function More() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
 
-  const responses = [
-    useQuery(GET_CURRENT_USER)
+  const MENU_SEARCH = [
+    {
+      id: 0,
+      title: "Find user",
+      onClick: () => router.push(`/user/find`)
+    },
+  ]
+
+  const MENU_DEVELOPERS = [
+    {
+      id: 0,
+      title: "Initialize database",
+      onClick: () => router.push(`/init`)
+    },
+    {
+      id: 1,
+      title: "Components overview",
+      onClick: () => router.push(`/comp-ov`)
+    },
+  ]
+
+  const results = [
+    [null, useQuery(CURRENT_USER)],
   ];
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
+  const user = results[0][1].data ? results[0][1].data.currentUser : null;
 
-  if (responses.some((response) => response.loading))
+  if (results.some(result => result[1].loading))
     return <Loading />;
-
-  const {currentUser} = responses[0].data;
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -86,7 +104,7 @@ function More() {
           <SectionBox border={false}>
             <Grid container alignItems="center">
               {
-                !currentUser
+                !user
                 ? (
                   <>
                     <Grid item xs={12} sm={8}>
@@ -94,7 +112,7 @@ function More() {
                     </Grid>
                     <Grid item xs={12} sm={4} align="right">
                       <ButtonGroup color="primary">
-                        <Button onClick={() => router.push('/signin')}>Sign in</Button>
+                        <Button variant="outlined" onClick={() => router.push('/signin')}>Sign in</Button>
                       </ButtonGroup>
                     </Grid>
                   </>
@@ -102,17 +120,15 @@ function More() {
                 : (
                   <>
                     <Grid item xs={12}>
-                      <UserInfoBox user={currentUser} dense />
+                      <UserInfoBox user={user} dense />
                     </Grid>
                     <Grid item xs align="right">
-                      <ButtonGroup color="primary">
-                        <Button onClick={() => router.push(`/user/${currentUser.id}`)}>
-                          My info
-                        </Button>
-                        <Button onClick={handleClickOpen}>
-                          Sign out
-                        </Button>
-                      </ButtonGroup>
+                      <Button variant="outlined" onClick={() => router.push(`/user/${user.id}`)}>
+                        My info
+                      </Button>
+                      <Button variant="outlined" onClick={handleClickOpen}>
+                        Sign out
+                      </Button>
                       <Dialog
                         open={open}
                         onClose={handleClose}
@@ -145,35 +161,20 @@ function More() {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
 
-          <SectionBox
-            titleBar={
-              <SectionTitleBar title="Search tools" icon=<QueueIcon /> />
+          <SectionBox titleBar={<SectionTitleBar title="Search tools" icon=<QueueIcon /> />}>
+            {
+              MENU_SEARCH && (MENU_SEARCH.length)
+              ? <List container>{[MENU_SEARCH].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>
+              : <NoContentsBox />
             }
-          >
-            <List>
-              <BaseListItem primary="Find user" onClick={() => {router.push(`/user/find`)}} />
-            </List>
           </SectionBox>
 
-          <SectionBox
-            titleBar={
-              <SectionTitleBar title="Settings" icon=<SettingsIcon /> />
+          <SectionBox titleBar={<SectionTitleBar title="Developer options" icon=<CodeIcon /> />}>
+            {
+              MENU_DEVELOPERS && (MENU_DEVELOPERS.length)
+              ? <List container>{[MENU_DEVELOPERS].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>
+              : <NoContentsBox />
             }
-          >
-            <List>
-              <BaseListItem primary="Manage my info" onClick={() => {router.push(`/user/update`)}} />
-            </List>
-          </SectionBox>
-
-          <SectionBox
-            titleBar={
-              <SectionTitleBar title="Developer options" icon=<CodeIcon /> />
-            }
-          >
-            <List>
-              <BaseListItem primary="Initialize database" onClick={() => {router.push(`/init`)}} />
-              <BaseListItem primary="Component overview" onClick={() => {router.push(`/comp-ov`)}} />
-            </List>
           </SectionBox>
         </Grid>
       </Grid>

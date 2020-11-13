@@ -41,9 +41,20 @@ const theme = createMuiTheme({
       },
     },
     MuiButton: {
-      text: {
+      outlined: {
         border: '0.15rem solid #9778ec40',
         borderRadius: 5,
+        color: "#5738AC",
+        height: "2.5rem",
+        margin: '0 0.5rem',
+        padding: '0 1.5rem',
+        fontSize: 16,
+        fontWeight: 400,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        wordWrap: "break-word",
+      },
+      text: {
         color: "#5738AC",
         height: "2.5rem",
         margin: '0 0.5rem',

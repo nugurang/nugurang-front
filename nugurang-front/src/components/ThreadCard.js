@@ -58,7 +58,9 @@ export default function ThreadCard({ thread }) {
                   <Avatar
                     src={thread.user.image ? thread.user.image.address : null}
                     variant="circle"
-                  />
+                  >
+                    {thread.user.name.charAt(0).toUpperCase()}
+                  </Avatar>
                 </Grid>
                 <Grid item>
                   <Typography variant="body1" className={classes.singleLineEllipsis}>{thread.user.name}</Typography>

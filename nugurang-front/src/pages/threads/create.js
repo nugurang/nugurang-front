@@ -132,7 +132,7 @@ function CreateThread() {
           }}
         >
           <Box align="center">
-            <Button type="submit">Submit</Button>
+            <Button variant="outlined" type="submit">Submit</Button>
           </Box>
         </form>
       </Container>

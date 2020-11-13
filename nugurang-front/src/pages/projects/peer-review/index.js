@@ -117,7 +117,7 @@ export default function PeerReviewIndex() {
         </Grid>
 
         <Box align="center">
-          <Button onClick={() => router.push('/peer-review/thank-you')}>Submit</Button>
+          <Button variant="outlined" onClick={() => router.push('/peer-review/thank-you')}>Submit</Button>
         </Box>
       </Container>
       

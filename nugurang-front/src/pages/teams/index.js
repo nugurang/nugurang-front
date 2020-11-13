@@ -4,7 +4,9 @@ import { gql, useQuery } from '@apollo/client';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 
+import AddIcon from '@material-ui/icons/Add';
 import GroupIcon from '@material-ui/icons/Group';
 
 import GraphQlError from '../../components/GraphQlError';
@@ -57,15 +59,13 @@ function Teams() {
 
   return (
     <Layout>
-      <PageTitleBar title="Teams" backButton backButtonLink="/home" />
+      <PageTitleBar title="Teams" backButton backButtonLink="/home">
+        <IconButton onClick={() => router.push(`/teams/create`)}>
+          <AddIcon />
+        </IconButton>
+      </PageTitleBar>
 
-      <SectionBox
-        titleBar={(
-          <SectionTitleBar title="My teams" icon={<GroupIcon />}>
-            <Button onClick={() => router.push('/teams/create')}>Create team</Button>
-          </SectionTitleBar>
-        )}
-      >
+      <SectionBox titleBar={(<SectionTitleBar title="My teams" icon={<GroupIcon />} />)}>
         {
           teams && (teams.length)
           ? <Grid container>{[teams].flat().map((team) => <Grid item xs={12} sm={6} md={4}><TeamInfoCard team={team} /></Grid>)}</Grid>
