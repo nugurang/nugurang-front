@@ -4,6 +4,8 @@ import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
+import AddIcon from '@material-ui/icons/Add';
+
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
@@ -181,16 +183,18 @@ function WorkInfo() {
   if (responses.some((response) => response.loading))
     return <Loading />;
   const work = responses[0].data ? responses[0].data.getWork : null;
+  const tasks = responses[0].data ? responses[0].data.getWork.tasks : [];
 
-  work.tasks.forEach(function(task){
+  tasks.forEach(function(task){
     task.onClick = () => router.push(`/tasks/${task.id}`);
   });
 
   return (
     <Layout>
       <PageTitleBar title="Work info" backButton="true" backButtonLink={`/projects/${work.project.id}`}>
-        <Button onClick={() => router.push({pathname: "/tasks/create", query: { work: router.query.name }})}>
-          Create task
+        <Button variant="" onClick={() => router.push({pathname: "/tasks/create", query: { project: router.query.id }})}>
+          <AddIcon />
+          Task
         </Button>
       </PageTitleBar>
       <SectionBox border={false}>

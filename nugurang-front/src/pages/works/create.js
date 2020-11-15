@@ -66,7 +66,7 @@ function CreateWork() {
                 }}
               >
                 <Box align="center">
-                  <Button type="submit variant="outlined"">Submit</Button>
+                  <Button type="submit" variant="outlined">Submit</Button>
                 </Box>
               </form>
             </Grid>

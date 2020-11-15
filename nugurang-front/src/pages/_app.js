@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Head from 'next/head'
 import PropTypes from 'prop-types';
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -22,6 +23,9 @@ export default function RootApp(props) {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
+        <Head>
+          <meta name="viewport" content="viewport-fit=cover" />
+        </Head>
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>

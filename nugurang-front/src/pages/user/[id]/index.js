@@ -214,7 +214,7 @@ function UserInfo() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Recent threads" icon=<AssignmentIcon />>
-                <Button onClick={() => router.push(`/user/${router.query.id}/threads`)}>More</Button>
+                <Button variant="outlined" onClick={() => router.push(`/user/${router.query.id}/threads`)}>More</Button>
               </SectionTitleBar>
             )}
           >
