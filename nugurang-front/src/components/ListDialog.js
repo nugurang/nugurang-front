@@ -7,7 +7,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { useTheme } from '@material-ui/core/styles';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import { useStyles } from '@material-ui/core/styles';
+
+import AddIcon from '@material-ui/icons/Add';
 
 export default function ListDialog({ items, selectedValue, content=null, title=null }) {
   const classes = useStyles();

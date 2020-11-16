@@ -7,11 +7,12 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+
 import CategoryIcon from '@material-ui/icons/Category';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
-import 'array-flat-polyfill';
 
+import 'array-flat-polyfill';
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
 import withAuth from '../../components/withAuth';
 import BaseCard from '../../components/BaseCard';

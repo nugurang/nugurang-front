@@ -1155,7 +1155,7 @@ export default function ComponentOverview() {
       <Overview title="TeamInfoBox">
         <TeamInfoBox team={TEAM_INFO_BOX_TEAM} />
       </Overview>
-      
+
       <Overview title="ThreadGrid">
         <ThreadGrid
           items={THREAD_GRID_ITEMS}

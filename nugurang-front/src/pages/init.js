@@ -139,7 +139,7 @@ function Init({client}) {
           const createThread = await client.mutate({
             mutation: CREATE_THREAD,
               variables: {
-                board: board,
+                board,
                 thread: {
                   name: loremIpsum(),
                   firstArticle: {

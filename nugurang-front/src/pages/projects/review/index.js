@@ -90,28 +90,28 @@ function Review() {
       <Container maxWidth="md">
         <Grid container>
           {TEST_USER_LIST.flat().map((item) => (
-          <Grid item xs={12} md={6}>
-            <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image} circleIcon="true" />}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Typography variant="body1">Did very well of...</Typography>
-                  <BaseMultiSelect
-                    items={TEST_POSITION_LIST}
-                    label="Position"
-                    placeholder="Select position"
-                  />
+            <Grid item xs={12} md={6}>
+              <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image} circleIcon="true" />}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Typography variant="body1">Did very well of...</Typography>
+                    <BaseMultiSelect
+                      items={TEST_POSITION_LIST}
+                      label="Position"
+                      placeholder="Select position"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="body1">Needs to go the extra mile to...</Typography>
+                    <BaseMultiSelect
+                      items={TEST_POSITION_LIST}
+                      label="Position"
+                      placeholder="Select position"
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body1">Needs to go the extra mile to...</Typography>
-                  <BaseMultiSelect
-                    items={TEST_POSITION_LIST}
-                    label="Position"
-                    placeholder="Select position"
-                  />
-                </Grid>
-              </Grid>
-            </SectionBox>
-          </Grid>
+              </SectionBox>
+            </Grid>
           ))}
         </Grid>
 
@@ -119,7 +119,7 @@ function Review() {
           <Button variant="outlined" onClick={() => router.push('/peer-review/thank-you')}>Submit</Button>
         </Box>
       </Container>
-      
+
     </Layout>
   );
 }

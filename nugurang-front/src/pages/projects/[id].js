@@ -76,7 +76,7 @@ function ProjectInfo() {
     return <GraphQlError error={errorResponse.error} />
   if (responses.some((response) => response.loading))
     return <Loading />;
-  
+
   const project = responses[0].data ? responses[0].data.getProject : null;
   const works = responses[0].data ? responses[0].data.getProject.works : [];
   const users = responses[0].data ? responses[0].data.getProject.getUsers : [];
@@ -105,16 +105,16 @@ function ProjectInfo() {
           <AddIcon />
           Work
         </Button>
-        <IconButton onClick={handleClick}>
+        <Button variant="" onClick={handleClick}>
           <MoreVertIcon />
-        </IconButton>
+        </Button>
         <Menu
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={() => router.push({pathname: "/projects/review", query: { project: router.query.id }})}>
             <ListItemIcon><DoneIcon fontSize="small" /></ListItemIcon>
             <Typography variant="inherit" noWrap>Finish</Typography>
           </MenuItem>

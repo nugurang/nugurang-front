@@ -41,7 +41,12 @@ export default function UserInfoBox({ user, dense=false }) {
             <Typography variant="body1">{user.email}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="body1">{user.getFollowers.length}{' followers, '}{user.getFollowings.length}{' followings'}</Typography>
+            <Typography variant="body1">
+              {user.getFollowers.length}
+              {' followers, '}
+              {user.getFollowings.length}
+              {' followings'}
+            </Typography>
           </Grid>
         </Grid>
         <Paper elevation={1} style={{margin: "1rem 0"}}>

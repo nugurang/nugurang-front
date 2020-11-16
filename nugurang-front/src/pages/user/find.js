@@ -65,7 +65,7 @@ function Find() {
   users.forEach(function(user){
     user.onClick = () => router.push(`/user/${user.id}`);
   });
-  
+
   return (
     <Layout>
       <PageTitleBar title="Find user" backButton />
@@ -109,7 +109,7 @@ function Find() {
           }
         </SectionBox>
       </Container>
-      
+
     </Layout>
   );
 }

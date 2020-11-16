@@ -98,11 +98,10 @@ function Thread(threadId) {
           <EditIcon />
         </IconButton>
         <YesNoDialog
-          title = "Delete"
-          content = "Are you sure to delete?"
-          onClickYes={() => 
-            router.push({pathname: "/threads/update", query: { thread: router.query.id }})
-          }
+          title="Delete"
+          content="Are you sure to delete?"
+          onClickYes={() =>
+            router.push({pathname: "/threads/update", query: { thread: router.query.id }})}
         >
           <IconButton>
             <DeleteIcon />
@@ -113,8 +112,8 @@ function Thread(threadId) {
       <Grid container>
         <Grid item xs={12} md={6}>
           <SectionBox>
-            { 
-              thread.firstArticle && 
+            {
+              thread.firstArticle && (
               <ArticleLeader
                 article={thread.firstArticle}
                 like={3}
@@ -122,16 +121,17 @@ function Thread(threadId) {
                 view={thread.viewCount}
                 vote={5}
               />
-            }
+            )
+}
           </SectionBox>
         </Grid>
         <Grid item xs={12} md={6}>
           <SectionBox
-            titleBar={
+            titleBar={(
               <SectionTitleBar title="Comments" icon=<CommentIcon />>
                 <Button onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
               </SectionTitleBar>
-            }
+            )}
           >
             <List>
               {[articles.slice(1)].flat().map((article) => <ArticleListItem article={article} />)}

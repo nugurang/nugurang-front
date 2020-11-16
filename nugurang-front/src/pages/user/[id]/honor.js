@@ -87,7 +87,7 @@ function Honor() {
       <PageTitleBar title="Honor badges" backButton />
       <SectionBox>
         {
-          recentEvents && (recentEvents.length)
+          TEST_HONOR_BADGE_LIST && (TEST_HONOR_BADGE_LIST.length)
           ? <Grid container>{[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}</Grid>
           : <NoContentsBox />
         }

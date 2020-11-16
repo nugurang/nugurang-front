@@ -2,11 +2,6 @@ import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
@@ -20,6 +15,7 @@ import BaseListItem from '../components/BaseListItem';
 import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
+import NoContentsBox from '../components/NoContentsBox';
 import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
@@ -112,9 +108,7 @@ function More() {
                       <Typography>You need to sign in first.</Typography>
                     </Grid>
                     <Grid item xs={12} sm={4} align="right">
-                      <ButtonGroup color="primary">
-                        <Button variant="outlined" onClick={() => router.push('/signin')}>Sign in</Button>
-                      </ButtonGroup>
+                      <Button variant="outlined" onClick={() => router.push('/signin')}>Sign in</Button>
                     </Grid>
                   </>
                 )
@@ -132,8 +126,8 @@ function More() {
                         </Grid>
                         <Grid item>
                           <YesNoDialog
-                            title = "Logout"
-                            content = "Are you sure to logout?"
+                            title="Logout"
+                            content="Are you sure to logout?"
                             onClickYes={() => router.push(`${BACKEND_ADDR}/logout`)}
                           >
                             <Button variant="outlined">

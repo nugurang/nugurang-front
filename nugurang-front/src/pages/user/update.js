@@ -62,8 +62,8 @@ export const CREATE_IMAGE = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUser($id: ID!, $user: UserInput!) {
-    updateUser (id: $id, user: $user) {
+  mutation updateUser($user: UserInput!) {
+    updateUser (user: $user) {
       id
     }
   }
@@ -167,7 +167,7 @@ function Update() {
                   const res = await createImage({ variables: { address: newImageAddress.current.value }});
                   image = res.data.createImage.id;
                 }
-                await updateUser({ variables: { id: user.id, user: { name: newName.current.value, email: newEmail.current.value, biography: "", image }}});
+                await updateUser({ variables: { user: { name: newName.current.value, email: newEmail.current.value, biography: "", image }}});
                 router.push(`/user/${user.id}`);
               }}
             >
@@ -184,7 +184,7 @@ function Update() {
               </Box>
               <Box align="center">
                 <OKDialog label="Delete" title="Denied" content="No you cannot leave :D">
-                <Button variant="outlined" type="submit">Delete</Button>
+                  <Button variant="outlined" type="submit">Delete</Button>
                 </OKDialog>
               </Box>
             </SectionBox>

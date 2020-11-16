@@ -12,6 +12,7 @@ import TextsmsIcon from '@material-ui/icons/Textsms';
 
 import BaseListItem from '../components/BaseListItem';
 import Layout from '../components/Layout';
+import NoContentsBox from '../components/NoContentsBox';
 import SectionBox from '../components/SectionBox';
 import PageTitleBar from '../components/PageTitleBar';
 import { BACKEND_ADDR } from '../config';
@@ -50,7 +51,7 @@ export default function SignIn() {
       <PageTitleBar title="Sign In" backButton />
       <Container maxWidth="sm">
         <SectionBox>
-            {
+          {
               SIGNIN_LIST && (SIGNIN_LIST.length)
               ? <List container>{[SIGNIN_LIST].flat().map((item) => <BaseListItem icon={item.icon} primary={item.title} onClick={item.onClick} />)}</List>
               : <NoContentsBox />

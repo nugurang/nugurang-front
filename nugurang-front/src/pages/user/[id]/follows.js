@@ -1,6 +1,7 @@
 import React from 'react';
 import {useRouter} from 'next/router';
 import { gql, useQuery } from '@apollo/client';
+import Grid from '@material-ui/core/Grid';
 
 import Layout from '../../../components/Layout';
 import BaseTabs from '../../../components/BaseTabs';

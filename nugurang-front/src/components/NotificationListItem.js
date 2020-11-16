@@ -22,7 +22,7 @@ export default function NotificationListItem({ notification }) {
       <Grid container>
         <Grid item>
           <ListItemIcon>
-            <MessageOutlinedIcon/>
+            <MessageOutlinedIcon />
           </ListItemIcon>
         </Grid>
         <Grid item xs>

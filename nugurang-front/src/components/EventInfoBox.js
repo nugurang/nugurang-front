@@ -21,7 +21,7 @@ export default function EventInfoBox({ event }) {
         imageTitle={event.title ? event.title : null}
       />
       <Accordion variant="outlined" defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h5" gutterBottom>{event.title}</Typography>
         </AccordionSummary>
         <AccordionDetails>

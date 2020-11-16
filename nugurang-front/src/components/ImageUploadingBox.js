@@ -20,9 +20,9 @@ export default function ImageUploadingBox({ image }) {
 
 
   function handleUploadClick() {
-    var file = event.target.files[0];
+    const file = event.target.files[0];
     const reader = new FileReader();
-    var url = reader.readAsDataURL(file);
+    const url = reader.readAsDataURL(file);
 
     reader.onloadend = function(e) {
       this.setState({

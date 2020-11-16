@@ -2,6 +2,7 @@
 import { makeStyles } from '@material-ui/styles';
 import React from 'react';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +14,7 @@ import ImageUploadingBox from '../components/ImageUploadingBox';
 import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
-import ResponsiveDialog from '../components/ResponsiveDialog';
+import YesNoDialog from '../components/YesNoDialog';
 
 
 const useStyles = makeStyles(() => ({
@@ -98,9 +99,10 @@ export default function Edit() {
         </Box>
       </SectionBox>
 
-
       <Box className={classes.box} align="center">
-        <ResponsiveDialog dialogTitle="Confirm?" />
+        <YesNoDialog title="Edit" content="Confirm?">
+          <Button variant="outlined">Submit</Button>
+        </YesNoDialog>
       </Box>
 
     </Layout>

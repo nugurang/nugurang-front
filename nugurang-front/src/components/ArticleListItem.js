@@ -26,9 +26,9 @@ export default function ArticleListItem({ article }) {
               alt={article.user.name}
               src={article.user.image ? article.user.image.address : null}
               variant="circle"
-              >
-                {article.user.name.charAt(0).toUpperCase()}
-              </Avatar>
+            >
+              {article.user.name.charAt(0).toUpperCase()}
+            </Avatar>
           </Grid>
         </div>
         <Grid item xs={10}>

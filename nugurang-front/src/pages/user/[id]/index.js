@@ -176,7 +176,7 @@ function UserInfo() {
       {
         user.id === currentUser.id
         ? (
-          <PageTitleBar title="My info" backButton >
+          <PageTitleBar title="My info" backButton>
             <IconButton onClick={() => router.push(`/user/update`)}>
               <EditIcon />
             </IconButton>

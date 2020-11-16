@@ -33,15 +33,15 @@ const useStyles = makeStyles(() => ({
 
 export default function CallingCard({ image=null, label=null, onClick=null }) {
   const classes = useStyles();
-  let key=0;
+  const key=0;
   return (
     <Card variant="outlined">
-      <CardActionArea onClick = {onClick ? onClick : null}>
+      <CardActionArea onClick={onClick || null}>
         <Grid container alignItems="center" direction="row">
           <Grid item xs={3}>
             {
               image
-              ? <CardMedia className={classes.cardMedia}image={image}/>
+              ? <CardMedia className={classes.cardMedia} image={image} />
               : null
             }
           </Grid>

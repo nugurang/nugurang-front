@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+
+import NotesIcon from '@material-ui/icons/Notes';
+import TitleIcon from '@material-ui/icons/Title';
 
 import withAuth from '../../components/withAuth';
-import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
-import Loading from '../../../components/Loading';
-import NoContentsBox from '../../components/NoContentsBox';
+import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
-import ProjectInfoBox from '../../components/ProjectInfoBox';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import UserInfoCard from '../../components/UserInfoCard';
-import WorkInfoCard from '../../components/WorkInfoCard';
-
 
 const GET_WORK = gql`
   query getWork($id: ID!) {
@@ -69,9 +70,19 @@ function Update() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
+
+  function handleNewTitleChange() {
+    newTitle.current.focus();
+  }
+
+  function handleNewContentChange() {
+    newContent.current.focus();
+  }
+
+
   return (
     <Layout>
-      <PageTitleBar title="Edit work" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
+      <PageTitleBar title="Edit work" backButton="true" backButtonLink={`/teams/${work.project.id}`}>
         <Button variant="outlined" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
       </PageTitleBar>
 
