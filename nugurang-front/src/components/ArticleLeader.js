@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import { NO_THREAD_IMAGE_ADDRESS } from '../config';
 import BaseImage from './BaseImage';
 import StatCounterBox from './StatCounterBox';
 
@@ -17,12 +18,10 @@ export default function ArticleLeader({ article, like, topic, view, vote }) {
   const router = useRouter();
   return (
     <Box>
-      <Box display={article.image ? "block" : "none"}>
-        <BaseImage
-          image={article.image}
-          imageTitle={article.title}
-        />
-      </Box>
+      <BaseImage
+        image={article.image ? article.image : NO_THREAD_IMAGE_ADDRESS}
+        imageTitle={article.title ? article.title : null}
+      />
       <Accordion variant="outlined" defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

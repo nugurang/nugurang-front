@@ -21,8 +21,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
 import Layout from '../../components/Layout';
+import OKDialog from '../../components/OKDialog';
 import PageTitleBar from '../../components/PageTitleBar';
-import ResponsiveDialog from '../../components/ResponsiveDialog';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
@@ -183,7 +183,9 @@ function Update() {
                 <Typography gutterBottom style={{color: "red"}}>Warning: this action CANNOT be undone.</Typography>
               </Box>
               <Box align="center">
-                <ResponsiveDialog label="Delete" title="Denied" content="No you cannot leave :D" />
+                <OKDialog label="Delete" title="Denied" content="No you cannot leave :D">
+                <Button variant="outlined" type="submit">Delete</Button>
+                </OKDialog>
               </Box>
             </SectionBox>
           </div>

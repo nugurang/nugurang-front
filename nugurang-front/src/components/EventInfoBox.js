@@ -9,18 +9,17 @@ import Typography from '@material-ui/core/Typography';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import { NO_THREAD_IMAGE_ADDRESS } from '../config';
 import BaseImage from './BaseImage';
 
 
 export default function EventInfoBox({ event }) {
   return (
     <Box>
-      <Box display={event.images ? "block" : "none"}>
-        <BaseImage
-          image={event.images ? event.images[0].address : null}
-          imageTitle={event.title}
-        />
-      </Box>
+      <BaseImage
+        image={event.images ? event.images[0].address : NO_THREAD_IMAGE_ADDRESS}
+        imageTitle={event.title ? event.title : null}
+      />
       <Accordion variant="outlined" defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} >
           <Typography variant="h5" gutterBottom>{event.title}</Typography>

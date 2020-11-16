@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import 'array-flat-polyfill';
 
+import { NO_THREAD_IMAGE_ADDRESS } from '../config';
 import NoContentsBox from './NoContentsBox';
 import StatCounterBox from './StatCounterBox';
 
@@ -44,12 +45,10 @@ export default function ThreadCard({ thread }) {
       variant="outlined"
     >
       <CardActionArea>
-        <Box display={thread.image ? "block" : "none"}>
-          <CardMedia className={classes.cardMedia}
-            image={thread.image}
-            title={thread.imageTitle ? thread.imageTitle : null}
-          />
-        </Box>
+        <CardMedia className={classes.cardMedia}
+          image={thread.image ? thread.image : NO_THREAD_IMAGE_ADDRESS}
+          title={thread.imageTitle ? thread.imageTitle : null}
+        />
         <CardContent>
           <Grid container spacing={1} alignItems="center">
             <Grid item>

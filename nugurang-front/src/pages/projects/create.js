@@ -17,8 +17,8 @@ import withAuth from '../../components/withAuth';
 
 
 export const CREATE_PROJECT = gql`
-  mutation createProject($team: ID!, $name: String!) {
-    createProject (team: $team, name: $name) {
+  mutation createProject($team: ID!, $project: ProjectInput!) {
+    createProject (team: $team, project: $project) {
       id
     }
   }
@@ -61,7 +61,7 @@ function CreateProject() {
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
-                  const projectRes = await createProject({ variables: {team: router.query.team, name: newName.current.value}});
+                  const projectRes = await createProject({ variables: {team: router.query.team, project: {name: newName.current.value}}});
                   const projectId = projectRes.data.createProject.id;
                   router.push(`/projects/${projectId}`);
                 }}

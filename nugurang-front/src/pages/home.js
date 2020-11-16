@@ -8,6 +8,7 @@ import List from '@material-ui/core/List';
 
 import IconButton from '@material-ui/core/IconButton';
 
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -141,7 +142,9 @@ function Home() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Starred threads" icon=<FavoriteIcon />>
-                <Button variant="outlined" disabled>More</Button>
+                <IconButton disabled onClick={() => router.push(`/user/${user.id}/star`)}>
+                  <ArrowForwardIcon />
+                </IconButton>
               </SectionTitleBar>
             )}
           >

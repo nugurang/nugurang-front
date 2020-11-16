@@ -16,8 +16,8 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
 
 export const CREATE_WORK = gql`
-  mutation createWork($project: ID!, $name: String!) {
-    createWork (project: $project, name: $name) {
+  mutation createWork($project: ID!, $work: WorkInput!) {
+    createWork (project: $project, work: $work) {
       id
     }
   }
@@ -60,7 +60,7 @@ function CreateWork() {
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
-                  const workRes = await createWork({ variables: {project: router.query.project, name: newName.current.value}});
+                  const workRes = await createWork({ variables: {project: router.query.project, work: {name: newName.current.value}}});
                   const workId = workRes.data.createWork.id;
                   router.push(`/works/${workId}`);
                 }}
