@@ -3,10 +3,14 @@ import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 
-import TextsmsIcon from '@material-ui/icons/Textsms';
+import CommentIcon from '@material-ui/icons/Comment';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
+import withAuth from '../../components/withAuth';
 import ArticleLeader from '../../components/ArticleLeader';
 import ArticleListItem from '../../components/ArticleListItem';
 import GraphQlError from '../../components/GraphQlError';
@@ -15,7 +19,7 @@ import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
-import withAuth from '../../components/withAuth';
+import YesNoDialog from '../../components/YesNoDialog';
 
 
 const GET_THREAD = gql`
@@ -90,8 +94,20 @@ function Thread(threadId) {
   return (
     <Layout>
       <PageTitleBar title="Thread" backButton backButtonLink="/boards">
-        <Button onClick={() => router.push({pathname: "/threads/update", query: { thread: thread.id }})}>Edit</Button>
-        <Button onClick={() => router.push({pathname: "/threads/update", query: { thread: thread.id }})}>Delete</Button>
+        <IconButton onClick={() => router.push({pathname: "/threads/update", query: { thread: router.query.id }})}>
+          <EditIcon />
+        </IconButton>
+        <YesNoDialog
+          title = "Delete"
+          content = "Are you sure to delete?"
+          onClickYes={() => 
+            router.push({pathname: "/threads/update", query: { thread: router.query.id }})
+          }
+        >
+          <IconButton>
+            <DeleteIcon />
+          </IconButton>
+        </YesNoDialog>
       </PageTitleBar>
 
       <Grid container>
@@ -112,7 +128,7 @@ function Thread(threadId) {
         <Grid item xs={12} md={6}>
           <SectionBox
             titleBar={
-              <SectionTitleBar title="Comments" icon=<TextsmsIcon />>
+              <SectionTitleBar title="Comments" icon=<CommentIcon />>
                 <Button onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
               </SectionTitleBar>
             }

@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 
+import AddIcon from '@material-ui/icons/Add';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import withAuth from '../../../components/withAuth';
@@ -76,7 +78,9 @@ function Board() {
         titleBar={
           (
             <SectionTitleBar title={board.name} icon={<AssignmentIcon />}>
-              <Button onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.id }})}>Create thread</Button>
+              <IconButton onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.id }})}>
+                <AddIcon />
+              </IconButton>
             </SectionTitleBar>
           )
         }

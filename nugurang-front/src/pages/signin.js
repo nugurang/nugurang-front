@@ -6,6 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 
+import FacebookIcon from '@material-ui/icons/Facebook';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import TextsmsIcon from '@material-ui/icons/Textsms';
+
 import BaseListItem from '../components/BaseListItem';
 import Layout from '../components/Layout';
 import SectionBox from '../components/SectionBox';
@@ -19,6 +23,7 @@ export default function SignIn() {
       id: 1,
       name: "Facebook",
       title: "Sign in with Facebook",
+      icon: <FacebookIcon />,
       image: "/static/favicons/favicon-facebook.png",
       onClick: () => alert('Facebook not supported')
     },
@@ -26,6 +31,7 @@ export default function SignIn() {
       id: 2,
       name: "GitHub",
       title: "Sign in with GitHub",
+      icon: <GitHubIcon />,
       image: "/static/favicons/favicon-github.png",
       onClick: () => router.push(`${BACKEND_ADDR}/oauth2/authorization/github`)
     },
@@ -33,6 +39,7 @@ export default function SignIn() {
       id: 3,
       name: "Kakao",
       title: "Sign in with Kakao",
+      icon: <TextsmsIcon />,
       image: "/static/favicons/favicon-kakao.png",
       onClick: () => router.push(`${BACKEND_ADDR}/oauth2/authorization/kakao`)
     },
@@ -45,7 +52,7 @@ export default function SignIn() {
         <SectionBox>
             {
               SIGNIN_LIST && (SIGNIN_LIST.length)
-              ? <List container>{[SIGNIN_LIST].flat().map((item) => <BaseListItem avatar={item.image} primary={item.title} onClick={item.onClick} />)}</List>
+              ? <List container>{[SIGNIN_LIST].flat().map((item) => <BaseListItem icon={item.icon} primary={item.title} onClick={item.onClick} />)}</List>
               : <NoContentsBox />
             }
         </SectionBox>

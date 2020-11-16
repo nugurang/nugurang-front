@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useTheme } from '@material-ui/core/styles';
 
-export default function ResponsiveDialog({ content=null, label="Submit", title=null }) {
+export default function YesNoDialog({ children, content=null, onClickNo=null, onClickYes=null, title=null }) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
 
@@ -19,11 +19,21 @@ export default function ResponsiveDialog({ content=null, label="Submit", title=n
     setOpen(false);
   };
 
+  const handleClickYes = () => {
+    setOpen(false);
+    {onClickYes ? onClickYes() : null}
+  };
+
+  const handleClickNo = () => {
+    setOpen(false);
+    {onClickNo ? onClickNo() : null}
+  };
+
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        {label}
-      </Button>
+      <div onClick={handleClickOpen}>
+        {children}
+      </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           {title}
@@ -34,8 +44,11 @@ export default function ResponsiveDialog({ content=null, label="Submit", title=n
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            OK
+          <Button onClick={handleClickYes} color="primary" autoFocus>
+            Yes
+          </Button>
+          <Button onClick={handleClickNo} color="primary" autoFocus>
+            No
           </Button>
         </DialogActions>
       </Dialog>

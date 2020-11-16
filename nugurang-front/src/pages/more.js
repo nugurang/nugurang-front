@@ -24,6 +24,7 @@ import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
 import SectionTitleBar from '../components/SectionTitleBar';
 import UserInfoBox from '../components/UserInfoBox';
+import YesNoDialog from '../components/YesNoDialog';
 
 
 export const CURRENT_USER = gql`
@@ -122,36 +123,25 @@ function More() {
                     <Grid item xs={12}>
                       <UserInfoBox user={user} dense />
                     </Grid>
-                    <Grid item xs align="right">
-                      <Button variant="outlined" onClick={() => router.push(`/user/${user.id}`)}>
-                        My info
-                      </Button>
-                      <Button variant="outlined" onClick={handleClickOpen}>
-                        Sign out
-                      </Button>
-                      <Dialog
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                      >
-                        <DialogTitle id="alert-dialog-title">
-                          Sign out
-                        </DialogTitle>
-                        <DialogContent>
-                          <DialogContentText id="alert-dialog-description">
-                            Are you sure to sign out?
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={() => router.push(`${BACKEND_ADDR}/logout`)} color="primary" autoFocus>
-                            Yes
+                    <Grid item xs={12}>
+                      <Grid container justify="flex-end">
+                        <Grid item>
+                          <Button variant="outlined" onClick={() => router.push(`/user/${user.id}`)}>
+                            My info
                           </Button>
-                          <Button onClick={handleClose} color="primary" autoFocus>
-                            No
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
+                        </Grid>
+                        <Grid item>
+                          <YesNoDialog
+                            title = "Logout"
+                            content = "Are you sure to logout?"
+                            onClickYes={() => router.push(`${BACKEND_ADDR}/logout`)}
+                          >
+                            <Button variant="outlined">
+                              Sign out
+                            </Button>
+                          </YesNoDialog>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </>
                 )

@@ -5,7 +5,10 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
+
+import AddIcon from '@material-ui/icons/Add';
 
 import withAuth from '../../components/withAuth';
 import ArticleListItem from '../../components/ArticleListItem';
@@ -120,7 +123,9 @@ function Event() {
             titleBar={
               (
                 <SectionTitleBar title="Related articles" icon={<AssignmentIcon />}>
-                  <Button variant="outlined" onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.board, event: router.query.event }})}>Create article</Button>
+                  <IconButton onClick={() => router.push({pathname: "/threads/create", query: { board: router.query.board, event: router.query.event }})}>
+                    <AddIcon />
+                  </IconButton>
                 </SectionTitleBar>
               )
             }
