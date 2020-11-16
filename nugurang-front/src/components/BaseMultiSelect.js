@@ -7,6 +7,7 @@ export default function BaseMultiSelect({ items, label, onChange, placeholder=nu
   return (
     <Autocomplete
       multiple
+      limitTags={2}
       onChange={onChange}
       options={items}
       getOptionLabel={option => option.label}

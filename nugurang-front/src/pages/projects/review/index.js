@@ -13,6 +13,7 @@ import BaseMultiSelect from '../../../components/BaseMultiSelect';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import SectionTitleBar from '../../../components/SectionTitleBar';
+import withAuth from '../../../components/withAuth';
 
 
 const TEST_POSITION_LIST = [
@@ -80,9 +81,7 @@ const TEST_USER_LIST = [
 ]
 
 
-
-
-export default function PeerReviewIndex() {
+function Review() {
   const router = useRouter();
   return (
     <Layout>
@@ -124,3 +123,5 @@ export default function PeerReviewIndex() {
     </Layout>
   );
 }
+
+export default withAuth(Review);

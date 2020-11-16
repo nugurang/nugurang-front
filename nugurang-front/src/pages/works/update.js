@@ -18,9 +18,9 @@ import UserInfoCard from '../../components/UserInfoCard';
 import WorkInfoCard from '../../components/WorkInfoCard';
 
 
-const GET_PROJECT = gql`
-  query getProject($id: ID!) {
-    getProject(id: $id) {
+const GET_WORK = gql`
+  query getWork($id: ID!) {
+    getWork(id: $id) {
       id
       name
       team {
@@ -43,9 +43,9 @@ const GET_PROJECT = gql`
 `;
 
 
-const UPDATE_PROJECT = gql`
-  mutation updateProject($id: ID!, project: ProjectInput!) {
-    updateProject(id: $id, project: $project) {
+const UPDATE_WORK = gql`
+  mutation updateWork($id: ID!, work: WorkInput!) {
+    updateWork(id: $id, work: $work) {
       id
     }
   }
@@ -57,11 +57,11 @@ function Update() {
   const newContent = useRef(null);
 
   const results = [
-    [null, useQuery(GET_PROJECT, {variables: {id: router.query.id}})],
-    useMutation(UPDATE_PROJECT)
+    [null, useQuery(GET_WORK, {variables: {id: router.query.id}})],
+    useMutation(UPDATE_WORK)
   ];
-  const [getProject, updateProject] = results.map(result => result[0]);
-  const project = results[0][1].data ? results[0][1].data.getProject : null;
+  const [getWork, updateWork] = results.map(result => result[0]);
+  const work = results[0][1].data ? results[0][1].data.getWork : null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -71,7 +71,7 @@ function Update() {
 
   return (
     <Layout>
-      <PageTitleBar title="Edit project" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
+      <PageTitleBar title="Edit work" backButton="true" backButtonLink={`/teams/${project.team.id}`}>
         <Button variant="outlined" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>Create work</Button>
       </PageTitleBar>
 
@@ -81,7 +81,7 @@ function Update() {
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={project.title}
+                  defaultValue={work.title}
                   inputRef={newTitle}
                   label="Enter title"
                   variant="outlined"
@@ -97,7 +97,7 @@ function Update() {
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={project.content}
+                  defaultValue={work.content}
                   inputRef={newContent}
                   label="Enter content"
                   variant="outlined"
@@ -111,8 +111,8 @@ function Update() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const res = await updateProject({ variables: { id: router.query.id, project: { title: newTitle.current.value, content: newContent.current.value }}});
-            router.push(`/projects/${res.data.updateProject.id}`);
+            const res = await updateWork({ variables: { id: router.query.id, project: { title: newTitle.current.value, content: newContent.current.value }}});
+            router.push(`/works/${res.data.updateWork.id}`);
           }}
         >
           <Box align="center">

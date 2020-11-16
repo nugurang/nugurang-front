@@ -3,8 +3,16 @@ import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import DoneIcon from '@material-ui/icons/Done';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
@@ -58,6 +66,8 @@ const GET_PROJECT = gql`
 
 function ProjectInfo() {
   const router = useRouter();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const responses = [
     useQuery(GET_PROJECT, {variables: {id: router.query.id}}),
   ];
@@ -78,6 +88,16 @@ function ProjectInfo() {
     user.onClick = () => router.push(`/user/${user.id}`);
   });
 
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
   return (
     <Layout>
       <PageTitleBar title="Project info" backButton backButtonLink={`/teams/${project.team.id}`}>
@@ -85,6 +105,24 @@ function ProjectInfo() {
           <AddIcon />
           Work
         </Button>
+        <IconButton onClick={handleClick}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon><DoneIcon fontSize="small" /></ListItemIcon>
+            <Typography variant="inherit" noWrap>Finish</Typography>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
+            <Typography variant="inherit" noWrap>Delete</Typography>
+          </MenuItem>
+        </Menu>
       </PageTitleBar>
 
       <SectionBox border={false}>

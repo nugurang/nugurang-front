@@ -12,7 +12,6 @@ import { ALL_BOARDS } from '../config';
 import withAuth from '../components/withAuth';
 import FullScreenDialogBox from '../components/FullScreenDialogBox';
 import GraphQlError from '../components/GraphQlError';
-import Layout from '../components/Layout';
 import Loading from '../components/Loading';
 
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
@@ -28,8 +27,8 @@ const GET_BOARDS = gql`
 `;
 
 const CREATE_BOARD = gql`
-  mutation CreateBoard($name: String!) {
-    createBoard(name: $name) {
+  mutation CreateBoard($board: BoardInput!) {
+    createBoard(board: $board) {
       id
       name
     }
@@ -37,8 +36,8 @@ const CREATE_BOARD = gql`
 `;
 
 const CREATE_THREAD = gql`
-  mutation CreateThread($thread: ThreadInput!) {
-    createThread(thread: $thread) {
+  mutation CreateThread($board: ID!, $thread: ThreadInput!) {
+    createThread(board: $board, thread: $thread) {
       id
       name
       firstArticle {
@@ -67,8 +66,8 @@ const CREATE_POSITION = gql`
 `;
 
 const CREATE_TEAM = gql`
-  mutation CreateTeam($name: String!) {
-    createTeam(name: $name) {
+  mutation CreateTeam($team: TeamInput!) {
+    createTeam(team: $team) {
       id
       name
     }
@@ -76,8 +75,8 @@ const CREATE_TEAM = gql`
 `
 
 const CREATE_PROJECT = gql`
-  mutation CreateProject($team: ID!, $name: String!) {
-    createProject(team: $team, name: $name) {
+  mutation CreateProject($team: ID!, $project: ProjectInput!) {
+    createProject(team: $team, project: $project) {
       id
       name
     }
@@ -85,8 +84,8 @@ const CREATE_PROJECT = gql`
 `
 
 const CREATE_WORK = gql`
-  mutation CreateWork($project: ID!, $name: String!, $order: Int) {
-    createWork(project: $project, name: $name, order: $order) {
+  mutation CreateWork($project: ID!, $work: WorkInput!) {
+    createWork(project: $project, work: $work) {
       id
       name
     }
@@ -111,16 +110,19 @@ function Init({client}) {
     if (error || done)
       return;
     try {
-      const createTeam = await client.mutate({mutation: CREATE_TEAM, variables: {name: 'Capstone'}});
+      const createTeam = await client.mutate({
+        mutation: CREATE_TEAM,
+        variables: {team: {name: 'Capstone'}}
+      });
       console.log(createTeam);
       const createProject = await client.mutate({
         mutation: CREATE_PROJECT,
-        variables: {team: createTeam.data.createTeam.id, name: 'Capstone-Project'}
+        variables: {team: createTeam.data.createTeam.id, project: {name: 'Capstone-Project'}}
       });
       console.log(createProject);
       const createWork = await client.mutate({
         mutation: CREATE_WORK,
-        variables: {project: createProject.data.createProject.id, name: 'Sprint1'}
+        variables: {project: createProject.data.createProject.id, work: {name: 'Sprint1'}}
       });
       console.log(createWork);
       for (const name of ALL_POSITIONS) {
@@ -128,7 +130,7 @@ function Init({client}) {
         console.log(createPosition);
       }
       for (const name of ALL_BOARDS) {
-        const createBoard = await client.mutate({mutation: CREATE_BOARD, variables: {name}});
+        const createBoard = await client.mutate({mutation: CREATE_BOARD, variables: {board: {name}}});
         console.log(createBoard);
       }
       const getBoards = await client.query({query: GET_BOARDS, variables: {names: ALL_BOARDS}})
@@ -137,14 +139,14 @@ function Init({client}) {
           const createThread = await client.mutate({
             mutation: CREATE_THREAD,
               variables: {
+                board: board,
                 thread: {
                   name: loremIpsum(),
-                  article: {
+                  firstArticle: {
                     title: loremIpsum(),
                     content: loremIpsum(),
                     images: []
-                  },
-                  board
+                  }
                 }
               }
           });
@@ -192,20 +194,18 @@ function Init({client}) {
     return <Loading circular="true" />
 
   return (
-    <Layout>
-      <FullScreenDialogBox>
-        <Grid container spacing={2} alignItems="center" justify="center">
-          <Grid item xs={12} align="center">
-            <Typography variant="h4">Initialization done.</Typography>
-          </Grid>
-          <Grid item xs={12} align="center">
-            <Box align="center">
-              <Button onClick={() => router.push(`/home`)}>Go Home</Button>
-            </Box>
-          </Grid>
+    <FullScreenDialogBox>
+      <Grid container spacing={2} alignItems="center" justify="center">
+        <Grid item xs={12} align="center">
+          <Typography variant="h4">Initialization done.</Typography>
         </Grid>
-      </FullScreenDialogBox>
-    </Layout>
+        <Grid item xs={12} align="center">
+          <Box align="center">
+            <Button onClick={() => router.push(`/home`)}>Go Home</Button>
+          </Box>
+        </Grid>
+      </Grid>
+    </FullScreenDialogBox>
   );
 }
 

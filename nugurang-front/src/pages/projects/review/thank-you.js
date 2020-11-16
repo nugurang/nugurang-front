@@ -11,6 +11,7 @@ import Layout from '../../../components/Layout';
 
 import FullScreenDialogBox from '../../../components/FullScreenDialogBox';
 import PageTitleBar from '../../../components/PageTitleBar';
+import withAuth from '../../../components/withAuth';
 
 
 const useStyles = makeStyles(() => ({
@@ -25,12 +26,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export default function ThankYou() {
+function ThankYou() {
   const router = useRouter();
   const classes = useStyles();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Review completed" icon=<CheckIcon /> />>
+      <FullScreenDialogBox titleBar = {<PageTitleBar title="Review completed" icon=<CheckIcon />} />>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography className={classes.typography}>Thank you for your cooperation!</Typography>
@@ -45,3 +46,5 @@ export default function ThankYou() {
     </Layout>
   );
 }
+
+export default withAuth(ThankYou);

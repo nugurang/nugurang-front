@@ -25,14 +25,14 @@ export default function ListDialog({ items, selectedValue, content=null, title=n
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
       <List>
-        {emails.map((email) => (
-          <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+        {items.map((item) => (
+          <ListItem button onClick={() => handleListItemClick(item)} key={email}>
             <ListItemAvatar>
               <Avatar className={classes.avatar}>
                 <PersonIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={email} />
+            <ListItemText primary={item} />
           </ListItem>
         ))}
 
