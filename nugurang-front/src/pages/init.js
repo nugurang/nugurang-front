@@ -186,7 +186,7 @@ function Init({client}) {
       }
       const createTeam = await client.mutate({
         mutation: CREATE_TEAM,
-        variables: {team: {name: 'Capstone'}}
+        variables: {team: {name: 'Capstone', users: []}}
       });
       console.log(createTeam);
       const createProject = await client.mutate({

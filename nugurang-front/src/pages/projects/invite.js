@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useRouter } from 'next/router';
-import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
@@ -20,36 +20,6 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 import UserInfoCard from '../../components/UserInfoCard'
 import withAuth from '../../components/withAuth';
 
-
-const GET_TEAM = gql`
-  query getTeam($id: ID!) {
-    getTeam(id: $id) {
-      id
-      name
-      projects {
-        id
-        name
-        getUsers(page: 0, pageSize: 100) {
-          id
-          name
-          image {
-            id
-            address
-          }
-        }
-      }
-      getUsers(page: 0, pageSize: 100) {
-        id
-        name
-        email
-        image {
-          id
-          address
-        }
-      }
-    }
-  }
-`;
 
 export const GET_USER_BY_NAME = gql`
   query getUserByName($name: String!) {
@@ -73,9 +43,11 @@ export const GET_USER_BY_NAME = gql`
 `;
 
 export const UPDATE_TEAM = gql`
-  mutation updateTeam($id: ID!, $team: TeamInput!) {
-    updateTeam(id: $id, team: $team) {
-      id
+  mutation updateProject($project: ID!, $name: String!, $users: [ID]!) {
+    updateTeam(project: $project, name: $name, users: $users) {
+      team {
+        id
+      }
     }
   }
 `;
@@ -85,16 +57,10 @@ function Invite() {
   const router = useRouter();
   const keywordName = useRef(null);
 
-  const results = [
-    [null, useQuery(GET_TEAM, {variables: {id: router.query.id}})],
-    useLazyQuery(GET_USER_BY_NAME),
-    useMutation(UPDATE_TEAM)
-  ];
-  const getUserByName = results[1][0];
-  const updateTeam = results[2][0];
+  const results = [useLazyQuery(GET_USER_BY_NAME), useMutation(UPDATE_TEAM)];
+  const [getUserByName, updateTeam] = results.map(result => result[0]);
 
-  const team = results[0][1].data ? results[0][1].data.getTeam : null;
-  const userData = results[1][1].data;
+  const userData = results[0][1].data;
   const users = userData && userData.getUserByName ? [userData.getUserByName] : null;
 
   if (results.some(result => result[1].loading))
@@ -103,22 +69,13 @@ function Invite() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  if (users) {
-    users.forEach(function(user){
-      user.onClick = async (e) => {
-        const res = await updateTeam({ variables: { id: Number(router.query.id), team: { name: team.name, users: [users, user].flat().map(user => Number(user)) }}});
-        router.push(`/teams/${router.query.id}`);
-      }
-    });
-  }
-
   function handleKeywordNameChange() {
     keywordName.current.focus();
   }
 
   return (
     <Layout>
-      <PageTitleBar title="Invite user to team" backButton />
+      <PageTitleBar title="Invite user to project" backButton />
 
       <Container maxWidth="md">
         <SectionBox border={false}>
