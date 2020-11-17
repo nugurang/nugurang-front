@@ -20,7 +20,7 @@ export default function EventInfoBox({ event }) {
     ? (
       <Box>
         <BaseImage
-          image={event.images.length() > 0 ? event.images[0].address : NO_THREAD_IMAGE_ADDRESS}
+          image={event.images && event.images.length() > 0 ? event.images[0].address : NO_THREAD_IMAGE_ADDRESS}
           imageTitle={event.name ? event.name : null}
         />
         <Accordion variant="outlined" defaultExpanded>

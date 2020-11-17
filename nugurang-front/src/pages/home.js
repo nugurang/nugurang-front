@@ -46,8 +46,6 @@ const GET_THREADS_BY_BOARD_NAMES = gql`
     getThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
       id
       name
-      upCount
-      commentCount
       user {
         id
         name
@@ -72,8 +70,6 @@ const GET_HOT_THREADS_BY_BOARD_NAMES = gql`
     getHotThreadsByBoardNames(boards: $boardNames, page: 0, pageSize: 5) {
       id
       name
-      upCount
-      commentCount
       user {
         id
         name

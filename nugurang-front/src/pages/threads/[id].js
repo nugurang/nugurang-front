@@ -40,10 +40,6 @@ const GET_THREAD = gql`
         id
         name
         description
-        images {
-          id
-          address
-        }
         recruitingStart
         recruitingEnd
         eventStart
@@ -125,7 +121,7 @@ function Thread(threadId) {
           <SectionBox>
             {
               thread.event
-              ? <EventInfoBox event={event} />
+              ? <EventInfoBox event={thread.event} />
               : (
                 <ArticleLeader
                   article={thread.firstArticle}

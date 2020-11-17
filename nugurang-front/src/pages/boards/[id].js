@@ -27,8 +27,6 @@ const GET_BOARD = gql`
       getThreads(page: 0, pageSize: 5) {
         id
         name
-        upCount
-        commentCount
         user {
           name
           image {

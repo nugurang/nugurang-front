@@ -108,8 +108,6 @@ export const GET_USER = gql`
       getThreads(page: 0, pageSize: 3) {
         id
         name
-        upCount
-        commentCount
         user {
           name
           image {
@@ -192,20 +190,20 @@ function UserInfo() {
             <UserInfoBox user={user} />
             <Grid container direction="row" justify="flex-end">
               <Grid item align="right">
+                <Button variant="outlined" onClick={() => router.push(`/user/${router.query.id}/follows`)}>
+                  People
+                </Button>
+              </Grid>
+              <Grid item align="right">
                 <form
                   onSubmit={e => {
                     e.preventDefault();
                     createFollowing({ variables: {user: router.query.id}});
                   }}
                 >
-                  <Box style={{margin: "1rem"}}>
-                    <Button variant="outlined" onClick={() => router.push(`/user/${router.query.id}/follows`)}>
-                      People
-                    </Button>
-                    <Button variant="outlined" type="submit">
-                      Follow
-                    </Button>
-                  </Box>
+                  <Button variant="outlined" type="submit">
+                    Follow
+                  </Button>
                 </form>
               </Grid>
             </Grid>

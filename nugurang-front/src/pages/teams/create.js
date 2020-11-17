@@ -60,7 +60,7 @@ function CreateTeam() {
               <form
                 onSubmit={e => {
                   e.preventDefault();
-                  createTeam({ variables: { team: { name: newName.current.value }}});
+                  createTeam({ variables: { team: { name: newName.current.value, users: [] }}});
                   router.push('/teams');
                 }}
               >

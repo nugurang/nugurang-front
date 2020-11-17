@@ -151,24 +151,6 @@ function ProjectInfo() {
               <Typography variant="inherit" noWrap>Finish</Typography>
             </YesNoDialog>
           </MenuItem>
-          <MenuItem onClick={() => router.push({pathname: "/projects/update", query: { project: router.query.id }})}>
-            <ListItemIcon><EditIcon fontSize="small" /></ListItemIcon>
-            <Typography variant="inherit" noWrap>Edit</Typography>
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <YesNoDialog
-              title="Delete"
-              content="Are you sure to delete?"
-              onClickYes={async (e) => {
-                e.preventDefault();
-                await deleteProject({ variables: { id: router.query.id }});
-                router.push(`/teams/${project.team.id}`);
-              }}
-            >
-              <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
-              <Typography variant="inherit" noWrap>Delete</Typography>
-            </YesNoDialog>
-          </MenuItem>
           <MenuItem onClick={handleClose}>
             <YesNoDialog
               title="Delete"
