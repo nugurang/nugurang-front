@@ -86,7 +86,7 @@ function CreateTask() {
                   e.preventDefault();
                   const taskRes = await createTask({ variables: {task: {work: router.query.work, name: newName.current.value}}});
                   const taskId = taskRes.data.createTask.id;
-                  router.push(`/tasks/${taskId}`);
+                  router.push(`/works/${router.query.work}`);
                 }}
               >
                 <Box align="center">

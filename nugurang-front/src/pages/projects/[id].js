@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,6 +27,7 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import UserInfoCard from '../../components/UserInfoCard';
 import WorkInfoCard from '../../components/WorkInfoCard';
+import YesNoDialog from '../../components/YesNoDialog';
 
 
 const TAB_PROPS = [
@@ -42,7 +43,7 @@ const TAB_PROPS = [
 
 
 const GET_PROJECT = gql`
-  query getProject($id: ID!) {
+  query GetProject($id: ID!) {
     getProject(id: $id) {
       id
       name
@@ -65,27 +66,45 @@ const GET_PROJECT = gql`
   }
 `;
 
+const UPDATE_PROJECT_FINISH = gql`
+  mutation UpdateProjectFinish($id: ID!) {
+    updateProjectFinish(id: $id)
+  }
+`;
+
+const DELETE_PROJECT = gql`
+  mutation DeleteProject($id: ID!) {
+    deleteProject(id: $id) {
+      id
+    }
+  }
+`;
+
+
 function ProjectInfo() {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const responses = [
-    useQuery(GET_PROJECT, {variables: {id: router.query.id}}),
+
+  const results = [
+    [null, useQuery(GET_PROJECT, {variables: {id: router.query.id}})],
+    useMutation(UPDATE_PROJECT_FINISH),
+    useMutation(DELETE_PROJECT)
   ];
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-  if (responses.some((response) => response.loading))
+  const [getProject, updateProjectFinish, deleteProject] = results.map(result => result[0]);
+  const project = results[0][1].data ? results[0][1].data.getProject : null;
+
+  if (results.some(result => result[1].loading))
     return <Loading />;
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />
 
-  const project = responses[0].data ? responses[0].data.getProject : null;
-  const works = responses[0].data ? responses[0].data.getProject.works : [];
-  const users = responses[0].data ? responses[0].data.getProject.getUsers : [];
 
-  works.forEach(function(work){
+  project.works.forEach(function(work){
     work.onClick = () => router.push(`/works/${work.id}`);
   });
-  users.forEach(function(user){
+  project.getUsers.forEach(function(user){
     user.onClick = () => router.push(`/user/${user.id}`);
   });
 
@@ -115,17 +134,36 @@ function ProjectInfo() {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => router.push({pathname: "/projects/review", query: { project: router.query.id }})}>
-            <ListItemIcon><DoneIcon fontSize="small" /></ListItemIcon>
-            <Typography variant="inherit" noWrap>Finish</Typography>
-          </MenuItem>
           <MenuItem onClick={() => router.push({pathname: "/projects/update", query: { project: router.query.id }})}>
             <ListItemIcon><EditIcon fontSize="small" /></ListItemIcon>
             <Typography variant="inherit" noWrap>Edit</Typography>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
-            <Typography variant="inherit" noWrap>Delete</Typography>
+            <YesNoDialog
+              title="Finish"
+              content="Are you sure to finish?"
+              onClickYes={async (e) => {
+                await updateProjectFinish({ variables: { id: router.query.id }});
+                router.push({pathname: "/projects/review", query: { project: router.query.id }});
+              }}
+            >
+              <ListItemIcon><DoneIcon fontSize="small" /></ListItemIcon>
+              <Typography variant="inherit" noWrap>Finish</Typography>
+            </YesNoDialog>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <YesNoDialog
+              title="Delete"
+              content="Are you sure to delete?"
+              onClickYes={async (e) => {
+                e.preventDefault();
+                await deleteProject({ variables: { id: router.query.id }});
+                router.push(`/teams/${project.team.id}`);
+              }}
+            >
+              <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
+              <Typography variant="inherit" noWrap>Delete</Typography>
+            </YesNoDialog>
           </MenuItem>
         </Menu>
       </PageTitleBar>
@@ -137,13 +175,13 @@ function ProjectInfo() {
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
           {
-            works && (works.length)
-            ? <Grid container>{[works].flat().map((work) => <Grid item xs={12} sm={6} md={4}><WorkInfoCard work={work} /></Grid>)}</Grid>
+            project.works && (project.works.length)
+            ? <Grid container>{[project.works].flat().map((work) => <Grid item xs={12} sm={6} md={4}><WorkInfoCard work={work} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
           {
-            users && (users.length)
-            ? <Grid container>{[users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+            project.getUsers && (project.getUsers.length)
+            ? <Grid container>{[project.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </BaseTabs>

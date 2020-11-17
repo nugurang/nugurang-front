@@ -116,7 +116,7 @@ function Home() {
     thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
   recentEvents.forEach(function(thread){
-    thread.onClick = () => router.push(`/events/${thread.id}`);
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
 
   return (

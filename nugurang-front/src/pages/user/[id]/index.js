@@ -7,6 +7,7 @@ import Grid from'@material-ui/core/Grid';
 import IconButton from'@material-ui/core/IconButton';
 import List from'@material-ui/core/List';
 
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import BookIcon from '@material-ui/icons/Book';
 import EditIcon from '@material-ui/icons/Edit';
@@ -214,7 +215,9 @@ function UserInfo() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Recent threads" icon=<AssignmentIcon />>
-                <Button variant="outlined" onClick={() => router.push(`/user/${router.query.id}/threads`)}>More</Button>
+                <IconButton onClick={() => router.push(`/user/${router.query.id}/threads`)}>
+                  <ArrowForwardIcon />
+                </IconButton>
               </SectionTitleBar>
             )}
           >
@@ -228,7 +231,9 @@ function UserInfo() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Recent blog updates" icon=<BookIcon />>
-                <Button variant="outlined" onClick={() => router.push(`/blog/${router.query.id}`)}>Visit</Button>
+                <IconButton onClick={() => router.push(`/blog/${router.query.id}`)}>
+                  <ArrowForwardIcon />
+                </IconButton>
               </SectionTitleBar>
             )}
           >
@@ -242,7 +247,9 @@ function UserInfo() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Honor badges" icon=<EmojiEventsIcon />>
-                <Button variant="outlined" onClick={() => router.push(`/user/${router.query.id}/honor`)}>More</Button>
+                <IconButton onClick={() => router.push(`/user/${router.query.id}/honor`)}>
+                  <ArrowForwardIcon />
+                </IconButton>
               </SectionTitleBar>
             )}
           >

@@ -1,0 +1,163 @@
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
+import React, { useRef } from 'react';
+import Box from '@material-ui/core/Box';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+
+import GraphQlError from '../../../components/GraphQlError';
+import Layout from '../../../components/Layout';
+import Loading from '../../../components/Loading';
+import PageTitleBar from '../../../components/PageTitleBar';
+import SectionBox from '../../../components/SectionBox';
+import SectionTitleBar from '../../../components/SectionTitleBar';
+import withAuth from '../../../components/withAuth';
+
+
+const POSITIONS = gql`
+  query Positions {
+    positions {
+      id
+      name
+    }
+  }
+`;
+
+const TEST_USER_LIST = [
+  {
+    id: 0,
+    name: "Test User",
+    email: "Test email",
+    image: "/static/images/sample_1.jpg",
+    bio: "Test bio",
+    followers: 5,
+    followings: 10,
+  },
+  {
+    id: 1,
+    name: "Test User",
+    email: "Test email",
+    image: "/static/images/sample_2.jpg",
+    bio: "Test bio",
+    followers: 5,
+    followings: 10,
+  },
+  {
+    id: 2,
+    name: "Test User",
+    email: "Test email",
+    image: "/static/images/sample_3.jpg",
+    bio: "Test bio",
+    followers: 5,
+    followings: 10,
+  },
+  {
+    id: 3,
+    name: "Test User",
+    email: "Test email",
+    image: "/static/images/sample_4.jpg",
+    bio: "Test bio",
+    followers: 5,
+    followings: 10,
+  },
+]
+
+
+function Review() {
+  const router = useRouter();
+  const newReview = useRef("a");
+
+  const results = [
+    [null, useQuery(POSITIONS)],
+  ];
+  const [positions] = results.map(result => result[0]);
+  const allPositions = results[0][1].data ? results[0][1].data.positions : null;
+
+  if (results.some(result => result[1].loading))
+    return <Loading />;
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />
+
+  function handleNewReviewChange() {
+    newReview.current.focus();
+  }
+
+  return (
+    <Layout>
+      <PageTitleBar title="Peer review" backButton />
+
+      <Container maxWidth="md">
+        <Grid container>
+          {TEST_USER_LIST.flat().map((item) => (
+            <Grid item xs={12} md={6}>
+              <SectionBox key={item.id} titleBar={<SectionTitleBar title={item.name} avatar={item.image} circleIcon="true" />}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Typography variant="body1">Did very well of...</Typography>
+
+
+                      <Autocomplete
+                        multiple
+                        limitTags={2}
+                        onChange={handleNewReviewChange}
+                        options={allPositions}
+                        getOptionLabel={(option) => option.name}
+                        filterSelectedOptions
+                        renderInput={params => (
+                          <TextField
+                            variant="outlined"
+                            label="Position"
+                            placeholder="Select position"
+                            margin="normal"
+                            fullWidth
+                          />
+                        )}
+                      />
+
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="body1">Needs to go the extra mile to...</Typography>
+
+
+                      <Autocomplete
+                        multiple
+                        limitTags={2}
+                        onChange={handleNewReviewChange}
+                        options={allPositions}
+                        getOptionLabel={(option) => option.name}
+                        filterSelectedOptions
+                        renderInput={params => (
+                          <TextField
+                            variant="outlined"
+                            label="Position"
+                            placeholder="Select position"
+                            margin="normal"
+                            fullWidth
+                          />
+                        )}
+                      />
+
+
+
+                  </Grid>
+                </Grid>
+              </SectionBox>
+            </Grid>
+          ))}
+        </Grid>
+
+        <Box align="center">
+          <Button variant="outlined" onClick={() => router.push('/peer-review/thank-you')}>Submit</Button>
+        </Box>
+      </Container>
+
+    </Layout>
+  );
+}
+
+export default withAuth(Review);

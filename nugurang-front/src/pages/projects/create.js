@@ -63,7 +63,7 @@ function CreateProject() {
                   e.preventDefault();
                   const projectRes = await createProject({ variables: { team: router.query.team, project: { name: newName.current.value }}});
                   const projectId = projectRes.data.createProject.id;
-                  router.push(`/projects/${projectId}`);
+                  router.push(`/teams/${router.query.team}`);
                 }}
               >
                 <Box align="center">

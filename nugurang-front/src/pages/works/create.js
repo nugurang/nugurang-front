@@ -62,7 +62,7 @@ function CreateWork() {
                   e.preventDefault();
                   const workRes = await createWork({ variables: {project: router.query.project, work: {name: newName.current.value}}});
                   const workId = workRes.data.createWork.id;
-                  router.push(`/works/${workId}`);
+                  router.push(`/projects/${router.query.project}`);
                 }}
               >
                 <Box align="center">

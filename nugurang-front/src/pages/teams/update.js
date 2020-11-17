@@ -21,7 +21,7 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 
 
 const GET_TEAM = gql`
-  query getTeam($id: ID!) {
+  query GetTeam($id: ID!) {
     getTeam(id: $id) {
       id
       name
@@ -104,6 +104,7 @@ function Update() {
           onSubmit={async (e) => {
             e.preventDefault();
             const res = await updateTeam({ variables: { id: router.query.team, team: { name: newName.current.value }}});
+            console.log(res.data);
             router.push(`/projects/${res.data.updateTeam.id}`);
           }}
         >

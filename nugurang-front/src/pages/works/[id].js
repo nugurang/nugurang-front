@@ -3,8 +3,15 @@ import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
@@ -17,104 +24,7 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TaskInfoCard from '../../components/TaskInfoCard';
 import WorkInfoBox from '../../components/WorkInfoBox';
-
-
-const TEST_USER_LIST = [
-  {
-    id: 0,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_1.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 1,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_2.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 2,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_3.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 3,
-    name: "Test User",
-    email: "Test email",
-    image: "/static/images/sample_4.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-]
-
-
-const TEST_TASK_TODO_LIST = [
-  {
-    id: 0,
-    name: "Test task to-do 1",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 1,
-    name: "Test task to-do 2",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 2,
-    name: "Test task to-do 3",
-    users: TEST_USER_LIST,
-  },
-]
-
-
-const TEST_TASK_DOING_LIST = [
-  {
-    id: 0,
-    name: "Test task doing 1",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 1,
-    name: "Test task doing 2",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 2,
-    name: "Test task doing 3",
-    users: TEST_USER_LIST,
-  },
-]
-
-
-const TEST_TASK_DONE_LIST = [
-  {
-    id: 0,
-    name: "Test task done 1",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 1,
-    name: "Test task done 2",
-    users: TEST_USER_LIST,
-  },
-  {
-    id: 2,
-    name: "Test task done 3",
-    users: TEST_USER_LIST,
-  },
-]
-
+import YesNoDialog from '../../components/YesNoDialog';
 
 
 const TAB_PROPS = [
@@ -132,8 +42,19 @@ const TAB_PROPS = [
   },
 ]
 
+
+const PROGRESSES = gql`
+  query Progresses {
+    progresses {
+      id
+      name
+    }
+  }
+`;
+
+
 const GET_WORK = gql`
-  query getWork($id: ID!) {
+  query GetWork($id: ID!) {
     getWork(id: $id) {
       id
       project {
@@ -156,6 +77,11 @@ const GET_WORK = gql`
           position {
             id
             name
+            description
+            image {
+              id
+              address
+            }
           }
         }
         users {
@@ -174,20 +100,49 @@ const GET_WORK = gql`
 
 function WorkInfo() {
   const router = useRouter();
-  const responses = [
-    useQuery(GET_WORK, {variables: {id: router.query.id}}),
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const results = [
+    [null, useQuery(PROGRESSES)],
+    [null, useQuery(GET_WORK, {variables: {id: router.query.id}})],
   ];
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-  if (responses.some((response) => response.loading))
+  const allProgresses = results[0][1].data ? results[0][1].data.progresses : [];
+  const work = results[1][1].data ? results[1][1].data.getWork : null;
+  const tasks = results[1][1].data ? results[1][1].data.getWork.tasks : null;
+  const tasksTodo = [];
+  const tasksDoing = [];
+  const tasksDone = [];
+
+  if (results.some(result => result[1].loading))
     return <Loading />;
-  const work = responses[0].data ? responses[0].data.getWork : null;
-  const tasks = responses[0].data ? responses[0].data.getWork.tasks : [];
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />;
+
+    console.log(tasks);
+  tasks.forEach(function(task){
+    if(task.progress.name === "TODO") {
+      tasksTodo.push(task);
+    } else if(task.progress.name === "DOING") {
+      tasksDoing.push(task);
+    } else if(task.progress.name === "DONE") {
+      tasksDone.push(task);
+    }
+  });
 
   tasks.forEach(function(task){
     task.onClick = () => router.push(`/tasks/${task.id}`);
   });
+
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   return (
     <Layout>
@@ -196,6 +151,34 @@ function WorkInfo() {
           <AddIcon />
           Task
         </Button>
+        <Button variant="" onClick={handleClick}>
+          <MoreVertIcon />
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={() => router.push({pathname: "/works/update", query: { work: router.query.id }})}>
+            <ListItemIcon><EditIcon fontSize="small" /></ListItemIcon>
+            <Typography variant="inherit" noWrap>Edit</Typography>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <YesNoDialog
+              title="Delete"
+              content="Are you sure to delete?"
+              onClickYes={async (e) => {
+                e.preventDefault();
+                await deleteProject({ variables: { id: router.query.id }});
+                router.push(`/works/${work.project.id}`);
+              }}
+            >
+              <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
+              <Typography variant="inherit" noWrap>Delete</Typography>
+            </YesNoDialog>
+          </MenuItem>
+        </Menu>
       </PageTitleBar>
       <SectionBox border={false}>
         <WorkInfoBox work={work} />
@@ -203,18 +186,18 @@ function WorkInfo() {
       <SectionBox>
         <BaseTabs tabProps={TAB_PROPS}>
           {
-            TEST_TASK_TODO_LIST && (TEST_TASK_TODO_LIST.length)
-            ? <Grid container>{[TEST_TASK_TODO_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
+            tasksTodo && (tasksTodo.length)
+            ? <Grid container>{[tasksTodo].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
           {
-            TEST_TASK_DOING_LIST && (TEST_TASK_DOING_LIST.length)
-            ? <Grid container>{[TEST_TASK_DOING_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
+            tasksDoing && (tasksDoing.length)
+            ? <Grid container>{[tasksDoing].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
           {
-            TEST_TASK_DONE_LIST && (TEST_TASK_DONE_LIST.length)
-            ? <Grid container>{[TEST_TASK_DONE_LIST].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
+            tasksDone && (tasksDone.length)
+            ? <Grid container>{[tasksDone].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </BaseTabs>

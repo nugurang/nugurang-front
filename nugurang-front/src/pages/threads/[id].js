@@ -28,6 +28,27 @@ const GET_THREAD = gql`
     getThread(id: $id) {
       id
       name
+      user {
+        id
+        name
+        image {
+          id
+          address
+        }
+      }
+      event {
+        id
+        name
+        description
+        images {
+          id
+          address
+        }
+        recruitingStart
+        recruitingEnd
+        eventStart
+        eventEnd
+      }
       firstArticle {
         id
         user {
@@ -79,6 +100,8 @@ function Thread(threadId) {
   const thread = responses[0].data.getThread;
   const articles = responses[0].data.getThread.getArticles;
 
+  console.log(thread.event);
+
   return (
     <Layout>
       <PageTitleBar title="Thread" backButton backButtonLink="/boards">
@@ -101,12 +124,9 @@ function Thread(threadId) {
         <Grid item xs={12} md={6}>
           <SectionBox>
             {
-              thread.event && (
-                <EventInfoBox event={event} />
-              )
-            }
-            {
-              thread.firstArticle && (
+              thread.event
+              ? <EventInfoBox event={event} />
+              : (
                 <ArticleLeader
                   article={thread.firstArticle}
                   like={3}

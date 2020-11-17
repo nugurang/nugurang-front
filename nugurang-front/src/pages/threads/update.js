@@ -58,7 +58,7 @@ export const UPDATE_THREAD = gql`
 
 function Update() {
   const router = useRouter();
-  const newTitle = useRef(null);
+  const newName = useRef(null);
   const newContent = useRef(null);
   const newImageAddress = useRef(null);
 
@@ -94,14 +94,14 @@ function Update() {
       <PageTitleBar title="Edit thread" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Edit title" icon=<TitleIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit name" icon=<TitleIcon /> />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
                   defaultValue={firstArticle.title}
-                  inputRef={newTitle}
-                  label="Enter title"
+                  inputRef={newName}
+                  label="Enter name"
                   variant="outlined"
                   onClick={handleNewTitleChange}
                 />
@@ -152,9 +152,8 @@ function Update() {
               const imageRes = await createImage({ variables: { address: newImageAddress.current.value }});
               image = imageRes.data.createImage.id;
             }
-            console.log(newTitle.current.value);
-            const threadRes = await updateThread({ variables: { id: thread.id, thread: {firstAarticle: {content: newContent.current.value, images: []}}}});
-            router.push(`/threads/${threadRes.data.createThread.id}`);
+            const threadRes = await updateThread({ variables: { id: thread.id, thread: { name: newName.current.value, firstArticle: { title: newName.current.value, content: newContent.current.value, images: []}}}});
+            router.push(`/threads/${threadRes.data.updateThread.id}`);
           }}
         >
           <Box align="center">

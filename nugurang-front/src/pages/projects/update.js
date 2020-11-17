@@ -8,8 +8,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
-import TitleIcon from '@material-ui/icons/TitleIcon';
-import NotesIcon from '@material-ui/icons/NotesIcon';
+import TitleIcon from '@material-ui/icons/Title';
+import NotesIcon from '@material-ui/icons/Notes';
 
 import withAuth from '../../components/withAuth';
 import GraphQlError from '../../components/GraphQlError';
@@ -46,7 +46,7 @@ const GET_PROJECT = gql`
 
 
 const UPDATE_PROJECT = gql`
-  mutation UpdateProject($id: ID!, project: ProjectInput!) {
+  mutation UpdateProject($id: ID!, $project: ProjectInput!) {
     updateProject(id: $id, project: $project) {
       id
     }
@@ -55,8 +55,7 @@ const UPDATE_PROJECT = gql`
 
 function Update() {
   const router = useRouter();
-  const newTitle = useRef(null);
-  const newContent = useRef(null);
+  const newName = useRef(null);
 
   const results = [
     [null, useQuery(GET_PROJECT, {variables: {id: router.query.project}})],
@@ -71,12 +70,8 @@ function Update() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  function handleNewTitleChange() {
-    newTitle.current.focus();
-  }
-
-  function handleNewContentChange() {
-    newContent.current.focus();
+  function handleNewNameChange() {
+    newName.current.focus();
   }
 
   return (
@@ -91,27 +86,11 @@ function Update() {
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={project.title}
-                  inputRef={newTitle}
+                  defaultValue={project.name}
+                  inputRef={newName}
                   label="Enter title"
                   variant="outlined"
-                  onClick={handleNewTitleChange}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </SectionBox>
-
-        <SectionBox titleBar={<SectionTitleBar title="Edit content" icon=<NotesIcon /> />}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  defaultValue={project.content}
-                  inputRef={newContent}
-                  label="Enter content"
-                  variant="outlined"
-                  onClick={handleNewContentChange}
+                  onClick={handleNewNameChange}
                 />
               </FormControl>
             </Grid>
@@ -121,7 +100,7 @@ function Update() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const res = await updateProject({ variables: { id: router.query.id, project: { title: newTitle.current.value, content: newContent.current.value }}});
+            const res = await updateProject({ variables: { id: router.query.project, project: { name: newName.current.value }}});
             router.push(`/projects/${res.data.updateProject.id}`);
           }}
         >

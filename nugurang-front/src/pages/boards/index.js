@@ -115,13 +115,13 @@ function Boards() {
     thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
   hotEvents.forEach(function(thread){
-    thread.onClick = () => router.push(`/events/${thread.id}`);
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
   recentThreads.forEach(function(thread){
     thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
   recentEvents.forEach(function(thread){
-    thread.onClick = () => router.push(`/events/${thread.id}`);
+    thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
 
   let key = 0;

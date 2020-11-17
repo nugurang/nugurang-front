@@ -16,6 +16,28 @@ import Loading from '../components/Loading';
 
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
 
+export const CURRENT_USER = gql`
+  query {
+    currentUser {
+      id
+      oauth2Provider
+      oauth2Id
+      name
+      email
+      image {
+        id
+        address
+      }
+      biography
+      getFollowers(page:0, pageSize:100) {
+        id
+      }
+      getFollowings(page:0, pageSize:100) {
+        id
+      }
+    }
+  }
+`;
 
 const GET_BOARDS_BY_NAMES = gql`
   query GetBoardsByNames($names: [String]!) {
@@ -119,6 +141,15 @@ const CREATE_WORK = gql`
   }
 `;
 
+const CREATE_TASK = gql`
+  mutation CreateTask($work: ID!, $task: TaskInput!) {
+    createTask(work: $work, task: $task) {
+      id
+      name
+    }
+  }
+`;
+
 
 function Init({client}) {
   const [done, setDone] = useState(false);
@@ -168,6 +199,11 @@ function Init({client}) {
         variables: {project: createProject.data.createProject.id, work: {name: 'Sprint1'}}
       });
       console.log(createWork);
+      const createTask = await client.mutate({
+        mutation: CREATE_TASK,
+        variables: {work: createWork.data.createWork.id, task: {name: 'Sprint1', users: [], positions: []}}
+      });
+      console.log(createTask);
       for (const name of ALL_POSITIONS) {
         const createPosition = await client.mutate({mutation: CREATE_POSITION, variables: { position: {name}}});
         console.log(createPosition);

@@ -20,24 +20,20 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 
 const GET_WORK = gql`
-  query getWork($id: ID!) {
+  query GetWork($id: ID!) {
     getWork(id: $id) {
       id
       name
-      team {
+      project {
         id
       }
-      works {
+      opened
+      order
+      tasks {
         id
         name
-      }
-      event {
-        id
-      }
-      getUsers(page: 0, pageSize: 100) {
-        id
-        name
-        email
+        difficulty
+        order
       }
     }
   }
@@ -45,7 +41,7 @@ const GET_WORK = gql`
 
 
 const UPDATE_WORK = gql`
-  mutation updateWork($id: ID!, work: WorkInput!) {
+  mutation UpdateWork($id: ID!, $work: WorkInput!) {
     updateWork(id: $id, work: $work) {
       id
     }
@@ -54,11 +50,10 @@ const UPDATE_WORK = gql`
 
 function Update() {
   const router = useRouter();
-  const newTitle = useRef(null);
-  const newContent = useRef(null);
+  const newName = useRef(null);
 
   const results = [
-    [null, useQuery(GET_WORK, {variables: {id: router.query.id}})],
+    [null, useQuery(GET_WORK, {variables: {id: router.query.work}})],
     useMutation(UPDATE_WORK)
   ];
   const [getWork, updateWork] = results.map(result => result[0]);
@@ -71,12 +66,8 @@ function Update() {
     return <GraphQlError error={errorResult[1].error} />
 
 
-  function handleNewTitleChange() {
-    newTitle.current.focus();
-  }
-
-  function handleNewContentChange() {
-    newContent.current.focus();
+  function handleNewNameChange() {
+    newName.current.focus();
   }
 
 
@@ -87,32 +78,16 @@ function Update() {
       </PageTitleBar>
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Edit title" icon=<TitleIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit name" icon=<TitleIcon /> />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={work.title}
-                  inputRef={newTitle}
+                  defaultValue={work.name}
+                  inputRef={newName}
                   label="Enter title"
                   variant="outlined"
-                  onClick={handleNewTitleChange}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </SectionBox>
-
-        <SectionBox titleBar={<SectionTitleBar title="Edit content" icon=<NotesIcon /> />}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  defaultValue={work.content}
-                  inputRef={newContent}
-                  label="Enter content"
-                  variant="outlined"
-                  onClick={handleNewContentChange}
+                  onClick={handleNewNameChange}
                 />
               </FormControl>
             </Grid>
@@ -122,7 +97,7 @@ function Update() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const res = await updateWork({ variables: { id: router.query.id, project: { title: newTitle.current.value, content: newContent.current.value }}});
+            const res = await updateWork({ variables: { id: router.query.work, work: { name: newName.current.value }}});
             router.push(`/works/${res.data.updateWork.id}`);
           }}
         >
