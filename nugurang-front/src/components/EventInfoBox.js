@@ -11,36 +11,41 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { NO_THREAD_IMAGE_ADDRESS } from '../config';
 import BaseImage from './BaseImage';
+import NoContentsBox from './NoContentsBox';
 
 
 export default function EventInfoBox({ event }) {
   return (
-    <Box>
-      <BaseImage
-        image={event.images ? event.images[0].address : NO_THREAD_IMAGE_ADDRESS}
-        imageTitle={event.title ? event.title : null}
-      />
-      <Accordion variant="outlined" defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h5" gutterBottom>{event.title}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Grid container alignItems="flex-start" spacing={1}>
-            <Grid item>
-              <Typography variant="body1">
-                {event.eventStart}
-                {"~"}
-              </Typography>
-              <Typography variant="body1">
-                {event.eventEnd}
-              </Typography>
+    event
+    ? (
+      <Box>
+        <BaseImage
+          image={event.images.length() > 0 ? event.images[0].address : NO_THREAD_IMAGE_ADDRESS}
+          imageTitle={event.name ? event.name : null}
+        />
+        <Accordion variant="outlined" defaultExpanded>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="h5" gutterBottom>{event.name}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container alignItems="flex-start" spacing={1}>
+              <Grid item>
+                <Typography variant="body1">
+                  {event.eventStart}
+                  {"~"}
+                </Typography>
+                <Typography variant="body1">
+                  {event.eventEnd}
+                </Typography>
+              </Grid>
+              <Grid item flexGrow={1}>
+                <Typography variant="body1">{event.description}</Typography>
+              </Grid>
             </Grid>
-            <Grid item flexGrow={1}>
-              <Typography variant="body1">{event.content}</Typography>
-            </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
-    </Box>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
+    )
+    : <NoContentsBox />
   );
 }

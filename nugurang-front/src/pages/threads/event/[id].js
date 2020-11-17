@@ -10,33 +10,17 @@ import List from '@material-ui/core/List';
 
 import AddIcon from '@material-ui/icons/Add';
 
-import withAuth from '../../components/withAuth';
-import ArticleListItem from '../../components/ArticleListItem';
-import EventInfoBox from '../../components/EventInfoBox';
-import GraphQlError from '../../components/GraphQlError';
-import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
-import NoContentsBox from '../../components/NoContentsBox';
-import PageTitleBar from '../../components/PageTitleBar';
-import SectionTitleBar from '../../components/SectionTitleBar';
-import SectionBox from '../../components/SectionBox';
+import withAuth from '../../../components/withAuth';
+import ArticleListItem from '../../../components/ArticleListItem';
+import EventInfoBox from '../../../components/EventInfoBox';
+import GraphQlError from '../../../components/GraphQlError';
+import Layout from '../../../components/Layout';
+import Loading from '../../../components/Loading';
+import NoContentsBox from '../../../components/NoContentsBox';
+import PageTitleBar from '../../../components/PageTitleBar';
+import SectionTitleBar from '../../../components/SectionTitleBar';
+import SectionBox from '../../../components/SectionBox';
 
-
-const TEST_EVENT = {
-  id: 0,
-  title: "Test event 1",
-  content: "Test content 1",
-  images: [
-    {
-      id: 0,
-      address: "/static/images/sample_1.jpg",
-    },
-  ],
-  recruitingStart: "2020-01-01 01:00:00",
-  recruitingEnd: "2020-01-02 01:00:00",
-  eventStart: "2020-01-03 01:00:00",
-  eventEnd: "2020-01-04 01:00:00",
-}
 
 const GET_THREAD = gql`
   query GetThread($id: ID!) {
@@ -53,8 +37,8 @@ const GET_THREAD = gql`
       }
       event {
         id
-        title
-        content
+        name
+        description
         images {
           id
           address
@@ -94,6 +78,7 @@ function Event() {
     [null, useQuery(GET_THREAD, {variables: {id: router.query.id}})],
   ];
   const thread = results[0][1].data ? results[0][1].data.getThread : null;
+  const event = results[0][1].data ? results[0][1].data.getThread.event : null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -107,16 +92,12 @@ function Event() {
 
       <Grid container>
         <Grid item xs={12} sm={6} md={4}>
-          <Grid container direction="row" justify="flex-end">
-            <Grid item>
-              <SectionBox>
-                <EventInfoBox event={TEST_EVENT} />
-                <Box align="right" style={{margin: "0.5rem"}}>
-                  <Button disabled onClick={() => router.push({pathname: "/events/join", query: { event: thread.event.id }})}>Match</Button>
-                </Box>
-              </SectionBox>
-            </Grid>
-          </Grid>
+          <SectionBox>
+            <EventInfoBox event={event} />
+            <Box align="right" style={{margin: "0.5rem"}}>
+              <Button disabled onClick={() => router.push({pathname: "/events/join", query: { event: thread.event.id }})}>Match</Button>
+            </Box>
+          </SectionBox>
         </Grid>
         <Grid item xs={12} sm={6} md={8}>
           <SectionBox

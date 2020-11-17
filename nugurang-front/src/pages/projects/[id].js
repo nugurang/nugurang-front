@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
+import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import withAuth from '../../components/withAuth';
@@ -117,6 +118,10 @@ function ProjectInfo() {
           <MenuItem onClick={() => router.push({pathname: "/projects/review", query: { project: router.query.id }})}>
             <ListItemIcon><DoneIcon fontSize="small" /></ListItemIcon>
             <Typography variant="inherit" noWrap>Finish</Typography>
+          </MenuItem>
+          <MenuItem onClick={() => router.push({pathname: "/projects/update", query: { project: router.query.id }})}>
+            <ListItemIcon><EditIcon fontSize="small" /></ListItemIcon>
+            <Typography variant="inherit" noWrap>Edit</Typography>
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>

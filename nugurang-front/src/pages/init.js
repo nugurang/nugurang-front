@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { ALL_BOARDS } from '../config';
+import { ALL_BOARDS, COMMON_BOARDS, EVENT_BOARDS } from '../config';
 import withAuth from '../components/withAuth';
 import FullScreenDialogBox from '../components/FullScreenDialogBox';
 import GraphQlError from '../components/GraphQlError';
@@ -17,9 +17,27 @@ import Loading from '../components/Loading';
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
 
 
-const GET_BOARDS = gql`
+const GET_BOARDS_BY_NAMES = gql`
   query GetBoardsByNames($names: [String]!) {
     getBoardsByNames(names: $names) {
+      id
+      name
+    }
+  }
+`;
+
+const POSITIONS = gql`
+  query Positions {
+    positions {
+      id
+      name
+    }
+  }
+`;
+
+const PROGRESSES = gql`
+  query Progresses {
+    progresses {
       id
       name
     }
@@ -47,6 +65,15 @@ const CREATE_THREAD = gql`
   }
 `;
 
+const CREATE_EVENT = gql`
+  mutation CreateEvent($event: EventInput!) {
+    createEvent(event: $event) {
+      id
+      name
+    }
+  }
+`;
+
 const CREATE_ARTICLE = gql`
   mutation CreateArticle($article: ArticleInput!, $thread: ID!, $parent: ID) {
     createArticle(article: $article, thread: $thread, parent: $parent) {
@@ -57,8 +84,8 @@ const CREATE_ARTICLE = gql`
 `;
 
 const CREATE_POSITION = gql`
-  mutation CreatePosition($name: String!) {
-    createPosition(name: $name) {
+  mutation CreatePosition($position: PositionInput!) {
+    createPosition(position: $position) {
       id
       name
     }
@@ -72,7 +99,7 @@ const CREATE_TEAM = gql`
       name
     }
   }
-`
+`;
 
 const CREATE_PROJECT = gql`
   mutation CreateProject($team: ID!, $project: ProjectInput!) {
@@ -81,7 +108,7 @@ const CREATE_PROJECT = gql`
       name
     }
   }
-`
+`;
 
 const CREATE_WORK = gql`
   mutation CreateWork($project: ID!, $work: WorkInput!) {
@@ -90,16 +117,8 @@ const CREATE_WORK = gql`
       name
     }
   }
-`
+`;
 
-const CREATE_TASK = gql`
-  mutation CreateTask($task: TaskInput!) {
-    CreateTask(task: $task) {
-      id
-      name
-    }
-  }
-`
 
 function Init({client}) {
   const [done, setDone] = useState(false);
@@ -110,6 +129,30 @@ function Init({client}) {
     if (error || done)
       return;
     try {
+      const positions = await client.mutate({
+        mutation: POSITIONS,
+      });
+      const progresses = await client.mutate({
+        mutation: PROGRESSES,
+      });
+      const eventList = [];
+      for (let i = 0; i < 10; ++i) {
+        const createEvent = await client.mutate({
+          mutation: CREATE_EVENT,
+          variables: {
+            event: {
+              name: loremIpsum({units: "word"}),
+              description: loremIpsum(),
+              recruitingStart: "2016-01-01T13:10:20Z",
+              recruitingEnd: "2016-01-01T13:10:20Z",
+              eventStart: "2016-01-01T13:10:20Z",
+              eventEnd: "2016-01-01T13:10:20Z",
+              images: []
+            }
+          }
+        });
+        eventList.push(createEvent.data.createEvent);
+      }
       const createTeam = await client.mutate({
         mutation: CREATE_TEAM,
         variables: {team: {name: 'Capstone'}}
@@ -126,29 +169,29 @@ function Init({client}) {
       });
       console.log(createWork);
       for (const name of ALL_POSITIONS) {
-        const createPosition = await client.mutate({mutation: CREATE_POSITION, variables: {name}});
+        const createPosition = await client.mutate({mutation: CREATE_POSITION, variables: { position: {name}}});
         console.log(createPosition);
       }
       for (const name of ALL_BOARDS) {
         const createBoard = await client.mutate({mutation: CREATE_BOARD, variables: {board: {name}}});
         console.log(createBoard);
       }
-      const getBoards = await client.query({query: GET_BOARDS, variables: {names: ALL_BOARDS}})
-      for (const board of getBoards.data.getBoardsByNames.map(board => board.id)) {
+      const getCommonBoards = await client.query({query: GET_BOARDS_BY_NAMES, variables: {names: COMMON_BOARDS}})
+      for (const board of getCommonBoards.data.getBoardsByNames.map(board => board.id)) {
         for (let i = 0; i < 10; ++i) {
           const createThread = await client.mutate({
             mutation: CREATE_THREAD,
-              variables: {
-                board,
-                thread: {
-                  name: loremIpsum(),
-                  firstArticle: {
-                    title: loremIpsum(),
-                    content: loremIpsum(),
-                    images: []
-                  }
+            variables: {
+              board,
+              thread: {
+                name: loremIpsum(),
+                firstArticle: {
+                  title: loremIpsum(),
+                  content: loremIpsum(),
+                  images: []
                 }
               }
+            }
           });
           const createArticle = await client.mutate({
             mutation: CREATE_ARTICLE,
@@ -177,6 +220,52 @@ function Init({client}) {
           }
         }
       }
+      const getEventBoards = await client.query({query: GET_BOARDS_BY_NAMES, variables: {names: EVENT_BOARDS}})
+      for (const board of getEventBoards.data.getBoardsByNames.map(board => board.id)) {
+        for (let i = 0; i < 10; ++i) {
+          const createThread = await client.mutate({
+            mutation: CREATE_THREAD,
+            variables: {
+              board,
+              thread: {
+                name: loremIpsum(),
+                firstArticle: {
+                  title: loremIpsum(),
+                  content: loremIpsum(),
+                  images: []
+                },
+                event: eventList[i].id
+              }
+            }
+          });
+          const createArticle = await client.mutate({
+            mutation: CREATE_ARTICLE,
+            variables: {
+              article: {
+                title: loremIpsum(),
+                content: loremIpsum(),
+                images: []
+              },
+              thread: createThread.data.createThread.id
+            }
+          });
+
+          for (let i = 0; i < 5; ++i) {
+            const createComment = await client.mutate({
+              mutation: CREATE_ARTICLE,
+              variables: {
+                thread: createThread.data.createThread.id,
+                parent: createArticle.data.createArticle.id,
+                article: {
+                  content: loremIpsum(),
+                  images: []
+                }
+              }
+            });
+          }
+        }
+      }
+
       setDone(true);
     } catch (error) {
       setError(error);

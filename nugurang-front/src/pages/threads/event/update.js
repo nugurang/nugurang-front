@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -7,17 +7,37 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
+
 import ImageIcon from '@material-ui/icons/Image';
+import NotesIcon from '@material-ui/icons/Notes';
+import TitleIcon from '@material-ui/icons/Title';
 
-import Layout from '../..components/Layout';
-import PageTitleBar from '../../components/PageTitleBar';
-import SectionBox from '../../components/SectionBox';
-import SectionTitleBar from '../../components/SectionTitleBar';
-import Loading from '../../components/Loading';
-import GraphQlError from '../../components/GraphQlError';
-import withAuth from '../../components/withAuth';
+import Layout from '../../../components/Layout';
+import PageTitleBar from '../../../components/PageTitleBar';
+import SectionBox from '../../../components/SectionBox';
+import SectionTitleBar from '../../../components/SectionTitleBar';
+import Loading from '../../../components/Loading';
+import GraphQlError from '../../../components/GraphQlError';
+import withAuth from '../../../components/withAuth';
 
+
+export const GET_THREAD = gql`
+  query getThread($id: ID!) {
+    getThread (id: $id) {
+      id
+      name
+      firstArticle {
+        id
+        title
+        content
+        images {
+          id
+          address
+        }
+      }
+    }
+  }
+`;
 
 export const CREATE_IMAGE = gql`
   mutation createImage($address: String!) {
@@ -27,26 +47,29 @@ export const CREATE_IMAGE = gql`
   }
 `;
 
-export const CREATE_THREAD = gql`
-  mutation createThread($thread: ThreadInput!) {
-    createThread (thread: $thread) {
+export const UPDATE_THREAD = gql`
+  mutation updateThread($id: ID!, $thread: ThreadInput!) {
+    updateThread (id: $id, thread: $thread) {
       id
     }
   }
 `;
 
 
-function CreateThread() {
+function Update() {
   const router = useRouter();
   const newTitle = useRef(null);
   const newContent = useRef(null);
   const newImageAddress = useRef(null);
 
   const results = [
+    [null, useQuery(GET_THREAD, {variables: {id: router.query.thread}})],
     useMutation(CREATE_IMAGE),
-    useMutation(CREATE_THREAD)
+    useMutation(UPDATE_THREAD)
   ];
-  const [createImage, createThread] = results.map(result => result[0]);
+  const [getThread, createImage, updateThread] = results.map(result => result[0]);
+  const thread = results[0][1].data ? results[0][1].data.getThread : null;
+  const firstArticle = results[0][1].data ? results[0][1].data.getThread.firstArticle : null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -68,14 +91,15 @@ function CreateThread() {
 
   return (
     <Layout>
-      <PageTitleBar title="Create new thread" backButton />
+      <PageTitleBar title="Edit thread" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Add title" icon=<GroupAddIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit title" icon=<TitleIcon /> />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
+                  defaultValue={firstArticle.title}
                   inputRef={newTitle}
                   label="Enter title"
                   variant="outlined"
@@ -86,11 +110,12 @@ function CreateThread() {
           </Grid>
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Add content" icon=<GroupAddIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit content" icon=<NotesIcon /> />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
+                  defaultValue={firstArticle.content}
                   inputRef={newContent}
                   label="Enter content"
                   variant="outlined"
@@ -102,11 +127,12 @@ function CreateThread() {
         </SectionBox>
 
 
-        <SectionBox titleBar={<SectionTitleBar title="Add image link" icon=<ImageIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit image link" icon=<ImageIcon /> />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
+                  defaultValue={firstArticle.image ? firstArticle.image.address : null}
                   inputRef={newImageAddress}
                   label="Enter image link"
                   variant="outlined"
@@ -127,7 +153,7 @@ function CreateThread() {
               image = imageRes.data.createImage.id;
             }
             console.log(newTitle.current.value);
-            const threadRes = await createThread({ variables: { thread: {board: router.query.board, name: newTitle.current.value, firstArticle: {title: newTitle.current.value, content: newContent.current.value, images: [image]}}}});
+            const threadRes = await updateThread({ variables: { id: thread.id, thread: {firstAarticle: {content: newContent.current.value, images: []}}}});
             router.push(`/threads/${threadRes.data.createThread.id}`);
           }}
         >
@@ -141,4 +167,4 @@ function CreateThread() {
   );
 }
 
-export default withAuth(CreateThread);
+export default withAuth(Update);

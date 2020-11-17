@@ -10,13 +10,13 @@ import TextField from '@material-ui/core/TextField';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ImageIcon from '@material-ui/icons/Image';
 
-import Layout from '../..components/Layout';
-import PageTitleBar from '../../components/PageTitleBar';
-import SectionBox from '../../components/SectionBox';
-import SectionTitleBar from '../../components/SectionTitleBar';
-import Loading from '../../components/Loading';
-import GraphQlError from '../../components/GraphQlError';
-import withAuth from '../../components/withAuth';
+import Layout from '../../../components/Layout';
+import PageTitleBar from '../../../components/PageTitleBar';
+import SectionBox from '../../../components/SectionBox';
+import SectionTitleBar from '../../../components/SectionTitleBar';
+import Loading from '../../../components/Loading';
+import GraphQlError from '../../../components/GraphQlError';
+import withAuth from '../../../components/withAuth';
 
 
 export const CREATE_IMAGE = gql`

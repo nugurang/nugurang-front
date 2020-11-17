@@ -1,10 +1,17 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import withAuth from '../../components/withAuth';
 import BaseTabs from '../../components/BaseTabs';
@@ -18,6 +25,7 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamInfoBox from '../../components/TeamInfoBox';
 import UserInfoCard from '../../components/UserInfoCard';
+import YesNoDialog from '../../components/YesNoDialog';
 
 
 const TAB_PROPS = [
@@ -61,8 +69,19 @@ const GET_TEAM = gql`
   }
 `;
 
+const DELETE_TEAM = gql`
+  mutation deleteTeam($id: ID!) {
+    deleteTeam(id: $id) {
+      id
+    }
+  }
+`;
+
+
 function TeamInfo() {
   const router = useRouter();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const responses = [
     useQuery(GET_TEAM, {variables: {id: router.query.id}}),
   ];
@@ -80,6 +99,16 @@ function TeamInfo() {
     user.onClick = () => router.push(`/user/${user.id}`);
   });
 
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
   return (
     <Layout>
 
@@ -88,6 +117,36 @@ function TeamInfo() {
           <AddIcon />
           Project
         </Button>
+
+
+        <Button variant="" onClick={handleClick}>
+          <MoreVertIcon />
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={() => router.push({pathname: "/teams/update", query: { team: router.query.id }})}>
+            <ListItemIcon><EditIcon fontSize="small" /></ListItemIcon>
+            <Typography variant="inherit" noWrap>Edit</Typography>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <YesNoDialog
+              title="Delete"
+              content="Are you sure to delete?"
+              onClickYes={async (e) => {
+                e.preventDefault();
+                await deleteTeam({ variables: { id: router.query.id }});
+                router.push(`/teams`);
+              }}
+            >
+              <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
+              <Typography variant="inherit" noWrap>Delete</Typography>
+            </YesNoDialog>
+          </MenuItem>
+        </Menu>
       </PageTitleBar>
 
       <SectionBox border={false}>

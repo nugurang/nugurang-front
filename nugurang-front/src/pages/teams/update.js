@@ -8,8 +8,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
-import TitleIcon from '@material-ui/icons/TitleIcon';
-import NotesIcon from '@material-ui/icons/NotesIcon';
+import TitleIcon from '@material-ui/icons/Title';
+import NotesIcon from '@material-ui/icons/Notes';
 
 import withAuth from '../../components/withAuth';
 import GraphQlError from '../../components/GraphQlError';
@@ -20,34 +20,39 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 
 
-const GET_PROJECT = gql`
-  query GetProject($id: ID!) {
-    getProject(id: $id) {
+const GET_TEAM = gql`
+  query getTeam($id: ID!) {
+    getTeam(id: $id) {
       id
       name
-      team {
-        id
-      }
-      works {
+      projects {
         id
         name
-      }
-      event {
-        id
+        getUsers(page: 0, pageSize: 100) {
+          id
+          name
+          image {
+            id
+            address
+          }
+        }
       }
       getUsers(page: 0, pageSize: 100) {
         id
         name
         email
+        image {
+          id
+          address
+        }
       }
     }
   }
 `;
 
-
-const UPDATE_PROJECT = gql`
-  mutation UpdateProject($id: ID!, project: ProjectInput!) {
-    updateProject(id: $id, project: $project) {
+const UPDATE_TEAM = gql`
+  mutation UpdateTeam($id: ID!, $team: TeamInput!) {
+    updateTeam(id: $id, team: $team) {
       id
     }
   }
@@ -55,15 +60,14 @@ const UPDATE_PROJECT = gql`
 
 function Update() {
   const router = useRouter();
-  const newTitle = useRef(null);
-  const newContent = useRef(null);
+  const newName = useRef(null);
 
   const results = [
-    [null, useQuery(GET_PROJECT, {variables: {id: router.query.project}})],
-    useMutation(UPDATE_PROJECT)
+    [null, useQuery(GET_TEAM, {variables: {id: router.query.team}})],
+    useMutation(UPDATE_TEAM)
   ];
-  const [getProject, updateProject] = results.map(result => result[0]);
-  const project = results[0][1].data ? results[0][1].data.getProject : null;
+  const [getTeam, updateTeam] = results.map(result => result[0]);
+  const project = results[0][1].data ? results[0][1].data.getTeam : null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -71,19 +75,13 @@ function Update() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  function handleNewTitleChange() {
-    newTitle.current.focus();
-  }
-
-  function handleNewContentChange() {
-    newContent.current.focus();
+  function handleNewNameChange() {
+    newName.current.focus();
   }
 
   return (
     <Layout>
-      <PageTitleBar title="Edit project" backButton="true" backButtonLink={`/projects/${router.query.project}`}>
-        <Button variant="outlined" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.project }})}>Create work</Button>
-      </PageTitleBar>
+      <PageTitleBar title="Edit team" backButton="true" backButtonLink={`/teams/${router.query.team}`} />
 
       <Container maxWidth="md">
         <SectionBox titleBar={<SectionTitleBar title="Edit title" icon=<TitleIcon /> />}>
@@ -92,26 +90,10 @@ function Update() {
               <FormControl fullWidth variant="filled">
                 <TextField
                   defaultValue={project.title}
-                  inputRef={newTitle}
+                  inputRef={newName}
                   label="Enter title"
                   variant="outlined"
-                  onClick={handleNewTitleChange}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </SectionBox>
-
-        <SectionBox titleBar={<SectionTitleBar title="Edit content" icon=<NotesIcon /> />}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  defaultValue={project.content}
-                  inputRef={newContent}
-                  label="Enter content"
-                  variant="outlined"
-                  onClick={handleNewContentChange}
+                  onClick={handleNewNameChange}
                 />
               </FormControl>
             </Grid>
@@ -121,8 +103,8 @@ function Update() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const res = await updateProject({ variables: { id: router.query.id, project: { title: newTitle.current.value, content: newContent.current.value }}});
-            router.push(`/projects/${res.data.updateProject.id}`);
+            const res = await updateTeam({ variables: { id: router.query.team, team: { name: newName.current.value }}});
+            router.push(`/projects/${res.data.updateTeam.id}`);
           }}
         >
           <Box align="center">

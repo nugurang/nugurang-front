@@ -8,15 +8,15 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
-import withAuth from '../../../components/withAuth';
-import Loading from '../../../components/Loading';
-import GraphQlError from '../../../components/GraphQlError';
-import Layout from '../../../components/Layout';
-import NoContentsBox from '../../../components/NoContentsBox';
-import PageTitleBar from '../../../components/PageTitleBar';
-import SectionTitleBar from '../../../components/SectionTitleBar';
-import SectionBox from '../../../components/SectionBox';
-import ThreadCard from '../../../components/ThreadCard';
+import withAuth from '../../components/withAuth';
+import Loading from '../../components/Loading';
+import GraphQlError from '../../components/GraphQlError';
+import Layout from '../../components/Layout';
+import NoContentsBox from '../../components/NoContentsBox';
+import PageTitleBar from '../../components/PageTitleBar';
+import SectionTitleBar from '../../components/SectionTitleBar';
+import SectionBox from '../../components/SectionBox';
+import ThreadCard from '../../components/ThreadCard';
 
 
 const GET_BOARD = gql`
