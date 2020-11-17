@@ -169,6 +169,20 @@ function ProjectInfo() {
               <Typography variant="inherit" noWrap>Delete</Typography>
             </YesNoDialog>
           </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <YesNoDialog
+              title="Delete"
+              content="Are you sure to delete?"
+              onClickYes={async (e) => {
+                e.preventDefault();
+                await deleteProject({ variables: { id: router.query.id }});
+                router.push(`/teams/${project.team.id}`);
+              }}
+            >
+              <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
+              <Typography variant="inherit" noWrap>Delete</Typography>
+            </YesNoDialog>
+          </MenuItem>
         </Menu>
       </PageTitleBar>
 
