@@ -1,13 +1,17 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import React, { useRef } from 'react';
-import Box from '@material-ui/core/Box';
+import React, { useState } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Box from '@material-ui/core/Box';
+import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 import GraphQlError from '../../../../components/GraphQlError';
 import Layout from '../../../../components/Layout';
@@ -27,30 +31,55 @@ const POSITIONS = gql`
   }
 `;
 
-const TEST_USER = {
-  id: 0,
-  name: "Test User",
-  email: "Test email",
-  image: {
-    id: 0,
-    address: "/static/images/sample_1.jpg",
-  },
-  bio: "Test bio",
-  followers: 5,
-  followings: 10,
-}
+const GET_USER = gql`
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      name
+      email
+      totalHonor
+      image {
+        id
+        address
+      }
+      getUserEvaluations(page: 0, pageSize: 999) {
+        id
+        startedAt
+        days
+        project {
+          id
+        }
+        reviews {
+          id
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_USER_REVIEWS = gql`
+  mutation UpdateUserReviews($evaluation: ID!, $reviews: UserReviewInput!) {
+    updateUserReviews (evaluation: $evaluation, reviews: $reviews)
+  }
+`;
 
 
-function User() {
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+function Index() {
   const router = useRouter();
-  const [newUpvotes, setNewUpvotes] = React.useState({name: "None"});
-  const [newDownvotes, setNewDownvotes] = React.useState({name: "None"});
+  const [newUpvotes, setNewUpvotes] = useState();
+  const [newDownvotes, setNewDownvotes] = useState();
 
   const results = [
     [null, useQuery(POSITIONS)],
+    [null, useQuery(GET_USER, {variables: {id: router.query.user}})],
   ];
-  const [positions] = results.map(result => result[0]);
-  const allPositions = results[0][1].data ? results[0][1].data.positions : null;
+  const [positions, getUser, updateUserReviews] = results.map(result => result[0]);
+  const allPositions = results[0][1].data?.positions;
+  const user = results[1][1].data?.getUser;
+  const evaluation = null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -58,14 +87,12 @@ function User() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  const handleNewUpvotesChange = (event) => {
-    newUpvotes.current.focus();
-    setNewUpvotes(event.target.value);
-  }
-  const handleNewDownvotesChange = (event) => {
-    newDownvotes.current.focus();
-    setNewDownvotes(event.target.value);
-  }
+  user.getUserEvaluations.forEach(function(_evaluation){
+    if (_evaluation.project.id == router.query.project) {
+      evaluation = _evaluation;
+    }
+  });
+
 
   return (
     <Layout>
@@ -73,52 +100,64 @@ function User() {
 
       <Container maxWidth="sm">
 
-        <SectionBox titleBar={<SectionTitleBar title={TEST_USER.name} avatar={TEST_USER.image.address} circleIcon="true" />}>
+        <SectionBox titleBar={<SectionTitleBar title={user.name} avatar={user.image?.address} circleIcon="true" />}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="body1">Did very well of...</Typography>
 
-                <Autocomplete
-                  multiple
-                  limitTags={2}
-                  onChange={handleNewUpvotesChange}
-                  options={allPositions}
-                  getOptionLabel={(option) => option.name}
-                  filterSelectedOptions
-                  renderInput={params => (
-                    <TextField
-                      variant="outlined"
-                      label="Position"
-                      inputRef={newUpvotes}
-                      placeholder="Select position"
-                      margin="normal"
-                      fullWidth
-                    />
-                  )}
-                />
+        <Autocomplete
+          multiple
+          onChange={(event, newValue) => {
+            setNewUpvotes(newValue);
+          }}
+          options={allPositions}
+          disableCloseOnSelect
+          getOptionLabel={(option) => option.name}
+          limitTags={2}
+          renderOption={(option, { selected }) => (
+            <>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {option.name}
+            </>
+          )}
+          renderInput={(params) => (
+            <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
+          )}
+        />
 
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">Needs to go the extra mile to...</Typography>
 
-                <Autocomplete
-                  multiple
-                  limitTags={2}
-                  onChange={handleNewDownvotesChange}
-                  options={allPositions}
-                  getOptionLabel={(option) => option.name}
-                  filterSelectedOptions
-                  renderInput={params => (
-                    <TextField
-                      variant="outlined"
-                      label="Position"
-                      inputRef={newDownvotes}
-                      placeholder="Select position"
-                      margin="normal"
-                      fullWidth
-                    />
-                  )}
-                />
+        <Autocomplete
+          multiple
+          onChange={(event, newValue) => {
+            setNewDownvotes(newValue);
+          }}
+          options={allPositions}
+          disableCloseOnSelect
+          getOptionLabel={(option) => option.name}
+          limitTags={2}
+          renderOption={(option, { selected }) => (
+            <>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {option.name}
+            </>
+          )}
+          renderInput={(params) => (
+            <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
+          )}
+        />
 
             </Grid>
           </Grid>
@@ -128,8 +167,17 @@ function User() {
           <form
             onSubmit={async (e) => {
               e.preventDefault();
-              const projectRes = await createProject({ variables: { team: router.query.team, project: { name: newName.current.value }}});
-              const projectId = projectRes.data.createProject.id;
+              const newHonors = [];
+              
+              newUpvotes.forEach(function(position){
+                newHonors.push({position: position.id, honor: 1});
+              });
+
+              newDownvotes.forEach(function(position){
+                newHonors.push({position: position.id, honor: -1});
+              });
+              console.log(evaluation);
+              await updateUserReviews({ variables: { evaluation: evaluation.id, reviews: [{ toUser: user.id, honors: newHonors }]}});
               router.push({pathname: "/projects/review", query: { project: router.query.project }});
             }}
           >
@@ -144,4 +192,4 @@ function User() {
   );
 }
 
-export default withAuth(User);
+export default withAuth(Index);

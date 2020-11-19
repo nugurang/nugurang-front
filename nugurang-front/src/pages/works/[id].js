@@ -147,7 +147,7 @@ function WorkInfo() {
   return (
     <Layout>
       <PageTitleBar title="Work info" backButton="true" backButtonLink={`/projects/${work.project.id}`}>
-        <Button variant="" onClick={() => router.push({pathname: "/tasks/create", query: { project: router.query.id }})}>
+        <Button variant="" onClick={() => router.push({pathname: "/tasks/create", query: { work: router.query.id }})}>
           <AddIcon />
           Task
         </Button>

@@ -90,7 +90,7 @@ const TEST_HONOR_BADGE_LIST = [
 ];
 
 
-export const GET_USER = gql`
+const GET_USER = gql`
   query getUser($id: ID!) {
     getUser(id: $id) {
       id

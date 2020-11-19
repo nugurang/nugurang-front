@@ -22,7 +22,7 @@ import withAuth from '../../components/withAuth';
 
 
 const GET_TEAM = gql`
-  query getTeam($id: ID!) {
+  query GetTeam($id: ID!) {
     getTeam(id: $id) {
       id
       name
@@ -52,7 +52,7 @@ const GET_TEAM = gql`
 `;
 
 export const GET_USER_BY_NAME = gql`
-  query getUserByName($name: String!) {
+  query GetUserByName($name: String!) {
     getUserByName(name: $name) {
       id
       name
@@ -73,7 +73,7 @@ export const GET_USER_BY_NAME = gql`
 `;
 
 export const UPDATE_TEAM = gql`
-  mutation updateTeam($id: ID!, $team: TeamInput!) {
+  mutation UpdateTeam($id: ID!, $team: TeamInput!) {
     updateTeam(id: $id, team: $team) {
       id
     }
@@ -106,7 +106,7 @@ function Invite() {
   if (users) {
     users.forEach(function(user){
       user.onClick = async (e) => {
-        const res = await updateTeam({ variables: { id: Number(router.query.id), team: { name: team.name, users: [users, user].flat().map(user => Number(user)) }}});
+        await updateTeam({ variables: { id: Number(router.query.id), team: { name: team.name, users: [users, user].flat().map(user => Number(user)) }}});
         router.push(`/teams/${router.query.id}`);
       }
     });
