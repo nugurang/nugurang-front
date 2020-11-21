@@ -28,8 +28,8 @@ export default function EventInfoBox({ event }) {
             <Typography variant="h5" gutterBottom>{event.name}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container alignItems="flex-start" spacing={1}>
-              <Grid item>
+            <Grid container alignItems="center" spacing={1}>
+              <Grid item xs={12}>
                 <Typography variant="body1">
                   {event.eventStart}
                   {"~"}
@@ -38,7 +38,7 @@ export default function EventInfoBox({ event }) {
                   {event.eventEnd}
                 </Typography>
               </Grid>
-              <Grid item flexGrow={1}>
+              <Grid item xs={12}>
                 <Typography variant="body1">{event.description}</Typography>
               </Grid>
             </Grid>

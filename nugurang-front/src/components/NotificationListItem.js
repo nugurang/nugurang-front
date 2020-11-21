@@ -31,24 +31,13 @@ export default function NotificationListItem({ notification }) {
               primary={(
                 <Box display='block'>
                   <Typography variant="h6">
-                    {notification.title}
-                  </Typography>
-                </Box>
-              )}
-              secondary={(
-                <Box display={notification.content ? "block" : "none"}>
-                  <Typography variant="body1">
-                    {notification.content}
+                    {notification.createdAt}
                   </Typography>
                 </Box>
               )}
             />
           </Box>
-          <Grid item xs={12}>
-            <Typography variant="body2">
-              {notification.createdAt}
-            </Typography>
-          </Grid>
+          {notification.data.flat().map((notification) => <Grid item><Typography variant="body2">{notification}</Typography></Grid>)}
         </Grid>
       </Grid>
     </ListItem>

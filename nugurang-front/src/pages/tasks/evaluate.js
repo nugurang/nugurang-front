@@ -46,24 +46,37 @@ const GET_TASK = gql`
 `;
 
 
-export const UPDATE_TASK = gql`
-  mutation UpdateTask($task: TaskInput!) {
-    updateTask (task: $task) {
-      id
-    }
+export const UPDATE_TASK_REVIEW = gql`
+  mutation UpdateTaskReview($taskReview: TaskReviewInput!) {
+    updateTaskReview (taskReview: $taskReview)
   }
 `;
 
+const marks = [
+  {
+    value: -5,
+    label: 'Bad',
+  },
+  {
+    value: 0,
+    label: 'Neutral',
+  },
+  {
+    value: 5,
+    label: 'Good',
+  }
+];
 
-function Review() {
+
+function Evaluate() {
   const router = useRouter();
-  const [newScore, setNewScore] = React.useState(0);
+  const [newScore, setNewScore] = React.useState();
 
   const results = [
     [null, useQuery(GET_TASK, {variables: {id: router.query.task}})],
-    useMutation(UPDATE_TASK),
+    useMutation(UPDATE_TASK_REVIEW),
   ];
-  const [getTask, updateTask] = results.map(result => result[0]);
+  const [getTask, updateTaskReview] = results.map(result => result[0]);
   console.log(results[0][1]);
   const task = results[0][1].data ? results[0][1].data.getTask : null;
 
@@ -72,11 +85,6 @@ function Review() {
   const errorResult = results.find(result => result[1].error);
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
-
-
-  const handleNewScoreChange = (event) => {
-    setNewScore(event.target.value);
-  }
 
   return (
     <Layout>
@@ -89,10 +97,15 @@ function Review() {
             <Grid item xs={12}>
               <Box style={{margin: "2rem"}}>
                 <Slider
-                  defaultValue={50}
-                  onChange={handleNewScoreChange}
-                  step={10}
+                  defaultValue={0}
+                  min={-5}
+                  max={5}
+                  step={1}
+                  onChange={(event, newValue) => {
+                    setNewScore(newValue);
+                  }}
                   valueLabelDisplay="on"
+                  marks={marks}
                 />
               </Box>
 
@@ -104,8 +117,8 @@ function Review() {
           <form
             onSubmit={async (e) => {
               e.preventDefault();
-              await updateTask({ variables: { id: router.query.task, task: { name: "", users: task.getUsers, positions: task.honors.position }}});
-              router.push(`/task/${task.id}`);
+              await updateTaskReview({ variables: { taskReview: { task: task.id, honor: newScore }}});
+              router.push(`/tasks/${task.id}`);
             }}
           >
             <Box align="center">
@@ -119,4 +132,4 @@ function Review() {
   );
 }
 
-export default withAuth(Review);
+export default withAuth(Evaluate);

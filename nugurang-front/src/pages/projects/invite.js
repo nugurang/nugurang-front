@@ -1,7 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useRouter } from 'next/router';
-import { gql, useLazyQuery, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -21,33 +23,27 @@ import UserInfoCard from '../../components/UserInfoCard'
 import withAuth from '../../components/withAuth';
 
 
-export const GET_USER_BY_NAME = gql`
-  query getUserByName($name: String!) {
-    getUserByName(name: $name) {
+const GET_PROJECT = gql`
+  query GetProject($id: ID!) {
+    getProject(id: $id) {
       id
       name
-      email
-      image {
-        id
-        address
-      }
-      biography
-      getFollowers(page:0, pageSize:100) {
+      team {
         id
       }
-      getFollowings(page:0, pageSize:100) {
+      getUsers(page: 0, pageSize: 100) {
         id
+        name
+        email
       }
     }
   }
 `;
 
-export const UPDATE_TEAM = gql`
-  mutation updateProject($project: ID!, $name: String!, $users: [ID]!) {
-    updateTeam(project: $project, name: $name, users: $users) {
-      team {
-        id
-      }
+export const CREATE_PROJECT_INVITATIONS = gql`
+  mutation CreateProjectInvitations($invitation: ProjectInvitationInput!) {
+    createProjectInvitations(invitation: $invitation) {
+      id
     }
   }
 `;
@@ -56,12 +52,14 @@ export const UPDATE_TEAM = gql`
 function Invite() {
   const router = useRouter();
   const keywordName = useRef(null);
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
-  const results = [useLazyQuery(GET_USER_BY_NAME), useMutation(UPDATE_TEAM)];
-  const [getUserByName, updateTeam] = results.map(result => result[0]);
-
-  const userData = results[0][1].data;
-  const users = userData && userData.getUserByName ? [userData.getUserByName] : null;
+  const results = [
+    [null, useQuery(GET_PROJECT, {variables: {id: router.query.id}})],
+    useMutation(CREATE_PROJECT_INVITATIONS)
+  ];
+  const [getProject, createProjectInvitations] = results.map(result => result[0]);
+  const project = results[0][1].data?.getProject;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -69,58 +67,59 @@ function Invite() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  function handleKeywordNameChange() {
-    keywordName.current.focus();
+  project.getUsers.forEach(function(user){
+    user.onClick = async (e) => {
+      setSelectedUsers(Array.from(new Set(selectedUsers.concat([user]))));
+      console.log(selectedUsers);
+    }
+  });
+
+
+  Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return a.indexOf(i) < 0;});
   }
+  if (selectedUsers) {
+    selectedUsers.forEach(function(user){
+      user.onClick = async (e) => {
+        setSelectedUsers(selectedUsers.diff([user].flat()));
+        console.log(selectedUsers);
+      }
+    });
+  }
+
 
   return (
     <Layout>
       <PageTitleBar title="Invite user to project" backButton />
-
       <Container maxWidth="md">
-        <SectionBox border={false}>
-          <Grid container spacing={2} alignItems="center" justify="space-between">
-            <Grid item xs>
-              <FormControl fullWidth variant="filled">
-                <TextField
-                  inputRef={keywordName}
-                  label="Enter username"
-                  variant="outlined"
-                  onClick={handleKeywordNameChange}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  await getUserByName({ variables: {name: keywordName.current.value}})}}
-              >
-                <IconButton type="submit" aria-label="search">
-                  <SearchIcon />
-                </IconButton>
-              </form>
-            </Grid>
-          </Grid>
-        </SectionBox>
 
-        <SectionBox
-          titleBar={
-            <SectionTitleBar title="Result" icon=<FindInPageIcon /> />
-          }
-        >
+        <Box display={selectedUsers && selectedUsers.length ? "block" : "none"}>
+          <SectionBox titleBar=<SectionTitleBar title="Selected users beta" icon=<FindInPageIcon /> /> >
+            <Grid container>{[selectedUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+          </SectionBox>
+        </Box>
+
+        <SectionBox title=<SectionTitleBar title="Result" icon=<FindInPageIcon /> /> >
           {
-            users
-            ? (
-              <Grid container>
-                {[users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}
-              </Grid>
-            )
+            project.getUsers
+            ? <Grid container>{[project.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </SectionBox>
-      </Container>
+     
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            await createProjectInvitations({ variables: {invitation: { project: router.query.id, users: selectedUsers.map(user => user.id) }}})
+            router.push(`/projects/${router.query.id}`);
+          }}
+        >
+          <Box align="center">
+            <Button type="submit" variant="outlined">Invite</Button>
+          </Box>
+        </form>
 
+      </Container>
     </Layout>
   );
 }

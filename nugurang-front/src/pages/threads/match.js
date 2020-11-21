@@ -1,15 +1,18 @@
+import "dayjs";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import DayjsUtils from "@date-io/dayjs";
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
+import Slider from '@material-ui/core/Slider';
 
-import CommentIcon from '@material-ui/icons/Comment';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import PeopleIcon from '@material-ui/icons/People';
 
 import withAuth from '../../components/withAuth';
 import ArticleLeader from '../../components/ArticleLeader';
@@ -77,13 +80,16 @@ const GET_THREAD = gql`
   }
 `;
 
-function Thread() {
+function Match() {
   const router = useRouter();
   const [showEvents, setShowEvents] = useState(false);
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [headCount, setHeadCount] = React.useState([2, 6]);
+
   const toggleShowEvents = () => {
     setShowEvents((prev) => !prev);
   };
-
+  
   const responses = [
     useQuery(GET_THREAD, {variables: {id: router.query.id}})
   ];
@@ -101,63 +107,59 @@ function Thread() {
 
   return (
     <Layout>
-      <PageTitleBar title="Thread" backButton backButtonLink="/boards">
-        <Button variant="" onClick={() => router.push({pathname: "/threads/update", query: { thread: router.query.id }})}>
-          <EditIcon />
-        </Button>
-        <YesNoDialog
-          title="Delete"
-          content="Are you sure to delete?"
-          onClickYes={() =>
-            router.push({pathname: "/threads/update", query: { thread: router.query.id }})}
-        >
-          <Button variant="">
-            <DeleteIcon />
-          </Button>
-        </YesNoDialog>
-      </PageTitleBar>
+      <PageTitleBar title="Match" backButton backButtonLink={`/threads/${router.query.id}`} />
 
       <Grid container>
         <Grid item xs={12} md={6}>
           <SectionBox>
             {
               thread.event
-              ? (
-                <>
-                  <EventInfoBox event={thread.event} />
-                  <Box style={{margin: "0.5rem"}} display="flex" justifyContent="flex-end">
-                    <Button variant="outlined" onClick={() => router.push({pathname: "/threads/match", query: { id: router.query.id }})}>Match</Button>
-                  </Box>
-                </>
-              )
-              : (
-                <ArticleLeader
-                  article={thread.firstArticle}
-                  like={3}
-                  topic="Test topic"
-                  view={thread.viewCount}
-                  vote={5}
-                />
-              )
+              ? <EventInfoBox event={thread.event} />
+              : <></>
             }
           </SectionBox>
         </Grid>
+
         <Grid item xs={12} md={6}>
-          <SectionBox
-            titleBar={(
-              <SectionTitleBar title="Comments" icon=<CommentIcon />>
-                <Button variant="outlined" onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
-              </SectionTitleBar>
-            )}
-          >
-            <List>
-              {[articles.slice(1)].flat().map((article) => <ArticleListItem article={article} />)}
-            </List>
+          <SectionBox titleBar={(<SectionTitleBar title="End date" icon=<EventAvailableIcon /> />)}>
+            <Box display="flex" justifyContent="center">
+              <MuiPickersUtilsProvider utils={DayjsUtils}>
+                <KeyboardDatePicker
+                  margin="normal"
+                  label="Select end date"
+                  format="YYYY-MM-DD"
+                  value={selectedDate}
+                  onChange={(date) => {
+                    setSelectedDate(date);
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+            </Box>
           </SectionBox>
+          <SectionBox titleBar={(<SectionTitleBar title="Match headcount" icon=<PeopleIcon /> />)}>
+            <Box style={{margin: "4rem 2rem 2rem 2rem"}}>
+              <Slider
+                value={headCount}
+                min={2}
+                max={10}
+                step={1}
+                onChange={(event, newValue) => {
+                  setHeadCount(newValue);
+                }}
+                valueLabelDisplay="on"
+              />
+            </Box>
+          </SectionBox>
+          <Box style={{margin: "0.5rem"}} display="flex" justifyContent="flex-end">
+            <Button fullWidth variant="outlined" onClick={() => router.push({pathname: "/threads/match", query: { id: router.query.id }})}>Qucik match</Button>
+          </Box>
+          <Box style={{margin: "0.5rem"}} display="flex" justifyContent="flex-end">
+            <Button fullWidth variant="outlined" onClick={() => router.push({pathname: "/threads/match", query: { id: router.query.id }})}>Level match</Button>
+          </Box>
         </Grid>
       </Grid>
     </Layout>
   );
 }
 
-export default withAuth(Thread);
+export default withAuth(Match);

@@ -12,18 +12,26 @@ import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 
-const GET_NOTIFICATIONS = gql`
-  query GetNotifications {
-  currentUser {
-    getNotifications(page: 0, pageSize: 100){
+
+export const CURRENT_USER = gql`
+  query CurrentUser {
+    currentUser {
       id
-      title
-      content
-      createdAt
+      oauth2Provider
+      oauth2Id
+      name
+      getNotifications(page: 0, pageSize: 100) {
+        id
+        createdAt
+        data
+        type {
+          id
+          name
+        }
       }
     }
   }
-`
+`;
 
 const TEST_NOTIFICATION_LIST = [
   {
@@ -64,26 +72,34 @@ const TEST_NOTIFICATION_LIST = [
 ];
 
 function Notifications(){
-    const router = useRouter();
-    const responses = [useQuery(GET_NOTIFICATIONS, {variables: {id: router.query.id}}),]
-    const errorResponse = responses.find((response) => response.error)
+  const router = useRouter();
 
-    if (errorResponse)
-      return <GraphQlError error={errorResponse.error} />
+  const results = [
+    [null, useQuery(CURRENT_USER)],
+  ];
+  const user = results[0][1].data?.currentUser;
+  const allNotifications = results[0][1].data?.currentUser.getNotifications;
 
-    if (responses.some((response) => response.loading))
-      return <Loading />;
+  if (results.some(result => result[1].loading))
+    return <Loading />;
+  const errorResult = results.find(result => result[1].error);
+  if (errorResult)
+    return <GraphQlError error={errorResult[1].error} />;
 
-    return(
-      <Layout>
-        <PageTitleBar title="Notifications" backButton />
-        <SectionBox>
-          <List>
-            {[TEST_NOTIFICATION_LIST].flat().map((notification) => <NotificationListItem notification={notification} />)}
-          </List>
-        </SectionBox>
-      </Layout>
-    );
+  allNotifications.forEach(function(notification){
+    notification.onClick = () => router.push(`/notifications/test/${notification.data[0]}`);
+  });
+
+  return(
+    <Layout>
+      <PageTitleBar title="Notifications" backButton />
+      <SectionBox>
+        <List>
+          {[TEST_NOTIFICATION_LIST].flat().map((notification) => <NotificationListItem notification={notification} />)}
+        </List>
+      </SectionBox>
+    </Layout>
+  );
 }
 
 export default withAuth(Notifications);

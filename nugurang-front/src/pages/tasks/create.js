@@ -2,6 +2,7 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -27,7 +28,6 @@ import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import UserInfoCard from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
 
 const POSITIONS = gql`
@@ -121,9 +121,6 @@ function CreateTask() {
           </FormControl>
         </SectionBox>
         <SectionBox titleBar={<SectionTitleBar title="Add assignee" icon=<PersonIcon /> border={false} />}>
-          <Typography>Selected worker: </Typography>
-          <UserInfoCard user={[selectedUser]} />
-
           <Autocomplete
             onChange={(event, newValue) => {
               setSelectedUser(newValue);
@@ -132,9 +129,16 @@ function CreateTask() {
             disableCloseOnSelect
             getOptionLabel={(option) => option.name}
             limitTags={2}
-            renderOption={(option, { selected }) => (
+            renderOption={(user, { selected }) => (
               <>
-                <UserInfoCard user={option} />
+                <Avatar
+                  alt={user.name}
+                  src={user.image ? user.image.address : null}
+                  variant="circle"
+                >
+                  {user.name.charAt(0).toUpperCase()}
+                </Avatar>
+                <Typography variant="body1">{user.name}</Typography>
               </>
             )}
             renderInput={(params) => (

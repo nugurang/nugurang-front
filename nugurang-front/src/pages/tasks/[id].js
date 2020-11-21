@@ -99,7 +99,7 @@ function Task() {
     <Layout>
     <Container maxWidth="sm">
       <PageTitleBar title="Task info" backButton="true" backButtonLink={`/works/${task.work.id}`}>
-        <Button variant="" onClick={() => router.push({pathname: "/tasks/evaluate", query: { project: router.query.id }})}>
+        <Button variant="" onClick={() => router.push({pathname: "/tasks/evaluate", query: { task: router.query.id }})}>
           <ThumbsUpDownIcon style={{margin: "0 0.5rem"}} />
           Evaluate
         </Button>
@@ -117,7 +117,7 @@ function Task() {
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
-                  const taskRes = await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users, positions: task.honors.map(honor => honor.position), progress: progress.id }}});
+                  await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users.map(user => user.id), positions: task.honors.map(honor => honor.position.id), progress: progress.id }}});
                   router.push(`/tasks/${router.query.id}`);
                 }}
               >

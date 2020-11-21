@@ -34,47 +34,6 @@ import WorkInfoCard from '../../../components/WorkInfoCard';
 import YesNoDialog from '../../../components/YesNoDialog';
 
 
-const TEST_USER_LIST = [
-  {
-    id: 0,
-    name: "Test User 1",
-    email: "Test email",
-    image: "/static/images/sample_1.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 1,
-    name: "Test User 2",
-    email: "Test email",
-    image: "/static/images/sample_2.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 2,
-    name: "Test User 3",
-    email: "Test email",
-    image: "/static/images/sample_3.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-  {
-    id: 3,
-    name: "Test User 4",
-    email: "Test email",
-    image: "/static/images/sample_4.jpg",
-    bio: "Test bio",
-    followers: 5,
-    followings: 10,
-  },
-]
-
-
-
 const TAB_PROPS = [
   {
     id: 0,
@@ -145,7 +104,7 @@ function ProjectInfo() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  TEST_USER_LIST.forEach(function(user){
+  project.getUsers.forEach(function(user){
     user.onClick = () => router.push({pathname: "/projects/review/user", query: { project: router.query.project, user: user.id }});
   });
 
@@ -171,11 +130,11 @@ function ProjectInfo() {
           <Typography variant="h5">Select a teammate to review...</Typography>
         </Box>
         {
-          TEST_USER_LIST && (TEST_USER_LIST.length)
+          project.getUsers && (project.getUsers.length)
           ? (
             <Grid container>
             {
-              [TEST_USER_LIST].flat().map((user) => <Grid item xs={12} sm={6} md={4}>
+              [project.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}>
                 <Card>
                   <CardActionArea onClick={() => user.onClick ? user.onClick() : null}>
                     <CardContent>

@@ -58,7 +58,7 @@ const GET_USER = gql`
 `;
 
 export const UPDATE_USER_REVIEWS = gql`
-  mutation UpdateUserReviews($evaluation: ID!, $reviews: UserReviewInput!) {
+  mutation UpdateUserReviews($evaluation: ID!, $reviews: [UserReviewInput]!) {
     updateUserReviews (evaluation: $evaluation, reviews: $reviews)
   }
 `;
@@ -75,11 +75,12 @@ function Index() {
   const results = [
     [null, useQuery(POSITIONS)],
     [null, useQuery(GET_USER, {variables: {id: router.query.user}})],
+    useMutation(UPDATE_USER_REVIEWS)
   ];
   const [positions, getUser, updateUserReviews] = results.map(result => result[0]);
   const allPositions = results[0][1].data?.positions;
   const user = results[1][1].data?.getUser;
-  const evaluation = null;
+  let evaluation = null;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -87,11 +88,13 @@ function Index() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
+  console.log(user);
   user.getUserEvaluations.forEach(function(_evaluation){
     if (_evaluation.project.id == router.query.project) {
       evaluation = _evaluation;
     }
   });
+  console.log(evaluation);
 
 
   return (
@@ -170,13 +173,13 @@ function Index() {
               const newHonors = [];
               
               newUpvotes.forEach(function(position){
-                newHonors.push({position: position.id, honor: 1});
+                newHonors.push({position: position.id, honor: 5});
               });
 
               newDownvotes.forEach(function(position){
-                newHonors.push({position: position.id, honor: -1});
+                newHonors.push({position: position.id, honor: -5});
               });
-              console.log(evaluation);
+
               await updateUserReviews({ variables: { evaluation: evaluation.id, reviews: [{ toUser: user.id, honors: newHonors }]}});
               router.push({pathname: "/projects/review", query: { project: router.query.project }});
             }}
