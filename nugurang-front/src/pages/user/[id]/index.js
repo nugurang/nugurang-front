@@ -101,6 +101,19 @@ const GET_USER = gql`
       email
       biography
       totalHonor
+      honors {
+        id
+        honor
+        position {
+          id
+          name
+          description
+          image {
+            id
+            address
+          }
+        }
+      }
       image {
         id
         address
@@ -118,9 +131,18 @@ const GET_USER = gql`
           }
         }
         firstArticle {
+          id
+          title
+          content
+          createdAt
+          modifiedAt
           images {
             address
           }
+          viewCount
+          upCount
+          downCount
+          starCount
         }
       }
       getFollowings(page: 0, pageSize: 100) {
@@ -255,8 +277,8 @@ function UserInfo() {
             )}
           >
             {
-              TEST_HONOR_BADGE_LIST && (TEST_HONOR_BADGE_LIST.length)
-              ? <Grid container>{[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} md={3}><HonorCard honor={honor} /></Grid>)}</Grid>
+              user.honors && (user.honors.length)
+              ? <Grid container>{user.honors.flat().map((honor) => <Grid item xs={4} md={3}><HonorCard honor={honor} /></Grid>)}</Grid>
               : <NoContentsBox />
             }
           </SectionBox>

@@ -27,8 +27,6 @@ export const GET_USER = gql`
       getThreads(page: 0, pageSize: 5) {
         id
         name
-        upCount
-        commentCount
         user {
           name
           image {
@@ -36,9 +34,18 @@ export const GET_USER = gql`
           }
         }
         firstArticle {
+          id
+          title
+          content
+          createdAt
+          modifiedAt
           images {
             address
           }
+          viewCount
+          upCount
+          downCount
+          starCount
         }
       }
     }

@@ -9,6 +9,7 @@ import GraphQlError from '../../components/GraphQlError';
 import NotificationListItem from '../../components/NotificationListItem';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
+import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 
@@ -22,6 +23,7 @@ export const CURRENT_USER = gql`
       name
       getNotifications(page: 0, pageSize: 100) {
         id
+        isRead
         createdAt
         data
         type {
@@ -95,7 +97,12 @@ function Notifications(){
       <PageTitleBar title="Notifications" backButton />
       <SectionBox>
         <List>
-          {[TEST_NOTIFICATION_LIST].flat().map((notification) => <NotificationListItem notification={notification} />)}
+
+          {
+            user.getNotifications && user.getNotifications.length
+            ? [user.getNotifications].flat().map((notification) => <NotificationListItem notification={notification} />)
+            : <NoContentsBox />
+          }        
         </List>
       </SectionBox>
     </Layout>

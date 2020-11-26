@@ -30,14 +30,14 @@ export default function NotificationListItem({ notification }) {
             <ListItemText
               primary={(
                 <Box display='block'>
-                  <Typography variant="h6">
+                  <Typography variant="body1">
                     {notification.createdAt}
                   </Typography>
                 </Box>
               )}
             />
           </Box>
-          {notification.data.flat().map((notification) => <Grid item><Typography variant="body2">{notification}</Typography></Grid>)}
+          {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{string}</Typography></Grid>)}
         </Grid>
       </Grid>
     </ListItem>

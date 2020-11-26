@@ -32,9 +32,9 @@ export default function HonorCard({ honor }) {
   return (
     <Card className={classes.card} variant="outlined">
       <CardActionArea>
-        <CardMedia className={classes.cardMedia} image={honor.image ? honor.image.address : null} name={honor.name} />
-        <Typography className={classes.cardScoreTypography} variant="subtitle2">{honor.score}</Typography>
-        <Typography align="center" variant="subtitle1">{honor.name}</Typography>
+        <CardMedia className={classes.cardMedia} image={honor.position.image ? honor.position.image.address : null} name={honor.name} />
+        <Typography className={classes.cardScoreTypography} variant="subtitle2">{honor.honor}</Typography>
+        <Typography align="center" variant="subtitle1">{honor.position.name}</Typography>
       </CardActionArea>
     </Card>
   );

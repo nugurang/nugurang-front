@@ -58,10 +58,16 @@ export const GET_USER = gql`
     getUser(id: $id) {
       id
       honors {
+        id
         honor
         position {
           id
           name
+          description
+          image {
+            id
+            address
+          }
         }
       }
     }
@@ -87,8 +93,8 @@ function Honor() {
       <PageTitleBar title="Honor badges" backButton />
       <SectionBox>
         {
-          TEST_HONOR_BADGE_LIST && (TEST_HONOR_BADGE_LIST.length)
-          ? <Grid container>{[TEST_HONOR_BADGE_LIST].flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}</Grid>
+          user.honors && user.honors.length
+          ? <Grid container>{user.honors.flat().map((honor) => <Grid item xs={4} sm={3} md={2}><HonorCard honor={honor} /></Grid>)}</Grid>
           : <NoContentsBox />
         }
       </SectionBox>

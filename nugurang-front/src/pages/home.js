@@ -36,6 +36,16 @@ export const CURRENT_USER = gql`
         id
         address
       }
+      getNotifications(page: 0, pageSize: 100) {
+        id
+        isRead
+        createdAt
+        data
+        type {
+          id
+          name
+        }
+      }
     }
   }
 `;
@@ -131,7 +141,7 @@ function Home() {
     <Layout>
       <PageTitleBar title="Home" icon=<HomeIcon />>
         <IconButton onClick={() => router.push(`/notifications/${user.id}`)}>
-          <Badge badgeContent={17} color="secondary">
+          <Badge badgeContent={user.getNotifications.length} color="secondary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
