@@ -260,7 +260,7 @@ function UserInfo() {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Recent blog updates" icon=<BookIcon />>
-                <IconButton onClick={() => router.push(`/blog/${router.query.id}`)}>
+                <IconButton onClick={() => router.push(`/user/${router.query.id}/blog`)}>
                   <ArrowForwardIcon />
                 </IconButton>
               </SectionTitleBar>

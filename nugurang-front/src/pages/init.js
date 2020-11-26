@@ -310,6 +310,10 @@ function Init({client}) {
 
   useEffect(() => {
     init();
+    if(done){
+      console.log("before");
+      router.push(`/home`);
+    }
   });
 
   if (error)

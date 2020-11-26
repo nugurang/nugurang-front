@@ -95,6 +95,8 @@ function CreateThread() {
                   label="Enter content"
                   variant="outlined"
                   onClick={handleNewContentChange}
+                  multiline
+                  rows={8}
                 />
               </FormControl>
             </Grid>
