@@ -58,6 +58,9 @@ function CreateArticle() {
                   label="Enter comment"
                   variant="outlined"
                   onClick={handleNewContentChange}
+                  multiline
+                  rows={8}
+                  component="pre"
                 />
               </FormControl>
             </Grid>
