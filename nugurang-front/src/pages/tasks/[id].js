@@ -58,6 +58,9 @@ const GET_TASK = gql`
           address
         }
       }
+      work {
+        id
+      }
     }
   }
 `;
@@ -118,7 +121,7 @@ function Task() {
                 onSubmit={async (e) => {
                   e.preventDefault();
                   await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users.map(user => user.id), positions: task.honors.map(honor => honor.position.id), progress: progress.id }}});
-                  router.push(`/tasks/${router.query.id}`);
+                  router.push(`/works/${task.work.id}`);
                 }}
               >
                 <Button variant="outlined" type="submit">Move to {progress.name}</Button>

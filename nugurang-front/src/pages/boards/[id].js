@@ -34,9 +34,18 @@ const GET_BOARD = gql`
           }
         }
         firstArticle {
+          id
+          title
+          content
+          createdAt
+          modifiedAt
           images {
             address
           }
+          viewCount
+          upCount
+          downCount
+          starCount
         }
       }
     }

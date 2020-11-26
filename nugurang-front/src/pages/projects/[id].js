@@ -62,6 +62,7 @@ const GET_PROJECT = gql`
         name
         email
       }
+      finished
     }
   }
 `;
@@ -117,8 +118,11 @@ function ProjectInfo() {
     setAnchorEl(null);
   };
 
-
-  return (
+  if(project.finished) {
+    router.push({pathname: "/projects/review", query: { project: router.query.id }});
+    return null;
+  }
+  else return (
     <Layout>
       <PageTitleBar title="Project info" backButton backButtonLink={`/teams/${project.team.id}`}>
         <Button variant="" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.id }})}>

@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import 'array-flat-polyfill';
 
-import StatCounterBox from './StatCounterBox';
+import ArticleStatCounterBox from './ArticleStatCounterBox';
 
 
 export default function ArticleListItem({ article }) {
@@ -52,10 +52,6 @@ export default function ArticleListItem({ article }) {
               )}
             />
           </Box>
-        </Grid>
-
-        <Grid item xs={12}>
-          <StatCounterBox topic={article.topic} image={article.image} view={article.view} like={article.like} vote={article.vote} />
         </Grid>
       </Grid>
     </ListItem>

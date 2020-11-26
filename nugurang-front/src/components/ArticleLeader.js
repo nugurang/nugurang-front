@@ -12,9 +12,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { NO_THREAD_IMAGE_ADDRESS } from '../config';
 import BaseImage from './BaseImage';
-import StatCounterBox from './StatCounterBox';
 
-export default function ArticleLeader({ article, like, topic, view, vote }) {
+export default function ArticleLeader({ article }) {
   const router = useRouter();
   return (
     <Box>
@@ -60,9 +59,6 @@ export default function ArticleLeader({ article, like, topic, view, vote }) {
           <Grid container spacing={2}>
             <Grid item xs>
               <Typography variant="body1">{article.content}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <StatCounterBox topic={topic} view={view} like={like} vote={vote} />
             </Grid>
           </Grid>
         </AccordionDetails>

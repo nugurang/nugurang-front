@@ -48,9 +48,18 @@ const GET_THREADS_BY_BOARD_NAMES = gql`
         }
       }
       firstArticle {
+        id
+        title
+        content
+        createdAt
+        modifiedAt
         images {
           address
         }
+        viewCount
+        upCount
+        downCount
+        starCount
       }
     }
   }
@@ -68,9 +77,18 @@ const GET_HOT_THREADS_BY_BOARD_NAMES = gql`
         }
       }
       firstArticle {
+        id
+        title
+        content
+        createdAt
+        modifiedAt
         images {
           address
         }
+        viewCount
+        upCount
+        downCount
+        starCount
       }
     }
   }

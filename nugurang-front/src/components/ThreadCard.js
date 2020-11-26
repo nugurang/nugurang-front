@@ -12,8 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import 'array-flat-polyfill';
 
 import { NO_THREAD_IMAGE_ADDRESS } from '../config';
+import ArticleStatCounterBox from './ArticleStatCounterBox';
 import NoContentsBox from './NoContentsBox';
-import StatCounterBox from './StatCounterBox';
 
 const useStyles = makeStyles(() => ({
   cardMedia: {
@@ -72,7 +72,7 @@ export default function ThreadCard({ thread }) {
           </Grid>
           <Grid container justify="flex-end">
             <Grid item align="right">
-              <StatCounterBox compact image={thread.image} upCount={thread.upCount} />
+              <ArticleStatCounterBox compact article={thread.firstArticle} />
             </Grid>
           </Grid>
         </CardContent>

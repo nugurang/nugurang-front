@@ -162,7 +162,8 @@ function Invite() {
               <form
                 onSubmit = { async (e) => {
                   e.preventDefault();
-                  await getUserByName({ variables: { name: keywordName.current.value }})}}
+                  await getUserByName({ variables: { name: keywordName.current.value }})
+                }}
               >
                 <IconButton type="submit" aria-label="search">
                   <SearchIcon />

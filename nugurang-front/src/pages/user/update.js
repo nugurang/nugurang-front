@@ -14,6 +14,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import DeleteIcon from '@material-ui/icons/Delete';
 import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
@@ -75,6 +77,7 @@ function Update() {
   const newName = useRef(null);
   const newEmail = useRef(null);
   const newImageAddress = useRef(null);
+  const newBiography = useRef(null);
   const [open, setOpen] = React.useState(false);
 
   const results = [
@@ -101,6 +104,10 @@ function Update() {
 
   function handleNewImageAddressChange() {
     newImageAddress.current.focus();
+  }
+
+  function handleNewBiographyChange() {
+    newBiography.current.focus();
   }
 
   return (
@@ -159,6 +166,24 @@ function Update() {
               </Grid>
             </SectionBox>
 
+            <SectionBox titleBar={<SectionTitleBar title="Change biography" icon=<AssignmentIndIcon /> />} border={false}>
+              <Grid container spacing={2} alignItems="center" justify="space-between">
+                <Grid item xs>
+                  <FormControl fullWidth variant="filled">
+                    <TextField
+                      multiline
+                      rows={5}
+                      defaultValue={user.biography}
+                      inputRef={newBiography}
+                      label="Enter biography"
+                      variant="outlined"
+                      onClick={handleNewBiographyChange}
+                    />
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </SectionBox>
+
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -167,7 +192,7 @@ function Update() {
                   const res = await createImage({ variables: { address: newImageAddress.current.value }});
                   image = res.data.createImage.id;
                 }
-                await updateUser({ variables: { user: { name: newName.current.value, email: newEmail.current.value, biography: "", image }}});
+                await updateUser({ variables: { user: { name: newName.current.value, email: newEmail.current.value, biography: newBiography.current.value, image }}});
                 router.push(`/user/${user.id}`);
               }}
             >
@@ -178,7 +203,7 @@ function Update() {
           </div>
 
           <div>
-            <SectionBox titleBar={<SectionTitleBar title="Delete user" icon=<ImageIcon /> />}>
+            <SectionBox titleBar={<SectionTitleBar title="Delete user" icon=<DeleteIcon /> />}>
               <Box style={{margin: "1rem"}}>
                 <Typography gutterBottom style={{color: "red"}}>Warning: this action CANNOT be undone.</Typography>
               </Box>

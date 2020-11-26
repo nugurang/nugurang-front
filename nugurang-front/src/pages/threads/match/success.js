@@ -5,20 +5,20 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import FullScreenDialogBox from '../components/FullScreenDialogBox';
-import Layout from '../components/Layout';
-import PageTitleBar from '../components/PageTitleBar';
+import withAuth from '../../../components/withAuth';
+import FullScreenDialogBox from '../../../components/FullScreenDialogBox';
+import Layout from '../../../components/Layout';
+import PageTitleBar from '../../../components/PageTitleBar';
 
 
-export default function ErrorPage({ errorCode }) {
+function Success() {
   const router = useRouter();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Error!" backButton />>
+      <FullScreenDialogBox titleBar=<PageTitleBar title="Success" backButton />>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
-            <Typography variant="h5">{errorCode}</Typography>
-            <Typography variant="h4">Something went wrong.</Typography>
+            <Typography variant="h4">Match requested successfullly.</Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
@@ -30,3 +30,5 @@ export default function ErrorPage({ errorCode }) {
     </Layout>
   );
 }
+
+export default withAuth(Success);

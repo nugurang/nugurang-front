@@ -42,7 +42,7 @@ const GET_USER = gql`
         id
         address
       }
-      getUserEvaluations(page: 0, pageSize: 999) {
+      getUserEvaluations(page: 0, pageSize: 100) {
         id
         startedAt
         days

@@ -19,7 +19,7 @@ import GraphQlError from '../../components/GraphQlError';
 import withAuth from '../../components/withAuth';
 
 
-export const CREATE_IMAGE = gql`
+const CREATE_IMAGE = gql`
   mutation createImage($address: String!) {
     createImage (address: $address) {
       id
@@ -27,7 +27,7 @@ export const CREATE_IMAGE = gql`
   }
 `;
 
-export const CREATE_THREAD = gql`
+const CREATE_THREAD = gql`
   mutation createThread($thread: ThreadInput!) {
     createThread (thread: $thread) {
       id

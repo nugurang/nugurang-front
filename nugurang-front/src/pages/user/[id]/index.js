@@ -47,6 +47,9 @@ const TEST_BLOG_THREAD = [
     topic: "Test topic",
     view: 4,
     vote: 5,
+    firstArticle: {
+      id: 0,
+    }
   }
 ];
 

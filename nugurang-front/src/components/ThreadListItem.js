@@ -10,8 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import { useRouter } from 'next/router';
 
+import ArticleStatCounterBox from './ArticleStatCounterBox';
 import NoContentsBox from './NoContentsBox';
-import StatCounterBox from './StatCounterBox';
 
 const useStyles = makeStyles({
   singleLineEllipsis: {
@@ -64,7 +64,7 @@ export default function ThreadListItem({ thread }) {
           <Typography variant="h6" className={classes.doubleLineEllipsis}>{thread.name}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <StatCounterBox image={thread.image} upCount={thread.upCount} />
+          <ArticleStatCounterBox article={thread.firstArticle} compact />
         </Grid>
       </Grid>
     </ListItem>
