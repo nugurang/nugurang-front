@@ -25,6 +25,15 @@ import SectionBox from '../../components/SectionBox';
 import YesNoDialog from '../../components/YesNoDialog';
 
 
+const VOTE_TYPES = gql`
+  query {
+    voteTypes {
+      id
+      name
+    }
+  }
+`;
+
 const CURRENT_USER = gql`
   query {
     currentUser {
@@ -121,20 +130,29 @@ function Thread() {
   };
 
   const results = [
+    [null, useQuery(VOTE_TYPES)],
     [null, useQuery(CURRENT_USER)],
     [null, useQuery(GET_THREAD, {variables: {id: router.query.id}})],
     useLazyQuery(GET_VOTE_TYPE_BY_NAME),
     useMutation(CREATE_VOTE),
   ];
-  const [currentUser, getThread, getVoteTypeByName, createVote] = results.map(result => result[0]);
-  const votingUser = results[0][1].data?.currentUser;
-  const thread = results[1][1].data?.getThread;
-  const voteType = results[2][1].data?.getVoteTypeByName;
+  const [voteTypes, currentUser, getThread, getVoteTypeByName, createVote] = results.map(result => result[0]);
+  const allVoteTypes = results[0][1].data?.voteTypes;
+  const votingUser = results[1][1].data?.currentUser;
+  const thread = results[2][1].data?.getThread;
+  const voteType = results[3][1].data?.getVoteTypeByName;
   if (results.some(result => result[1].loading))
     return <Loading />;
   const errorResult = results.find(result => result[1].error);
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />;
+
+  const allVoteTypesRev = {};
+  allVoteTypes.forEach(function(voteType){
+    allVoteTypesRev[voteType.name] = Number(voteType.id);
+  });
+  console.log(allVoteTypesRev);
+
 
   return (
     <Layout>
@@ -173,19 +191,15 @@ function Thread() {
               article={thread.firstArticle}
               onClickUp = { async (e) => {
                 e.preventDefault();
-                await getVoteTypeByName({ variables: { name: "UP"}});
-                console.log(voteType);
-                await createVote({ variables: { vote: { user: votingUser.id, article: thread.firstArticle.id, voteType: voteType.id}}});
+                await createVote({ variables: { vote: { user: votingUser.id, article: thread.firstArticle.id, voteType: allVoteTypesRev["UP"]}}});
               }}
               onClickDown = { async (e) => {
                 e.preventDefault();
-                await getVoteTypeByName({ variables: { name: "DOWN"}});
-                await createVote({ variables: { vote: { user: votingUser.id, article: thread.firstArticle.id, voteType: voteType.id}}});
+                await createVote({ variables: { vote: { user: votingUser.id, article: thread.firstArticle.id, voteType: allVoteTypesRev["DOWN"]}}});
               }}
               onClickStar = { async (e) => {
                 e.preventDefault();
-                await getVoteTypeByName({ variables: { name: "STAR"}});
-                await createVote({ variables: { vote: { user: votingUser.id, article: thread.firstArticle.id, voteType: voteType.id}}});
+                await createVote({ variables: { vote: { user: votingUser.id, article: thread.firstArticle.id, voteType: allVoteTypesRev["STAR"]}}});
               }}
             />
           </SectionBox>

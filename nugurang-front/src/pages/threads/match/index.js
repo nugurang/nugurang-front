@@ -27,6 +27,15 @@ import SectionBox from '../../../components/SectionBox';
 import YesNoDialog from '../../../components/YesNoDialog';
 
 
+const MATCH_TYPES = gql`
+  query {
+    matchTypes {
+      id
+      name
+    }
+  }
+`;
+
 const GET_THREAD = gql`
   query GetThread($id: ID!) {
     getThread(id: $id) {
@@ -107,14 +116,16 @@ function Match() {
   const [teamSize, setTeamSize] = React.useState([2, 6]);
 
   const results = [
+    [null, useQuery(MATCH_TYPES)],
     [null, useQuery(GET_THREAD, {variables: {id: router.query.id}})],
     useLazyQuery(GET_MATCH_TYPE_BY_NAME),
     useMutation(CREATE_MATCH_REQUEST),
   ];
-  const [getThread, getMatchTypeByName, createMatchRequest] = results.map(result => result[0]);
-  const thread = results[0][1].data?.getThread;
-  const articles = results[0][1].data?.getThread.getArticles;
-  const matchType = results[1][1].data?.getMatchTypeByName;
+  const [matchTypes, getThread, getMatchTypeByName, createMatchRequest] = results.map(result => result[0]);
+  const allMatchTypes = results[0][1].data?.matchTypes;
+  const thread = results[1][1].data?.getThread;
+  const articles = results[1][1].data?.getThread.getArticles;
+  const matchType = results[2][1].data?.getMatchTypeByName;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -122,6 +133,11 @@ function Match() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
+  const allMatchTypesRev = {};
+  allMatchTypes.forEach(function(matchType){
+    allMatchTypesRev[matchType.name] = Number(matchType.id);
+  });
+  console.log(allMatchTypesRev);
 
 
   const toggleShowEvents = () => {
@@ -179,9 +195,7 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await getMatchTypeByName({ variables: { name: "RANDOM"}});
-                    console.log(matchType);
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: matchType.id, minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >
@@ -194,8 +208,7 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await getMatchTypeByName({ variables: { name: "HONOR"}});
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: matchType.id, minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["HONOR"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >
@@ -208,8 +221,7 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await getMatchTypeByName({ variables: { name: "PERSONALITY"}});
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: matchType.id, minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["PERSONALITY"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >
