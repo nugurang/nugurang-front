@@ -191,7 +191,7 @@ function Invite() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          await createProjectInvitations({ variables: {invitation: { team: router.query.id, users: selectedUsers.map(user => user.id) }}})
+          await createTeamInvitations({ variables: {invitation: { team: router.query.id, users: selectedUsers.map(user => user.id) }}})
           router.push(`/teams/${router.query.id}`);
         }}
       >

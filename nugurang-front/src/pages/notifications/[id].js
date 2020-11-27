@@ -30,6 +30,14 @@ export const CURRENT_USER = gql`
           id
           name
         }
+        user {
+          id
+          name
+          image {
+            id
+            address
+          }
+        }
       }
     }
   }
@@ -89,7 +97,9 @@ function Notifications(){
     return <GraphQlError error={errorResult[1].error} />;
 
   allNotifications.forEach(function(notification){
-    notification.onClick = () => router.push(`/notifications/test/${notification.data[0]}`);
+    if (notification.type.name == "TEAM_INVITATION") {
+      notification.onClick = () => router.push({pathname: "/teams/join", query: { notification: notification.id }});
+    }
   });
 
   return(
@@ -97,7 +107,6 @@ function Notifications(){
       <PageTitleBar title="Notifications" backButton />
       <SectionBox>
         <List>
-
           {
             user.getNotifications && user.getNotifications.length
             ? [user.getNotifications].flat().map((notification) => <NotificationListItem notification={notification} />)

@@ -38,13 +38,6 @@ export const CURRENT_USER = gql`
       }
       getNotifications(page: 0, pageSize: 100) {
         id
-        isRead
-        createdAt
-        data
-        type {
-          id
-          name
-        }
       }
     }
   }

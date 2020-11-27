@@ -15,10 +15,22 @@ import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
+import PositionInfoCard from '../../components/PositionInfoCard';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TaskInfoBox from '../../components/TaskInfoBox';
 
+
+const TAB_PROPS = [
+  {
+    id: 0,
+    label: "Progress",
+  },
+  {
+    id: 1,
+    label: "Positions",
+  },
+]
 
 const PROGRESSES = gql`
   query Progresses {
@@ -100,39 +112,48 @@ function Task() {
 
   return (
     <Layout>
-    <Container maxWidth="sm">
       <PageTitleBar title="Task info" backButton="true" backButtonLink={`/works/${task.work.id}`}>
         <Button variant="" onClick={() => router.push({pathname: "/tasks/evaluate", query: { task: router.query.id }})}>
           <ThumbsUpDownIcon style={{margin: "0 0.5rem"}} />
           Evaluate
         </Button>
       </PageTitleBar>
-      <SectionBox border={false}>
-        <TaskInfoBox task={task} />
+      <Container maxWidth="sm">
+        <SectionBox border={false}>
+          <TaskInfoBox task={task} />
+        </SectionBox>
+
+
+      <SectionBox>
+        <BaseTabs tabProps={TAB_PROPS}>
+          {
+            selectableProgresses && (selectableProgresses.length)
+            ? (
+              <Box display="flex" justifyContent="center">
+                {[selectableProgresses].flat().map((progress) => 
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users.map(user => user.id), positions: task.honors.map(honor => honor.position.id), progress: progress.id }}});
+                      router.push(`/works/${task.work.id}`);
+                    }}
+                  >
+                    <Button variant="outlined" type="submit">Move to {progress.name}</Button>
+                  </form>
+                )}
+              </Box>
+            )
+            : <NoContentsBox />
+          }
+          {
+            task.honors && (task.honors.length)
+            ? <Grid container>{[task.honors].flat().map((honor) => <Grid item xs={12}><PositionInfoCard position={honor.position} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
+        </BaseTabs>
       </SectionBox>
-        {
-          selectableProgresses && (selectableProgresses.length)
-          ? (
 
-            <Box display="flex" justifyContent="center">
-
-            {[selectableProgresses].flat().map((progress) => 
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users.map(user => user.id), positions: task.honors.map(honor => honor.position.id), progress: progress.id }}});
-                  router.push(`/works/${task.work.id}`);
-                }}
-              >
-                <Button variant="outlined" type="submit">Move to {progress.name}</Button>
-              </form>
-            )}
-              
-            </Box>
-          )
-          : <NoContentsBox />
-        }
-    </Container>
+      </Container>
     </Layout>
   );
 }
