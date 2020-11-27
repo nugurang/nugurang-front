@@ -98,7 +98,9 @@ function Notifications(){
 
   allNotifications.forEach(function(notification){
     if (notification.type.name == "TEAM_INVITATION") {
-      notification.onClick = () => router.push({pathname: "/teams/join", query: { notification: notification.id }});
+      notification.onClick = () => router.push({pathname: "/teams/join", query: { invitation: notification.data[0] }});
+    } else if (notification.type.name == "PROJECT_INVITATION") {
+      notification.onClick = () => router.push({pathname: "/projects/join", query: { invitation: notification.data[0] }});
     }
   });
 

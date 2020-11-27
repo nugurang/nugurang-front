@@ -52,6 +52,9 @@ export default function NotificationListItem({ notification }) {
           <Box display={notification.type.name == "TEAM_INVITATION" ? "block" : "none"}>
             {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{"You are invited to team "}{string}{"."}</Typography></Grid>)}
           </Box>
+          <Box display={notification.type.name == "PROJECT_INVITATION" ? "block" : "none"}>
+            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{"You are invited to project "}{string}{"."}</Typography></Grid>)}
+          </Box>
         </Grid>
       </Grid>
     </ListItem>

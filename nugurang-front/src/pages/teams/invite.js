@@ -119,7 +119,6 @@ function Invite() {
     users.forEach(function(user){
       user.onClick = async (e) => {
         setSelectedUsers(Array.from(new Set(selectedUsers.concat([user]))));
-        console.log(selectedUsers);
       }
     });
   }
@@ -174,7 +173,7 @@ function Invite() {
         </SectionBox>
 
         <Box display={selectedUsers && selectedUsers.length ? "block" : "none"}>
-          <SectionBox titleBar=<SectionTitleBar title="Selected users beta" icon=<FindInPageIcon /> /> >
+          <SectionBox titleBar=<SectionTitleBar title="Selected users" icon=<FindInPageIcon /> /> >
             <Grid container>{[selectedUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
           </SectionBox>
         </Box>

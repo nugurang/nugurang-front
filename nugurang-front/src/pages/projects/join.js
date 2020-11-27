@@ -40,15 +40,15 @@ export const CURRENT_USER = gql`
 `;
 
 
-export const GET_TEAM_INVITATION = gql`
-  query GetTeamInvitation($id: ID!) {
-    getTeamInvitation(id: $id) {
+export const GET_PROJECT_INVITATION = gql`
+  query GetProjectInvitation($id: ID!) {
+    getProjectInvitation(id: $id) {
       id
       status {
         id
         name
       }
-      team {
+      project {
         id
         name
       }
@@ -56,15 +56,15 @@ export const GET_TEAM_INVITATION = gql`
   }
 `;
 
-export const UPDATE_TEAM_INVITATION_ACCEPTED = gql`
-  mutation UpdateTeamInvitationAccepted($id: ID!) {
-    updateTeamInvitationAccepted(id: $id)
+export const UPDATE_PROJECT_INVITATION_ACCEPTED = gql`
+  mutation UpdateProjectInvitationAccepted($id: ID!) {
+    updateProjectInvitationAccepted(id: $id)
   }
 `;
 
-export const UPDATE_TEAM_INVITATION_DENIED = gql`
-  mutation UpdateTeamInvitationDenied($id: ID!) {
-    updateTeamInvitationDenied(id: $id)
+export const UPDATE_PROJECT_INVITATION_DENIED = gql`
+  mutation UpdateProjectInvitationDenied($id: ID!) {
+    updateProjectInvitationDenied(id: $id)
   }
 `;
 
@@ -75,13 +75,13 @@ function Join() {
 
   const results = [
     [null, useQuery(CURRENT_USER)],
-    [null, useQuery(GET_TEAM_INVITATION, {variables: {id: router.query.invitation}})],
-    useMutation(UPDATE_TEAM_INVITATION_ACCEPTED),
-    useMutation(UPDATE_TEAM_INVITATION_DENIED),
+    [null, useQuery(GET_PROJECT_INVITATION, {variables: {id: router.query.invitation}})],
+    useMutation(UPDATE_PROJECT_INVITATION_ACCEPTED),
+    useMutation(UPDATE_PROJECT_INVITATION_DENIED),
   ];
-  const [currentUser, getTeamInvitation, updateTeamInvitationAccepted, updateTeamInvitationDenied] = results.map(result => result[0]);
+  const [currentUser, getProjectInvitation, updateProjectInvitationAccepted, updateProjectInvitationDenied] = results.map(result => result[0]);
   const user = results[0][1].data?.currentUser;
-  const invitation = results[1][1].data?.getTeamInvitation;
+  const invitation = results[1][1].data?.getProjectInvitation;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -104,8 +104,8 @@ function Join() {
           </Grid>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              {"You are invited to team "}
-              {invitation.team.name}{"."}
+              {"You are invited to project "}
+              {invitation.project.name}{"."}
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">
@@ -115,8 +115,8 @@ function Join() {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                updateTeamInvitationAccepted({ variables: { id: router.query.invitation }});
-                router.push(`/teams/${invitation.team.id}`);
+                updateProjectInvitationAccepted({ variables: { id: router.query.invitation }});
+                router.push(`/projects/${invitation.project.id}`);
               }}
             >
               <Box align="center">
@@ -128,7 +128,7 @@ function Join() {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                updateTeamInvitationDenied({ variables: { id: router.query.invitation }});
+                updateProjectInvitationDenied({ variables: { id: router.query.invitation }});
                 router.back();
               }}
             >

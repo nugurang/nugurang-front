@@ -219,18 +219,24 @@ function UserInfo() {
                   People
                 </Button>
               </Grid>
-              <Grid item align="right">
-                <form
-                  onSubmit={e => {
-                    e.preventDefault();
-                    createFollowing({ variables: {user: router.query.id}});
-                  }}
-                >
-                  <Button variant="outlined" type="submit">
-                    Follow
-                  </Button>
-                </form>
-              </Grid>
+              {
+                user.id != currentUser.id
+                ? (
+                  <Grid item align="right">
+                    <form
+                      onSubmit={e => {
+                        e.preventDefault();
+                        createFollowing({ variables: {user: router.query.id}});
+                      }}
+                    >
+                      <Button variant="outlined" type="submit">
+                        Follow
+                      </Button>
+                    </form>
+                  </Grid>
+                )
+                : <></>
+              }
             </Grid>
           </SectionBox>
         </Grid>
