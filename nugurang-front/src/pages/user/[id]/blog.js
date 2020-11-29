@@ -122,29 +122,29 @@ const THREAD_LIST_ITEMS = [
       }
       blog{
         id
-      }
-      getThreads(page: 0, pageSize: 5) {
-        id
-        name
-        user {
-          name
-          image {
-            address
-          }
-        }
-        firstArticle {
+        getThreads(page: 0, pageSize: 5) {
           id
-          title
-          content
-          createdAt
-          modifiedAt
-          images {
-            address
+          name
+          user {
+            name
+            image {
+              address
+            }
           }
-          viewCount
-          upCount
-          downCount
-          starCount
+          firstArticle {
+            id
+            title
+            content
+            createdAt
+            modifiedAt
+            images {
+              address
+            }
+            viewCount
+            upCount
+            downCount
+            starCount
+          }
         }
       }
     }
@@ -153,6 +153,7 @@ const THREAD_LIST_ITEMS = [
 
 function Blog() {
  const router = useRouter();
+
   const responses = [
     useQuery(GET_USER, {variables: {id: router.query.id}})
   ];
@@ -163,8 +164,10 @@ function Blog() {
   if (responses.some((response) => response.loading))
     return <Loading />;
 
-  const user = responses[0].data.getUser;
-  THREAD_LIST_ITEMS.forEach(function(thread){
+  const user = responses[0].data ? responses[0].data.getUser : null;
+  const threads = responses[0].data ? responses[0].data.getUser.blog.getThreads : null;
+
+  threads.forEach(function(thread){
     thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
 
@@ -177,8 +180,8 @@ function Blog() {
       </PageTitleBar>
       <SectionBox>
         {
-              THREAD_LIST_ITEMS
-              ? <List>{THREAD_LIST_ITEMS.flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              threads
+              ? <List>{[threads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
               : <NoContentsBox />
             }
       </SectionBox>

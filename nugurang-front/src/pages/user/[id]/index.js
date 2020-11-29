@@ -118,8 +118,32 @@ const GET_USER = gql`
         id
         address
       }
-      blog {
+      blog{
         id
+        getThreads(page: 0, pageSize: 3) {
+          id
+          name
+          user {
+            name
+            image {
+              address
+            }
+          }
+          firstArticle {
+            id
+            title
+            content
+            createdAt
+            modifiedAt
+            images {
+              address
+            }
+            viewCount
+            upCount
+            downCount
+            starCount
+          }
+        }
       }
       getThreads(page: 0, pageSize: 3) {
         id
@@ -182,6 +206,7 @@ function UserInfo() {
   ];
   const user = results[0][1].data ? results[0][1].data.getUser : null;
   const recentThreads = results[0][1].data ? results[0][1].data.getUser.getThreads : [];
+  const recentBlogs = results[0][1].data ? results[0][1].data.getUser.blog.getThreads : [];
   const currentUser = results[1][1].data ? results[1][1].data.currentUser : null;
   const [getUser, getCurrentUser, createFollowing] = results.map(result => result[0]);
 
@@ -193,6 +218,10 @@ function UserInfo() {
 
   recentThreads.forEach(function(thread){
     thread.onClick = () => router.push(`/threads/${thread.id}`);
+  });
+
+  recentBlogs.forEach(function(blogThread){
+    blogThread.onClick = () => router.push(`/threads/${blogThread.id}`);
   });
 
   return (
@@ -267,8 +296,8 @@ function UserInfo() {
             )}
           >
             {
-              TEST_BLOG_THREAD && (TEST_BLOG_THREAD.length)
-              ? <List>{[TEST_BLOG_THREAD].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              user.blog.getThreads && (user.blog.getThreads.length)
+              ? <List>{[recentBlogs].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
               : <NoContentsBox />
             }
           </SectionBox>
