@@ -43,47 +43,8 @@ export const CURRENT_USER = gql`
   }
 `;
 
-const TEST_NOTIFICATION_LIST = [
-  {
-    id: 0,
-    title: "New Comments",
-    content: "I don't think so",
-    createdAt: "11/01 13:11",
-    link: "/threads/904",
-  },
-  {
-    id: 1,
-    title: "New Comments",
-    content: "I agree with you",
-    createdAt: "11/02 15:23",
-    link: "/threads/896",
-  },
-  {
-    id: 2,
-    title: "New Comments",
-    content: "I don't know",
-    createdAt: "11/04 18:37",
-    link: "/threads/896",
-    },
-  {
-    id: 3,
-    title: "New Comments",
-    content: "I don't know",
-    createdAt: "11/05 11:52",
-    link: "/threads/896",
-    },
-  {
-    id: 4,
-    title: "New Comments",
-    content: "I don't know",
-    createdAt: "11/06 7:26",
-    link: "/threads/896",
-  },
-];
-
 function Notifications(){
   const router = useRouter();
-
   const results = [
     [null, useQuery(CURRENT_USER)],
   ];
