@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
@@ -15,6 +15,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import withAuth from '../../components/withAuth';
+import BaseSwitch from '../../components/BaseSwitch';
 import BaseTabs from '../../components/BaseTabs';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
@@ -56,6 +57,7 @@ const GET_TEAM = gql`
             address
           }
         }
+        finished
       }
       getUsers(page: 0, pageSize: 100) {
         id
@@ -82,6 +84,10 @@ const DELETE_TEAM = gql`
 function TeamInfo() {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [showFinished, setShowFinished] = useState(false);
+  const toggleShowFinished = () => {
+    setShowFinished((prev) => !prev);
+  };
 
   const responses = [
     useQuery(GET_TEAM, {variables: {id: router.query.id}}),
@@ -92,6 +98,7 @@ function TeamInfo() {
   if (responses.some((response) => response.loading))
     return <Loading />;
   const team = responses[0].data ? responses[0].data.getTeam : null;
+  const projects = showFinished ? team.projects : team.projects.filter(project => !project.finished);
 
   team.projects.forEach(function(project){
     project.onClick = () => router.push(`/projects/${project.id}`);
@@ -156,13 +163,22 @@ function TeamInfo() {
         <SectionBox>
           <BaseTabs tabProps={TAB_PROPS}>
             {
-              team.projects && (team.projects.length)
-              ? <Grid container>{[team.projects].flat().map((project) => <Grid item xs={12} sm={6}><ProjectInfoCard project={project} /></Grid>)}</Grid>
+              projects && (projects.length)
+              ? (
+                <>
+                  <Grid container justify="flex-end">
+                    <Grid item>
+                      <BaseSwitch label="Show finished projects" checked={showFinished} onChange={toggleShowFinished} />
+                    </Grid>
+                  </Grid>
+                  <Grid container>{projects.flat().map((project) => <Grid item xs={12} sm={6}><ProjectInfoCard project={project} /></Grid>)}</Grid>
+                </>
+              )
               : <NoContentsBox />
             }
             {
               team.getUsers && (team.getUsers.length)
-              ? <Grid container>{[team.getUsers].flat().map((user) => <Grid item xs={12} sm={6}><UserInfoCard user={user} /></Grid>)}</Grid>
+              ? <Grid container>{team.getUsers.flat().map((user) => <Grid item xs={12} sm={6}><UserInfoCard user={user} /></Grid>)}</Grid>
               : <NoContentsBox />
             }
           </BaseTabs>

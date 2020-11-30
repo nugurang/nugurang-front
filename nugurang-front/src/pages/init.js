@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { gql } from '@apollo/client';
 import { withApollo } from '@apollo/react-hoc';
 import { loremIpsum } from 'lorem-ipsum';
@@ -5,6 +6,7 @@ import { useEffect, useState } from 'react';
 import {useRouter} from 'next/router';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import DayjsUtils from "@date-io/dayjs";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -174,10 +176,10 @@ function Init({client}) {
             event: {
               name: loremIpsum({units: "word"}),
               description: loremIpsum(),
-              recruitingStart: "2016-01-01T13:10:20Z",
-              recruitingEnd: "2016-01-01T13:10:20Z",
-              eventStart: "2016-01-01T13:10:20Z",
-              eventEnd: "2016-01-01T13:10:20Z",
+              recruitingStart: new Date(dayjs()),
+              recruitingEnd: new Date(dayjs()),
+              eventStart: new Date(dayjs()),
+              eventEnd: new Date(dayjs()),
               images: []
             }
           }

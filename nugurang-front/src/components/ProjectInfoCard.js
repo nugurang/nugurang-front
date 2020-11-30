@@ -10,7 +10,7 @@ export default function ProjectInfoCard({ project }) {
   return (
     <UserGroupInfoCard
       primary={project.name}
-      secondary={project.name}
+      secondary={project.finished ? "Finished" : project.name}
       title={project.title}
       users={project.users}
       onClick={() => project.onClick ? project.onClick() : null}
