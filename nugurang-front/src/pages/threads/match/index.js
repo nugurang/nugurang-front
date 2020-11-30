@@ -195,7 +195,7 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: selectedDate.diff(dayjs(), "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >
@@ -208,7 +208,7 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["HONOR"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["HONOR"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: selectedDate.diff(dayjs(), "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >
@@ -221,7 +221,7 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["PERSONALITY"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: dayjs().diff(selectedDate, "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["PERSONALITY"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: selectedDate.diff(dayjs(), "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >

@@ -215,14 +215,15 @@ function Init({client}) {
       const getCommonBoards = await client.query({query: GET_BOARDS_BY_NAMES, variables: {names: COMMON_BOARDS}})
       for (const board of getCommonBoards.data.getBoardsByNames.map(board => board.id)) {
         for (let i = 0; i < 10; ++i) {
+          const threadName = loremIpsum();
           const createThread = await client.mutate({
             mutation: CREATE_THREAD,
             variables: {
               board,
               thread: {
-                name: loremIpsum(),
+                name: threadName,
                 firstArticle: {
-                  title: loremIpsum(),
+                  title: threadName,
                   content: loremIpsum(),
                   images: []
                 }

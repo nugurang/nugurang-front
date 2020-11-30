@@ -3,8 +3,9 @@ import {useRouter} from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Grid from'@material-ui/core/Grid';
 import List from '@material-ui/core/List';
-import EditIcon from '@material-ui/icons/Edit';
 import Button from'@material-ui/core/Button';
+
+import AddIcon from '@material-ui/icons/Add';
 
 import GraphQlError from '../../../components/GraphQlError';
 import HonorCard from '../../../components/HonorCard';
@@ -15,100 +16,6 @@ import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import ThreadListItem from '../../../components/ThreadListItem';
 import withAuth from '../../../components/withAuth';
-
-
-const COMP_OV_IMAGE_ADDRESS = "/static/images/sample_1.jpg";
-
-const THREAD_LIST_ITEMS = [
-    {
-      id: 0,
-      name: "Test thread 1",
-      user: {
-        id: 0,
-        name: "Test user name",
-        image: {
-          id: 0,
-          address: {COMP_OV_IMAGE_ADDRESS},
-        },
-      },
-      team: null,
-      event: null,
-      firstArticle: {
-        id: 0,
-        content: "First article",
-        viewCount: 10,
-        createdAt: "2020-09-01 00:00:00",
-        modifiedAt: "2020-09-02 00:00:00",
-        title: "First article title",
-        user: {
-          id: 0,
-          name: "Test user name",
-          image: {
-            id: 0,
-            address: {COMP_OV_IMAGE_ADDRESS},
-          },
-        },
-        parent: null,
-        images: [
-          {
-            id: 0,
-            address: {COMP_OV_IMAGE_ADDRESS},
-          },
-        ],
-      },
-      getArticles: {
-
-      },
-      upCount: 1,
-      downCount: 2,
-      starCount: 3,
-      commentCount: 4,
-    },
-    {
-      id: 0,
-      name: "Test thread 2",
-      user: {
-        id: 0,
-        name: "Test user name",
-        image: {
-          id: 0,
-          address: {COMP_OV_IMAGE_ADDRESS},
-        },
-      },
-      team: null,
-      event: null,
-      firstArticle: {
-        id: 0,
-        content: "First article",
-        viewCount: 10,
-        createdAt: "2020-09-01 00:00:00",
-        modifiedAt: "2020-09-02 00:00:00",
-        title: "First article title",
-        user: {
-          id: 0,
-          name: "Test user name",
-          image: {
-            id: 0,
-            address: {COMP_OV_IMAGE_ADDRESS},
-          },
-        },
-        parent: null,
-        images: [
-          {
-            id: 0,
-            address: {COMP_OV_IMAGE_ADDRESS},
-          },
-        ],
-      },
-      getArticles: {
-
-      },
-      upCount: 1,
-      downCount: 2,
-      starCount: 3,
-      commentCount: 4,
-    },
-  ];
 
 
   export const GET_USER = gql`
@@ -175,15 +82,15 @@ function Blog() {
     <Layout>
       <PageTitleBar title="Blog" backButton>
         <Button variant="" onClick={() => router.push({pathname: "/threads/create", query: { board: user.blog.id }})}>
-          <EditIcon />
+          <AddIcon />
         </Button>
       </PageTitleBar>
       <SectionBox>
         {
-              threads
-              ? <List>{[threads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
-              : <NoContentsBox />
-            }
+          threads && threads.length
+          ? <List>{[threads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+          : <NoContentsBox />
+        }
       </SectionBox>
     </Layout>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -32,14 +33,16 @@ export default function TaskInfoBox({ task }) {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <Chip color="primary" style={{margin: "0.5rem 0"}} label={task.progress.name} />
+        <Box style={{margin: "0 0.5rem"}}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item>
+              <Chip color="primary" style={{margin: "0.5rem 0"}} label={task.progress.name} />
+            </Grid>
+            <Grid item>
+              <Chip color="primary" style={{margin: "0.5rem 0"}} avatar={<Avatar>Lv</Avatar>} label={task.difficulty} />
+            </Grid>
           </Grid>
-          <Grid item>
-            <Chip color="primary" style={{margin: "0.5rem 0"}} avatar={<Avatar>Lv</Avatar>} label={task.difficulty} />
-          </Grid>
-        </Grid>
+        </Box>
       </Grid>
     </Grid>
   );

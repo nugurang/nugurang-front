@@ -128,42 +128,39 @@ function Task() {
         <SectionBox border={false}>
           <TaskInfoBox task={task} />
         </SectionBox>
-
-
-      <SectionBox>
-        <BaseTabs tabProps={TAB_PROPS}>
-          {
-            selectableProgresses && (selectableProgresses.length)
-            ? (
-              <Box display="flex" justifyContent="center">
-                {[selectableProgresses].flat().map((progress) => 
-                  <form
-                    onSubmit={async (e) => {
-                      e.preventDefault();
-                      await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users.map(user => user.id), positions: task.positions.map(position => position.id), progress: progress.id }}});
-                      router.push(`/works/${task.work.id}`);
-                    }}
-                  >
-                    <Button variant="outlined" type="submit">Move to {progress.name}</Button>
-                  </form>
-                )}
-              </Box>
-            )
-            : <NoContentsBox />
-          }
-          {
-            task.positions && (task.positions.length)
-            ? <Grid container>{[task.positions].flat().map((position) => <Grid item xs={12} sm={6} md={4}><PositionInfoCard position={position} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-          {
-            task.users && (task.users.length)
-            ? <Grid container>{[task.users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-        </BaseTabs>
-      </SectionBox>
-
+        <SectionBox>
+          <BaseTabs tabProps={TAB_PROPS}>
+            {
+              selectableProgresses && (selectableProgresses.length)
+              ? (
+                <Box display="flex" justifyContent="center">
+                  {[selectableProgresses].flat().map((progress) => 
+                    <form
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users.map(user => user.id), positions: task.positions.map(position => position.id), progress: progress.id }}});
+                        router.push(`/works/${task.work.id}`);
+                      }}
+                    >
+                      <Button variant="outlined" type="submit">Move to {progress.name}</Button>
+                    </form>
+                  )}
+                </Box>
+              )
+              : <NoContentsBox />
+            }
+            {
+              task.positions && (task.positions.length)
+              ? <Grid container>{[task.positions].flat().map((position) => <Grid item xs={12} sm={6} md={4}><PositionInfoCard position={position} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+            {
+              task.users && (task.users.length)
+              ? <Grid container>{[task.users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+          </BaseTabs>
+        </SectionBox>
       </Container>
     </Layout>
   );
