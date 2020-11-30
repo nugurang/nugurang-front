@@ -72,18 +72,6 @@ const GET_WORK = gql`
           id
           name
         }
-        honors {
-          honor
-          position {
-            id
-            name
-            description
-            image {
-              id
-              address
-            }
-          }
-        }
         users {
           id
           name

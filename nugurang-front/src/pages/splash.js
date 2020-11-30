@@ -43,7 +43,7 @@ export default function Splash() {
               <img src="/static/favicons/favicon-nugurang.png" alt="Nugurang" />
             </Grid>
             <Grid item align="center">
-              <Typography variant="h2">Nugurang</Typography>
+              <Typography variant="h2" style={{fontWeight: "400"}}>Nugurang</Typography>
             </Grid>
           </Grid>
         </Grid>

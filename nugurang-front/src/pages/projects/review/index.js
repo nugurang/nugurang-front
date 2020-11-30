@@ -149,7 +149,7 @@ function ProjectInfo() {
                           </Avatar>
                         </Grid>
                         <Grid item xs justify="flex-start">
-                          <Typography variant="h6">
+                          <Typography variant="body1">
                             {user.name}
                           </Typography>
                         </Grid>

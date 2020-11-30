@@ -57,6 +57,11 @@ function More() {
       title: "Find user",
       onClick: () => router.push(`/user/find`)
     },
+    {
+      id: 1,
+      title: "Positions",
+      onClick: () => router.push(`/positions`)
+    },
   ]
 
   const MENU_DEVELOPERS = [

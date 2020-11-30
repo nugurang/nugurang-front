@@ -19,7 +19,7 @@ import PositionInfoCard from '../../components/PositionInfoCard';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TaskInfoBox from '../../components/TaskInfoBox';
-
+import UserInfoCard from '../../components/UserInfoCard';
 
 const TAB_PROPS = [
   {
@@ -29,6 +29,10 @@ const TAB_PROPS = [
   {
     id: 1,
     label: "Positions",
+  },
+  {
+    id: 2,
+    label: "Users",
   },
 ]
 
@@ -55,11 +59,13 @@ const GET_TASK = gql`
         id
         name
       }
-      honors {
-        honor
-        position {
+      positions {
+        id
+        name
+        description
+        image {
           id
-          name
+          address
         }
       }
       users {
@@ -118,7 +124,7 @@ function Task() {
           Evaluate
         </Button>
       </PageTitleBar>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <SectionBox border={false}>
           <TaskInfoBox task={task} />
         </SectionBox>
@@ -134,7 +140,7 @@ function Task() {
                   <form
                     onSubmit={async (e) => {
                       e.preventDefault();
-                      await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users.map(user => user.id), positions: task.honors.map(honor => honor.position.id), progress: progress.id }}});
+                      await updateTask({ variables: {id: router.query.id, task: { name: task.name, users: task.users.map(user => user.id), positions: task.positions.map(position => position.id), progress: progress.id }}});
                       router.push(`/works/${task.work.id}`);
                     }}
                   >
@@ -146,8 +152,13 @@ function Task() {
             : <NoContentsBox />
           }
           {
-            task.honors && (task.honors.length)
-            ? <Grid container>{[task.honors].flat().map((honor) => <Grid item xs={12}><PositionInfoCard position={honor.position} /></Grid>)}</Grid>
+            task.positions && (task.positions.length)
+            ? <Grid container>{[task.positions].flat().map((position) => <Grid item xs={12} sm={6} md={4}><PositionInfoCard position={position} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
+          {
+            task.users && (task.users.length)
+            ? <Grid container>{[task.users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </BaseTabs>
