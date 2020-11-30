@@ -12,12 +12,14 @@ import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Slider from '@material-ui/core/Slider';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import EmojiFlagsIcon from '@material-ui/icons/EmojiFlags';
 import PersonIcon from '@material-ui/icons/Person';
 import ViewListIcon from '@material-ui/icons/ViewList';
 
@@ -69,6 +71,18 @@ export const CREATE_TASK = gql`
   }
 `;
 
+
+const marks = [
+  {
+    value: 0,
+    label: 'Easy',
+  },
+  {
+    value: 10,
+    label: 'Hard',
+  }
+];
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -77,6 +91,7 @@ function CreateTask() {
   const newName = useRef(null);
   const [selectedUser, setSelectedUser] = useState();
   const [selectedPositions, setSelectedPositions] = useState();
+  const [difficulty, setDifficulty] = useState();
 
   const results = [
     [null, useQuery(POSITIONS)],
@@ -174,12 +189,32 @@ function CreateTask() {
             <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
           )}
         />
-
         </SectionBox>
+
+        <SectionBox titleBar={<SectionTitleBar title="Difficluty" icon=<EmojiFlagsIcon /> />}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Box style={{margin: "2rem"}}>
+                <Slider
+                  defaultValue={5}
+                  min={0}
+                  max={10}
+                  step={1}
+                  onChange={(event, newValue) => {
+                    setDifficulty(newValue);
+                  }}
+                  valueLabelDisplay="on"
+                  marks={marks}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </SectionBox>
+
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const taskRes = await createTask({ variables: {work: router.query.work, task: { name: newName.current.value, users: [selectedUser.id], positions: selectedPositions.map(position => position.id) }}});
+            const taskRes = await createTask({ variables: {work: router.query.work, task: { name: newName.current.value, users: [selectedUser.id], positions: selectedPositions.map(position => position.id), difficulty }}});
             router.push(`/works/${router.query.work}`);
           }}
         >
