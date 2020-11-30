@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Menu from '@material-ui/core/Menu';
@@ -117,8 +118,6 @@ function TeamInfo() {
           <AddIcon />
           Project
         </Button>
-
-
         <Button variant="" onClick={handleClick}>
           <MoreVertIcon />
         </Button>
@@ -149,24 +148,26 @@ function TeamInfo() {
         </Menu>
       </PageTitleBar>
 
-      <SectionBox border={false}>
-        <TeamInfoBox team={team} />
-      </SectionBox>
+      <Container maxWidth="md">
+        <SectionBox border={false}>
+          <TeamInfoBox team={team} />
+        </SectionBox>
 
-      <SectionBox>
-        <BaseTabs tabProps={TAB_PROPS}>
-          {
-            team.projects && (team.projects.length)
-            ? <Grid container>{[team.projects].flat().map((project) => <Grid item xs={12} sm={6} md={4}><ProjectInfoCard project={project} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-          {
-            team.getUsers && (team.getUsers.length)
-            ? <Grid container>{[team.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-        </BaseTabs>
-      </SectionBox>
+        <SectionBox>
+          <BaseTabs tabProps={TAB_PROPS}>
+            {
+              team.projects && (team.projects.length)
+              ? <Grid container>{[team.projects].flat().map((project) => <Grid item xs={12} sm={6}><ProjectInfoCard project={project} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+            {
+              team.getUsers && (team.getUsers.length)
+              ? <Grid container>{[team.getUsers].flat().map((user) => <Grid item xs={12} sm={6}><UserInfoCard user={user} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+          </BaseTabs>
+        </SectionBox>
+      </Container>
 
     </Layout>
   );

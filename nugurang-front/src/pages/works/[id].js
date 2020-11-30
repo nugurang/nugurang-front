@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Menu from '@material-ui/core/Menu';
@@ -168,28 +169,30 @@ function WorkInfo() {
           </MenuItem>
         </Menu>
       </PageTitleBar>
-      <SectionBox border={false}>
-        <WorkInfoBox work={work} />
-      </SectionBox>
-      <SectionBox>
-        <BaseTabs tabProps={TAB_PROPS}>
-          {
-            tasksTodo && (tasksTodo.length)
-            ? <Grid container>{[tasksTodo].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-          {
-            tasksDoing && (tasksDoing.length)
-            ? <Grid container>{[tasksDoing].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-          {
-            tasksDone && (tasksDone.length)
-            ? <Grid container>{[tasksDone].flat().map((task) => <Grid item xs={12} sm={6} md={4}><TaskInfoCard task={task} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-        </BaseTabs>
-      </SectionBox>
+      <Container maxWidth="md">
+        <SectionBox border={false}>
+          <WorkInfoBox work={work} />
+        </SectionBox>
+        <SectionBox>
+          <BaseTabs tabProps={TAB_PROPS}>
+            {
+              tasksTodo && (tasksTodo.length)
+              ? <Grid container>{[tasksTodo].flat().map((task) => <Grid item xs={12} sm={6}><TaskInfoCard task={task} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+            {
+              tasksDoing && (tasksDoing.length)
+              ? <Grid container>{[tasksDoing].flat().map((task) => <Grid item xs={12} sm={6}><TaskInfoCard task={task} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+            {
+              tasksDone && (tasksDone.length)
+              ? <Grid container>{[tasksDone].flat().map((task) => <Grid item xs={12} sm={6}><TaskInfoCard task={task} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+          </BaseTabs>
+        </SectionBox>
+      </Container>
     </Layout>
   );
 }

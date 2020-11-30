@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -171,25 +172,26 @@ function ProjectInfo() {
           </MenuItem>
         </Menu>
       </PageTitleBar>
+      <Container maxWidth="md">
+        <SectionBox border={false}>
+          <ProjectInfoBox project={project} />
+        </SectionBox>
 
-      <SectionBox border={false}>
-        <ProjectInfoBox project={project} />
-      </SectionBox>
-
-      <SectionBox>
-        <BaseTabs tabProps={TAB_PROPS}>
-          {
-            project.works && (project.works.length)
-            ? <Grid container>{[project.works].flat().map((work) => <Grid item xs={12} sm={6} md={4}><WorkInfoCard work={work} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-          {
-            project.getUsers && (project.getUsers.length)
-            ? <Grid container>{[project.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
-            : <NoContentsBox />
-          }
-        </BaseTabs>
-      </SectionBox>
+        <SectionBox>
+          <BaseTabs tabProps={TAB_PROPS}>
+            {
+              project.works && (project.works.length)
+              ? <Grid container>{[project.works].flat().map((work) => <Grid item xs={12} sm={6}><WorkInfoCard work={work} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+            {
+              project.getUsers && (project.getUsers.length)
+              ? <Grid container>{[project.getUsers].flat().map((user) => <Grid item xs={12} sm={6}><UserInfoCard user={user} /></Grid>)}</Grid>
+              : <NoContentsBox />
+            }
+          </BaseTabs>
+        </SectionBox>
+      </Container>
 
     </Layout>
   );

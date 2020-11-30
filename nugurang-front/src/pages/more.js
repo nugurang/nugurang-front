@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 
 import CodeIcon from '@material-ui/icons/Code';
+import PersonIcon from '@material-ui/icons/Person';
 import QueueIcon from '@material-ui/icons/Queue';
 
 import { BACKEND_ADDR } from '../config';
@@ -50,6 +51,20 @@ export const CURRENT_USER = gql`
 function More() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
+
+
+  const MENU_USER = [
+    {
+      id: 0,
+      title: "My information",
+      onClick: () => router.push(`/user/${user.id}`)
+    },
+    {
+      id: 1,
+      title: "My blog",
+      onClick: () => router.push(`/user/${user.id}/blog`)
+    },
+  ]
 
   const MENU_SEARCH = [
     {
@@ -149,6 +164,14 @@ function More() {
           </SectionBox>
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
+
+          <SectionBox titleBar={<SectionTitleBar title="My account" icon=<PersonIcon /> />}>
+            {
+              MENU_USER && (MENU_USER.length)
+              ? <List container>{[MENU_USER].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>
+              : <NoContentsBox />
+            }
+          </SectionBox>
 
           <SectionBox titleBar={<SectionTitleBar title="Search tools" icon=<QueueIcon /> />}>
             {

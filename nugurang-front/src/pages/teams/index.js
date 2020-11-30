@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -64,14 +65,15 @@ function Teams() {
           <AddIcon />
         </IconButton>
       </PageTitleBar>
-
-      <SectionBox titleBar={(<SectionTitleBar title="My teams" icon={<GroupIcon />} />)}>
-        {
-          teams && (teams.length)
-          ? <Grid container>{[teams].flat().map((team) => <Grid item xs={12} sm={6} md={4}><TeamInfoCard team={team} /></Grid>)}</Grid>
-          : <NoContentsBox />
-        }
-      </SectionBox>
+      <Container maxWidth="md">
+        <SectionBox titleBar={(<SectionTitleBar title="My teams" icon={<GroupIcon />} />)}>
+          {
+            teams && (teams.length)
+            ? <Grid container>{[teams].flat().map((team) => <Grid item xs={12} sm={6}><TeamInfoCard team={team} /></Grid>)}</Grid>
+            : <NoContentsBox />
+          }
+        </SectionBox>
+      </Container>
     </Layout>
   );
 }
