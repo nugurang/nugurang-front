@@ -28,7 +28,14 @@ export const GET_CURRENT_USER = gql`
       getTeams(page: 0, pageSize: 100) {
         id
         name
-        getUsers(page: 0, pageSize: 100) {
+        owner {
+          id
+          image {
+            id
+            address
+          }
+        }
+        getMembers(page: 0, pageSize: 100) {
           id
           image {
             id
@@ -53,8 +60,8 @@ function Teams() {
     return <Loading />;
 
   const teams = responses[0].data.currentUser ? responses[0].data.currentUser.getTeams : null;
-
   teams.forEach(function(team){
+    team.getUsers = [team.owner].concat(team.getMembers);
     team.onClick = () => router.push(`/teams/${team.id}`);
   });
 

@@ -46,15 +46,6 @@ const GET_TEAM = gql`
           }
         }
       }
-      getUsers(page: 0, pageSize: 100) {
-        id
-        name
-        email
-        image {
-          id
-          address
-        }
-      }
     }
   }
 `;

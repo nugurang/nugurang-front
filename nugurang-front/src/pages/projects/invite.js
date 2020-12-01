@@ -30,7 +30,7 @@ const GET_PROJECT = gql`
       name
       team {
         id
-        getUsers(page: 0, pageSize: 100) {
+        getMembers(page: 0, pageSize: 100) {
           id
           name
           email
@@ -67,7 +67,7 @@ function Invite() {
   if (errorResult)
     return <GraphQlError error={errorResult[1].error} />
 
-  project.team.getUsers.forEach(function(user){
+  project.team.getMembers.forEach(function(user){
     user.onClick = async (e) => {
       setSelectedUsers(Array.from(new Set(selectedUsers.concat([user]))));
       console.log(selectedUsers);
@@ -101,8 +101,8 @@ function Invite() {
 
         <SectionBox title=<SectionTitleBar title="Result" icon=<FindInPageIcon /> /> >
           {
-            project.team.getUsers
-            ? <Grid container>{[project.team.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+            project.team.getMembers && project.team.getMembers.length
+            ? <Grid container>{[project.team.getMembers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </SectionBox>

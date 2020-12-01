@@ -18,7 +18,7 @@ export default function ArticleLeader({ article }) {
   return (
     <Box>
       <BaseImage
-        image={article.image ? article.image : NO_THREAD_IMAGE_ADDRESS}
+        image={article.image ? article.image[0] : NO_THREAD_IMAGE_ADDRESS}
         imageTitle={article.title ? article.title : null}
       />
       <Accordion variant="outlined" defaultExpanded>
