@@ -125,7 +125,7 @@ function Match() {
 
   const results = [
     [null, useQuery(MATCH_TYPES)],
-    [null, useQuery(GET_THREAD, {variables: {id: router.query.id}})],
+    [null, useQuery(GET_THREAD, {variables: {id: router.query.thread}})],
     useLazyQuery(GET_MATCH_TYPE_BY_NAME),
     useMutation(CREATE_MATCH_REQUEST),
   ];
@@ -272,7 +272,7 @@ function Match() {
                   onSubmit={async (e) => {
                     e.preventDefault();
                     await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
-                    router.push(`/threads/match/success`);
+                    router.push(`/match/request/success`);
                   }}
                 >
                   <Box align="center">
@@ -285,7 +285,7 @@ function Match() {
                   onSubmit={async (e) => {
                     e.preventDefault();
                     await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["HONOR"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
-                    router.push(`/threads/match/success`);
+                    router.push(`/match/request/success`);
                   }}
                 >
                   <Box align="center">
@@ -298,7 +298,7 @@ function Match() {
                   onSubmit={async (e) => {
                     e.preventDefault();
                     await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["PERSONALITY"], minTeamSize, maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
-                    router.push(`/threads/match/success`);
+                    router.push(`/match/request/success`);
                   }}
                 >
                   <Box align="center">
