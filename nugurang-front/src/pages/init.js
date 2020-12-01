@@ -333,7 +333,7 @@ function Init({client}) {
         </Grid>
         <Grid item xs={12} align="center">
           <Box align="center">
-            <Button onClick={() => router.push(`/home`)}>Go Home</Button>
+            <Button variant="outlined" onClick={() => router.push(`/home`)}>Go Home</Button>
           </Box>
         </Grid>
       </Grid>
