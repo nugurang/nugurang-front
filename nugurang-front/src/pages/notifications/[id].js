@@ -62,6 +62,8 @@ function Notifications(){
       notification.onClick = () => router.push({pathname: "/teams/join", query: { invitation: notification.data[0] }});
     } else if (notification.type.name == "PROJECT_INVITATION") {
       notification.onClick = () => router.push({pathname: "/projects/join", query: { invitation: notification.data[0] }});
+    } else if (notification.type.name == "MATCH_SUCCESS") {
+      notification.onClick = () => router.push({pathname: "/match/join", query: { matchType: notification.data[0], event: notification.data[1], team: notification.data[2] }});
     }
   });
 

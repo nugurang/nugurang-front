@@ -271,6 +271,9 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
+                    console.log(selectedDate);
+                    console.log(dayjs());
+                    console.log(selectedDate.diff(dayjs(), "day"));
                     await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
                     router.push(`/match/request/success`);
                   }}

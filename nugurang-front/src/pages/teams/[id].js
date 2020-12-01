@@ -42,7 +42,7 @@ const TAB_PROPS = [
 ]
 
 const GET_TEAM = gql`
-  query getTeam($id: ID!) {
+  query GetTeam($id: ID!) {
     getTeam(id: $id) {
       id
       name
@@ -73,7 +73,7 @@ const GET_TEAM = gql`
 `;
 
 const DELETE_TEAM = gql`
-  mutation deleteTeam($id: ID!) {
+  mutation DeleteTeam($id: ID!) {
     deleteTeam(id: $id) {
       id
     }
