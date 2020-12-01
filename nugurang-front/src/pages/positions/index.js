@@ -16,6 +16,7 @@ import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
+import PositionInfoCard from '../../components/PositionInfoCard';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import UserInfoBox from '../../components/UserInfoBox';
@@ -58,7 +59,7 @@ function Positions() {
         <SectionBox>
         {
           allPositions && (allPositions.length)
-          ? <List>{[allPositions].flat().map((position) => <BaseListItem avatar={position.image ? position.image.address : null} primary={position.name} secondary={position.description} />)}</List>
+          ? <List>{[allPositions].flat().map((position) => <PositionInfoCard position={position} />)}</List>
           : <NoContentsBox />
         }
         </SectionBox>
