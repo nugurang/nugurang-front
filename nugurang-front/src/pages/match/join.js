@@ -40,33 +40,52 @@ export const CURRENT_USER = gql`
 `;
 
 
-export const GET_TEAM_INVITATION = gql`
-  query GetTeamInvitation($id: ID!) {
-    getTeamInvitation(id: $id) {
+const GET_EVENT = gql`
+  query GetEvent($id: ID!) {
+    getEvent(id: $id) {
       id
-      status {
+      name
+      description
+      recruitingStart
+      recruitingEnd
+      eventStart
+      eventEnd
+    }
+  }
+`;
+
+
+const GET_TEAM = gql`
+  query getTeam($id: ID!) {
+    getTeam(id: $id) {
+      id
+      name
+      projects {
         id
         name
+        getUsers(page: 0, pageSize: 100) {
+          id
+          name
+          image {
+            id
+            address
+          }
+        }
+        finished
       }
-      team {
+      getUsers(page: 0, pageSize: 100) {
         id
         name
+        email
+        image {
+          id
+          address
+        }
       }
     }
   }
 `;
 
-export const UPDATE_TEAM_INVITATION_ACCEPTED = gql`
-  mutation UpdateTeamInvitationAccepted($id: ID!) {
-    updateTeamInvitationAccepted(id: $id)
-  }
-`;
-
-export const UPDATE_TEAM_INVITATION_DENIED = gql`
-  mutation UpdateTeamInvitationDenied($id: ID!) {
-    updateTeamInvitationDenied(id: $id)
-  }
-`;
 
 
 function Join() {
@@ -75,13 +94,13 @@ function Join() {
 
   const results = [
     [null, useQuery(CURRENT_USER)],
-    [null, useQuery(GET_TEAM_INVITATION, {variables: {id: router.query.invitation}})],
-    useMutation(UPDATE_TEAM_INVITATION_ACCEPTED),
-    useMutation(UPDATE_TEAM_INVITATION_DENIED),
+    [null, useQuery(GET_EVENT, {variables: {id: router.query.event}})],
+    [null, useQuery(GET_TEAM, {variables: {id: router.query.team}})],
   ];
-  const [currentUser, getTeamInvitation, updateTeamInvitationAccepted, updateTeamInvitationDenied] = results.map(result => result[0]);
+  const [currentUser, getEvent, getTeam] = results.map(result => result[0]);
   const user = results[0][1].data?.currentUser;
-  const invitation = results[1][1].data?.getTeamInvitation;
+  const event = results[1][1].data?.getEvent;
+  const team = results[1][1].data?.getTeam;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -91,7 +110,7 @@ function Join() {
 
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Invitation" icon=<CheckIcon /> />>
+      <FullScreenDialogBox titleBar=<PageTitleBar title="Match joined!" icon=<CheckIcon /> />>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Avatar className={classes.avatar}
@@ -104,38 +123,14 @@ function Join() {
           </Grid>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              {"You are invited to team "}
-              {invitation.team.name}{"."}
+              {"Your match request is finished and joined the team "}
+              {team.name}{"."}
             </Typography>
           </Grid>
-          <Grid item xs={12} align="center">
-            <Typography variant="h5">Do you want to join?</Typography>
-          </Grid>
           <Grid item align="center">
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                updateTeamInvitationAccepted({ variables: { id: router.query.invitation }});
-                router.push(`/teams/${invitation.team.id}`);
-              }}
-            >
-              <Box align="center">
-                <Button variant="outlined" type="submit">Accept</Button>
-              </Box>
-            </form>
-          </Grid>
-          <Grid item align="center">
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                updateTeamInvitationDenied({ variables: { id: router.query.invitation }});
-                router.back();
-              }}
-            >
-              <Box align="center">
-                <Button variant="outlined" type="submit">Deny</Button>
-              </Box>
-            </form>
+            <Box align="center">
+              <Button variant="outlined" type="submit" onSubmit={() => { router.push(`/teams/${team.id}`); }}>Go to team</Button>
+            </Box>
           </Grid>
         </Grid>
       </FullScreenDialogBox>
