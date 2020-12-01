@@ -89,7 +89,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 function CreateTask() {
   const router = useRouter();
   const newName = useRef(null);
-  const [selectedUser, setSelectedUser] = useState();
+  const [selectedUsers, setSelectedUsers] = useState();
   const [selectedPositions, setSelectedPositions] = useState();
   const [difficulty, setDifficulty] = useState();
 
@@ -111,7 +111,7 @@ function CreateTask() {
 
   project.getUsers.forEach(function(user){
     user.onClick = (event, newValue) => {
-      setSelectedUser(newValue);
+      setSelectedUsers(newValue);
     };
   });
 
@@ -137,8 +137,9 @@ function CreateTask() {
         </SectionBox>
         <SectionBox titleBar={<SectionTitleBar title="Select assignee" icon=<PersonIcon /> border={false} />}>
           <Autocomplete
+            multiple
             onChange={(event, newValue) => {
-              setSelectedUser(newValue);
+              setSelectedUsers(newValue);
             }}
             options={project.getUsers}
             disableCloseOnSelect
@@ -214,7 +215,7 @@ function CreateTask() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const taskRes = await createTask({ variables: {work: router.query.work, task: { name: newName.current.value, users: [selectedUser.id], positions: selectedPositions.map(position => position.id), difficulty }}});
+            const taskRes = await createTask({ variables: {work: router.query.work, task: { name: newName.current.value, users: selectedUsers.map(user => user.id), positions: selectedPositions.map(position => position.id), difficulty }}});
             router.push(`/works/${router.query.work}`);
           }}
         >
