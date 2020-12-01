@@ -166,23 +166,6 @@ function ProjectInfo() {
         }
       </SectionBox>
 
-      <Grid container spacing={2} justify="center">
-        <Grid item xs={12}>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              const projectRes = await createProject({ variables: { team: router.query.team, project: { name: newName.current.value }}});
-              const projectId = projectRes.data.createProject.id;
-              router.push("/projects/review/thank-you");
-            }}
-          >
-            <Box align="center">
-              <Button type="submit" variant="outlined">Submit</Button>
-            </Box>
-          </form>
-        </Grid>
-      </Grid>
-
     </Layout>
   );
 }

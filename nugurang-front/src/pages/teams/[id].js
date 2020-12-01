@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { gql, useMutation, useQuery } from '@apollo/client';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Menu from '@material-ui/core/Menu';
@@ -59,7 +61,16 @@ const GET_TEAM = gql`
         }
         finished
       }
-      getUsers(page: 0, pageSize: 100) {
+      owner {
+        id
+        name
+        email
+        image {
+          id
+          address
+        }
+      }
+      getMembers(page: 0, pageSize: 100) {
         id
         name
         email
@@ -97,13 +108,14 @@ function TeamInfo() {
     return <GraphQlError error={errorResponse.error} />
   if (responses.some((response) => response.loading))
     return <Loading />;
-  const team = responses[0].data ? responses[0].data.getTeam : null;
+  const team = responses[0].data?.getTeam;
   const projects = showFinished ? team.projects : team.projects.filter(project => !project.finished);
 
   team.projects.forEach(function(project){
     project.onClick = () => router.push(`/projects/${project.id}`);
   });
-  team.getUsers.forEach(function(user){
+  team.owner.onClick = () => router.push(`/user/${team.owner.id}`);
+  team.getMembers.forEach(function(user){
     user.onClick = () => router.push(`/user/${user.id}`);
   });
 
@@ -158,15 +170,15 @@ function TeamInfo() {
       <Container maxWidth="md">
         <SectionBox border={false}>
           <Grid container alignItems="center" justify="space-between">
-            <Grid item xs={12} sm>
+            <Grid item xs={12}>
               <TeamInfoBox team={team} />
-            </Grid>
-            <Grid item align="right">
-              <BaseSwitch label="Show finished projects" checked={showFinished} onChange={toggleShowFinished} />
             </Grid>
           </Grid>
         </SectionBox>
 
+        <Box display="flex" justifyContent="flex-end">
+          <Box mx="2rem"><BaseSwitch label="Show finished projects" checked={showFinished} onChange={toggleShowFinished} /></Box>
+        </Box>
         <SectionBox>
           <BaseTabs tabProps={TAB_PROPS}>
             {
@@ -175,9 +187,21 @@ function TeamInfo() {
               : <NoContentsBox />
             }
             {
-              team.getUsers && (team.getUsers.length)
-              ? <Grid container>{team.getUsers.flat().map((user) => <Grid item xs={12} sm={6}><UserInfoCard user={user} /></Grid>)}</Grid>
-              : <NoContentsBox />
+              <>
+                <Typography variant="h6">Owner</Typography>
+                <Grid container>
+                  <Grid item xs={12} sm={6}>
+                    <UserInfoCard user={team.owner} />
+                  </Grid>
+                </Grid>
+                <Divider style={{margin: "1rem"}}/>
+                <Typography variant="h6">Members</Typography>
+                {
+                  team.getMembers && (team.getMembers.length)
+                  ? <Grid container>{team.getMembers.flat().map((user) => <Grid item xs={12} sm={6}><UserInfoCard user={user} /></Grid>)}</Grid>
+                  : <NoContentsBox />
+                }
+              </>
             }
           </BaseTabs>
         </SectionBox>

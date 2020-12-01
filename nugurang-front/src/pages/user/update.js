@@ -42,7 +42,7 @@ const TAB_PROPS = [
 ]
 
 export const CURRENT_USER = gql`
-  query currentUser {
+  query CurrentUser {
     currentUser {
       id
       name
@@ -56,7 +56,7 @@ export const CURRENT_USER = gql`
 `;
 
 export const CREATE_IMAGE = gql`
-  mutation createImage($address: String!) {
+  mutation CreateImage($address: String!) {
     createImage (address: $address) {
       id
     }
@@ -64,7 +64,7 @@ export const CREATE_IMAGE = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUser($user: UserInput!) {
+  mutation UpdateUser($user: UserInput!) {
     updateUser (user: $user) {
       id
     }
@@ -187,12 +187,15 @@ function Update() {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
+                const name = newName.current.value;
+                const email = newEmail.current.value;
+                const biography = newBiography.current.value;
                 let image;
                 if (newImageAddress.current.value) {
                   const res = await createImage({ variables: { address: newImageAddress.current.value }});
-                  image = res.data.createImage.id;
+                  image = Number(res.data.createImage.id);
                 }
-                await updateUser({ variables: { user: { name: newName.current.value, email: newEmail.current.value, biography: newBiography.current.value, image }}});
+                await updateUser({ variables: { user: { name, email, biography, image }}});
                 router.push(`/user/${user.id}`);
               }}
             >

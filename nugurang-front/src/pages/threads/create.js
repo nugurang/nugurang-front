@@ -123,13 +123,15 @@ function CreateThread() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            let image;
+            const title = newTitle.current.value;
+            const content = newContent.current.value;
+            let images = [];
             if (newImageAddress.current.value) {
-              const imageRes = await createImage({ variables: { address: newImageAddress.current.value }});
-              image = imageRes.data.createImage.id;
+              const res = await createImage({ variables: { address: newImageAddress.current.value }});
+              images.push(Number(res.data.createImage.id));
             }
-            console.log(newTitle.current.value);
-            const threadRes = await createThread({ variables: { board: router.query.board, thread: {name: newTitle.current.value, firstArticle: {title: newTitle.current.value, content: newContent.current.value, images: [image]}}}});
+            console.log(images);
+            const threadRes = await createThread({ variables: { board: router.query.board, thread: {name: title, firstArticle: {title, content, images}}}});
             router.push(`/threads/${threadRes.data.createThread.id}`);
           }}
         >

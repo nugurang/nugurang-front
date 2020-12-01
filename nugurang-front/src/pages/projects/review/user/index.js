@@ -99,7 +99,7 @@ function Index() {
 
   return (
     <Layout>
-      <PageTitleBar title="Peer review" backButton />
+      <PageTitleBar title="Teammate review" backButton />
 
       <Container maxWidth="sm">
 
