@@ -78,12 +78,12 @@ function Follows() {
         <BaseTabs tabProps={TAB_PROPS}>
           {
             user.getFollowings && (user.getFollowings.length)
-            ? <Grid container>{[user.getFollowings].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+            ? <Grid container>{[user.getFollowings].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
           {
             user.getFollowers && (user.getFollowers.length)
-            ? <Grid container>{[user.getFollowers].flat().map((thread) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+            ? <Grid container>{[user.getFollowers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </BaseTabs>
