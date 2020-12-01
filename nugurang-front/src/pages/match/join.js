@@ -63,24 +63,7 @@ const GET_TEAM = gql`
       projects {
         id
         name
-        getUsers(page: 0, pageSize: 100) {
-          id
-          name
-          image {
-            id
-            address
-          }
-        }
         finished
-      }
-      getUsers(page: 0, pageSize: 100) {
-        id
-        name
-        email
-        image {
-          id
-          address
-        }
       }
     }
   }
