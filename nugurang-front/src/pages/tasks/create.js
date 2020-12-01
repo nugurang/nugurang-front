@@ -135,7 +135,7 @@ function CreateTask() {
             />
           </FormControl>
         </SectionBox>
-        <SectionBox titleBar={<SectionTitleBar title="Add assignee" icon=<PersonIcon /> border={false} />}>
+        <SectionBox titleBar={<SectionTitleBar title="Select assignee" icon=<PersonIcon /> border={false} />}>
           <Autocomplete
             onChange={(event, newValue) => {
               setSelectedUser(newValue);
@@ -191,7 +191,7 @@ function CreateTask() {
         />
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Difficluty" icon=<EmojiFlagsIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Select difficluty" icon=<EmojiFlagsIcon /> />}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box style={{margin: "2rem"}}>

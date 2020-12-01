@@ -44,8 +44,8 @@ const GET_USER = gql`
       }
       getUserEvaluations(page: 0, pageSize: 100) {
         id
-        startedAt
-        days
+        createdAt
+        expiredAt
         project {
           id
         }

@@ -157,23 +157,21 @@ function TeamInfo() {
 
       <Container maxWidth="md">
         <SectionBox border={false}>
-          <TeamInfoBox team={team} />
+          <Grid container alignItems="center" justify="space-between">
+            <Grid item xs={12} sm>
+              <TeamInfoBox team={team} />
+            </Grid>
+            <Grid item align="right">
+              <BaseSwitch label="Show finished projects" checked={showFinished} onChange={toggleShowFinished} />
+            </Grid>
+          </Grid>
         </SectionBox>
 
         <SectionBox>
           <BaseTabs tabProps={TAB_PROPS}>
             {
               projects && (projects.length)
-              ? (
-                <>
-                  <Grid container justify="flex-end">
-                    <Grid item>
-                      <BaseSwitch label="Show finished projects" checked={showFinished} onChange={toggleShowFinished} />
-                    </Grid>
-                  </Grid>
-                  <Grid container>{projects.flat().map((project) => <Grid item xs={12} sm={6}><ProjectInfoCard project={project} /></Grid>)}</Grid>
-                </>
-              )
+              ? <Grid container>{projects.flat().map((project) => <Grid item xs={12} sm={6}><ProjectInfoCard project={project} /></Grid>)}</Grid>
               : <NoContentsBox />
             }
             {
