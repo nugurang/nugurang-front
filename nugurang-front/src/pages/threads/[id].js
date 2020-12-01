@@ -181,7 +181,7 @@ function Thread() {
                 <>
                   <EventInfoBox event={thread.event} />
                   <Box style={{margin: "0.5rem"}} display="flex" justifyContent="flex-end">
-                    <Button variant="outlined" onClick={() => router.push({pathname: "/threads/match", query: { id: router.query.id }})}>Match</Button>
+                    <Button variant="outlined" onClick={() => router.push({pathname: "/match/request", query: { thread: router.query.id }})}>Match</Button>
                   </Box>
                 </>
               )
