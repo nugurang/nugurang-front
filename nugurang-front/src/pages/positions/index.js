@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import List from '@material-ui/core/List';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import CodeIcon from '@material-ui/icons/Code';
@@ -59,7 +59,7 @@ function Positions() {
         <SectionBox>
         {
           allPositions && (allPositions.length)
-          ? <List>{[allPositions].flat().map((position) => <PositionInfoCard position={position} />)}</List>
+          ? <Grid container>{[allPositions].flat().map((position) => <Grid item xs={12} sm={6} md={4}><PositionInfoCard position={position} /></Grid>)}</Grid>
           : <NoContentsBox />
         }
         </SectionBox>

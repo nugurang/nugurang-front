@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React from 'react';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -30,12 +31,12 @@ export default function EventInfoBox({ event }) {
           <AccordionDetails>
             <Grid container alignItems="center" spacing={1}>
               <Grid item xs={12}>
-                <Typography variant="body1">
-                  {event.eventStart}
-                  {"~"}
+                <Typography variant="h5">
+                  {dayjs(event.eventStart).format('YYYY-MM-DD HH:mm')}
+                  {" ~ "}
                 </Typography>
-                <Typography variant="body1">
-                  {event.eventEnd}
+                <Typography variant="h5">
+                  {dayjs(event.eventEnd).format('YYYY-MM-DD HH:mm')}
                 </Typography>
               </Grid>
               <Grid item xs={12}>

@@ -116,7 +116,7 @@ const CREATE_MATCH_REQUEST = gql`
 function Match() {
   const router = useRouter();
   const [showEvents, setShowEvents] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedDate, setSelectedDate] = useState(dayjs().add('1', 'day'));
   const [minTeamSize, setMinTeamSize] = useState(2);
   const [maxTeamSize, setMaxTeamSize] = useState(3);
   const [infMaxTeamSize, setInfMaxTeamSize] = useState(false);

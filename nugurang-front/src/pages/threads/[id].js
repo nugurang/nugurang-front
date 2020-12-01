@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 
 import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -63,6 +64,9 @@ const GET_THREAD = gql`
         recruitingEnd
         eventStart
         eventEnd
+        matchRequests {
+          id
+        }
       }
       firstArticle {
         id
@@ -180,7 +184,11 @@ function Thread() {
               ? (
                 <>
                   <EventInfoBox event={thread.event} />
-                  <Box style={{margin: "0.5rem"}} display="flex" justifyContent="flex-end">
+
+                  <Box style={{margin: "0.5rem"}} display="flex" alignItems="center" justifyContent="flex-end">
+                    <Typography variant="body1">
+                      {thread.event.matchRequests.length}{" requests"}
+                    </Typography>
                     <Button variant="outlined" onClick={() => router.push({pathname: "/match/request", query: { thread: router.query.id }})}>Match</Button>
                   </Box>
                 </>
