@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import DayjsUtils from "@date-io/dayjs";
@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import List from '@material-ui/core/List';
 import Slider from '@material-ui/core/Slider';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
@@ -168,20 +169,32 @@ function Match() {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <SectionBox titleBar={(<SectionTitleBar title="End date" icon=<EventAvailableIcon /> />)}>
-            <Box display="flex" justifyContent="center">
-              <MuiPickersUtilsProvider utils={DayjsUtils}>
+          <SectionBox titleBar={(<SectionTitleBar title="Expire date" icon=<EventAvailableIcon /> />)}>
+            <MuiPickersUtilsProvider utils={DayjsUtils}>
+              <Box display="flex" justifyContent="center">
                 <KeyboardDatePicker
+                  disablePast
                   margin="normal"
-                  label="Select end date"
+                  label="Select date"
                   format="YYYY-MM-DD"
                   value={selectedDate}
                   onChange={(date) => {
                     setSelectedDate(date);
                   }}
                 />
-              </MuiPickersUtilsProvider>
-            </Box>
+              </Box>
+              <Box display="flex" justifyContent="center">
+                <KeyboardTimePicker
+                  disablePast
+                  margin="normal"
+                  label="Select time"
+                  value={selectedDate}
+                  onChange={(date) => {
+                    setSelectedDate(date);
+                  }}
+                />
+              </Box>
+            </MuiPickersUtilsProvider>
           </SectionBox>
 
           <SectionBox titleBar={(<SectionTitleBar title="Minimal team size" icon=<PeopleIcon /> />)}>
@@ -271,10 +284,10 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    console.log(selectedDate);
-                    console.log(dayjs());
-                    console.log(selectedDate.diff(dayjs(), "day"));
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
+                    const days = selectedDate.diff(dayjs(), "day");
+                    const hours = selectedDate.diff(dayjs(), "hour") % 24;
+                    const minutes = selectedDate.diff(dayjs(), "minute") % 60;
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days, hours, minutes }}});
                     router.push(`/match/request/success`);
                   }}
                 >
@@ -287,7 +300,10 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["HONOR"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
+                    const days = selectedDate.diff(dayjs(), "day");
+                    const hours = selectedDate.diff(dayjs(), "hour") % 24;
+                    const minutes = selectedDate.diff(dayjs(), "minute") % 60;
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["HONOR"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days, hours, minutes }}});
                     router.push(`/match/request/success`);
                   }}
                 >
@@ -300,7 +316,10 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["PERSONALITY"], minTeamSize, maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
+                    const days = selectedDate.diff(dayjs(), "day");
+                    const hours = selectedDate.diff(dayjs(), "hour") % 24;
+                    const minutes = selectedDate.diff(dayjs(), "minute") % 60;
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["PERSONALITY"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days, hours, minutes }}});
                     router.push(`/match/request/success`);
                   }}
                 >

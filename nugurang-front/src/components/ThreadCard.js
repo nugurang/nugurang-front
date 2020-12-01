@@ -51,7 +51,7 @@ export default function ThreadCard({ thread }) {
         />
         <CardContent>
           <Grid container spacing={1} alignItems="center">
-            <Grid item>
+            <Grid item xs={12}>
               <Grid container spacing={1} alignItems="center" direction="row">
                 <Grid item>
                   <Avatar
