@@ -50,10 +50,10 @@ export default function NotificationListItem({ notification }) {
             />
           </Box>
           <Box display={notification.type.name == "TEAM_INVITATION" ? "block" : "none"}>
-            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{"You are invited to team "}{string}{"."}</Typography></Grid>)}
+            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{"You are invited to team."}</Typography></Grid>)}
           </Box>
           <Box display={notification.type.name == "PROJECT_INVITATION" ? "block" : "none"}>
-            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{"You are invited to project "}{string}{"."}</Typography></Grid>)}
+            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{"You are invited to project."}</Typography></Grid>)}
           </Box>
           <Box display={notification.type.name == "MATCH_SUCCESS" ? "block" : "none"}>
             <Grid item><Typography variant="body2">{"Requested match found."}</Typography></Grid>

@@ -186,7 +186,7 @@ function Match() {
 
           <SectionBox titleBar={(<SectionTitleBar title="Minimal team size" icon=<PeopleIcon /> />)}>
             <Grid container spacing={2} alignItems="center">
-              <Grid item xs style={{margin: "4rem 2rem 2rem 2rem"}}>
+              <Grid item xs style={{margin: "2rem 2rem 0rem 2rem"}}>
                 <Slider
                   value={minTeamSize}
                   min={2}
@@ -198,7 +198,7 @@ function Match() {
                   valueLabelDisplay="on"
                 />
               </Grid>
-              <Grid item style={{margin: "2rem 2rem 2rem 2rem"}}>
+              <Grid item style={{margin: "2rem"}}>
                 <Input
                   value={minTeamSize}
                   margin="dense"
@@ -224,10 +224,10 @@ function Match() {
 
           <SectionBox titleBar={(<SectionTitleBar title="Maximal team size" icon=<PeopleIcon /> />)}>
             <Box display="flex" justifyContent="flex-end">
-              <Box m={2}><BaseSwitch label="Set infinite" checked={infMaxTeamSize} onChange={toggleInfMaxTeamSize} /></Box>
+              <Box mx="2rem"><BaseSwitch label="Set infinite" checked={infMaxTeamSize} onChange={toggleInfMaxTeamSize} /></Box>
             </Box>
             <Grid container spacing={2} alignItems="center">
-              <Grid item xs style={{margin: "4rem 2rem 2rem 2rem"}}>
+              <Grid item xs style={{margin: "2rem 2rem 0rem 2rem"}}>
                 <Slider
                   value={maxTeamSize}
                   min={2}
@@ -240,7 +240,7 @@ function Match() {
                   disabled={infMaxTeamSize}
                 />
               </Grid>
-              <Grid item style={{margin: "2rem 2rem 2rem 2rem"}}>
+              <Grid item style={{margin: "2rem"}}>
                 <Input
                   value={maxTeamSize}
                   margin="dense"
