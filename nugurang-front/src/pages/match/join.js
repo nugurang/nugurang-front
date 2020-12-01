@@ -83,7 +83,7 @@ function Join() {
   const [currentUser, getEvent, getTeam] = results.map(result => result[0]);
   const user = results[0][1].data?.currentUser;
   const event = results[1][1].data?.getEvent;
-  const team = results[1][1].data?.getTeam;
+  const team = results[2][1].data?.getTeam;
 
   if (results.some(result => result[1].loading))
     return <Loading />;
