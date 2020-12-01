@@ -85,11 +85,6 @@ function More() {
       title: "Initialize database",
       onClick: () => router.push(`/init`)
     },
-    {
-      id: 1,
-      title: "Components overview",
-      onClick: () => router.push(`/comp-ov`)
-    },
   ]
 
   const results = [
