@@ -99,7 +99,7 @@ function Find() {
 
         <SectionBox
           titleBar={
-            <SectionTitleBar title="Result" icon=<FindInPageIcon /> />
+            <SectionTitleBar title="Results" icon=<FindInPageIcon /> />
           }
         >
           {

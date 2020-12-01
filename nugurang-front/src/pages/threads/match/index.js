@@ -8,8 +8,10 @@ import Button from '@material-ui/core/Button';
 import DayjsUtils from "@date-io/dayjs";
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
 import List from '@material-ui/core/List';
 import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
 
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import PeopleIcon from '@material-ui/icons/People';
@@ -17,6 +19,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import withAuth from '../../../components/withAuth';
 import ArticleLeader from '../../../components/ArticleLeader';
 import ArticleListItem from '../../../components/ArticleListItem';
+import BaseSwitch from '../../../components/BaseSwitch';
 import EventInfoBox from '../../../components/EventInfoBox';
 import GraphQlError from '../../../components/GraphQlError';
 import Layout from '../../../components/Layout';
@@ -112,8 +115,13 @@ const CREATE_MATCH_REQUEST = gql`
 function Match() {
   const router = useRouter();
   const [showEvents, setShowEvents] = useState(false);
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [teamSize, setTeamSize] = React.useState([2, 6]);
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [minTeamSize, setMinTeamSize] = useState(2);
+  const [maxTeamSize, setMaxTeamSize] = useState(3);
+  const [infMaxTeamSize, setInfMaxTeamSize] = useState(false);
+  const toggleInfMaxTeamSize = () => {
+    setInfMaxTeamSize((prev) => !prev);
+  };
 
   const results = [
     [null, useQuery(MATCH_TYPES)],
@@ -175,27 +183,95 @@ function Match() {
               </MuiPickersUtilsProvider>
             </Box>
           </SectionBox>
-          <SectionBox titleBar={(<SectionTitleBar title="Match team size" icon=<PeopleIcon /> />)}>
-            <Box style={{margin: "4rem 2rem 2rem 2rem"}}>
-              <Slider
-                value={teamSize}
-                min={2}
-                max={10}
-                step={1}
-                onChange={(event, newValue) => {
-                  setTeamSize(newValue);
-                }}
-                valueLabelDisplay="on"
-              />
-            </Box>
+
+          <SectionBox titleBar={(<SectionTitleBar title="Minimal team size" icon=<PeopleIcon /> />)}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs style={{margin: "4rem 2rem 2rem 2rem"}}>
+                <Slider
+                  value={minTeamSize}
+                  min={2}
+                  max={10}
+                  step={1}
+                  onChange={(event, newValue) => {
+                    setMinTeamSize(newValue);
+                  }}
+                  valueLabelDisplay="on"
+                />
+              </Grid>
+              <Grid item style={{margin: "2rem 2rem 2rem 2rem"}}>
+                <Input
+                  value={minTeamSize}
+                  margin="dense"
+                  onChange={(event) => {
+                    setMinTeamSize(event.target.value === '' ? '' : Number(event.target.value));
+                  }}
+                  onBlur = {() => {
+                    if (minTeamSize < 2) {
+                      setMinTeamSize(2);
+                    }
+                  }}
+                  style={{width: 80}}
+                  inputProps={{
+                    step: 1,
+                    min: 2,
+                    type: 'number',
+                    'aria-labelledby': 'input-slider',
+                  }}
+                />
+              </Grid>
+            </Grid>
           </SectionBox>
+
+          <SectionBox titleBar={(<SectionTitleBar title="Maximal team size" icon=<PeopleIcon /> />)}>
+            <Box display="flex" justifyContent="flex-end">
+              <Box m={2}><BaseSwitch label="Set infinite" checked={infMaxTeamSize} onChange={toggleInfMaxTeamSize} /></Box>
+            </Box>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs style={{margin: "4rem 2rem 2rem 2rem"}}>
+                <Slider
+                  value={maxTeamSize}
+                  min={2}
+                  max={10}
+                  step={1}
+                  onChange={(event, newValue) => {
+                    setMaxTeamSize(newValue);
+                  }}
+                  valueLabelDisplay="on"
+                  disabled={infMaxTeamSize}
+                />
+              </Grid>
+              <Grid item style={{margin: "2rem 2rem 2rem 2rem"}}>
+                <Input
+                  value={maxTeamSize}
+                  margin="dense"
+                  onChange={(event) => {
+                    setMaxTeamSize(event.target.value === '' ? '' : Number(event.target.value));
+                  }}
+                  onBlur = {() => {
+                    if (maxTeamSize < 2) {
+                      setMaxTeamSize(2);
+                    }
+                  }}
+                  style={{width: 80}}
+                  inputProps={{
+                    step: 1,
+                    min: 2,
+                    type: 'number',
+                    'aria-labelledby': 'input-slider',
+                  }}
+                  disabled={infMaxTeamSize}
+                />
+              </Grid>
+            </Grid>
+          </SectionBox>
+
           <SectionBox border={false} >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: selectedDate.diff(dayjs(), "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["RANDOM"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >
@@ -208,7 +284,7 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["HONOR"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: selectedDate.diff(dayjs(), "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["HONOR"], minTeamSize, maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >
@@ -221,7 +297,7 @@ function Match() {
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["PERSONALITY"], minTeamSize: teamSize[0], maxTeamSize: teamSize[1], days: selectedDate.diff(dayjs(), "day") }}});
+                    await createMatchRequest({ variables: { request: { event: thread.event.id, type: allMatchTypesRev["PERSONALITY"], minTeamSize, maxTeamSize, days: selectedDate.diff(dayjs(), "day") }}});
                     router.push(`/threads/match/success`);
                   }}
                 >
