@@ -178,7 +178,7 @@ function Invite() {
           </SectionBox>
         </Box>
 
-        <SectionBox titleBar=<SectionTitleBar title="Result" icon=<FindInPageIcon /> /> >
+        <SectionBox titleBar=<SectionTitleBar title="Results" icon=<FindInPageIcon /> /> >
           {
             users && users.length
             ? <Grid container>{[users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
