@@ -49,7 +49,7 @@ export class GetBoardQueryBuilder {
         }
         ${this.threads ? '...threads' : ''}
       }
-      ${FRAGMENT_THREADS}
+      ${this.threads ? FRAGMENT_THREADS : ''}
     `;
   }
 

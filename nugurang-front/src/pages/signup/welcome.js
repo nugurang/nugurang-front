@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 
+import withAuthServerSide from '../../utils/withAuthServerSide';
+
 import FullScreenDialogBox from '../../components/FullScreenDialogBox';
 import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
@@ -26,33 +28,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const GET_CURRENT_USER = gql`
-  query {
-    currentUser {
-      id
-      name
-      image {
-        id
-        address
-      }
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide( async ({ currentUser }) => {
+  return {
+    props: {
+      currentUser,
+    },
+  };
+});
 
-function Welcome() {
+function Welcome({ currentUser }) {
   const router = useRouter();
   const classes = useStyles();
-
-  const responses = [
-    useQuery(GET_CURRENT_USER)
-  ];
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-  if (responses.some((response) => response.loading))
-    return <Loading />;
-
-  const {currentUser} = responses[0].data;
 
   return (
     <Layout>

@@ -87,10 +87,10 @@ export class GetTaskQueryBuilder {
           ${this.works ? '...works' : ''}
         }
       }
-      ${FRAGMENT_PROGRESS}
-      ${FRAGMENT_POSITIONS}
-      ${FRAGMENT_USERS}
-      ${FRAGMENT_WORKS}
+      ${this.progress ? FRAGMENT_PROGRESS : ''}
+      ${this.positions ? FRAGMENT_POSITIONS : ''}
+      ${this.users ? FRAGMENT_USERS : ''}
+      ${this.works ? FRAGMENT_WORKS : ''}
     `;
   }
 

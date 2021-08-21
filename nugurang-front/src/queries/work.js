@@ -48,7 +48,7 @@ export class GetWorkQueryBuilder {
           ${this.tasks ? '...tasks' : ''}
         }
       }
-      ${FRAGMENT_TASKS}
+      ${this.tasks ? FRAGMENT_TASKS : ''}
     `;
   }
 

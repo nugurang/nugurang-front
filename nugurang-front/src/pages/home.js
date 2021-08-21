@@ -16,8 +16,7 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 import { COMMON_BOARDS, EVENT_BOARDS } from '../config';
 import withAuthServerSide from '../utils/withAuthServerSide';
-import graphQlClient from "../graphQlClient";
-import GraphQlError from '../components/GraphQlError';
+import queryServerSide from "../utils/queryServerSide";
 import {
   GetCurrentUserQueryBuilder,
 } from '../queries/user';
@@ -26,6 +25,7 @@ import {
   GetHotThreadsByBoardNamesQueryBuilder,
 } from '../queries/thread';
 
+import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
 import NoContentsBox from '../components/NoContentsBox';
@@ -35,17 +35,20 @@ import SectionTitleBar from '../components/SectionTitleBar';
 import ThreadCard from '../components/ThreadCard';
 import ThreadListItem from '../components/ThreadListItem';
 
-export const getServerSideProps = withAuthServerSide(async () => {
-  const currentUserResult = await graphQlClient.query({
+export const getServerSideProps = withAuthServerSide(async ({ context }) => {
+  const currentUserResult = await queryServerSide({
+    context,
     query: new GetCurrentUserQueryBuilder().withNotifications().build(),
   });
-  const hotThreadsResult = await graphQlClient.query({
+  const hotThreadsResult = await queryServerSide({
+    context,
     query: new GetHotThreadsByBoardNamesQueryBuilder().withUser().withEvent().withFirstArticle().withArticles().build(),
     variables: {
       boardNames: COMMON_BOARDS,
     },
   });
-  const eventsResult = await graphQlClient.query({
+  const eventsResult = await queryServerSide({
+    context,
     query: new GetThreadsByBoardNamesQueryBuilder().withUser().withEvent().withFirstArticle().withArticles().build(),
     variables: {
       boardNames: EVENT_BOARDS,
@@ -59,7 +62,7 @@ export const getServerSideProps = withAuthServerSide(async () => {
       events: eventsResult.data.getThreadsByBoardNames,
     },
   };
-})
+});
 
 function Home({ currentUser, hotThreads, events }) {
   const router = useRouter();

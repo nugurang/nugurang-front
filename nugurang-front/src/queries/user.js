@@ -195,11 +195,11 @@ export class GetUserQueryBuilder {
           ${this.blog ? '...blog' : ''}
         }
       }
-      ${FRAGMENT_FOLLOWS}
-      ${FRAGMENT_HONORS}
-      ${FRAGMENT_THREADS}
-      ${FRAGMENT_EVALUATIONS}
-      ${FRAGMENT_BLOG}
+      ${this.follows ? FRAGMENT_FOLLOWS : ''}
+      ${this.honors ? FRAGMENT_HONORS : ''}
+      ${this.threads ? FRAGMENT_THREADS : ''}
+      ${this.evaluations ? FRAGMENT_EVALUATIONS : ''}
+      ${this.blog ? FRAGMENT_BLOG : ''}
     `;
   }
 
@@ -260,11 +260,11 @@ export class GetUserByNameQueryBuilder {
           ${this.blog ? '...blog' : ''}
         }
       }
-      ${FRAGMENT_FOLLOWS}
-      ${FRAGMENT_HONORS}
-      ${FRAGMENT_THREADS}
-      ${FRAGMENT_EVALUATIONS}
-      ${FRAGMENT_BLOG}
+      ${this.follows ? FRAGMENT_FOLLOWS : ''}
+      ${this.honors ? FRAGMENT_HONORS : ''}
+      ${this.threads ? FRAGMENT_THREADS : ''}
+      ${this.evaluations ? FRAGMENT_EVALUATIONS : ''}
+      ${this.blog ? FRAGMENT_BLOG : ''}
     `;
   }
 
@@ -333,12 +333,12 @@ export class GetCurrentUserQueryBuilder {
           ${this.blog ? '...blog' : ''}
         }
       }
-      ${FRAGMENT_NOTIFICATIONS}
-      ${FRAGMENT_FOLLOWS}
-      ${FRAGMENT_HONORS}
-      ${FRAGMENT_THREADS}
-      ${FRAGMENT_EVALUATIONS}
-      ${FRAGMENT_BLOG}
+      ${this.notifications ? FRAGMENT_NOTIFICATIONS : ''}
+      ${this.follows ? FRAGMENT_FOLLOWS : ''}
+      ${this.honors ? FRAGMENT_HONORS : ''}
+      ${this.threads ? FRAGMENT_THREADS : ''}
+      ${this.evaluations ? FRAGMENT_EVALUATIONS : ''}
+      ${this.blog ? FRAGMENT_BLOG : ''}
     `;
   }
 

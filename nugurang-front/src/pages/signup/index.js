@@ -12,7 +12,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
 
-import graphQlClient from "../../graphQlClient";
+import queryServerSide from "../../utils/queryServerSide";
 import {
   GetCurrentOAuth2UserQueryBuilder,
   CreateUserMutationBuilder,
@@ -28,20 +28,23 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 
-
 export const getServerSideProps = async (context) => {
-  const currentOAuth2UserResult = await graphQlClient.query({
+  const currentOAuth2UserResult = await queryServerSide({
+    context,
     query: new GetCurrentOAuth2UserQueryBuilder().build(),
-    context: {
-        headers: {
-            Cookie: context.req.headers.cookie
-        }
-    }
   });
+  if (currentOAuth2UserResult.data === undefined) {
+    return {
+      redirect: {
+        destination: '/signin/',
+        permanent: false
+      }
+    }
+  }
 
   return {
     props: {
-      currentOAuth2User: currentOAuth2UserResult.data ? currentOAuth2UserResult.data.currentOAuth2User : null,
+      currentOAuth2User: currentOAuth2UserResult.data.currentOAuth2User,
     },
   };
 };

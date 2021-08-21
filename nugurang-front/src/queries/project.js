@@ -79,10 +79,10 @@ export class GetProjectQueryBuilder {
           ${this.users ? '...users' : ''}
         }
       }
-      ${FRAGMENT_TEAM}
-      ${FRAGMENT_WORKS}
-      ${FRAGMENT_EVENT}
-      ${FRAGMENT_USERS}
+      ${this.team ? FRAGMENT_TEAM : ''}
+      ${this.works ? FRAGMENT_WORKS : ''}
+      ${this.event ? FRAGMENT_EVENT : ''}
+      ${this.users ? FRAGMENT_USERS : ''}
     `;
   }
 

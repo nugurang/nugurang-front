@@ -1,6 +1,6 @@
 import { ApolloClient, HttpLink, InMemoryCache, from } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
-import { BACKEND_ADDR } from './config';
+import { BACKEND_ADDR } from '../config';
 
 const link = from([
   onError(({ graphQLErrors, networkError }) => {

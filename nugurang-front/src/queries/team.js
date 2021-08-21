@@ -78,9 +78,9 @@ export class GetTeamQueryBuilder {
         ${this.owner ? '...owner' : ''}
         ${this.members ? '...members' : ''}
       }
-      ${FRAGMENT_PROJECTS}
-      ${FRAGMENT_OWNER}
-      ${FRAGMENT_MEMBERS}
+      ${this.projects ? FRAGMENT_PROJECTS : ''}
+      ${this.owner ? FRAGMENT_OWNER : ''}
+      ${this.members ? FRAGMENT_MEMBERS : ''}
     `;
   }
 

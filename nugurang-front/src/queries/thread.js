@@ -115,10 +115,10 @@ export class GetThreadQueryBuilder {
           ${this.articles ? '...articles' : ''}
         }
       }
-      ${FRAGMENT_USER}
-      ${FRAGMENT_EVENT}
-      ${FRAGMENT_FIRST_ARTICLE}
-      ${FRAGMENT_ARTICLES}
+      ${this.user ? FRAGMENT_USER : ''}
+      ${this.event ? FRAGMENT_EVENT : ''}
+      ${this.firstArticle ? FRAGMENT_FIRST_ARTICLE : ''}
+      ${this.articles ? FRAGMENT_ARTICLES : ''}
     `;
   }
 
@@ -169,7 +169,6 @@ export class GetThreadsByBoardNamesQueryBuilder {
       ${FRAGMENT_EVENT}
       ${FRAGMENT_FIRST_ARTICLE}
       ${FRAGMENT_ARTICLES}
-      }
     `;
   }
 
@@ -220,7 +219,6 @@ export class GetHotThreadsByBoardNamesQueryBuilder {
       ${FRAGMENT_EVENT}
       ${FRAGMENT_FIRST_ARTICLE}
       ${FRAGMENT_ARTICLES}
-      }
     `;
   }
 

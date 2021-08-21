@@ -1,4 +1,4 @@
-import graphQlClient from "../graphQlClient";
+import queryServerSide from "../utils/queryServerSide";
 import {
   GetCurrentOAuth2UserQueryBuilder,
   GetCurrentUserQueryBuilder,
@@ -7,12 +7,9 @@ import {
 export default function withAuthServerSide(getServerSidePropsFunction) {
   return async (context) => {
 
-    const currentOAuth2UserResult = await graphQlClient.query({
+    const currentOAuth2UserResult = await queryServerSide({
+      context,
       query: new GetCurrentOAuth2UserQueryBuilder().build(),
-    }).catch(error => {
-      return {
-        error,
-      }
     });
     if (currentOAuth2UserResult.data === undefined) {
       return {
@@ -23,12 +20,9 @@ export default function withAuthServerSide(getServerSidePropsFunction) {
       }
     }
 
-    const currentUserResult = await graphQlClient.query({
+    const currentUserResult = await queryServerSide({
+      context,
       query: new GetCurrentUserQueryBuilder().build(),
-    }).catch(error => {
-      return {
-        error,
-      }
     });
     if (currentUserResult.data === undefined) {
       return {
