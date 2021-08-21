@@ -29,9 +29,14 @@ import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
   const currentOAuth2UserResult = await graphQlClient.query({
     query: new GetCurrentOAuth2UserQueryBuilder().build(),
+    context: {
+        headers: {
+            Cookie: context.req.headers.cookie
+        }
+    }
   });
 
   return {
