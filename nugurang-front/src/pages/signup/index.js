@@ -12,6 +12,15 @@ import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
 
+import graphQlClient from "../../graphQlClient";
+import {
+  GetCurrentOAuth2UserQueryBuilder,
+  CreateUserMutationBuilder,
+} from '../../queries/user';
+import {
+  CreateImageMutationBuilder,
+} from '../../queries/image';
+
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
@@ -20,45 +29,29 @@ import Loading from '../../components/Loading';
 import GraphQlError from '../../components/GraphQlError';
 
 
-export const CURRENT_OAUTH2_USER = gql`
-  query {
-    currentOAuth2User {
-      id
-      name
-      email
-    }
-  }
-`;
+export const getServerSideProps = async () => {
+  const currentOAuth2UserResult = await graphQlClient.query({
+    query: new GetCurrentOAuth2UserQueryBuilder().build(),
+  });
 
-export const CREATE_IMAGE = gql`
-  mutation createImage($address: String! ) {
-    createImage (address: $address) {
-      id
-    }
-  }
-`;
+  return {
+    props: {
+      currentOAuth2User: currentOAuth2UserResult.data ? currentOAuth2UserResult.data.currentOAuth2User : null,
+    },
+  };
+};
 
-export const CREATE_USER = gql`
-  mutation createUser($user: UserInput!) {
-    createUser (user: $user) {
-      id
-    }
-  }
-`;
-
-function SignUp() {
+function SignUp({ currentOAuth2User }) {
   const router = useRouter();
   const newName = useRef(null);
   const newEmail = useRef(null);
   const newImageAddress = useRef(null);
 
   const results = [
-    [null, useQuery(CURRENT_OAUTH2_USER)],
-    useMutation(CREATE_IMAGE),
-    useMutation(CREATE_USER)
+    useMutation(new CreateImageMutationBuilder().build()),
+    useMutation(new CreateUserMutationBuilder().build()),
   ];
-  const user = results[0][1].data ? results[0][1].data.currentOAuth2User : null;
-  const [getCurrentOAuth2User, createImage, createUser] = results.map(result => result[0]);
+  const [createImage, createUser] = results.map(result => result[0]);
 
   if (results.some(result => result[1].loading))
     return <Loading />;
@@ -88,7 +81,7 @@ function SignUp() {
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={user.name}
+                  defaultValue={currentOAuth2User.name}
                   inputRef={newName}
                   label="Enter username"
                   variant="outlined"
@@ -104,7 +97,7 @@ function SignUp() {
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={user.email}
+                  defaultValue={currentOAuth2User.email}
                   inputRef={newEmail}
                   label="Enter email"
                   variant="outlined"
