@@ -46,8 +46,8 @@ export class GetBoardQueryBuilder {
         getBoard(id: $id) {
           id
           name
+          ${this.threads ? '...threads' : ''}
         }
-        ${this.threads ? '...threads' : ''}
       }
       ${this.threads ? FRAGMENT_THREADS : ''}
     `;
@@ -57,14 +57,25 @@ export class GetBoardQueryBuilder {
 
 export class GetBoardByNameQueryBuilder {
 
+  constructor() {
+    this.threads = false;
+  }
+
+  withThreads() {
+    this.threads = true;
+    return this;
+  }
+
   build() {
     return gql`
       query getBoardByName($name: String!) {
         getBoardByName(name: $name) {
           id
           name
+          ${this.threads ? '...threads' : ''}
         }
       }
+      ${this.threads ? FRAGMENT_THREADS : ''}
     `;
   }
 
@@ -72,14 +83,25 @@ export class GetBoardByNameQueryBuilder {
 
 export class GetBoardsByNamesQueryBuilder {
 
+  constructor() {
+    this.threads = false;
+  }
+
+  withThreads() {
+    this.threads = true;
+    return this;
+  }
+
   build() {
     return gql`
       query GetBoardsByNames($names: [String]!) {
         getBoardsByNames(names: $names) {
           id
           name
+          ${this.threads ? '...threads' : ''}
         }
       }
+      ${this.threads ? FRAGMENT_THREADS : ''}
     `;
   }
 

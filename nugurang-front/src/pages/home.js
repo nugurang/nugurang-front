@@ -15,9 +15,7 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 import { COMMON_BOARDS, EVENT_BOARDS } from '../config';
 import withAuthServerSide from '../utils/withAuthServerSide';
 import { queryToBackend } from "../utils/requestToBackend";
-import {
-  GetCurrentUserQueryBuilder,
-} from '../queries/user';
+import { GetCurrentUserQueryBuilder } from '../queries/user';
 import {
   GetThreadsByBoardNamesQueryBuilder,
   GetHotThreadsByBoardNamesQueryBuilder,

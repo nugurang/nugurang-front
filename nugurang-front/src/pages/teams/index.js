@@ -25,7 +25,7 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
 
   return {
     props: {
-      teams: currentUserResult.data.getCurrentUser.getTeams,
+      teams: currentUserResult.data.currentUser.getTeams,
     },
   };
 });

@@ -14,14 +14,12 @@ import {
   GetBoardsByNamesQueryBuilder,
   CreateBoardMutationBuilder,
 } from '../queries/board';
-import {
-  GetAllPositionsQueryBuilder,
-  GetAllProgressesQueryBuilder,
-} from '../queries/constant';
 import { CreateThreadMutationBuilder } from '../queries/thread';
 import { CreateEventMutationBuilder } from '../queries/event';
 import { CreateArticleMutationBuilder } from '../queries/article';
 import {
+  GetAllTaskPositionsQueryBuilder,
+  GetAllTaskProgressesQueryBuilder,
   CreateTaskMutationBuilder,
   CreateTaskPositionMutationBuilder,
 } from '../queries/task';
@@ -47,10 +45,10 @@ function Init() {
       return;
     try {
       await mutateToBackend({
-        mutation: new GetAllPositionsQueryBuilder().build(),
+        mutation: new GetAllTaskPositionsQueryBuilder().build(),
       });
       await mutateToBackend({
-        mutation: new GetAllProgressesQueryBuilder().build(),
+        mutation: new GetAllTaskProgressesQueryBuilder().build(),
       });
       const eventList = [];
       for (let i = 0; i < 10; ++i) {

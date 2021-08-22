@@ -11,7 +11,7 @@ export default function withAuthServerSide(getServerSidePropsFunction) {
       context,
       query: new GetCurrentOAuth2UserQueryBuilder().build(),
     });
-    if (currentOAuth2UserResult.data === undefined) {
+    if (currentOAuth2UserResult.data.currentOAuth2User === null) {
       return {
         redirect: {
           destination: '/signin/',
@@ -24,7 +24,7 @@ export default function withAuthServerSide(getServerSidePropsFunction) {
       context,
       query: new GetCurrentUserQueryBuilder().build(),
     });
-    if (currentUserResult.data === undefined) {
+    if (currentUserResult.data.currentUser === null) {
       return {
         redirect: {
           destination: '/signup/',

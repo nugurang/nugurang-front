@@ -67,7 +67,7 @@ function Update({ thread }) {
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={firstArticle.title}
+                  defaultValue={thread.firstArticle.title}
                   inputRef={newName}
                   label="Enter name"
                   variant="outlined"
@@ -83,7 +83,7 @@ function Update({ thread }) {
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={firstArticle.content}
+                  defaultValue={thread.firstArticle.content}
                   inputRef={newContent}
                   label="Enter content"
                   variant="outlined"
@@ -100,7 +100,7 @@ function Update({ thread }) {
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={firstArticle.image ? firstArticle.image.address : null}
+                  defaultValue={thread.firstArticle.image ? thread.firstArticle.image.address : null}
                   inputRef={newImageAddress}
                   label="Enter image link"
                   variant="outlined"
@@ -139,7 +139,7 @@ function Update({ thread }) {
                 }
               }
             });
-            router.push(`/threads/${threadResponse.data.updateThread.id}`);
+            router.push(`/threads/${thread.id}`);
           }}
         >
           <Box align="center">

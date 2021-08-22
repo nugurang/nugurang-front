@@ -73,10 +73,10 @@ export class GetTeamQueryBuilder {
         getTeam(id: $id) {
           id
           name
+          ${this.projects ? '...projects' : ''}
+          ${this.owner ? '...owner' : ''}
+          ${this.members ? '...members' : ''}
         }
-        ${this.projects ? '...projects' : ''}
-        ${this.owner ? '...owner' : ''}
-        ${this.members ? '...members' : ''}
       }
       ${this.projects ? FRAGMENT_PROJECTS : ''}
       ${this.owner ? FRAGMENT_OWNER : ''}

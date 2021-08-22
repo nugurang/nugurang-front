@@ -65,7 +65,7 @@ export default function BaseTabs({ children, tabProps }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  let tabPropKey = 0;
+  let tabPropKey = -1;
   let tabKey = -1;
   return (
     <div className={classes.root}>

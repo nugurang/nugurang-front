@@ -20,22 +20,7 @@ import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import UserInfoCard from '../../components/UserInfoCard'
 
-export const getServerSideProps = withAuthServerSide(async ({ context }) => {
-  const userResult = await queryToBackend({
-    context,
-    query: new GetUserByNameQueryBuilder().withFollows().build(),
-    variables: {
-      id: context.query.id,
-    },
-  });
-
-  return {
-    props: {
-      user: userResult.data.getUser,
-      threads: userResult.data.getUser.getThreads,
-    },
-  };
-});
+export const getServerSideProps = withAuthServerSide();
 
 function Find() {
   const router = useRouter();
@@ -71,7 +56,7 @@ function Find() {
                   const response = await queryToBackend({
                     query: new GetUserByNameQueryBuilder().withFollows().build(),
                     variables: {
-                      id: keywordName.current.value,
+                      name: keywordName.current.value,
                     },
                   });
                   setUsers(response.data.getUserByName.map(user => {

@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
 import { queryToBackend } from "../../utils/requestToBackend";
-import { GetBoardByNameQueryBuilder } from '../queries/board';
+import { GetBoardByNameQueryBuilder } from '../../queries/board';
 import {
   GetThreadsByBoardNamesQueryBuilder,
   GetHotThreadsByBoardNamesQueryBuilder,
@@ -58,6 +58,8 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
+  console.log(commomBoardThreadsResult);
+
   return {
     props: {
       commomBoardThreads: commomBoardThreadsResult.data.getThreadsByBoardNames,
@@ -80,17 +82,30 @@ function Boards({
     setShowEvents((prev) => !prev);
   };
 
-  [
-    commomBoardThreads,
-    eventBoardThreads,
-    hotCommomBoardThreads,
-    hotEventBoardThreads,
-  ].map(boardThreads => boardThreads.map(thread => {
+  commomBoardThreads = commomBoardThreads.map(thread => {
     return {
       ...thread,
       onClick: () => router.push(`/threads/${thread.id}`),
     };
-  }));
+  });
+  eventBoardThreads = eventBoardThreads.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
+  });
+  hotCommomBoardThreads = hotCommomBoardThreads.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
+  });
+  hotEventBoardThreads = hotEventBoardThreads.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
+  });
 
   let key = 0;
   const currentBoard = showEvents ? EVENT_BOARDS : COMMON_BOARDS;
@@ -111,11 +126,11 @@ function Boards({
                       image="/static/images/sample_1.jpg"
                       onClick={async (e) => {
                         e.preventDefault();
-                        const { data } = await queryToBackend({
+                        const boardResponse = await queryToBackend({
                           query: new GetBoardByNameQueryBuilder().build(),
                           variables: { name: boardName },
                         });
-                        const boardId = data.getBoardByName ? data.getBoardByName.id : ``;
+                        const boardId = boardResponse.data.getBoardByName ? boardResponse.data.getBoardByName.id : ``;
                         router.push(`/boards/${boardId}`);
                       }}
                     />

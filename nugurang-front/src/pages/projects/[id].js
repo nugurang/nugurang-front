@@ -48,7 +48,7 @@ const TAB_PROPS = [
 export const getServerSideProps = withAuthServerSide( async ({ context }) => {
   const projectResult = await queryToBackend({
     context,
-    query: new GetProjectQueryBuilder().withUser().withEvent().withFirstArticle().withArticles().build(),
+    query: new GetProjectQueryBuilder().withTeam().withWorks().withUsers().withEvent().build(),
     variables: {
       id: context.query.id,
     },
@@ -92,7 +92,7 @@ function ProjectInfo({ project, works, users }) {
     router.push({
       pathname: "/projects/review",
       query: {
-        project: router.query.id
+        project: project.id
       }
     });
     return null;
@@ -169,13 +169,13 @@ function ProjectInfo({ project, works, users }) {
         <SectionBox>
           <BaseTabs tabProps={TAB_PROPS}>
             {
-              project.works && (project.works.length)
-              ? <Grid container>{[project.works].flat().map((work) => <Grid item xs={12} sm={6}><WorkInfoCard work={work} /></Grid>)}</Grid>
+              works && works.length
+              ? <Grid container>{[works].flat().map((work) => <Grid item xs={12} sm={6}><WorkInfoCard work={work} /></Grid>)}</Grid>
               : <NoContentsBox />
             }
             {
-              project.getUsers && (project.getUsers.length)
-              ? <Grid container>{[project.getUsers].flat().map((user) => <Grid item xs={12} sm={6}><UserInfoCard user={user} /></Grid>)}</Grid>
+              users && users.length
+              ? <Grid container>{[users].flat().map((user) => <Grid item xs={12} sm={6}><UserInfoCard user={user} /></Grid>)}</Grid>
               : <NoContentsBox />
             }
           </BaseTabs>

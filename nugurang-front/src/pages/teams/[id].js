@@ -79,7 +79,10 @@ function TeamInfo({ team, projects, owner, members }) {
       onClick: () => router.push(`/projects/${project.id}`),
     };
   });
-  owner.onClick = () => router.push(`/user/${owner.id}`);
+  owner = {
+    ...owner,
+    onClick: () => router.push(`/user/${owner.id}`),
+  }
   members = members.map(member => {
     return {
       ...member,
