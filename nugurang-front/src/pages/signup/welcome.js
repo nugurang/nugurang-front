@@ -42,7 +42,7 @@ function Welcome({ currentUser }) {
 
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Welcome" icon=<CheckIcon /> />>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Welcome" icon={<CheckIcon />} />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Avatar className={classes.avatar}

@@ -1,4 +1,4 @@
-import queryServerSide from "../utils/queryServerSide";
+import { queryToBackend } from "../utils/requestToBackend";
 import {
   GetCurrentOAuth2UserQueryBuilder,
   GetCurrentUserQueryBuilder,
@@ -7,7 +7,7 @@ import {
 export default function withAuthServerSide(getServerSidePropsFunction) {
   return async (context) => {
 
-    const currentOAuth2UserResult = await queryServerSide({
+    const currentOAuth2UserResult = await queryToBackend({
       context,
       query: new GetCurrentOAuth2UserQueryBuilder().build(),
     });
@@ -20,7 +20,7 @@ export default function withAuthServerSide(getServerSidePropsFunction) {
       }
     }
 
-    const currentUserResult = await queryServerSide({
+    const currentUserResult = await queryToBackend({
       context,
       query: new GetCurrentUserQueryBuilder().build(),
     });

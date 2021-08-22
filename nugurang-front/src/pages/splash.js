@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';

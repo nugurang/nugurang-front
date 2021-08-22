@@ -1,4 +1,3 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -12,7 +11,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
 
-import queryServerSide from "../../utils/queryServerSide";
+import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
 import {
   GetCurrentOAuth2UserQueryBuilder,
   CreateUserMutationBuilder,
@@ -25,11 +24,9 @@ import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import Loading from '../../components/Loading';
-import GraphQlError from '../../components/GraphQlError';
 
 export const getServerSideProps = async (context) => {
-  const currentOAuth2UserResult = await queryServerSide({
+  const currentOAuth2UserResult = await queryToBackend({
     context,
     query: new GetCurrentOAuth2UserQueryBuilder().build(),
   });
@@ -55,18 +52,6 @@ function SignUp({ currentOAuth2User }) {
   const newEmail = useRef(null);
   const newImageAddress = useRef(null);
 
-  const results = [
-    useMutation(new CreateImageMutationBuilder().build()),
-    useMutation(new CreateUserMutationBuilder().build()),
-  ];
-  const [createImage, createUser] = results.map(result => result[0]);
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />
-
   function handleNewNameChange() {
     newName.current.focus();
   }
@@ -84,7 +69,7 @@ function SignUp({ currentOAuth2User }) {
       <PageTitleBar title="Sign up" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Add username" icon=<PersonIcon /> />} border={false}>
+        <SectionBox titleBar={<SectionTitleBar title="Add username" icon={<PersonIcon />} />} border={false}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -100,7 +85,7 @@ function SignUp({ currentOAuth2User }) {
           </Grid>
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Add email" icon=<EmailIcon /> />} border={false}>
+        <SectionBox titleBar={<SectionTitleBar title="Add email" icon={<EmailIcon />} />} border={false}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -116,7 +101,7 @@ function SignUp({ currentOAuth2User }) {
           </Grid>
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon=<ImageIcon /> />} border={false}>
+        <SectionBox titleBar={<SectionTitleBar title="Add user image link" icon={<ImageIcon />} />} border={false}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -136,10 +121,23 @@ function SignUp({ currentOAuth2User }) {
             e.preventDefault();
             let image;
             if (newImageAddress.current.value) {
-              const res = await createImage({ variables: { address: newImageAddress.current.value }});
+              const res = await mutateToBackend({
+                mutation: new CreateImageMutationBuilder().build(),
+                variables: { address: newImageAddress.current.value },
+              });
               image = res.data.createImage.id;
             }
-            await createUser({ variables: { user: { name: newName.current.value, email: newEmail.current.value, biography: "", image }}});
+            await mutateToBackend({
+              mutation: new CreateUserMutationBuilder().build(),
+              variables: {
+                user: {
+                  name: newName.current.value,
+                  email: newEmail.current.value,
+                  biography: "",
+                  image,
+                }
+              },
+            });
             router.push(`/signup/welcome`);
           }}
         >

@@ -1,8 +1,6 @@
-import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,7 +14,7 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 import { COMMON_BOARDS, EVENT_BOARDS } from '../config';
 import withAuthServerSide from '../utils/withAuthServerSide';
-import queryServerSide from "../utils/queryServerSide";
+import { queryToBackend } from "../utils/requestToBackend";
 import {
   GetCurrentUserQueryBuilder,
 } from '../queries/user';
@@ -25,9 +23,7 @@ import {
   GetHotThreadsByBoardNamesQueryBuilder,
 } from '../queries/thread';
 
-import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
-import Loading from '../components/Loading';
 import NoContentsBox from '../components/NoContentsBox';
 import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
@@ -36,18 +32,18 @@ import ThreadCard from '../components/ThreadCard';
 import ThreadListItem from '../components/ThreadListItem';
 
 export const getServerSideProps = withAuthServerSide(async ({ context }) => {
-  const currentUserResult = await queryServerSide({
+  const currentUserResult = await queryToBackend({
     context,
     query: new GetCurrentUserQueryBuilder().withNotifications().build(),
   });
-  const hotThreadsResult = await queryServerSide({
+  const hotThreadsResult = await queryToBackend({
     context,
     query: new GetHotThreadsByBoardNamesQueryBuilder().withUser().withEvent().withFirstArticle().withArticles().build(),
     variables: {
       boardNames: COMMON_BOARDS,
     },
   });
-  const eventsResult = await queryServerSide({
+  const eventsResult = await queryToBackend({
     context,
     query: new GetThreadsByBoardNamesQueryBuilder().withUser().withEvent().withFirstArticle().withArticles().build(),
     variables: {
@@ -67,16 +63,23 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
 function Home({ currentUser, hotThreads, events }) {
   const router = useRouter();
 
-  hotThreads.forEach(function(thread){
-    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  console.log(hotThreads);
+  hotThreads = hotThreads.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
   });
-  events.forEach(function(thread){
-    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  events = events.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
   });
 
   return (
     <Layout>
-      <PageTitleBar title="Home" icon=<HomeIcon />>
+      <PageTitleBar title="Home" icon={<HomeIcon />}>
         <IconButton onClick={() => router.push(`/notifications/${currentUser.id}`)}>
           <Badge badgeContent={currentUser.getNotifications.length} color="secondary">
             <NotificationsIcon />
@@ -96,7 +99,7 @@ function Home({ currentUser, hotThreads, events }) {
         <Grid item xs={12} md={6}>
           <SectionBox
             titleBar={(
-              <SectionTitleBar title="Starred threads" icon=<FavoriteIcon />>
+              <SectionTitleBar title="Starred threads" icon={<FavoriteIcon />}>
                 <IconButton disabled onClick={() => router.push(`/user/${currentUser.id}/star`)}>
                   <ArrowForwardIcon />
                 </IconButton>
@@ -113,7 +116,7 @@ function Home({ currentUser, hotThreads, events }) {
         <Grid item xs={12} md={6}>
           <SectionBox
             titleBar={(
-              <SectionTitleBar title="Hot threads" icon=<WhatshotIcon /> />
+              <SectionTitleBar title="Hot threads" icon={<WhatshotIcon />}/>
             )}
           >
             {
@@ -126,7 +129,7 @@ function Home({ currentUser, hotThreads, events }) {
         <Grid item xs={12}>
           <SectionBox
             titleBar={(
-              <SectionTitleBar title="Recent events" icon=<TrendingUpIcon /> />
+              <SectionTitleBar title="Recent events" icon={<TrendingUpIcon />} />
             )}
           >
             {

@@ -1,159 +1,43 @@
 import dayjs from "dayjs";
-import { gql } from '@apollo/client';
-import { withApollo } from '@apollo/react-hoc';
 import { loremIpsum } from 'lorem-ipsum';
 import { useEffect, useState } from 'react';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import DayjsUtils from "@date-io/dayjs";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { ALL_BOARDS, COMMON_BOARDS, EVENT_BOARDS } from '../config';
-import withAuth from '../components/withAuth';
+import withAuthServerSide from "../utils/withAuthServerSide";
+import { queryToBackend, mutateToBackend } from "../utils/requestToBackend";
+import {
+  GetBoardsByNamesQueryBuilder,
+  CreateBoardMutationBuilder,
+} from '../queries/board';
+import {
+  GetAllPositionsQueryBuilder,
+  GetAllProgressesQueryBuilder,
+} from '../queries/constant';
+import { CreateThreadMutationBuilder } from '../queries/thread';
+import { CreateEventMutationBuilder } from '../queries/event';
+import { CreateArticleMutationBuilder } from '../queries/article';
+import {
+  CreateTaskMutationBuilder,
+  CreateTaskPositionMutationBuilder,
+} from '../queries/task';
+import { CreateTeamMutationBuilder } from '../queries/team';
+import { CreateProjectMutationBuilder } from '../queries/project';
+import { CreateWorkMutationBuilder } from '../queries/work';
+
 import FullScreenDialogBox from '../components/FullScreenDialogBox';
 import GraphQlError from '../components/GraphQlError';
 import Loading from '../components/Loading';
 
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
 
-export const CURRENT_USER = gql`
-  query {
-    currentUser {
-      id
-      oauth2Provider
-      oauth2Id
-      name
-      email
-      image {
-        id
-        address
-      }
-      biography
-      getFollowers(page:0, pageSize:100) {
-        id
-      }
-      getFollowings(page:0, pageSize:100) {
-        id
-      }
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide();
 
-const GET_BOARDS_BY_NAMES = gql`
-  query GetBoardsByNames($names: [String]!) {
-    getBoardsByNames(names: $names) {
-      id
-      name
-    }
-  }
-`;
-
-const POSITIONS = gql`
-  query Positions {
-    positions {
-      id
-      name
-    }
-  }
-`;
-
-const PROGRESSES = gql`
-  query Progresses {
-    progresses {
-      id
-      name
-    }
-  }
-`;
-
-const CREATE_BOARD = gql`
-  mutation CreateBoard($board: BoardInput!) {
-    createBoard(board: $board) {
-      id
-      name
-    }
-  }
-`;
-
-const CREATE_THREAD = gql`
-  mutation CreateThread($board: ID!, $thread: ThreadInput!) {
-    createThread(board: $board, thread: $thread) {
-      id
-      name
-      firstArticle {
-        id
-      }
-    }
-  }
-`;
-
-const CREATE_EVENT = gql`
-  mutation CreateEvent($event: EventInput!) {
-    createEvent(event: $event) {
-      id
-      name
-    }
-  }
-`;
-
-const CREATE_ARTICLE = gql`
-  mutation CreateArticle($article: ArticleInput!, $thread: ID!, $parent: ID) {
-    createArticle(article: $article, thread: $thread, parent: $parent) {
-      id
-      title
-    }
-  }
-`;
-
-const CREATE_POSITION = gql`
-  mutation CreatePosition($position: PositionInput!) {
-    createPosition(position: $position) {
-      id
-      name
-    }
-  }
-`;
-
-const CREATE_TEAM = gql`
-  mutation CreateTeam($team: TeamInput!) {
-    createTeam(team: $team) {
-      id
-      name
-    }
-  }
-`;
-
-const CREATE_PROJECT = gql`
-  mutation CreateProject($team: ID!, $project: ProjectInput!) {
-    createProject(team: $team, project: $project) {
-      id
-      name
-    }
-  }
-`;
-
-const CREATE_WORK = gql`
-  mutation CreateWork($project: ID!, $work: WorkInput!) {
-    createWork(project: $project, work: $work) {
-      id
-      name
-    }
-  }
-`;
-
-const CREATE_TASK = gql`
-  mutation CreateTask($work: ID!, $task: TaskInput!) {
-    createTask(work: $work, task: $task) {
-      id
-      name
-    }
-  }
-`;
-
-
-function Init({client}) {
+function Init() {
   const [done, setDone] = useState(false);
   const [error, setError] = useState();
   const router = useRouter();
@@ -162,16 +46,16 @@ function Init({client}) {
     if (error || done)
       return;
     try {
-      const positions = await client.mutate({
-        mutation: POSITIONS,
+      await mutateToBackend({
+        mutation: new GetAllPositionsQueryBuilder().build(),
       });
-      const progresses = await client.mutate({
-        mutation: PROGRESSES,
+      await mutateToBackend({
+        mutation: new GetAllProgressesQueryBuilder().build(),
       });
       const eventList = [];
       for (let i = 0; i < 10; ++i) {
-        const createEvent = await client.mutate({
-          mutation: CREATE_EVENT,
+        const createEvent = await mutateToBackend({
+          mutation: new CreateEventMutationBuilder().build(),
           variables: {
             event: {
               name: loremIpsum({units: "word"}),
@@ -186,40 +70,49 @@ function Init({client}) {
         });
         eventList.push(createEvent.data.createEvent);
       }
-      const createTeam = await client.mutate({
-        mutation: CREATE_TEAM,
+      const createTeam = await mutateToBackend({
+        mutation: new CreateTeamMutationBuilder().build(),
         variables: {team: {name: 'Capstone'}}
       });
       console.log(createTeam);
-      const createProject = await client.mutate({
-        mutation: CREATE_PROJECT,
+      const createProject = await mutateToBackend({
+        mutation: new CreateProjectMutationBuilder().build(),
         variables: {team: createTeam.data.createTeam.id, project: {name: 'Capstone-Project'}}
       });
       console.log(createProject);
-      const createWork = await client.mutate({
-        mutation: CREATE_WORK,
+      const createWork = await mutateToBackend({
+        mutation: new CreateWorkMutationBuilder().build(),
         variables: {project: createProject.data.createProject.id, work: {name: 'Sprint1'}}
       });
       console.log(createWork);
-      const createTask = await client.mutate({
-        mutation: CREATE_TASK,
+      const createTask = await mutateToBackend({
+        mutation: new CreateTaskMutationBuilder().build(),
         variables: {work: createWork.data.createWork.id, task: {name: 'Sprint1', users: [], positions: []}}
       });
       console.log(createTask);
       for (const name of ALL_POSITIONS) {
-        const createPosition = await client.mutate({mutation: CREATE_POSITION, variables: { position: {name}}});
+        const createPosition = await mutateToBackend({
+          mutation: new CreateTaskPositionMutationBuilder().build(),
+          variables: { position: {name}},
+        });
         console.log(createPosition);
       }
       for (const name of ALL_BOARDS) {
-        const createBoard = await client.mutate({mutation: CREATE_BOARD, variables: {board: {name}}});
+        const createBoard = await mutateToBackend({
+          mutation: new CreateBoardMutationBuilder().build(),
+          variables: {board: {name}},
+        });
         console.log(createBoard);
       }
-      const getCommonBoards = await client.query({query: GET_BOARDS_BY_NAMES, variables: {names: COMMON_BOARDS}})
+      const getCommonBoards = await queryToBackend({
+        query: new GetBoardsByNamesQueryBuilder().build(),
+        variables: {names: COMMON_BOARDS}
+      });
       for (const board of getCommonBoards.data.getBoardsByNames.map(board => board.id)) {
         for (let i = 0; i < 10; ++i) {
           const threadName = loremIpsum();
-          const createThread = await client.mutate({
-            mutation: CREATE_THREAD,
+          const createThread = await mutateToBackend({
+            mutation: new CreateThreadMutationBuilder().build(),
             variables: {
               board,
               thread: {
@@ -232,8 +125,8 @@ function Init({client}) {
               }
             }
           });
-          const createArticle = await client.mutate({
-            mutation: CREATE_ARTICLE,
+          const createArticle = await mutateToBackend({
+            mutation: new CreateArticleMutationBuilder().build(),
             variables: {
               article: {
                 title: loremIpsum(),
@@ -245,8 +138,8 @@ function Init({client}) {
           });
 
           for (let i = 0; i < 5; ++i) {
-            const createComment = await client.mutate({
-              mutation: CREATE_ARTICLE,
+            await mutateToBackend({
+              mutation: new CreateArticleMutationBuilder().build(),
               variables: {
                 thread: createThread.data.createThread.id,
                 parent: createArticle.data.createArticle.id,
@@ -259,11 +152,14 @@ function Init({client}) {
           }
         }
       }
-      const getEventBoards = await client.query({query: GET_BOARDS_BY_NAMES, variables: {names: EVENT_BOARDS}})
+      const getEventBoards = await queryToBackend({
+        query: new GetBoardsByNamesQueryBuilder().build(),
+        variables: {names: EVENT_BOARDS}
+      });
       for (const board of getEventBoards.data.getBoardsByNames.map(board => board.id)) {
         for (let i = 0; i < 10; ++i) {
-          const createThread = await client.mutate({
-            mutation: CREATE_THREAD,
+          const createThread = await mutateToBackend({
+            mutation: new CreateThreadMutationBuilder().build(),
             variables: {
               board,
               thread: {
@@ -277,8 +173,8 @@ function Init({client}) {
               }
             }
           });
-          const createArticle = await client.mutate({
-            mutation: CREATE_ARTICLE,
+          const createArticle = await mutateToBackend({
+            mutation: new CreateArticleMutationBuilder().build(),
             variables: {
               article: {
                 title: loremIpsum(),
@@ -290,8 +186,8 @@ function Init({client}) {
           });
 
           for (let i = 0; i < 5; ++i) {
-            const createComment = await client.mutate({
-              mutation: CREATE_ARTICLE,
+            await mutateToBackend({
+              mutation: new CreateArticleMutationBuilder().build(),
               variables: {
                 thread: createThread.data.createThread.id,
                 parent: createArticle.data.createArticle.id,
@@ -341,4 +237,4 @@ function Init({client}) {
   );
 }
 
-export default withAuth(withApollo(Init));
+export default Init;

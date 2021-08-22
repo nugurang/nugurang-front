@@ -1,5 +1,5 @@
 import React from 'react';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
 

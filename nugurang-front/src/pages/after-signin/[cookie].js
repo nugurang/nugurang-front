@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import {useEffect} from 'react'
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 
 export default function AfterSigninCookie() {

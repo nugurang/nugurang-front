@@ -1,10 +1,6 @@
-import {useRouter} from 'next/router';
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
+import { useRouter } from 'next/router';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 
 import FacebookIcon from '@material-ui/icons/Facebook';
 import GitHubIcon from '@material-ui/icons/GitHub';

@@ -70,7 +70,7 @@ export class GetBoardByNameQueryBuilder {
 
 }
 
-export class GetBoardByNamesQueryBuilder {
+export class GetBoardsByNamesQueryBuilder {
 
   build() {
     return gql`
