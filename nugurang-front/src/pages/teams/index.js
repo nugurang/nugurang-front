@@ -1,68 +1,44 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
-
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-
 import AddIcon from '@material-ui/icons/Add';
 import GroupIcon from '@material-ui/icons/Group';
 
-import GraphQlError from '../../components/GraphQlError';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { queryToBackend } from "../../utils/requestToBackend";
+import { GetCurrentUserQueryBuilder } from '../../queries/user';
+
 import Layout from '../../components/Layout';
 import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import TeamInfoCard from '../../components/TeamInfoCard';
-import withAuth from '../../components/withAuth';
-import Loading from '../../components/Loading';
 
+export const getServerSideProps = withAuthServerSide(async ({ context }) => {
+  const currentUserResult = await queryToBackend({
+    context,
+    query: new GetCurrentUserQueryBuilder().withTeams().build(),
+  });
 
-export const GET_CURRENT_USER = gql`
-  query {
-    currentUser {
-      id
-      getTeams(page: 0, pageSize: 100) {
-        id
-        name
-        owner {
-          id
-          image {
-            id
-            address
-          }
-        }
-        getMembers(page: 0, pageSize: 100) {
-          id
-          image {
-            id
-            address
-          }
-        }
-      }
-    }
-  }
-`;
+  return {
+    props: {
+      teams: currentUserResult.data.getCurrentUser.getTeams,
+    },
+  };
+});
 
-
-function Teams() {
+function Teams({ teams }) {
   const router = useRouter();
-  const responses = [
-    useQuery(GET_CURRENT_USER),
-  ];
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-  if (responses.some((response) => response.loading))
-    return <Loading />;
 
-  const teams = responses[0].data.currentUser ? responses[0].data.currentUser.getTeams : null;
-  teams.forEach(function(team){
-    team.getUsers = [team.owner].concat(team.getMembers);
-    team.onClick = () => router.push(`/teams/${team.id}`);
+  teams = teams.map(team => {
+    return {
+      ...team,
+      getUsers: [team.owner].concat(team.getMembers),
+      onClick: () => router.push(`/teams/${team.id}`),
+    };
   });
 
   return (
@@ -85,4 +61,4 @@ function Teams() {
   );
 }
 
-export default withAuth(Teams);
+export default Teams;

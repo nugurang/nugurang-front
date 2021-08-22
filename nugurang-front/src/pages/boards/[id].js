@@ -1,16 +1,13 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-
 import AddIcon from '@material-ui/icons/Add';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
-import withAuth from '../../components/withAuth';
-import Loading from '../../components/Loading';
-import GraphQlError from '../../components/GraphQlError';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { queryToBackend } from "../../utils/requestToBackend";
+import { GetBoardQueryBuilder } from '../../queries/board';
+
 import Layout from '../../components/Layout';
 import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
@@ -18,63 +15,31 @@ import SectionTitleBar from '../../components/SectionTitleBar';
 import SectionBox from '../../components/SectionBox';
 import ThreadCard from '../../components/ThreadCard';
 
+export const getServerSideProps = withAuthServerSide( async ({ context }) => {
+  const boardResult = await queryToBackend({
+    context,
+    query: new GetBoardQueryBuilder().withThreads().build(),
+    variables: {
+      id: context.query.id,
+    },
+  });
 
-const GET_BOARD = gql`
-  query GetBoard($id: ID!) {
-    getBoard(id: $id) {
-      id
-      name
-      getThreads(page: 0, pageSize: 5) {
-        id
-        name
-        user {
-          name
-          image {
-            address
-          }
-        }
-        firstArticle {
-          id
-          title
-          content
-          createdAt
-          modifiedAt
-          images {
-            address
-          }
-          viewCount
-          upCount
-          downCount
-          starCount
-        }
-      }
-    }
-  }
-`;
-
-
-function Board() {
-  const router = useRouter();
-  const [showEvents, setShowEvents] = useState(false);
-  const toggleShowEvents = () => {
-    setShowEvents((prev) => !prev);
+  return {
+    props: {
+      board: boardResult.data.getBoard,
+      threads: boardResult.data.getBoard.getThreads,
+    },
   };
+});
 
-  const responses = [
-    useQuery(GET_BOARD, {variables: {id: router.query.id}}),
-  ];
+function Board({ board, threads }) {
+  const router = useRouter();
 
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-  if (responses.some((response) => response.loading))
-    return <Loading />;
-
-  const board = responses[0].data.getBoard ? responses[0].data.getBoard : null;
-  const threads = responses[0].data.getBoard ? responses[0].data.getBoard.getThreads : null;
-
-  threads.forEach(function(thread){
-    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  threads = threads.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
   });
 
   return (
@@ -103,4 +68,4 @@ function Board() {
   );
 }
 
-export default withAuth(Board);
+export default Board;

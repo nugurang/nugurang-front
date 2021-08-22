@@ -1,4 +1,3 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -9,12 +8,17 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
+import {
+  GetTeamInvitationQueryBuilder,
+  UpdateTeamInvitationAcceptedMutationBuilder,
+  UpdateTeamInvitationDeniedMutationBuilder,
+} from '../../queries/team';
+
 import FullScreenDialogBox from '../../components/FullScreenDialogBox';
-import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
-import withAuth from '../../components/withAuth';
 
 
 const useStyles = makeStyles(() => ({
@@ -26,72 +30,30 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const CURRENT_USER = gql`
-  query {
-    currentUser {
-      id
-      name
-      image {
-        id
-        address
-      }
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide(async ({ context, currentUser }) => {
+  const teamInvitationResult = await queryToBackend({
+    context,
+    query: new GetTeamInvitationQueryBuilder().build(),
+    variables: {
+      id: context.query.invitation,
+    },
+  });
 
+  return {
+    props: {
+      currentUser,
+      teamInvitation: teamInvitationResult.data.getTeamInvitation,
+    },
+  };
+});
 
-export const GET_TEAM_INVITATION = gql`
-  query GetTeamInvitation($id: ID!) {
-    getTeamInvitation(id: $id) {
-      id
-      status {
-        id
-        name
-      }
-      team {
-        id
-        name
-      }
-    }
-  }
-`;
-
-export const UPDATE_TEAM_INVITATION_ACCEPTED = gql`
-  mutation UpdateTeamInvitationAccepted($id: ID!) {
-    updateTeamInvitationAccepted(id: $id)
-  }
-`;
-
-export const UPDATE_TEAM_INVITATION_DENIED = gql`
-  mutation UpdateTeamInvitationDenied($id: ID!) {
-    updateTeamInvitationDenied(id: $id)
-  }
-`;
-
-
-function Join() {
+function Join({ currentUser, teamInvitation }) {
   const router = useRouter();
   const classes = useStyles();
 
-  const results = [
-    [null, useQuery(CURRENT_USER)],
-    [null, useQuery(GET_TEAM_INVITATION, {variables: {id: router.query.invitation}})],
-    useMutation(UPDATE_TEAM_INVITATION_ACCEPTED),
-    useMutation(UPDATE_TEAM_INVITATION_DENIED),
-  ];
-  const [currentUser, getTeamInvitation, updateTeamInvitationAccepted, updateTeamInvitationDenied] = results.map(result => result[0]);
-  const user = results[0][1].data?.currentUser;
-  const invitation = results[1][1].data?.getTeamInvitation;
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />;
-
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Invitation" icon=<CheckIcon /> />>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Invitation" icon={<CheckIcon />} />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Avatar className={classes.avatar}
@@ -115,7 +77,12 @@ function Join() {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                updateTeamInvitationAccepted({ variables: { id: router.query.invitation }});
+                mutateToBackend({
+                  mutation: new UpdateTeamInvitationAcceptedMutationBuilder().build(),
+                  variables: {
+                    id: teamInvitation.id,
+                  }
+                });
                 router.push(`/teams/${invitation.team.id}`);
               }}
             >
@@ -128,7 +95,12 @@ function Join() {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                updateTeamInvitationDenied({ variables: { id: router.query.invitation }});
+                mutateToBackend({
+                  mutation: new UpdateTeamInvitationDeniedMutationBuilder().build(),
+                  variables: {
+                    id: teamInvitation.id,
+                  }
+                });
                 router.back();
               }}
             >
@@ -143,4 +115,4 @@ function Join() {
   );
 }
 
-export default withAuth(Join);
+export default Join;

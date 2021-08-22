@@ -33,13 +33,48 @@ const FRAGMENT_USERS = `
     }
   }
 `;
-const FRAGMENT_WORKS = `
-  fragment works on Task {
+const FRAGMENT_WORK = `
+  fragment work on Task {
     work {
       id
     }
   }
 `;
+
+export class GetAllTaskPositionsQueryBuilder {
+
+  build() {
+    return gql`
+      query Positions {
+        positions {
+          id
+          name
+          description
+          image {
+            id
+            address
+          }
+        }
+      }
+    `;
+  }
+
+}
+
+export class GetAllTaskProgressesQueryBuilder {
+
+  build() {
+    return gql`
+      query Progresses {
+        progresses {
+          id
+          name
+        }
+      }
+    `;
+  }
+
+}
 
 export class GetTaskQueryBuilder {
 
@@ -65,8 +100,8 @@ export class GetTaskQueryBuilder {
     return this;
   }
 
-  withWorks() {
-    this.works = true;
+  withWork() {
+    this.work = true;
     return this;
   }
 
@@ -84,13 +119,13 @@ export class GetTaskQueryBuilder {
           ${this.progress ? '...progress' : ''}
           ${this.positions ? '...positions' : ''}
           ${this.users ? '...users' : ''}
-          ${this.works ? '...works' : ''}
+          ${this.work ? '...work' : ''}
         }
       }
       ${this.progress ? FRAGMENT_PROGRESS : ''}
       ${this.positions ? FRAGMENT_POSITIONS : ''}
       ${this.users ? FRAGMENT_USERS : ''}
-      ${this.works ? FRAGMENT_WORKS : ''}
+      ${this.work ? FRAGMENT_WORK : ''}
     `;
   }
 
@@ -119,20 +154,6 @@ export class CreateTaskPositionMutationBuilder {
         createPosition(position: $position) {
           id
           name
-        }
-      }
-    `;
-  }
-
-}
-
-export class CreateTaskVoteMutationBuilder {
-
-  build() {
-    return gql`
-      mutation CreateVote($vote: VoteInput!) {
-        createVote(vote: $vote) {
-          id
         }
       }
     `;

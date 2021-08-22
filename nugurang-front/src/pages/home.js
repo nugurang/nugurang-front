@@ -63,7 +63,6 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
 function Home({ currentUser, hotThreads, events }) {
   const router = useRouter();
 
-  console.log(hotThreads);
   hotThreads = hotThreads.map(thread => {
     return {
       ...thread,

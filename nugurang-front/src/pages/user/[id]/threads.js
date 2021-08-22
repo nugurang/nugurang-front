@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
 import Grid from '@material-ui/core/Grid';
-
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
-import withAuth from '../../../components/withAuth';
-import Loading from '../../../components/Loading';
-import GraphQlError from '../../../components/GraphQlError';
+import withAuthServerSide from '../../../utils/withAuthServerSide';
+import { queryToBackend } from "../../../utils/requestToBackend";
+import { GetUserQueryBuilder } from '../../../queries/user';
+
 import Layout from '../../../components/Layout';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionTitleBar from '../../../components/SectionTitleBar';
@@ -14,58 +13,25 @@ import SectionBox from '../../../components/SectionBox';
 import ThreadCard from '../../../components/ThreadCard';
 import 'array-flat-polyfill';
 
+export const getServerSideProps = withAuthServerSide(async ({ context }) => {
+  const userResult = await queryToBackend({
+    context,
+    query: new GetUserQueryBuilder().withThreads().build(),
+    variables: {
+      id: context.query.id,
+    },
+  });
 
-export const GET_USER = gql`
-  query getUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      name
-      image {
-        id
-        address
-      }
-      getThreads(page: 0, pageSize: 5) {
-        id
-        name
-        user {
-          name
-          image {
-            address
-          }
-        }
-        firstArticle {
-          id
-          title
-          content
-          createdAt
-          modifiedAt
-          images {
-            address
-          }
-          viewCount
-          upCount
-          downCount
-          starCount
-        }
-      }
-    }
-  }
-`;
+  return {
+    props: {
+      user: userResult.data.getUser,
+      threads: userResult.data.getUser.getThreads,
+    },
+  };
+});
 
-
-function Threads() {
+function Threads({ user, threads }) {
   const router = useRouter();
-  const results = [
-    [null, useQuery(GET_USER, {variables: {id: router.query.id}})],
-  ];
-  const user = results[0][1].data ? results[0][1].data.getUser : null;
-  const threads = results[0][1].data ? results[0][1].data.getUser.getThreads : null;
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />
-
   return (
     <Layout>
       <PageTitleBar title="Threads" backButton />
@@ -84,4 +50,4 @@ function Threads() {
   );
 }
 
-export default withAuth(Threads);
+export default Threads;

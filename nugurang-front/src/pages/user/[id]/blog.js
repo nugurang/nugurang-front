@@ -1,81 +1,44 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
-import Grid from'@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Button from'@material-ui/core/Button';
-
 import AddIcon from '@material-ui/icons/Add';
 
-import GraphQlError from '../../../components/GraphQlError';
-import HonorCard from '../../../components/HonorCard';
+import withAuthServerSide from '../../../utils/withAuthServerSide';
+import { queryToBackend } from "../../../utils/requestToBackend";
+import { GetUserQueryBuilder } from '../../../queries/user';
+
 import Layout from '../../../components/Layout';
-import Loading from '../../../components/Loading';
 import NoContentsBox from '../../../components/NoContentsBox';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
 import ThreadListItem from '../../../components/ThreadListItem';
-import withAuth from '../../../components/withAuth';
 
+export const getServerSideProps = withAuthServerSide(async ({ context }) => {
+  const userResult = await queryToBackend({
+    context,
+    query: new GetUserQueryBuilder().withBlog().build(),
+    variables: {
+      id: context.query.id,
+    },
+  });
 
-  export const GET_USER = gql`
-  query getUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      name
-      image {
-        id
-        address
-      }
-      blog{
-        id
-        getThreads(page: 0, pageSize: 5) {
-          id
-          name
-          user {
-            name
-            image {
-              address
-            }
-          }
-          firstArticle {
-            id
-            title
-            content
-            createdAt
-            modifiedAt
-            images {
-              address
-            }
-            viewCount
-            upCount
-            downCount
-            starCount
-          }
-        }
-      }
-    }
-  }
-`;
+  return {
+    props: {
+      user: userResult.data.getUser,
+      blogThreads: userResult.data.getUser.blog.getThreads,
+    },
+  };
+});
 
-function Blog() {
+function Blog({ user, blogThreads }) {
  const router = useRouter();
 
-  const responses = [
-    useQuery(GET_USER, {variables: {id: router.query.id}})
-  ];
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-
-  if (responses.some((response) => response.loading))
-    return <Loading />;
-
-  const user = responses[0].data ? responses[0].data.getUser : null;
-  const threads = responses[0].data ? responses[0].data.getUser.blog.getThreads : null;
-
-  threads.forEach(function(thread){
-    thread.onClick = () => router.push(`/threads/${thread.id}`);
+  blogThreads = blogThreads.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
   });
 
   return (
@@ -87,8 +50,8 @@ function Blog() {
       </PageTitleBar>
       <SectionBox>
         {
-          threads && threads.length
-          ? <List>{[threads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+          blogThreads && blogThreads.length
+          ? <List>{[blogThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
           : <NoContentsBox />
         }
       </SectionBox>
@@ -96,4 +59,4 @@ function Blog() {
   );
 }
 
-export default withAuth(Blog);
+export default Blog;

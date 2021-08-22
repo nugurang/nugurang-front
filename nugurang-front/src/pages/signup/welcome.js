@@ -1,4 +1,3 @@
-import { gql, useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -12,9 +11,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import withAuthServerSide from '../../utils/withAuthServerSide';
 
 import FullScreenDialogBox from '../../components/FullScreenDialogBox';
-import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
 import PageTitleBar from '../../components/PageTitleBar';
 import withAuth from '../../components/withAuth';
 

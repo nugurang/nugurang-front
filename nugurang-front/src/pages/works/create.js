@@ -1,4 +1,3 @@
-import { gql, useMutation, } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -9,28 +8,20 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { mutateToBackend } from "../../utils/requestToBackend";
+import { CreateWorkMutationBuilder } from '../../queries/work';
+
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import withAuth from '../../components/withAuth';
 
-export const CREATE_WORK = gql`
-  mutation createWork($project: ID!, $work: WorkInput!) {
-    createWork (project: $project, work: $work) {
-      id
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide();
 
 function CreateWork() {
   const router = useRouter();
   const newName = useRef(null);
-
-  const [
-    createWork,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREATE_WORK);
 
   function handleNewNameChange() {
     newName.current.focus();
@@ -42,7 +33,7 @@ function CreateWork() {
       <PageTitleBar title="Create new work" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Add work name" icon=<GroupAddIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Add work name" icon={<GroupAddIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -60,8 +51,15 @@ function CreateWork() {
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
-                  const workRes = await createWork({ variables: {project: router.query.project, work: {name: newName.current.value}}});
-                  const workId = workRes.data.createWork.id;
+                  await mutateToBackend({
+                    mutation: new CreateWorkMutationBuilder().build(),
+                    variables: {
+                      project: router.query.project,
+                      work: {
+                        name: newName.current.value,
+                      },
+                    }
+                  });
                   router.push(`/projects/${router.query.project}`);
                 }}
               >
@@ -72,12 +70,10 @@ function CreateWork() {
             </Grid>
           </Grid>
         </SectionBox>
-        {mutationLoading && <p>Loading...</p>}
-        {mutationError && <p>Error :( Please try again</p>}
       </Container>
 
     </Layout>
   );
 }
 
-export default withAuth(CreateWork);
+export default CreateWork;

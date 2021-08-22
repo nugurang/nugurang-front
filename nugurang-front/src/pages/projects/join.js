@@ -1,4 +1,3 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -9,13 +8,19 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 
-import FullScreenDialogBox from '../../components/FullScreenDialogBox';
-import GraphQlError from '../../components/GraphQlError';
-import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
-import PageTitleBar from '../../components/PageTitleBar';
-import withAuth from '../../components/withAuth';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import {
+  queryToBackend,
+  mutateToBackend,
+} from "../../utils/requestToBackend";
+import {
+  GetProjectInvitationQueryBuilder,
+  UpdateProjectInvitationAcceptedMutationBuilder,
+  UpdateProjectInvitationDeniedMutationBuilder,
+} from '../../queries/project';
 
+import FullScreenDialogBox from '../../components/FullScreenDialogBox';
+import Layout from '../../components/Layout';
 
 const useStyles = makeStyles(() => ({
   avatar: {
@@ -26,80 +31,38 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const CURRENT_USER = gql`
-  query {
-    currentUser {
-      id
-      name
-      image {
-        id
-        address
-      }
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide( async ({ context, currentUser }) => {
+  const invitationResult = await queryToBackend({
+    context,
+    query: new GetProjectInvitationQueryBuilder().build(),
+    variables: {
+      id: context.query.invitation,
+    },
+  });
 
+  return {
+    props: {
+      currentUser,
+      invitation: invitationResult.data.GetProjectInvitation,
+    },
+  };
+});
 
-export const GET_PROJECT_INVITATION = gql`
-  query GetProjectInvitation($id: ID!) {
-    getProjectInvitation(id: $id) {
-      id
-      status {
-        id
-        name
-      }
-      project {
-        id
-        name
-      }
-    }
-  }
-`;
-
-export const UPDATE_PROJECT_INVITATION_ACCEPTED = gql`
-  mutation UpdateProjectInvitationAccepted($id: ID!) {
-    updateProjectInvitationAccepted(id: $id)
-  }
-`;
-
-export const UPDATE_PROJECT_INVITATION_DENIED = gql`
-  mutation UpdateProjectInvitationDenied($id: ID!) {
-    updateProjectInvitationDenied(id: $id)
-  }
-`;
-
-
-function Join() {
+function Join({ currentUser, invitation }) {
   const router = useRouter();
   const classes = useStyles();
 
-  const results = [
-    [null, useQuery(CURRENT_USER)],
-    [null, useQuery(GET_PROJECT_INVITATION, {variables: {id: router.query.invitation}})],
-    useMutation(UPDATE_PROJECT_INVITATION_ACCEPTED),
-    useMutation(UPDATE_PROJECT_INVITATION_DENIED),
-  ];
-  const [currentUser, getProjectInvitation, updateProjectInvitationAccepted, updateProjectInvitationDenied] = results.map(result => result[0]);
-  const user = results[0][1].data?.currentUser;
-  const invitation = results[1][1].data?.getProjectInvitation;
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />;
-
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Invitation" icon=<CheckIcon /> />>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Invitation" icon={<CheckIcon />} />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Avatar className={classes.avatar}
-              alt={user.name}
-              src={user.image ? user.image.address : null}
+              alt={currentUser.name}
+              src={currentUser.image ? currentUser.image.address : null}
               variant="circle"
             >
-              {user.name.charAt(0).toUpperCase()}
+              {currentUser.name.charAt(0).toUpperCase()}
             </Avatar>
           </Grid>
           <Grid item xs={12} align="center">
@@ -113,9 +76,14 @@ function Join() {
           </Grid>
           <Grid item align="center">
             <form
-              onSubmit={e => {
+              onSubmit={async e => {
                 e.preventDefault();
-                updateProjectInvitationAccepted({ variables: { id: router.query.invitation }});
+                await mutateToBackend({
+                  mutation: new UpdateProjectInvitationAcceptedMutationBuilder().build(),
+                  variables: {
+                    id: invitation.id,
+                  }
+                });
                 router.push(`/projects/${invitation.project.id}`);
               }}
             >
@@ -126,9 +94,14 @@ function Join() {
           </Grid>
           <Grid item align="center">
             <form
-              onSubmit={e => {
+              onSubmit={async e => {
                 e.preventDefault();
-                updateProjectInvitationDenied({ variables: { id: router.query.invitation }});
+                await mutateToBackend({
+                  mutation: new UpdateProjectInvitationDeniedMutationBuilder().build(),
+                  variables: {
+                    id: invitation.id,
+                  }
+                });
                 router.back();
               }}
             >
@@ -143,4 +116,4 @@ function Join() {
   );
 }
 
-export default withAuth(Join);
+export default Join;

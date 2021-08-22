@@ -92,6 +92,28 @@ const FRAGMENT_THREADS = `
     }
   }
 `;
+const FRAGMENT_TEAMS = `
+  fragment teams on User {
+    getTeams(page: 0, pageSize: 100) {
+      id
+      name
+      owner {
+        id
+        image {
+          id
+          address
+        }
+      }
+      getMembers(page: 0, pageSize: 100) {
+        id
+        image {
+          id
+          address
+        }
+      }
+    }
+  }
+`;
 const FRAGMENT_EVALUATIONS = `
   fragment evaluations on User {
     getUserEvaluations(page: 0, pageSize: 100) {
@@ -146,6 +168,7 @@ export class GetUserQueryBuilder {
     this.follows = false;
     this.honors = false;
     this.threads = false;
+    this.teams = false;
     this.evaluations = false;
     this.blog = false;
   }
@@ -162,6 +185,11 @@ export class GetUserQueryBuilder {
 
   withThreads() {
     this.threads = true;
+    return this;
+  }
+
+  withTeams() {
+    this.teams = true;
     return this;
   }
 
@@ -191,6 +219,7 @@ export class GetUserQueryBuilder {
           ${this.follows ? '...follows' : ''}
           ${this.honors ? '...honors' : ''}
           ${this.threads ? '...threads' : ''}
+          ${this.teams ? '...teams' : ''}
           ${this.evaluations ? '...evaluations' : ''}
           ${this.blog ? '...blog' : ''}
         }
@@ -198,6 +227,7 @@ export class GetUserQueryBuilder {
       ${this.follows ? FRAGMENT_FOLLOWS : ''}
       ${this.honors ? FRAGMENT_HONORS : ''}
       ${this.threads ? FRAGMENT_THREADS : ''}
+      ${this.teams ? FRAGMENT_TEAMS : ''}
       ${this.evaluations ? FRAGMENT_EVALUATIONS : ''}
       ${this.blog ? FRAGMENT_BLOG : ''}
     `;
@@ -211,6 +241,7 @@ export class GetUserByNameQueryBuilder {
     this.follows = false;
     this.honors = false;
     this.threads = false;
+    this.teams = false;
     this.evaluations = false;
     this.blog = false;
   }
@@ -227,6 +258,11 @@ export class GetUserByNameQueryBuilder {
 
   withThreads() {
     this.threads = true;
+    return this;
+  }
+
+  withTeams() {
+    this.teams = true;
     return this;
   }
 
@@ -256,6 +292,7 @@ export class GetUserByNameQueryBuilder {
           ${this.follows ? '...follows' : ''}
           ${this.honors ? '...honors' : ''}
           ${this.threads ? '...threads' : ''}
+          ${this.teams ? '...teams' : ''}
           ${this.evaluations ? '...evaluations' : ''}
           ${this.blog ? '...blog' : ''}
         }
@@ -263,6 +300,7 @@ export class GetUserByNameQueryBuilder {
       ${this.follows ? FRAGMENT_FOLLOWS : ''}
       ${this.honors ? FRAGMENT_HONORS : ''}
       ${this.threads ? FRAGMENT_THREADS : ''}
+      ${this.teams ? FRAGMENT_TEAMS : ''}
       ${this.evaluations ? FRAGMENT_EVALUATIONS : ''}
       ${this.blog ? FRAGMENT_BLOG : ''}
     `;
@@ -277,6 +315,7 @@ export class GetCurrentUserQueryBuilder {
     this.follows = false;
     this.honors = false;
     this.threads = false;
+    this.teams = false;
     this.evaluations = false;
     this.blog = false;
   }
@@ -298,6 +337,11 @@ export class GetCurrentUserQueryBuilder {
 
   withThreads() {
     this.threads = true;
+    return this;
+  }
+
+  withTeams() {
+    this.teams = true;
     return this;
   }
 
@@ -329,6 +373,7 @@ export class GetCurrentUserQueryBuilder {
           ${this.follows ? '...follows' : ''}
           ${this.honors ? '...honors' : ''}
           ${this.threads ? '...threads' : ''}
+          ${this.teams ? '...teams' : ''}
           ${this.evaluations ? '...evaluations' : ''}
           ${this.blog ? '...blog' : ''}
         }
@@ -337,6 +382,7 @@ export class GetCurrentUserQueryBuilder {
       ${this.follows ? FRAGMENT_FOLLOWS : ''}
       ${this.honors ? FRAGMENT_HONORS : ''}
       ${this.threads ? FRAGMENT_THREADS : ''}
+      ${this.teams ? FRAGMENT_TEAMS : ''}
       ${this.evaluations ? FRAGMENT_EVALUATIONS : ''}
       ${this.blog ? FRAGMENT_BLOG : ''}
     `;

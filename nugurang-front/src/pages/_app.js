@@ -20,7 +20,6 @@ export default function RootApp(props) {
     }
   }, []);
 
-
   return (
     <ApolloProvider client={graphQlClient}>
       <ThemeProvider theme={theme}>

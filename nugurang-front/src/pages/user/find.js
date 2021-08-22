@@ -1,5 +1,4 @@
-import React, { useRef } from 'react'
-import { gql, useLazyQuery } from '@apollo/client';
+import React, { useRef, useState } from 'react'
 import { useRouter } from 'next/router';
 
 import Container from '@material-ui/core/Container';
@@ -10,61 +9,43 @@ import TextField from '@material-ui/core/TextField';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import SearchIcon from '@material-ui/icons/Search';
 
-import GraphQlError from '../../components/GraphQlError';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { queryToBackend } from "../../utils/requestToBackend";
+import { GetUserByNameQueryBuilder } from '../../queries/user';
+
 import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox'
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import UserInfoCard from '../../components/UserInfoCard'
-import withAuth from '../../components/withAuth';
 
-export const GET_USER_BY_NAME = gql`
-  query getUserByName($name: String!) {
-    getUserByName(name: $name) {
-      id
-      name
-      email
-      image {
-        id
-        address
-      }
-      biography
-      getFollowers(page:0, pageSize:100) {
-        id
-      }
-      getFollowings(page:0, pageSize:100) {
-        id
-      }
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide(async ({ context }) => {
+  const userResult = await queryToBackend({
+    context,
+    query: new GetUserByNameQueryBuilder().withFollows().build(),
+    variables: {
+      id: context.query.id,
+    },
+  });
 
+  return {
+    props: {
+      user: userResult.data.getUser,
+      threads: userResult.data.getUser.getThreads,
+    },
+  };
+});
 
 function Find() {
   const router = useRouter();
   const keywordName = useRef(null);
 
-  const results = [useLazyQuery(GET_USER_BY_NAME)];
-  const [getUserByName] = results.map(result => result[0]);
-
-  const userData = results[0][1].data;
-  const users = userData && userData.getUserByName ? [userData.getUserByName] : [];
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />
+  const [users, setUsers] = useState([]);
 
   function handleKeywordNameChange() {
     keywordName.current.focus();
   }
-
-  users.forEach(function(user){
-    user.onClick = () => router.push(`/user/${user.id}`);
-  });
 
   return (
     <Layout>
@@ -87,7 +68,19 @@ function Find() {
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
-                  await getUserByName({ variables: {name: keywordName.current.value}})}}
+                  const response = await queryToBackend({
+                    query: new GetUserByNameQueryBuilder().withFollows().build(),
+                    variables: {
+                      id: keywordName.current.value,
+                    },
+                  });
+                  setUsers(response.data.getUserByName.map(user => {
+                    return {
+                      ...user,
+                      onClick: () => router.push(`/user/${user.id}`),
+                    };
+                  }));
+                }}
               >
                 <IconButton type="submit" aria-label="search">
                   <SearchIcon />
@@ -99,7 +92,7 @@ function Find() {
 
         <SectionBox
           titleBar={
-            <SectionTitleBar title="Results" icon=<FindInPageIcon /> />
+            <SectionTitleBar title="Results" icon={<FindInPageIcon />} />
           }
         >
           {
@@ -114,4 +107,4 @@ function Find() {
   );
 }
 
-export default withAuth(Find);
+export default Find;

@@ -1,4 +1,3 @@
-import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -10,49 +9,23 @@ import TextField from '@material-ui/core/TextField';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ImageIcon from '@material-ui/icons/Image';
 
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { mutateToBackend } from "../../utils/requestToBackend";
+import { CreateImageMutationBuilder } from '../../queries/image';
+import { CreateThreadMutationBuilder } from '../../queries/thread';
+
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import Loading from '../../components/Loading';
-import GraphQlError from '../../components/GraphQlError';
-import withAuth from '../../components/withAuth';
 
-
-const CREATE_IMAGE = gql`
-  mutation createImage($address: String!) {
-    createImage (address: $address) {
-      id
-    }
-  }
-`;
-
-const CREATE_THREAD = gql`
-  mutation createThread($board: ID!, $thread: ThreadInput!) {
-    createThread (board: $board, thread: $thread) {
-      id
-    }
-  }
-`;
-
+export const getServerSideProps = withAuthServerSide();
 
 function CreateThread() {
   const router = useRouter();
   const newTitle = useRef(null);
   const newContent = useRef(null);
   const newImageAddress = useRef(null);
-
-  const results = [
-    useMutation(CREATE_IMAGE),
-    useMutation(CREATE_THREAD)
-  ];
-  const [createImage, createThread] = results.map(result => result[0]);
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />
 
   function handleNewTitleChange() {
     newTitle.current.focus();
@@ -71,7 +44,7 @@ function CreateThread() {
       <PageTitleBar title="Create new thread" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Add title" icon=<GroupAddIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Add title" icon={<GroupAddIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -86,7 +59,7 @@ function CreateThread() {
           </Grid>
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Add content" icon=<GroupAddIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Add content" icon={<GroupAddIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -104,7 +77,7 @@ function CreateThread() {
         </SectionBox>
 
 
-        <SectionBox titleBar={<SectionTitleBar title="Add image link" icon=<ImageIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Add image link" icon={<ImageIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -127,12 +100,29 @@ function CreateThread() {
             const content = newContent.current.value;
             let images = [];
             if (newImageAddress.current.value) {
-              const res = await createImage({ variables: { address: newImageAddress.current.value }});
-              images.push(Number(res.data.createImage.id));
+              const imageResponse = await mutateToBackend({
+                mutation: new CreateImageMutationBuilder().build(),
+                variables: {
+                  address: newImageAddress.current.value
+                }
+              });
+              images.push(Number(imageResponse.data.createImage.id));
             }
-            console.log(images);
-            const threadRes = await createThread({ variables: { board: router.query.board, thread: {name: title, firstArticle: {title, content, images}}}});
-            router.push(`/threads/${threadRes.data.createThread.id}`);
+            const threadResponse = await mutateToBackend({
+              mutation: new CreateThreadMutationBuilder().build(),
+              variables: {
+                board: router.query.board,
+                thread: {
+                  name: title,
+                  firstArticle: {
+                    title,
+                    content,
+                    images
+                  }
+                }
+              }
+            });
+            router.push(`/threads/${threadResponse.data.createThread.id}`);
           }}
         >
           <Box align="center">
@@ -145,4 +135,4 @@ function CreateThread() {
   );
 }
 
-export default withAuth(CreateThread);
+export default CreateThread;

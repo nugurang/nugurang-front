@@ -6,7 +6,6 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-
 import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';

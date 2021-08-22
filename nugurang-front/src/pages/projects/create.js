@@ -1,4 +1,3 @@
-import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -9,29 +8,20 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { mutateToBackend } from "../../utils/requestToBackend";
+import { CreateProjectMutationBuilder } from '../../queries/project';
+
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import withAuth from '../../components/withAuth';
 
-
-export const CREATE_PROJECT = gql`
-  mutation createProject($team: ID!, $project: ProjectInput!) {
-    createProject (team: $team, project: $project) {
-      id
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide();
 
 function CreateProject() {
   const router = useRouter();
   const newName = useRef(null);
-
-  const [
-    createProject,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREATE_PROJECT);
 
   function handleNewNameChange() {
     newName.current.focus();
@@ -43,7 +33,7 @@ function CreateProject() {
       <PageTitleBar title="Create new project" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Add project name" icon=<GroupAddIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Add project name" icon={<GroupAddIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -61,17 +51,22 @@ function CreateProject() {
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
-                  const projectRes = await createProject({ variables: { team: router.query.team, project: { name: newName.current.value }}});
-                  const projectId = projectRes.data.createProject.id;
-                  router.push(`/teams/${router.query.team}`);
+                  const projectResponse = await mutateToBackend({
+                    mutation: new CreateProjectMutationBuilder().build(),
+                    variables: {
+                      team: router.query.team,
+                      project: {
+                        name: newName.current.value
+                      }
+                    }
+                  });
+                  router.push(`/projects/${projectResponse.data.createProject.id}`);
                 }}
               >
                 <Box align="center">
                   <Button type="submit" variant="outlined">Submit</Button>
                 </Box>
               </form>
-              {mutationLoading && <p>Loading...</p>}
-              {mutationError && <p>Error :( Please try again</p>}
             </Grid>
           </Grid>
         </SectionBox>
@@ -81,4 +76,4 @@ function CreateProject() {
   );
 }
 
-export default withAuth(CreateProject);
+export default CreateProject;

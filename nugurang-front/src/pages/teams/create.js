@@ -1,4 +1,3 @@
-import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -9,29 +8,20 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { mutateToBackend } from "../../utils/requestToBackend";
+import { CreateTeamMutationBuilder } from '../../queries/team';
+
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import withAuth from '../../components/withAuth';
 
-
-export const CREATE_TEAM = gql`
-  mutation createTeam($team: TeamInput!) {
-    createTeam (team: $team) {
-      id
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide();
 
 function CreateTeam() {
   const router = useRouter();
   const newName = useRef(null);
-
-  const [
-    createTeam,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREATE_TEAM);
 
   function handleNewNameChange() {
     newName.current.focus();
@@ -42,7 +32,7 @@ function CreateTeam() {
       <PageTitleBar title="Create new team" backButton backButtonLink="/teams" />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Add team name" icon=<GroupAddIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Add team name" icon={<GroupAddIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
@@ -58,9 +48,16 @@ function CreateTeam() {
             </Grid>
             <Grid item xs={12}>
               <form
-                onSubmit={e => {
+                onSubmit={async e => {
                   e.preventDefault();
-                  createTeam({ variables: { team: { name: newName.current.value }}});
+                  await mutateToBackend({
+                    mutation: new CreateTeamMutationBuilder().build(),
+                    variables: {
+                      team: {
+                        name: newName.current.value
+                      }
+                    }
+                  });
                   router.push('/teams');
                 }}
               >
@@ -79,4 +76,4 @@ function CreateTeam() {
   );
 }
 
-export default withAuth(CreateTeam);
+export default CreateTeam;

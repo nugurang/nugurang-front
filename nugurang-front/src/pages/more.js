@@ -160,7 +160,7 @@ function More() {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
 
-          <SectionBox titleBar={<SectionTitleBar title="My account" icon=<PersonIcon /> />}>
+          <SectionBox titleBar={<SectionTitleBar title="My account" icon={<PersonIcon />} />}>
             {
               MENU_USER && (MENU_USER.length)
               ? <List container>{[MENU_USER].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>
@@ -168,7 +168,7 @@ function More() {
             }
           </SectionBox>
 
-          <SectionBox titleBar={<SectionTitleBar title="Search tools" icon=<QueueIcon /> />}>
+          <SectionBox titleBar={<SectionTitleBar title="Search tools" icon={<QueueIcon />} />}>
             {
               MENU_SEARCH && (MENU_SEARCH.length)
               ? <List container>{[MENU_SEARCH].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>
@@ -176,7 +176,7 @@ function More() {
             }
           </SectionBox>
 
-          <SectionBox titleBar={<SectionTitleBar title="Developer options" icon=<CodeIcon /> />}>
+          <SectionBox titleBar={<SectionTitleBar title="Developer options" icon={<CodeIcon /> }/>}>
             {
               MENU_DEVELOPERS && (MENU_DEVELOPERS.length)
               ? <List container>{[MENU_DEVELOPERS].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>

@@ -14,7 +14,7 @@ export default function ErrorPage({ errorCode }) {
   const router = useRouter();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Error!" backButton />>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Error!" backButton />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography variant="h5">{errorCode}</Typography>

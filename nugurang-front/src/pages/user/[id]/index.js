@@ -1,23 +1,21 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { gql, useMutation, useQuery } from '@apollo/client';
-import Box from'@material-ui/core/Box';
 import Button from'@material-ui/core/Button';
 import Grid from'@material-ui/core/Grid';
 import IconButton from'@material-ui/core/IconButton';
 import List from'@material-ui/core/List';
-
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import BookIcon from '@material-ui/icons/Book';
 import EditIcon from '@material-ui/icons/Edit';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
-import withAuth from '../../../components/withAuth';
+import withAuthServerSide from '../../../utils/withAuthServerSide';
+import { mutateToBackend, queryToBackend } from "../../../utils/requestToBackend";
+import { GetUserQueryBuilder, CreateUserFollowingMutationBuilder } from '../../../queries/user';
+
 import Layout from '../../../components/Layout';
 import HonorCard from '../../../components/HonorCard';
-import GraphQlError from '../../../components/GraphQlError';
-import Loading from '../../../components/Loading';
 import NoContentsBox from '../../../components/NoContentsBox';
 import PageTitleBar from '../../../components/PageTitleBar';
 import SectionBox from '../../../components/SectionBox';
@@ -25,203 +23,40 @@ import SectionTitleBar from '../../../components/SectionTitleBar';
 import UserInfoBox from '../../../components/UserInfoBox';
 import ThreadListItem from '../../../components/ThreadListItem';
 
-
-const TEST_USER = {
-  id: 0,
-  name: "Test User",
-  email: "Test email",
-  image: "/static/images/sample_1.jpg",
-  bio: "Test bio",
-  followers: 5,
-  followings: 10,
-}
-
-const TEST_BLOG_THREAD = [
-  {
-    id: 0,
-    user: TEST_USER,
-    title: "Recent event 1",
-    content: "Content and more",
-    image: "/static/images/sample_1.jpg",
-    like: 3,
-    topic: "Test topic",
-    view: 4,
-    vote: 5,
-    firstArticle: {
-      id: 0,
-    }
-  }
-];
-
-const TEST_HONOR_BADGE_LIST = [
-  {
-    id: 0,
-    name: "Pikachu",
-    image: {
-      id: 0,
-      address: "/static/images/sample_1.jpg",
+export const getServerSideProps = withAuthServerSide(async ({ context, currentUser }) => {
+  const userResult = await queryToBackend({
+    context,
+    query: new GetUserQueryBuilder().withFollows().withHonors().withThreads().withBlog().build(),
+    variables: {
+      id: context.query.id,
     },
-    score: "1000000",
-  },
-  {
-    id: 1,
-    name: "Raichu",
-    image: {
-      id: 0,
-      address: "/static/images/sample_1.jpg",
-    },
-    score: "2000000",
-  },
-  {
-    id: 2,
-    name: "Charmander",
-    image: {
-      id: 0,
-      address: "/static/images/sample_1.jpg",
-    },
-    score: "3000000",
-  },
-  {
-    id: 3,
-    name: "Squirtle",
-    image: {
-      id: 0,
-      address: "/static/images/sample_1.jpg",
-    },
-    score: "4000000",
-  },
-];
-
-
-const GET_USER = gql`
-  query getUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      name
-      email
-      biography
-      totalHonor
-      honors {
-        id
-        honor
-        position {
-          id
-          name
-          description
-          image {
-            id
-            address
-          }
-        }
-      }
-      image {
-        id
-        address
-      }
-      blog{
-        id
-        getThreads(page: 0, pageSize: 3) {
-          id
-          name
-          user {
-            name
-            image {
-              address
-            }
-          }
-          firstArticle {
-            id
-            title
-            content
-            createdAt
-            modifiedAt
-            images {
-              address
-            }
-            viewCount
-            upCount
-            downCount
-            starCount
-          }
-        }
-      }
-      getThreads(page: 0, pageSize: 3) {
-        id
-        name
-        user {
-          name
-          image {
-            address
-          }
-        }
-        firstArticle {
-          id
-          title
-          content
-          createdAt
-          modifiedAt
-          images {
-            address
-          }
-          viewCount
-          upCount
-          downCount
-          starCount
-        }
-      }
-      getFollowings(page: 0, pageSize: 100) {
-        id
-      }
-      getFollowers(page: 0, pageSize: 100) {
-        id
-      }
-    }
-  }
-`;
-
-
-export const CURRENT_USER = gql`
-  query currentUser{
-    currentUser {
-      id
-      name
-      email
-    }
-  }
-`;
-
-export const CREATE_FOLLOWING = gql`
-  mutation createFollowing($user: ID!) {
-    createFollowing(user: $user)
-  }
-`;
-
-
-function UserInfo() {
-  const router = useRouter();
-  const results = [
-    [null, useQuery(GET_USER, {variables: {id: router.query.id}})],
-    [null, useQuery(CURRENT_USER)],
-    useMutation(CREATE_FOLLOWING)
-  ];
-  const user = results[0][1].data ? results[0][1].data.getUser : null;
-  const recentThreads = results[0][1].data ? results[0][1].data.getUser.getThreads : [];
-  const recentBlogs = results[0][1].data ? results[0][1].data.getUser.blog.getThreads : [];
-  const currentUser = results[1][1].data ? results[1][1].data.currentUser : null;
-  const [getUser, getCurrentUser, createFollowing] = results.map(result => result[0]);
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />;
-
-  recentThreads.forEach(function(thread){
-    thread.onClick = () => router.push(`/threads/${thread.id}`);
   });
 
-  recentBlogs.forEach(function(blogThread){
-    blogThread.onClick = () => router.push(`/threads/${blogThread.id}`);
+  return {
+    props: {
+      currentUser,
+      user: userResult.data.getUser,
+      threads: userResult.data.getUser.getThreads,
+      blogThreads: userResult.data.getUser.blog.getThreads,
+    },
+  };
+});
+
+
+function UserInfo({ currentUser, user, threads, blogThreads }) {
+  const router = useRouter();
+
+  threads = threads.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
+  });
+  blogThreads = blogThreads.map(thread => {
+    return {
+      ...thread,
+      onClick: () => router.push(`/threads/${thread.id}`),
+    };
   });
 
   return (
@@ -255,7 +90,12 @@ function UserInfo() {
                     <form
                       onSubmit={e => {
                         e.preventDefault();
-                        createFollowing({ variables: {user: router.query.id}});
+                        mutateToBackend({
+                          mutation: new CreateUserFollowingMutationBuilder().build(),
+                          variables: {
+                            user: router.query.id
+                          }
+                        });
                       }}
                     >
                       <Button variant="outlined" type="submit">
@@ -272,7 +112,7 @@ function UserInfo() {
         <Grid item xs={12} md={6} lg={8}>
           <SectionBox
             titleBar={(
-              <SectionTitleBar title="Recent threads" icon=<AssignmentIcon />>
+              <SectionTitleBar title="Recent threads" icon={<AssignmentIcon />}>
                 <IconButton onClick={() => router.push(`/user/${router.query.id}/threads`)}>
                   <ArrowForwardIcon />
                 </IconButton>
@@ -280,15 +120,15 @@ function UserInfo() {
             )}
           >
             {
-              user.getThreads && (user.getThreads.length)
-              ? <List>{[recentThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              threads && threads.length
+              ? <List>{[threads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
               : <NoContentsBox />
             }
           </SectionBox>
 
           <SectionBox
             titleBar={(
-              <SectionTitleBar title="Recent blog updates" icon=<BookIcon />>
+              <SectionTitleBar title="Recent blog updates" icon={<BookIcon />}>
                 <IconButton onClick={() => router.push(`/user/${router.query.id}/blog`)}>
                   <ArrowForwardIcon />
                 </IconButton>
@@ -296,15 +136,15 @@ function UserInfo() {
             )}
           >
             {
-              user.blog.getThreads && (user.blog.getThreads.length)
-              ? <List>{[recentBlogs].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
+              blogThreads && blogThreads.length
+              ? <List>{[blogThreads].flat().map((thread) => <ThreadListItem thread={thread} />)}</List>
               : <NoContentsBox />
             }
           </SectionBox>
 
           <SectionBox
             titleBar={(
-              <SectionTitleBar title="Honor badges" icon=<EmojiEventsIcon />>
+              <SectionTitleBar title="Honor badges" icon={<EmojiEventsIcon />}>
                 <IconButton onClick={() => router.push(`/user/${router.query.id}/honor`)}>
                   <ArrowForwardIcon />
                 </IconButton>
@@ -312,7 +152,7 @@ function UserInfo() {
             )}
           >
             {
-              user.honors && (user.honors.length)
+              user.honors && user.honors.length
               ? <Grid container>{user.honors.flat().map((honor) => <Grid item xs={4} md={3}><HonorCard honor={honor} /></Grid>)}</Grid>
               : <NoContentsBox />
             }
@@ -324,4 +164,4 @@ function UserInfo() {
   );
 }
 
-export default withAuth(UserInfo);
+export default UserInfo;

@@ -224,6 +224,66 @@ export class GetHotThreadsByBoardNamesQueryBuilder {
 
 }
 
+export class GetAllThreadVoteTypesQueryBuilder {
+
+  build() {
+    return gql`
+      query VoteTypes {
+        voteTypes {
+          id
+          name
+        }
+      }
+    `;
+  }
+
+}
+
+export class GetThreadVoteTypeByNameQueryBuilder {
+
+  build() {
+    return gql`
+      query GetVoteTypeByName($name: String!){
+        getVoteTypeByName(name: $name) {
+          id
+        }
+      }
+    `;
+  }
+
+}
+
+export class GetAllThreadMatchTypesQueryBuilder {
+
+  build() {
+    return gql`
+      query MatchTypes {
+        matchTypes {
+          id
+          name
+        }
+      }
+    `;
+  }
+
+}
+
+export class GetAllThreadMatchTypesByNameQueryBuilder {
+
+  build() {
+    return gql`
+      query GetMatchTypeByName($name: String!) {
+        getMatchTypeByName(name: $name) {
+          id
+          name
+        }
+      }
+    `;
+  }
+
+}
+
+
 export class CreateThreadMutationBuilder {
 
   build() {
@@ -235,6 +295,34 @@ export class CreateThreadMutationBuilder {
           firstArticle {
             id
           }
+        }
+      }
+    `;
+  }
+
+}
+
+export class CreateThreadVoteMutationBuilder {
+
+  build() {
+    return gql`
+      mutation CreateVote($vote: VoteInput!) {
+        createVote(vote: $vote) {
+          id
+        }
+      }
+    `;
+  }
+
+}
+
+export class CreateThreadMatchRequestMutationBuilder {
+
+  build() {
+    return gql`
+      mutation CreateMatchRequest($request: MatchRequestInput!) {
+        createMatchRequest (request: $request) {
+          id
         }
       }
     `;
