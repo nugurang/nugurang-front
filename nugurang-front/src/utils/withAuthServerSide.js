@@ -11,7 +11,8 @@ export default function withAuthServerSide(getServerSidePropsFunction) {
       context,
       query: new GetCurrentOAuth2UserQueryBuilder().build(),
     });
-    if (currentOAuth2UserResult.data.currentOAuth2User === null) {
+    if (!currentOAuth2UserResult.data
+      || currentOAuth2UserResult.data.currentOAuth2User === null) {
       return {
         redirect: {
           destination: '/signin/',

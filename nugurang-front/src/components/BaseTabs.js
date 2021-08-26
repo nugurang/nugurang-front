@@ -64,9 +64,10 @@ export default function BaseTabs({ children, tabProps }) {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    console.log(newValue);
   };
-  let tabPropKey = -1;
-  let tabKey = -1;
+  let tabPropKey = 0;
+  let tabKey = 0;
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default" style={{ background: 'transparent', boxShadow: 'none'}}>

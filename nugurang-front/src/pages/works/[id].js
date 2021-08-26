@@ -53,8 +53,8 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
 
   return {
     props: {
-      work: workResult.data.work,
-      tasks: workResult.data.work.tasks,
+      work: workResult.data.getWork,
+      tasks: workResult.data.getWork.tasks,
     },
   };
 });

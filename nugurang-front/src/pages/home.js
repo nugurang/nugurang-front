@@ -96,11 +96,7 @@ function Home({ currentUser, hotThreads, events }) {
         <Grid item xs={12} md={6}>
           <SectionBox
             titleBar={(
-              <SectionTitleBar title="Starred threads" icon={<FavoriteIcon />}>
-                <IconButton disabled onClick={() => router.push(`/user/${currentUser.id}/star`)}>
-                  <ArrowForwardIcon />
-                </IconButton>
-              </SectionTitleBar>
+              <SectionTitleBar title="Starred threads" icon={<FavoriteIcon />} />
             )}
           >
             {

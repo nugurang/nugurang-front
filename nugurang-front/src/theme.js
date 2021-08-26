@@ -108,7 +108,7 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true,
-    fontFamily: "Ubuntu",
+    fontFamily: "NanumGothic",
     fontSize: 16,
     color: "#000000",
     test: {

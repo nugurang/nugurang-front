@@ -29,7 +29,7 @@ export class GetWorkQueryBuilder {
     this.tasks = false;
   }
 
-  withMTasks() {
+  withTasks() {
     this.tasks = true;
     return this;
   }
