@@ -20,8 +20,8 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
 
   return {
     props: {
-      currentUser: currentUserResult.data.getCurrentUser,
-      notifications: currentUserResult.data.getCurrentUser.getNotifications,
+      currentUser: currentUserResult.data.currentUser,
+      notifications: currentUserResult.data.currentUser.notifications || [],
     },
   };
 });
@@ -29,7 +29,7 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
 function Notifications({ currentUser, notifications }) {
   const router = useRouter();
 
-  notifications.forEach(function(notification){
+  notifications.forEach(notification => {
     if (notification.type.name == "TEAM_INVITATION") {
       notification.onClick = () => router.push({pathname: "/teams/join", query: { invitation: notification.data[0] }});
     } else if (notification.type.name == "PROJECT_INVITATION") {

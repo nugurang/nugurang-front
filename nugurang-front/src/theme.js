@@ -28,7 +28,7 @@ const theme = createMuiTheme({
     MuiAccordion: {
       root: {
         border: '0rem solid',
-        borderRadius: 5,
+        borderRadius: 25,
       },
     },
     MuiAvatar: {
@@ -43,7 +43,7 @@ const theme = createMuiTheme({
     MuiButton: {
       root: {
         border: '0.15rem solid #9778ec40',
-        borderRadius: 20,
+        borderRadius: 25,
         color: "#5738AC",
         height: "2.5rem",
         margin: '0 0.5rem',
@@ -62,7 +62,7 @@ const theme = createMuiTheme({
     MuiCard: {
       root: {
         border: '0.05rem solid #888',
-        borderRadius: 20,
+        borderRadius: 25,
         background: "FFF7FF",
         margin: '0.5rem',
         padding: '0',
@@ -88,10 +88,16 @@ const theme = createMuiTheme({
         margin: '0rem 1rem',
         padding: '0.5rem',
         border: '0.05rem solid #888',
-        borderRadius: 20,
+        borderRadius: 25,
       },
       elevation0: {
         border: '0rem solid',
+      },
+    },
+    MuiOutlinedInput: {
+      root: {
+        color: '0rem solid #9778ec40',
+        borderRadius: 25,
       },
     },
   },
