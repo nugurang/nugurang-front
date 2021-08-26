@@ -123,7 +123,7 @@ function More() {
                       <Typography>You need to sign in first.</Typography>
                     </Grid>
                     <Grid item xs={12} sm={4} align="right">
-                      <Button variant="outlined" onClick={() => router.push('/signin')}>Sign in</Button>
+                      <Button variant="contained" onClick={() => router.push('/signin')}>Sign in</Button>
                     </Grid>
                   </>
                 )
@@ -135,7 +135,7 @@ function More() {
                     <Grid item xs={12}>
                       <Grid container justify="flex-end">
                         <Grid item>
-                          <Button variant="outlined" onClick={() => router.push(`/user/${user.id}`)}>
+                          <Button variant="contained" onClick={() => router.push(`/user/${user.id}`)}>
                             My info
                           </Button>
                         </Grid>
@@ -145,7 +145,7 @@ function More() {
                             content="Are you sure to logout?"
                             onClickYes={() => router.push(`${BACKEND_ADDR}/logout`)}
                           >
-                            <Button variant="outlined">
+                            <Button variant="contained">
                               Sign out
                             </Button>
                           </YesNoDialog>

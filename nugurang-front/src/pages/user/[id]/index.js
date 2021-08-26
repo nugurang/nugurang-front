@@ -79,7 +79,7 @@ function UserInfo({ currentUser, user, threads, blogThreads }) {
             <UserInfoBox user={user} />
             <Grid container direction="row" justify="flex-end">
               <Grid item align="right">
-                <Button variant="outlined" onClick={() => router.push(`/user/${router.query.id}/follows`)}>
+                <Button variant="contained" onClick={() => router.push(`/user/${router.query.id}/follows`)}>
                   People
                 </Button>
               </Grid>
@@ -98,7 +98,7 @@ function UserInfo({ currentUser, user, threads, blogThreads }) {
                         });
                       }}
                     >
-                      <Button variant="outlined" type="submit">
+                      <Button variant="contained" type="submit">
                         Follow
                       </Button>
                     </form>

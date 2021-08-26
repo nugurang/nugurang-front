@@ -21,7 +21,7 @@ export default function Welcome() {
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button variant="outlined" onClick={() => router.back()}>Go back</Button>
+              <Button variant="contained" onClick={() => router.back()}>Go back</Button>
             </Box>
           </Grid>
         </Grid>

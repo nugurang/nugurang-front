@@ -109,7 +109,7 @@ function Task({ allTaskProgresses, task }) {
                         router.push(`/works/${task.work.id}`);
                       }}
                     >
-                      <Button variant="outlined" type="submit">Move to {progress.name}</Button>
+                      <Button variant="contained" type="submit">Move to {progress.name}</Button>
                     </form>
                   )}
                 </Box>

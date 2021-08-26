@@ -143,7 +143,7 @@ function Update({ thread }) {
           }}
         >
           <Box align="center">
-            <Button variant="outlined" type="submit">Submit</Button>
+            <Button variant="contained" type="submit">Submit</Button>
           </Box>
         </form>
       </Container>

@@ -88,7 +88,7 @@ function Join({ currentUser, invitation }) {
               }}
             >
               <Box align="center">
-                <Button variant="outlined" type="submit">Accept</Button>
+                <Button variant="contained" type="submit">Accept</Button>
               </Box>
             </form>
           </Grid>
@@ -106,7 +106,7 @@ function Join({ currentUser, invitation }) {
               }}
             >
               <Box align="center">
-                <Button variant="outlined" type="submit">Deny</Button>
+                <Button variant="contained" type="submit">Deny</Button>
               </Box>
             </form>
           </Grid>

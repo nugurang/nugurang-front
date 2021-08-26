@@ -23,7 +23,7 @@ function Success() {
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button variant="outlined" onClick={() => router.push('/home')}>Go home</Button>
+              <Button variant="contained" onClick={() => router.push('/home')}>Go home</Button>
             </Box>
           </Grid>
         </Grid>

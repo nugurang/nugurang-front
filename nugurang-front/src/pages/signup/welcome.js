@@ -63,7 +63,7 @@ function Welcome({ currentUser }) {
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button variant="outlined" onClick={() => router.push('/')}>Go home</Button>
+              <Button variant="contained" onClick={() => router.push('/')}>Go home</Button>
             </Box>
           </Grid>
         </Grid>

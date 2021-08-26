@@ -50,7 +50,7 @@ function Update({ project }) {
   return (
     <Layout>
       <PageTitleBar title="Edit project" backButton="true" backButtonLink={`/projects/${router.query.project}`}>
-        <Button variant="outlined" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.project }})}>Create work</Button>
+        <Button variant="contained" onClick={() => router.push({pathname: "/works/create", query: { project: router.query.project }})}>Create work</Button>
       </PageTitleBar>
 
       <Container maxWidth="md">
@@ -86,7 +86,7 @@ function Update({ project }) {
           }}
         >
           <Box align="center">
-            <Button variant="outlined" type="submit">Submit</Button>
+            <Button variant="contained" type="submit">Submit</Button>
           </Box>
         </form>
 

@@ -66,7 +66,7 @@ function Failed({ currentUser, event }) {
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button variant="outlined" onClick={() => router.push(`/home`)}>Go Home</Button>
+              <Button variant="contained" onClick={() => router.push(`/home`)}>Go Home</Button>
             </Box>
           </Grid>
         </Grid>

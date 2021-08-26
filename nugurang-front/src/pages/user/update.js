@@ -174,7 +174,7 @@ function Update({ currentUser }) {
               }}
             >
               <Box align="center">
-                <Button variant="outlined" type="submit">Submit</Button>
+                <Button variant="contained" type="submit">Submit</Button>
               </Box>
             </form>
           </div>
@@ -186,7 +186,7 @@ function Update({ currentUser }) {
               </Box>
               <Box align="center">
                 <OKDialog label="Delete" title="Denied" content="No you cannot leave :D">
-                  <Button variant="outlined" type="submit">Delete</Button>
+                  <Button variant="contained" type="submit">Delete</Button>
                 </OKDialog>
               </Box>
             </SectionBox>

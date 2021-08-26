@@ -214,7 +214,7 @@ function Match({ allThreadMatchTypes, thread }) {
                   }}
                 >
                   <Box align="center">
-                    <Button variant="outlined" type="submit">Random match</Button>
+                    <Button variant="contained" type="submit">Random match</Button>
                   </Box>
                 </form>
               </Grid>
@@ -244,7 +244,7 @@ function Match({ allThreadMatchTypes, thread }) {
                   }}
                 >
                   <Box align="center">
-                    <Button variant="outlined" type="submit">Honor match</Button>
+                    <Button variant="contained" type="submit">Honor match</Button>
                   </Box>
                 </form>
               </Grid>
@@ -273,7 +273,7 @@ function Match({ allThreadMatchTypes, thread }) {
                   }}
                 >
                   <Box align="center">
-                    <Button variant="outlined" type="submit">Personality match</Button>
+                    <Button variant="contained" type="submit">Personality match</Button>
                   </Box>
                 </form>
               </Grid>

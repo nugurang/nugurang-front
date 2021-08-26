@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,7 +12,6 @@ import 'array-flat-polyfill';
 
 import { NO_THREAD_IMAGE_ADDRESS } from '../config';
 import ArticleStatCounterBox from './ArticleStatCounterBox';
-import NoContentsBox from './NoContentsBox';
 
 const useStyles = makeStyles(() => ({
   cardMedia: {
@@ -42,7 +40,6 @@ export default function ThreadCard({ thread }) {
   return (
     <Card
       onClick={() => thread.onClick ? thread.onClick() : null}
-      variant="outlined"
     >
       <CardActionArea>
         <CardMedia className={classes.cardMedia}
@@ -70,13 +67,13 @@ export default function ThreadCard({ thread }) {
               <Typography variant="h6" className={classes.doubleLineEllipsis}>{thread.name}</Typography>
             </Grid>
           </Grid>
-          <Grid container justify="flex-end">
-            <Grid item align="right">
-              <ArticleStatCounterBox compact article={thread.firstArticle} />
-            </Grid>
-          </Grid>
         </CardContent>
       </CardActionArea>
+      <Grid container justify="flex-end">
+        <Grid item align="right">
+          <ArticleStatCounterBox compact article={thread.firstArticle} />
+        </Grid>
+      </Grid>
     </Card>
   );
 }

@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import CommentIcon from '@material-ui/icons/Comment';
@@ -59,18 +60,18 @@ function Thread({ currentUser, allVoteTypes, thread }) {
   return (
     <Layout>
       <PageTitleBar title="Thread" backButton backButtonLink="/boards">
-        <Button variant="" onClick={() => router.push({pathname: "/threads/update", query: { thread: router.query.id }})}>
+        <IconButton onClick={() => router.push({pathname: "/threads/update", query: { thread: router.query.id }})}>
           <EditIcon />
-        </Button>
+        </IconButton>
         <YesNoDialog
           title="Delete"
           content="Are you sure to delete?"
           onClickYes={() =>
             router.push({pathname: "/threads/update", query: { thread: router.query.id }})}
         >
-          <Button variant="">
+          <IconButton>
             <DeleteIcon />
-          </Button>
+          </IconButton>
         </YesNoDialog>
       </PageTitleBar>
 
@@ -87,7 +88,7 @@ function Thread({ currentUser, allVoteTypes, thread }) {
                     <Typography variant="body1">
                       {thread.event.matchRequests.length}{" requests"}
                     </Typography>
-                    <Button variant="outlined" onClick={() => router.push({pathname: "/match/request", query: { thread: router.query.id }})}>Match</Button>
+                    <Button variant="contained" onClick={() => router.push({pathname: "/match/request", query: { thread: router.query.id }})}>Match</Button>
                   </Box>
                 </>
               )
@@ -141,7 +142,7 @@ function Thread({ currentUser, allVoteTypes, thread }) {
           <SectionBox
             titleBar={(
               <SectionTitleBar title="Comments" icon={<CommentIcon />}>
-                <Button variant="outlined" onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
+                <Button variant="contained" onClick={() => router.push({pathname: "/articles/create", query: { thread: thread.id }})}>Leave comment</Button>
               </SectionTitleBar>
             )}
           >

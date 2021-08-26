@@ -41,9 +41,9 @@ const theme = createMuiTheme({
       },
     },
     MuiButton: {
-      outlined: {
+      root: {
         border: '0.15rem solid #9778ec40',
-        borderRadius: 5,
+        borderRadius: 20,
         color: "#5738AC",
         height: "2.5rem",
         margin: '0 0.5rem',
@@ -54,22 +54,15 @@ const theme = createMuiTheme({
         textOverflow: "ellipsis",
         wordWrap: "break-word",
       },
-      text: {
-        color: "#5738AC",
-        height: "2.5rem",
-        margin: '0 0.5rem',
-        padding: '0 1.5rem',
-        fontSize: 16,
-        fontWeight: 400,
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        wordWrap: "break-word",
-      },
+      contained: {
+        backgroundColor: "#9778ec",
+        color: "#fff",
+      }
     },
     MuiCard: {
       root: {
-        border: '0.15rem solid #9778ec40',
-        borderRadius: 5,
+        border: '0.05rem solid #888',
+        borderRadius: 20,
         background: "FFF7FF",
         margin: '0.5rem',
         padding: '0',
@@ -77,7 +70,7 @@ const theme = createMuiTheme({
     },
     MuiCssBaseline: {
       "@global": {
-        '@font-face': ["Ubuntu"],
+        '@font-face': ["NanumGothic"],
       },
     },
     MuiDivider: {
@@ -91,18 +84,14 @@ const theme = createMuiTheme({
       },
     },
     MuiPaper: {
+      rounded: {
+        margin: '0rem 1rem',
+        padding: '0.5rem',
+        border: '0.05rem solid #888',
+        borderRadius: 20,
+      },
       elevation0: {
         border: '0rem solid',
-        borderRadius: 5,
-        margin: '0rem 1rem',
-        padding: '0.5rem',
-      },
-      elevation1: {
-        border: '0.15rem solid #9778ec40',
-        borderRadius: 5,
-        margin: '0rem 1rem',
-        padding: '0.5rem',
-        boxShadow: "none",
       },
     },
   },
