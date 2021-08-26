@@ -25,7 +25,7 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
     context,
     query: new GetTeamQueryBuilder().build(),
     variables: {
-      id: context.query.id,
+      id: context.query.team,
     },
   });
 
@@ -83,7 +83,7 @@ function Update({ team }) {
                 }
               }
             });
-            router.push(`/team/${response.data.updateTeam.id}`);
+            router.push(`/teams/${response.data.updateTeam.id}`);
           }}
         >
           <Box align="center">

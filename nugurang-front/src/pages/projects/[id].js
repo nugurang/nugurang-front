@@ -150,8 +150,7 @@ function ProjectInfo({ project, works, users }) {
             <YesNoDialog
               title="Delete"
               content="Are you sure to delete?"
-              onClickYes={async (e) => {
-                e.preventDefault();
+              onClickYes={async () => {
                 await mutateToBackend({
                   mutation: new DeleteProjectMutationBuilder().build(),
                   variables: {
