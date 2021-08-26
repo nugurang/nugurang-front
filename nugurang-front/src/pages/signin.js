@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -11,16 +12,25 @@ import Layout from '../components/Layout';
 import NoContentsBox from '../components/NoContentsBox';
 import SectionBox from '../components/SectionBox';
 import PageTitleBar from '../components/PageTitleBar';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(() => ({
+  logo: {
+    width: '20vh',
+    marginBottom: '5vh',
+  },
+}));
 
 export default function SignIn() {
   const router = useRouter();
+  const classes = useStyles();
+
   const SIGNIN_LIST = [
     {
       id: 1,
       name: "Facebook",
       title: "Sign in with Facebook",
       icon: <FacebookIcon />,
-      image: "/static/favicons/favicon-facebook.png",
       onClick: () => alert('Facebook not supported')
     },
     {
@@ -28,7 +38,6 @@ export default function SignIn() {
       name: "GitHub",
       title: "Sign in with GitHub",
       icon: <GitHubIcon />,
-      image: "/static/favicons/favicon-github.png",
       onClick: () => router.push(`${process.env.NEXT_PUBLIC_BACKEND_ADDR_PUBLIC}/oauth2/authorization/github`)
     },
     {
@@ -36,7 +45,6 @@ export default function SignIn() {
       name: "Kakao",
       title: "Sign in with Kakao",
       icon: <TextsmsIcon />,
-      image: "/static/favicons/favicon-kakao.png",
       onClick: () => router.push(`${process.env.NEXT_PUBLIC_BACKEND_ADDR_PUBLIC}/oauth2/authorization/kakao`)
     },
 ];
@@ -45,6 +53,9 @@ export default function SignIn() {
     <Layout>
       <PageTitleBar title="Sign In" backButton />
       <Container maxWidth="sm">
+        <Grid container justify="center">
+          <img src="/images/nugurang-logo.png" class={classes.logo} />
+        </Grid>
         <SectionBox>
           {
               SIGNIN_LIST && (SIGNIN_LIST.length)
