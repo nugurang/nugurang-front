@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers';
+import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import DayjsUtils from "@date-io/dayjs";
@@ -14,9 +14,9 @@ import PeopleIcon from '@material-ui/icons/People';
 import withAuthServerSide from '../../../utils/withAuthServerSide';
 import { mutateToBackend, queryToBackend } from "../../../utils/requestToBackend";
 import {
+  CreateThreadMatchRequestMutationBuilder,
   GetAllThreadMatchTypesQueryBuilder,
   GetThreadQueryBuilder,
-  CreateThreadMatchRequestMutationBuilder,
 } from '../../../queries/thread';
 
 import BaseSwitch from '../../../components/BaseSwitch';
@@ -133,7 +133,7 @@ function Match({ allThreadMatchTypes, thread }) {
                   onChange={(event) => {
                     setMinTeamSize(event.target.value === '' ? '' : Number(event.target.value));
                   }}
-                  onBlur = {() => {
+                  onBlur={() => {
                     if (minTeamSize < 2) {
                       setMinTeamSize(2);
                     }
@@ -175,7 +175,7 @@ function Match({ allThreadMatchTypes, thread }) {
                   onChange={(event) => {
                     setMaxTeamSize(event.target.value === '' ? '' : Number(event.target.value));
                   }}
-                  onBlur = {() => {
+                  onBlur={() => {
                     if (maxTeamSize < 2) {
                       setMaxTeamSize(2);
                     }
@@ -193,7 +193,7 @@ function Match({ allThreadMatchTypes, thread }) {
             </Grid>
           </SectionBox>
 
-          <SectionBox border={false} >
+          <SectionBox border={false}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <form
@@ -207,7 +207,7 @@ function Match({ allThreadMatchTypes, thread }) {
                       variables: {
                         request: {
                           event: thread.event.id,
-                          type: allThreadMatchTypesRev["RANDOM"],
+                          type: allThreadMatchTypesRev.RANDOM,
                           minTeamSize,
                           maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize,
                           days,
@@ -236,7 +236,7 @@ function Match({ allThreadMatchTypes, thread }) {
                       variables: {
                         request: {
                           event: thread.event.id,
-                          type: allThreadMatchTypesRev["HONOR"],
+                          type: allThreadMatchTypesRev.HONOR,
                           minTeamSize,
                           maxTeamSize:
                           setInfMaxTeamSize ? null : maxTeamSize,
@@ -266,7 +266,7 @@ function Match({ allThreadMatchTypes, thread }) {
                       variables: {
                         request: {
                           event: thread.event.id,
-                          type: allThreadMatchTypesRev["PERSONALITY"],
+                          type: allThreadMatchTypesRev.PERSONALITY,
                           minTeamSize,
                           maxTeamSize: setInfMaxTeamSize ? null : maxTeamSize,
                           days,

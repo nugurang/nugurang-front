@@ -40,6 +40,11 @@ const theme = createMuiTheme({
         margin: '0.5rem',
       },
     },
+    MuiBottomNavigationAction: {
+      root: {
+        minWidth: '2.5rem',
+      }
+    },
     MuiButton: {
       root: {
         border: '0.15rem solid #9778ec40',
@@ -68,6 +73,12 @@ const theme = createMuiTheme({
         padding: '0',
       },
     },
+    MuiContainer: {
+      root: {
+        paddingLeft: '0rem',
+        paddingRight: '0rem',
+      },
+    },
     MuiCssBaseline: {
       "@global": {
         '@font-face': ["NanumGothic"],
@@ -86,7 +97,7 @@ const theme = createMuiTheme({
     MuiPaper: {
       rounded: {
         margin: '0rem 1rem',
-        padding: '0.5rem',
+        padding: '0rem',
         border: '0.05rem solid #888',
         borderRadius: 25,
       },

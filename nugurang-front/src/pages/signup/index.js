@@ -10,10 +10,10 @@ import EmailIcon from '@material-ui/icons/Email';
 import ImageIcon from '@material-ui/icons/Image';
 import PersonIcon from '@material-ui/icons/Person';
 
-import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
 import {
-  GetCurrentOAuth2UserQueryBuilder,
   CreateUserMutationBuilder,
+  GetCurrentOAuth2UserQueryBuilder,
 } from '../../queries/user';
 import {
   CreateImageMutationBuilder,

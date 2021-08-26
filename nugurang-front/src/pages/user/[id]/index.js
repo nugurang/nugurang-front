@@ -12,7 +12,7 @@ import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 import withAuthServerSide from '../../../utils/withAuthServerSide';
 import { mutateToBackend, queryToBackend } from "../../../utils/requestToBackend";
-import { GetUserQueryBuilder, CreateUserFollowingMutationBuilder } from '../../../queries/user';
+import { CreateUserFollowingMutationBuilder, GetUserQueryBuilder } from '../../../queries/user';
 
 import Layout from '../../../components/Layout';
 import HonorCard from '../../../components/HonorCard';

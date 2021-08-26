@@ -15,10 +15,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
-import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
 import {
-  GetTeamQueryBuilder,
   DeleteTeamMutationBuilder,
+  GetTeamQueryBuilder,
 } from '../../queries/team';
 
 import BaseSwitch from '../../components/BaseSwitch';
@@ -175,7 +175,7 @@ function TeamInfo({ team, projects, owner, members }) {
                     <UserInfoCard user={team.owner} />
                   </Grid>
                 </Grid>
-                <Divider style={{margin: "1rem"}}/>
+                <Divider style={{margin: "1rem"}} />
                 <Typography variant="h6">Members</Typography>
                 {
                   team.getMembers && (team.getMembers.length)

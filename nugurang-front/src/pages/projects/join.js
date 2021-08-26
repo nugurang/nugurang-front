@@ -10,8 +10,8 @@ import CheckIcon from '@material-ui/icons/Check';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
 import {
-  queryToBackend,
   mutateToBackend,
+  queryToBackend,
 } from "../../utils/requestToBackend";
 import {
   GetProjectInvitationQueryBuilder,
@@ -74,7 +74,8 @@ function Join({ currentUser, invitation }) {
           <Grid item xs={12} align="center">
             <Typography variant="h4">
               {"You are invited to project "}
-              {invitation.project.name}{"."}
+              {invitation.project.name}
+              {"."}
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">

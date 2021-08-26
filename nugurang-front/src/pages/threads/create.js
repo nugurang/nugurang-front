@@ -98,7 +98,7 @@ function CreateThread() {
             e.preventDefault();
             const title = newTitle.current.value;
             const content = newContent.current.value;
-            let images = [];
+            const images = [];
             if (newImageAddress.current.value) {
               const imageResponse = await mutateToBackend({
                 mutation: new CreateImageMutationBuilder().build(),

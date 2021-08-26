@@ -25,7 +25,7 @@ export class CreateImageMutationBuilder {
           address
         }
       }
-    `;  
+    `;
   }
 
 }

@@ -139,7 +139,7 @@ function More({ currentUser }) {
             }
           </SectionBox>
 
-          <SectionBox titleBar={<SectionTitleBar title="Developer options" icon={<CodeIcon /> }/>}>
+          <SectionBox titleBar={<SectionTitleBar title="Developer options" icon={<CodeIcon />} />}>
             {
               MENU_DEVELOPERS && (MENU_DEVELOPERS.length)
               ? <List container>{[MENU_DEVELOPERS].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>

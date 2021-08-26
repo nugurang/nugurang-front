@@ -96,7 +96,7 @@ function Task({ allTaskProgresses, task }) {
               selectableProgresses && selectableProgresses.length
               ? (
                 <Box display="flex" justifyContent="center">
-                  {[selectableProgresses].flat().map((progress) => 
+                  {[selectableProgresses].flat().map((progress) => (
                     <form
                       onSubmit={async (e) => {
                         e.preventDefault();
@@ -115,8 +115,12 @@ function Task({ allTaskProgresses, task }) {
                         router.push(`/works/${task.work.id}`);
                       }}
                     >
-                      <Button variant="contained" type="submit">Move to {progress.name}</Button>
+                      <Button variant="contained" type="submit">
+                        Move to
+                        {progress.name}
+                      </Button>
                     </form>
+                  )
                   )}
                 </Box>
               )

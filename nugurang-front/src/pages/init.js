@@ -9,19 +9,19 @@ import Typography from '@material-ui/core/Typography';
 
 import { ALL_BOARDS, COMMON_BOARDS, EVENT_BOARDS } from '../config';
 import withAuthServerSide from "../utils/withAuthServerSide";
-import { queryToBackend, mutateToBackend } from "../utils/requestToBackend";
+import { mutateToBackend, queryToBackend } from "../utils/requestToBackend";
 import {
-  GetBoardsByNamesQueryBuilder,
   CreateBoardMutationBuilder,
+  GetBoardsByNamesQueryBuilder,
 } from '../queries/board';
 import { CreateThreadMutationBuilder } from '../queries/thread';
 import { CreateEventMutationBuilder } from '../queries/event';
 import { CreateArticleMutationBuilder } from '../queries/article';
 import {
-  GetAllTaskPositionsQueryBuilder,
-  GetAllTaskProgressesQueryBuilder,
   CreateTaskMutationBuilder,
   CreateTaskPositionMutationBuilder,
+  GetAllTaskPositionsQueryBuilder,
+  GetAllTaskProgressesQueryBuilder,
 } from '../queries/task';
 import { CreateTeamMutationBuilder } from '../queries/team';
 import { CreateProjectMutationBuilder } from '../queries/project';

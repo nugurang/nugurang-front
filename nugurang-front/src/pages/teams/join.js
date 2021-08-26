@@ -73,7 +73,8 @@ function Join({ currentUser, teamInvitation }) {
           <Grid item xs={12} align="center">
             <Typography variant="h4">
               {"You are invited to team "}
-              {invitation.team.name}{"."}
+              {invitation.team.name}
+              {"."}
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">

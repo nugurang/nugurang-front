@@ -9,12 +9,12 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
 import {
-  queryToBackend,
   mutateToBackend,
+  queryToBackend,
 } from "../../utils/requestToBackend";
 import {
-  GetProjectQueryBuilder,
   CreateProjectInvitationsMutationBuilder,
+  GetProjectQueryBuilder,
 } from '../../queries/project';
 
 import Layout from '../../components/Layout';
@@ -69,19 +69,19 @@ function Invite({ project, members }) {
       <Container maxWidth="md">
 
         <Box display={selectedUsers && selectedUsers.length ? "block" : "none"}>
-          <SectionBox titleBar={<SectionTitleBar title="Selected users beta" icon={<FindInPageIcon />} />} >
+          <SectionBox titleBar={<SectionTitleBar title="Selected users beta" icon={<FindInPageIcon />} />}>
             <Grid container>{[selectedUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
           </SectionBox>
         </Box>
 
-        <SectionBox title={<SectionTitleBar title="Result" icon={<FindInPageIcon />} />} >
+        <SectionBox title={<SectionTitleBar title="Result" icon={<FindInPageIcon />} />}>
           {
             project.team.getMembers && project.team.getMembers.length
             ? <Grid container>{[project.team.getMembers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </SectionBox>
-     
+
         <form
           onSubmit={async (e) => {
             e.preventDefault();
