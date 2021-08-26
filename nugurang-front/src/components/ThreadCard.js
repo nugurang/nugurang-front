@@ -6,7 +6,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import 'array-flat-polyfill';
 
@@ -14,6 +13,9 @@ import { NO_THREAD_IMAGE_ADDRESS } from '../config';
 import ArticleStatCounterBox from './ArticleStatCounterBox';
 
 const useStyles = makeStyles(() => ({
+  cardBody: {
+    minHeight: '8.5rem',
+  },
   cardMedia: {
     height: 0,
     paddingTop: '56.25%', // 16:9
@@ -23,20 +25,19 @@ const useStyles = makeStyles(() => ({
     textOverflow: "ellipsis",
     display: "-webkit-box",
     "-webkit-line-clamp": 1,
-    "-webkit-box-orient": "vertical"
+    "-webkit-box-orient": "vertical",
   },
   doubleLineEllipsis: {
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "-webkit-box",
     "-webkit-line-clamp": 2,
-    "-webkit-box-orient": "vertical"
+    "-webkit-box-orient": "vertical",
   },
 }));
 
 export default function ThreadCard({ thread }) {
   const classes = useStyles();
-  const router = useRouter();
   return (
     <Card
       onClick={() => thread.onClick ? thread.onClick() : null}
@@ -47,7 +48,7 @@ export default function ThreadCard({ thread }) {
           title={thread.imageTitle ? thread.imageTitle : null}
         />
         <CardContent>
-          <Grid container spacing={1} alignItems="center">
+          <Grid container className={classes.cardBody} spacing={1} alignItems="center">
             <Grid item xs={12}>
               <Grid container spacing={1} alignItems="center" direction="row">
                 <Grid item>

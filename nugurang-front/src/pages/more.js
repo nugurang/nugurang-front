@@ -1,19 +1,19 @@
-import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-
 import CodeIcon from '@material-ui/icons/Code';
 import PersonIcon from '@material-ui/icons/Person';
 import QueueIcon from '@material-ui/icons/Queue';
 
+import withAuthServerSide from '../utils/withAuthServerSide';
+import { queryToBackend } from "../utils/requestToBackend";
+import { GetCurrentUserQueryBuilder } from '../queries/user';
+
 import BaseListItem from '../components/BaseListItem';
-import GraphQlError from '../components/GraphQlError';
 import Layout from '../components/Layout';
-import Loading from '../components/Loading';
 import NoContentsBox from '../components/NoContentsBox';
 import PageTitleBar from '../components/PageTitleBar';
 import SectionBox from '../components/SectionBox';
@@ -21,46 +21,31 @@ import SectionTitleBar from '../components/SectionTitleBar';
 import UserInfoBox from '../components/UserInfoBox';
 import YesNoDialog from '../components/YesNoDialog';
 
+export const getServerSideProps = withAuthServerSide(async ({ context }) => {
+  const currentUserResult = await queryToBackend({
+    context,
+    query: new GetCurrentUserQueryBuilder().withFollows().build(),
+  });
+  return {
+    props: {
+      currentUser: currentUserResult.data.currentUser,
+    },
+  };
+});
 
-export const CURRENT_USER = gql`
-  query {
-    currentUser {
-      id
-      oauth2Provider
-      oauth2Id
-      name
-      email
-      image {
-        id
-        address
-      }
-      biography
-      getFollowers(page:0, pageSize:100) {
-        id
-      }
-      getFollowings(page:0, pageSize:100) {
-        id
-      }
-    }
-  }
-`;
-
-
-function More() {
+function More({ currentUser }) {
   const router = useRouter();
-  const [open, setOpen] = React.useState(false);
-
 
   const MENU_USER = [
     {
       id: 0,
       title: "My information",
-      onClick: () => router.push(`/user/${user.id}`)
+      onClick: () => router.push(`/user/${currentUser.id}`)
     },
     {
       id: 1,
       title: "My blog",
-      onClick: () => router.push(`/user/${user.id}/blog`)
+      onClick: () => router.push(`/user/${currentUser.id}/blog`)
     },
   ]
 
@@ -85,26 +70,6 @@ function More() {
     },
   ]
 
-  const results = [
-    [null, useQuery(CURRENT_USER)],
-  ];
-  const user = results[0][1].data ? results[0][1].data.currentUser : null;
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />;
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-
   return (
     <Layout>
       <PageTitleBar title="More" backButton backButtonLink="/home" />
@@ -114,7 +79,7 @@ function More() {
           <SectionBox border={false}>
             <Grid container alignItems="center">
               {
-                !user
+                !currentUser
                 ? (
                   <>
                     <Grid item xs={12} sm={8}>
@@ -128,12 +93,12 @@ function More() {
                 : (
                   <>
                     <Grid item xs={12}>
-                      <UserInfoBox user={user} dense />
+                      <UserInfoBox user={currentUser} dense />
                     </Grid>
                     <Grid item xs={12}>
                       <Grid container justify="flex-end">
                         <Grid item>
-                          <Button variant="contained" onClick={() => router.push(`/user/${user.id}`)}>
+                          <Button variant="contained" onClick={() => router.push(`/user/${currentUser.id}`)}>
                             My info
                           </Button>
                         </Grid>

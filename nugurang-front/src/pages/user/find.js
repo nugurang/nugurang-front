@@ -52,19 +52,23 @@ function Find() {
             <Grid item>
               <form
                 onSubmit={async (e) => {
-                  e.preventDefault();
-                  const response = await queryToBackend({
-                    query: new GetUserByNameQueryBuilder().withFollows().build(),
-                    variables: {
-                      name: keywordName.current.value,
-                    },
-                  });
-                  setUsers(response.data.getUserByName.map(user => {
-                    return {
-                      ...user,
-                      onClick: () => router.push(`/user/${user.id}`),
-                    };
-                  }));
+                  if (!!keywordName.current.value) {
+                    e.preventDefault();
+                    const response = await queryToBackend({
+                      query: new GetUserByNameQueryBuilder().withFollows().build(),
+                      variables: {
+                        name: keywordName.current.value || undefined,
+                      },
+                    });
+                    if (response.data && (response.data.getUserByName !== null)) {
+                      setUsers([response.data.getUserByName].map(user => {
+                        return {
+                          ...user,
+                          onClick: () => router.push(`/user/${user.id}`),
+                        };
+                      }));
+                    } else setUsers([]);
+                  }
                 }}
               >
                 <IconButton type="submit" aria-label="search">
@@ -81,8 +85,8 @@ function Find() {
           }
         >
           {
-            users && (users.length)
-            ? <Grid container>{[users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
+            users.length > 0
+            ? <Grid container>{users.flat().map(user => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
             : <NoContentsBox />
           }
         </SectionBox>
