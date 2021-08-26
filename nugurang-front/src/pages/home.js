@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import IconButton from '@material-ui/core/IconButton';
 
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -82,14 +81,15 @@ function Home({ currentUser, hotThreads, events }) {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <Avatar
-          alt={currentUser.name}
-          src={currentUser.image ? currentUser.image.address : null}
-          onClick={() => router.push(`/user/${currentUser.id}`)}
-          variant="circle"
-        >
-          {currentUser.name.charAt(0).toUpperCase()}
-        </Avatar>
+        <IconButton size='small' onClick={() => router.push(`/user/${currentUser.id}`)}>
+          <Avatar
+            alt={currentUser.name}
+            src={currentUser.image ? currentUser.image.address : null}
+            variant="circle"
+          >
+            {currentUser.name.charAt(0).toUpperCase()}
+          </Avatar>
+        </IconButton>
       </PageTitleBar>
 
       <Grid container>

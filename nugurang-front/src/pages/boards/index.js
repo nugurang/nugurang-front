@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
 import { queryToBackend } from "../../utils/requestToBackend";
-import { GetBoardByNameQueryBuilder } from '../../queries/board';
+import { GetBoardsByNamesQueryBuilder } from '../../queries/board';
 import {
   GetThreadsByBoardNamesQueryBuilder,
   GetHotThreadsByBoardNamesQueryBuilder,
@@ -29,46 +29,53 @@ import SectionBox from '../../components/SectionBox';
 import ThreadListItem from '../../components/ThreadListItem';
 
 export const getServerSideProps = withAuthServerSide( async ({ context }) => {
-  const commomBoardThreadsResult = await queryToBackend({
+
+  const commonBoardsResponse = await queryToBackend({
+    context,
+    query: new GetBoardsByNamesQueryBuilder().build(),
+    variables: { names: COMMON_BOARDS },
+  });
+  const eventBoardsResponse = await queryToBackend({
+    context,
+    query: new GetBoardsByNamesQueryBuilder().build(),
+    variables: { names: EVENT_BOARDS },
+  });
+  const commomBoardThreadsResponse  = await queryToBackend({
     context,
     query: new GetThreadsByBoardNamesQueryBuilder().withUser().withFirstArticle().build(),
-    variables: {
-      boardNames: COMMON_BOARDS,
-    },
+    variables: { boardNames: COMMON_BOARDS },
   });
-  const eventBoardThreadsResult = await queryToBackend({
+  const eventBoardThreadsResponse  = await queryToBackend({
     context,
     query: new GetThreadsByBoardNamesQueryBuilder().withUser().withFirstArticle().build(),
-    variables: {
-      boardNames: EVENT_BOARDS,
-    },
+    variables: { boardNames: EVENT_BOARDS },
   });
-  const hotCommomBoardThreadsResult = await queryToBackend({
+  const hotCommomBoardThreadsResponse  = await queryToBackend({
     context,
     query: new GetHotThreadsByBoardNamesQueryBuilder().withUser().withFirstArticle().build(),
-    variables: {
-      boardNames: COMMON_BOARDS,
-    },
+    variables: { boardNames: COMMON_BOARDS },
   });
-  const hotEventBoardThreadsResult = await queryToBackend({
+  const hotEventBoardThreadsResponse  = await queryToBackend({
     context,
     query: new GetHotThreadsByBoardNamesQueryBuilder().withUser().withFirstArticle().build(),
-    variables: {
-      boardNames: EVENT_BOARDS,
-    },
+    variables: { boardNames: EVENT_BOARDS },
   });
 
   return {
     props: {
-      commomBoardThreads: commomBoardThreadsResult.data.getThreadsByBoardNames,
-      eventBoardThreads: eventBoardThreadsResult.data.getThreadsByBoardNames,
-      hotCommomBoardThreads: hotCommomBoardThreadsResult.data.getHotThreadsByBoardNames,
-      hotEventBoardThreads: hotEventBoardThreadsResult.data.getHotThreadsByBoardNames,
+      commonBoards: commonBoardsResponse.data.getBoardsByNames,
+      eventBoards: eventBoardsResponse.data.getBoardsByNames,
+      commomBoardThreads: commomBoardThreadsResponse.data.getThreadsByBoardNames,
+      eventBoardThreads: eventBoardThreadsResponse.data.getThreadsByBoardNames,
+      hotCommomBoardThreads: hotCommomBoardThreadsResponse.data.getHotThreadsByBoardNames,
+      hotEventBoardThreads: hotEventBoardThreadsResponse.data.getHotThreadsByBoardNames,
     },
   };
 });
 
 function Boards({
+  commonBoards,
+  eventBoards,
   commomBoardThreads,
   eventBoardThreads,
   hotCommomBoardThreads,
@@ -81,32 +88,20 @@ function Boards({
   };
 
   commomBoardThreads = commomBoardThreads.map(thread => {
-    return {
-      ...thread,
-      onClick: () => router.push(`/threads/${thread.id}`),
-    };
+    return { ...thread, onClick: () => router.push(`/threads/${thread.id}`) };
   });
   eventBoardThreads = eventBoardThreads.map(thread => {
-    return {
-      ...thread,
-      onClick: () => router.push(`/threads/${thread.id}`),
-    };
+    return { ...thread, onClick: () => router.push(`/threads/${thread.id}`), };
   });
   hotCommomBoardThreads = hotCommomBoardThreads.map(thread => {
-    return {
-      ...thread,
-      onClick: () => router.push(`/threads/${thread.id}`),
-    };
+    return { ...thread, onClick: () => router.push(`/threads/${thread.id}`), };
   });
   hotEventBoardThreads = hotEventBoardThreads.map(thread => {
-    return {
-      ...thread,
-      onClick: () => router.push(`/threads/${thread.id}`),
-    };
+    return { ...thread, onClick: () => router.push(`/threads/${thread.id}`), };
   });
 
   let key = 0;
-  const currentBoard = showEvents ? EVENT_BOARDS : COMMON_BOARDS;
+  const currentBoards = showEvents ? eventBoards : commonBoards;
   return (
     <Layout>
       <PageTitleBar title="Boards" backButton>
@@ -115,27 +110,24 @@ function Boards({
       <Grid container>
         <Grid item xs={12}>
           <SectionBox titleBar={<SectionTitleBar title="Categories" icon={<CategoryIcon />} />}>
-            <Grid container>
-              {[currentBoard].flat().map((boardName) =>
-                (
+            {
+              currentBoards.length > 0
+              ? <Grid container>
+                {currentBoards.map(board =>
                   <Grid item key={++key} xs={6} sm={4} md={3} align="center">
                     <CallingCard
-                      label={boardName}
+                      label={board.name}
                       image="/images/sample_1.jpg"
-                      onClick={async (e) => {
+                      onClick={e => {
                         e.preventDefault();
-                        const boardResponse = await queryToBackend({
-                          query: new GetBoardByNameQueryBuilder().build(),
-                          variables: { name: boardName },
-                        });
-                        const boardId = boardResponse.data.getBoardByName ? boardResponse.data.getBoardByName.id : ``;
-                        router.push(`/boards/${boardId}`);
+                        router.push(`/boards/${board.id}`);
                       }}
                     />
                   </Grid>
-                )
-              )}
-            </Grid>
+                )}
+              </Grid>
+              : <NoContentsBox />
+            }
           </SectionBox>
         </Grid>
         <Grid item xs={12} sm={6}>
