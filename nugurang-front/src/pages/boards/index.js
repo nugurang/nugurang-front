@@ -123,7 +123,7 @@ function Boards({
                   <Grid item key={++key} xs={6} sm={4} md={3} align="center">
                     <CallingCard
                       label={boardName}
-                      image="/static/images/sample_1.jpg"
+                      image="/images/sample_1.jpg"
                       onClick={async (e) => {
                         e.preventDefault();
                         const boardResponse = await queryToBackend({

@@ -13,7 +13,6 @@ import withAuthServerSide from '../../utils/withAuthServerSide';
 import FullScreenDialogBox from '../../components/FullScreenDialogBox';
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
-import withAuth from '../../components/withAuth';
 
 
 const useStyles = makeStyles(() => ({
@@ -72,4 +71,4 @@ function Welcome({ currentUser }) {
   );
 }
 
-export default withAuth(Welcome);
+export default Welcome;
