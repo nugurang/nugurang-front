@@ -10,7 +10,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import PersonIcon from '@material-ui/icons/Person';
 import QueueIcon from '@material-ui/icons/Queue';
 
-import { BACKEND_ADDR } from '../config';
+import { BACKEND_ADDR_PUBLIC } from '../config';
 import withAuth from '../components/withAuth';
 import BaseListItem from '../components/BaseListItem';
 import GraphQlError from '../components/GraphQlError';
@@ -143,7 +143,7 @@ function More() {
                           <YesNoDialog
                             title="Logout"
                             content="Are you sure to logout?"
-                            onClickYes={() => router.push(`${BACKEND_ADDR}/logout`)}
+                            onClickYes={() => router.push(`${BACKEND_ADDR_PUBLIC}/logout`)}
                           >
                             <Button variant="contained">
                               Sign out
