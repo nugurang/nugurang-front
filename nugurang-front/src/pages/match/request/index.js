@@ -17,7 +17,7 @@ import {
   GetAllThreadMatchTypesQueryBuilder,
   GetThreadQueryBuilder,
   CreateThreadMatchRequestMutationBuilder,
-} from '../../../queries/user';
+} from '../../../queries/thread';
 
 import BaseSwitch from '../../../components/BaseSwitch';
 import EventInfoBox from '../../../components/EventInfoBox';
