@@ -34,6 +34,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context, currentU
     },
   });
 
+  if (!eventResult.data.getEvent) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       currentUser,

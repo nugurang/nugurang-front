@@ -13,6 +13,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
+  if (!imageResult.data.getImage) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       image: imageResult.data.getImage,

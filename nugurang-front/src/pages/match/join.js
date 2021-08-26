@@ -34,6 +34,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context, currentU
     },
   });
 
+  if (!teamResult.data.getTeam) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       currentUser,

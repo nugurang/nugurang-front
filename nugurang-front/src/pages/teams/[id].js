@@ -53,6 +53,12 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
     },
   });
 
+  if (!teamResult.data.getTeam) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       team: teamResult.data.getTeam,

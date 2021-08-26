@@ -48,6 +48,12 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
     },
   });
 
+  if (!hotThreadsResult.data.getHotThreadsByBoardNames || !eventsResult.data.getThreadsByBoardNames) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       currentUser: currentUserResult.data.currentUser,

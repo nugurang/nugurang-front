@@ -39,6 +39,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
+  if (!threadResult.data.getThread) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       allThreadMatchTypes: allThreadMatchTypesResult.data.matchTypes,
