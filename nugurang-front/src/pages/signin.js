@@ -11,7 +11,7 @@ import Layout from '../components/Layout';
 import NoContentsBox from '../components/NoContentsBox';
 import SectionBox from '../components/SectionBox';
 import PageTitleBar from '../components/PageTitleBar';
-import { BACKEND_ADDR } from '../config';
+import { BACKEND_ADDR_PUBLIC } from '../config';
 
 export default function SignIn() {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function SignIn() {
       title: "Sign in with GitHub",
       icon: <GitHubIcon />,
       image: "/static/favicons/favicon-github.png",
-      onClick: () => router.push(`${BACKEND_ADDR}/oauth2/authorization/github`)
+      onClick: () => router.push(`${BACKEND_ADDR_PUBLIC}/oauth2/authorization/github`)
     },
     {
       id: 3,
@@ -38,7 +38,7 @@ export default function SignIn() {
       title: "Sign in with Kakao",
       icon: <TextsmsIcon />,
       image: "/static/favicons/favicon-kakao.png",
-      onClick: () => router.push(`${BACKEND_ADDR}/oauth2/authorization/kakao`)
+      onClick: () => router.push(`${BACKEND_ADDR_PUBLIC}/oauth2/authorization/kakao`)
     },
 ];
 

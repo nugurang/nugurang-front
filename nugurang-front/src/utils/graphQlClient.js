@@ -1,6 +1,6 @@
 import { ApolloClient, HttpLink, InMemoryCache, from } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
-import { BACKEND_ADDR } from '../config';
+import { BACKEND_ADDR_PUBLIC } from '../config';
 
 const link = from([
   onError(({ graphQLErrors, networkError }) => {
@@ -13,7 +13,7 @@ const link = from([
     if (networkError) console.log(`[Network error]: ${networkError}`);
   }),
   new HttpLink({
-    uri: `${BACKEND_ADDR}/graphql`,
+    uri: `${BACKEND_ADDR_PUBLIC}/graphql`,
     credentials: 'include'
   }),
 ]);
