@@ -62,11 +62,11 @@ function Thread({ currentUser, allVoteTypes, _thread }) {
     const newThreadResponse = await queryToBackend({
       query: new GetThreadQueryBuilder().withEvent().withFirstArticle().withArticles().build(),
       variables: {
-        id: router.query.id,
+        id: thread.id,
       },
     });
     setThread(newThreadResponse.data.getThread);
-  }
+  };
 
   return (
     <Layout>
@@ -105,6 +105,8 @@ function Thread({ currentUser, allVoteTypes, _thread }) {
               )
               : <ArticleLeader article={thread.firstArticle} />
             }
+            <Typography></Typography>
+            <Typography></Typography>
             <ArticleStatCounterBox
               article={thread.firstArticle}
               onClickUp = { async (e) => {

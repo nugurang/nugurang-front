@@ -58,8 +58,6 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
-  console.log(commomBoardThreadsResult);
-
   return {
     props: {
       commomBoardThreads: commomBoardThreadsResult.data.getThreadsByBoardNames,
