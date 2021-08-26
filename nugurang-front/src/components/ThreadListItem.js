@@ -3,15 +3,12 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import { useRouter } from 'next/router';
 
 import ArticleStatCounterBox from './ArticleStatCounterBox';
-import NoContentsBox from './NoContentsBox';
 
 const useStyles = makeStyles({
   singleLineEllipsis: {

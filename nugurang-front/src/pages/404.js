@@ -14,14 +14,14 @@ export default function Welcome() {
   const router = useRouter();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Error 404" backButton />>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Error 404" backButton />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography variant="h4">Something went wrong.</Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button variant="outlined" onClick={() => router.back()}>Go back</Button>
+              <Button variant="contained" onClick={() => router.back()}>Go back</Button>
             </Box>
           </Grid>
         </Grid>

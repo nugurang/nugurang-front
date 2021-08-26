@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -14,15 +13,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import withAuth from '../../components/withAuth';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import {
+  GetWorkQueryBuilder,
+  DeleteWorkMutationBuilder,
+} from '../../queries/work';
+
 import BaseTabs from '../../components/BaseTabs';
-import GraphQlError from '../../components/GraphQlError';
 import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
-import SectionTitleBar from '../../components/SectionTitleBar';
 import TaskInfoCard from '../../components/TaskInfoCard';
 import WorkInfoBox from '../../components/WorkInfoBox';
 import YesNoDialog from '../../components/YesNoDialog';
@@ -43,72 +45,38 @@ const TAB_PROPS = [
   },
 ]
 
+export const getServerSideProps = withAuthServerSide(async ({ context }) => {
+  const workResult = await queryToBackend({
+    context,
+    query: new GetWorkQueryBuilder().withTasks().build(),
+    variables: {
+      id: context.query.id,
+    },
+  });
 
-const PROGRESSES = gql`
-  query Progresses {
-    progresses {
-      id
-      name
-    }
-  }
-`;
+  return {
+    props: {
+      work: workResult.data.getWork,
+      tasks: workResult.data.getWork.tasks,
+    },
+  };
+});
 
-
-const GET_WORK = gql`
-  query GetWork($id: ID!) {
-    getWork(id: $id) {
-      id
-      project {
-        id
-      }
-      name
-      opened
-      order
-      tasks {
-        id
-        name
-        difficulty
-        order
-        progress {
-          id
-          name
-        }
-        users {
-          id
-          name
-          image {
-            id
-            address
-          }
-        }
-      }
-    }
-  }
-`;
-
-
-function WorkInfo() {
+function WorkInfo({ work, tasks }) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const results = [
-    [null, useQuery(PROGRESSES)],
-    [null, useQuery(GET_WORK, {variables: {id: router.query.id}})],
-  ];
-  const allProgresses = results[0][1].data ? results[0][1].data.progresses : [];
-  const work = results[1][1].data ? results[1][1].data.getWork : null;
-  const tasks = results[1][1].data ? results[1][1].data.getWork.tasks : null;
   const tasksTodo = [];
   const tasksDoing = [];
   const tasksDone = [];
 
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />;
+  tasks = tasks.map(task => {
+    return {
+      ...task,
+      onClick: () => router.push(`/tasks/${task.id}`),
+    };
+  });
 
-    console.log(tasks);
   tasks.forEach(function(task){
     if(task.progress.name === "TODO") {
       tasksTodo.push(task);
@@ -118,11 +86,6 @@ function WorkInfo() {
       tasksDone.push(task);
     }
   });
-
-  tasks.forEach(function(task){
-    task.onClick = () => router.push(`/tasks/${task.id}`);
-  });
-
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -157,10 +120,14 @@ function WorkInfo() {
             <YesNoDialog
               title="Delete"
               content="Are you sure to delete?"
-              onClickYes={async (e) => {
-                e.preventDefault();
-                await deleteProject({ variables: { id: router.query.id }});
-                router.push(`/works/${work.project.id}`);
+              onClickYes={async () => {
+                await mutateToBackend({
+                  mutation: new DeleteWorkMutationBuilder().build(),
+                  variables: {
+                    id: router.query.id
+                  }
+                });
+                router.push(`/projects/${work.project.id}`);
               }}
             >
               <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>
@@ -197,4 +164,4 @@ function WorkInfo() {
   );
 }
 
-export default withAuth(WorkInfo);
+export default WorkInfo;

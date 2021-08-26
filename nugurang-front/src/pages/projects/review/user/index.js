@@ -1,4 +1,3 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -9,93 +8,67 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
-import GraphQlError from '../../../../components/GraphQlError';
+import withAuthServerSide from '../../../../utils/withAuthServerSide';
+import {
+  queryToBackend,
+  mutateToBackend,
+} from "../../../../utils/requestToBackend";
+import { GetProjectQueryBuilder } from '../../../../queries/project';
+import { GetAllTaskPositionsQueryBuilder } from '../../../../queries/task';
+import {
+  GetUserQueryBuilder,
+  UpdateUserReviewsMutationBuilder,
+} from '../../../../queries/user';
+
 import Layout from '../../../../components/Layout';
-import Loading from '../../../../components/Loading';
 import PageTitleBar from '../../../../components/PageTitleBar';
 import SectionBox from '../../../../components/SectionBox';
 import SectionTitleBar from '../../../../components/SectionTitleBar';
-import withAuth from '../../../../components/withAuth';
 
+export const getServerSideProps = withAuthServerSide( async ({ context }) => {
+  const allPositionsResult = await queryToBackend({
+    context,
+    query: new GetAllTaskPositionsQueryBuilder().build(),
+  });
+  const projectResult = await queryToBackend({
+    context,
+    query: new GetProjectQueryBuilder().build(),
+    variables: {
+      id: context.query.project,
+    },
+  });
+  const userResult = await queryToBackend({
+    context,
+    query: new GetUserQueryBuilder().withEvaluations().build(),
+    variables: {
+      id: context.query.user,
+    },
+  });
 
-const POSITIONS = gql`
-  query Positions {
-    positions {
-      id
-      name
-    }
-  }
-`;
+  return {
+    props: {
+      allPositions: allPositionsResult.data.positions,
+      project: projectResult.data.getProject,
+      user: userResult.data.getUser,
+    },
+  };
+});
 
-const GET_USER = gql`
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      name
-      email
-      totalHonor
-      image {
-        id
-        address
-      }
-      getUserEvaluations(page: 0, pageSize: 100) {
-        id
-        createdAt
-        expiredAt
-        project {
-          id
-        }
-        reviews {
-          id
-        }
-      }
-    }
-  }
-`;
-
-export const UPDATE_USER_REVIEWS = gql`
-  mutation UpdateUserReviews($evaluation: ID!, $reviews: [UserReviewInput]!) {
-    updateUserReviews (evaluation: $evaluation, reviews: $reviews)
-  }
-`;
-
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
-function Index() {
+function Index({ allPositions, project, user }) {
   const router = useRouter();
   const [newUpvotes, setNewUpvotes] = useState();
   const [newDownvotes, setNewDownvotes] = useState();
 
-  const results = [
-    [null, useQuery(POSITIONS)],
-    [null, useQuery(GET_USER, {variables: {id: router.query.user}})],
-    useMutation(UPDATE_USER_REVIEWS)
-  ];
-  const [positions, getUser, updateUserReviews] = results.map(result => result[0]);
-  const allPositions = results[0][1].data?.positions;
-  const user = results[1][1].data?.getUser;
   let evaluation = null;
 
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />
-
-  console.log(user);
-  user.getUserEvaluations.forEach(function(_evaluation){
-    if (_evaluation.project.id == router.query.project) {
+  user.getUserEvaluations.forEach(_evaluation => {
+    if (_evaluation.project.id === project.id) {
       evaluation = _evaluation;
     }
   });
-  console.log(evaluation);
-
 
   return (
     <Layout>
@@ -120,8 +93,8 @@ function Index() {
           renderOption={(option, { selected }) => (
             <>
               <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
+                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                checkedIcon={<CheckBoxIcon fontSize="small" />}
                 style={{ marginRight: 8 }}
                 checked={selected}
               />
@@ -149,8 +122,8 @@ function Index() {
           renderOption={(option, { selected }) => (
             <>
               <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
+                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                checkedIcon={<CheckBoxIcon fontSize="small" />}
                 style={{ marginRight: 8 }}
                 checked={selected}
               />
@@ -180,8 +153,22 @@ function Index() {
                 newHonors.push({position: position.id, honor: -5});
               });
 
-              await updateUserReviews({ variables: { evaluation: evaluation.id, reviews: [{ toUser: user.id, honors: newHonors }]}});
-              router.push({pathname: "/projects/review", query: { project: router.query.project }});
+              await mutateToBackend({
+                mutation: new UpdateUserReviewsMutationBuilder().build(),
+                variables: {
+                  evaluation: evaluation.id,
+                  reviews: [{
+                    toUser: user.id,
+                    honors: newHonors
+                  }]
+                }
+              });
+              router.push({
+                pathname: "/projects/review",
+                query: {
+                  project: project.id,
+                },
+              });
             }}
           >
             <Box align="center">
@@ -195,4 +182,4 @@ function Index() {
   );
 }
 
-export default withAuth(Index);
+export default Index;

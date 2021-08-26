@@ -28,7 +28,7 @@ const theme = createMuiTheme({
     MuiAccordion: {
       root: {
         border: '0rem solid',
-        borderRadius: 5,
+        borderRadius: 25,
       },
     },
     MuiAvatar: {
@@ -41,9 +41,9 @@ const theme = createMuiTheme({
       },
     },
     MuiButton: {
-      outlined: {
+      root: {
         border: '0.15rem solid #9778ec40',
-        borderRadius: 5,
+        borderRadius: 25,
         color: "#5738AC",
         height: "2.5rem",
         margin: '0 0.5rem',
@@ -54,22 +54,15 @@ const theme = createMuiTheme({
         textOverflow: "ellipsis",
         wordWrap: "break-word",
       },
-      text: {
-        color: "#5738AC",
-        height: "2.5rem",
-        margin: '0 0.5rem',
-        padding: '0 1.5rem',
-        fontSize: 16,
-        fontWeight: 400,
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        wordWrap: "break-word",
-      },
+      contained: {
+        backgroundColor: "#9778ec",
+        color: "#fff",
+      }
     },
     MuiCard: {
       root: {
-        border: '0.15rem solid #9778ec40',
-        borderRadius: 5,
+        border: '0.05rem solid #888',
+        borderRadius: 25,
         background: "FFF7FF",
         margin: '0.5rem',
         padding: '0',
@@ -77,7 +70,7 @@ const theme = createMuiTheme({
     },
     MuiCssBaseline: {
       "@global": {
-        '@font-face': ["Ubuntu"],
+        '@font-face': ["NanumGothic"],
       },
     },
     MuiDivider: {
@@ -91,24 +84,26 @@ const theme = createMuiTheme({
       },
     },
     MuiPaper: {
+      rounded: {
+        margin: '0rem 1rem',
+        padding: '0.5rem',
+        border: '0.05rem solid #888',
+        borderRadius: 25,
+      },
       elevation0: {
         border: '0rem solid',
-        borderRadius: 5,
-        margin: '0rem 1rem',
-        padding: '0.5rem',
       },
-      elevation1: {
-        border: '0.15rem solid #9778ec40',
-        borderRadius: 5,
-        margin: '0rem 1rem',
-        padding: '0.5rem',
-        boxShadow: "none",
+    },
+    MuiOutlinedInput: {
+      root: {
+        color: '0rem solid #9778ec40',
+        borderRadius: 25,
       },
     },
   },
   typography: {
     useNextVariants: true,
-    fontFamily: "Ubuntu",
+    fontFamily: "NanumGothic",
     fontSize: 16,
     color: "#000000",
     test: {

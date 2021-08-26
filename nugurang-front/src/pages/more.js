@@ -123,7 +123,7 @@ function More() {
                       <Typography>You need to sign in first.</Typography>
                     </Grid>
                     <Grid item xs={12} sm={4} align="right">
-                      <Button variant="outlined" onClick={() => router.push('/signin')}>Sign in</Button>
+                      <Button variant="contained" onClick={() => router.push('/signin')}>Sign in</Button>
                     </Grid>
                   </>
                 )
@@ -135,7 +135,7 @@ function More() {
                     <Grid item xs={12}>
                       <Grid container justify="flex-end">
                         <Grid item>
-                          <Button variant="outlined" onClick={() => router.push(`/user/${user.id}`)}>
+                          <Button variant="contained" onClick={() => router.push(`/user/${user.id}`)}>
                             My info
                           </Button>
                         </Grid>
@@ -145,7 +145,7 @@ function More() {
                             content="Are you sure to logout?"
                             onClickYes={() => router.push(`${BACKEND_ADDR}/logout`)}
                           >
-                            <Button variant="outlined">
+                            <Button variant="contained">
                               Sign out
                             </Button>
                           </YesNoDialog>
@@ -160,7 +160,7 @@ function More() {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
 
-          <SectionBox titleBar={<SectionTitleBar title="My account" icon=<PersonIcon /> />}>
+          <SectionBox titleBar={<SectionTitleBar title="My account" icon={<PersonIcon />} />}>
             {
               MENU_USER && (MENU_USER.length)
               ? <List container>{[MENU_USER].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>
@@ -168,7 +168,7 @@ function More() {
             }
           </SectionBox>
 
-          <SectionBox titleBar={<SectionTitleBar title="Search tools" icon=<QueueIcon /> />}>
+          <SectionBox titleBar={<SectionTitleBar title="Search tools" icon={<QueueIcon />} />}>
             {
               MENU_SEARCH && (MENU_SEARCH.length)
               ? <List container>{[MENU_SEARCH].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>
@@ -176,7 +176,7 @@ function More() {
             }
           </SectionBox>
 
-          <SectionBox titleBar={<SectionTitleBar title="Developer options" icon=<CodeIcon /> />}>
+          <SectionBox titleBar={<SectionTitleBar title="Developer options" icon={<CodeIcon /> }/>}>
             {
               MENU_DEVELOPERS && (MENU_DEVELOPERS.length)
               ? <List container>{[MENU_DEVELOPERS].flat().map((item) => <BaseListItem primary={item.title} onClick={item.onClick} />)}</List>

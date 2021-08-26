@@ -1,4 +1,3 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -9,13 +8,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Slider from '@material-ui/core/Slider';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -23,54 +18,22 @@ import EmojiFlagsIcon from '@material-ui/icons/EmojiFlags';
 import PersonIcon from '@material-ui/icons/Person';
 import ViewListIcon from '@material-ui/icons/ViewList';
 
-import GraphQlError from '../../components/GraphQlError';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import {
+  mutateToBackend,
+  queryToBackend
+} from "../../utils/requestToBackend";
+import { GetWorkQueryBuilder } from '../../queries/task';
+import {
+  GetAllTaskPositionsQueryBuilder,
+  CreateTaskMutationBuilder,
+} from '../../queries/task';
+
 import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
-import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
 import withAuth from '../../components/withAuth';
-
-const POSITIONS = gql`
-  query Positions {
-    positions {
-      id
-      name
-    }
-  }
-`;
-
-const GET_WORK = gql`
-  query GetWork($id: ID!) {
-    getWork(id: $id) {
-      id
-      name
-      project {
-        id
-        name
-        getUsers(page: 0, pageSize: 5) {
-          id
-          name
-          email
-          image {
-            id
-            address
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const CREATE_TASK = gql`
-  mutation CreateTask($work: ID!, $task: TaskInput!) {
-    createTask (work: $work, task: $task) {
-      id
-    }
-  }
-`;
-
 
 const marks = [
   {
@@ -83,37 +46,34 @@ const marks = [
   }
 ];
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+export const getServerSideProps = withAuthServerSide(async ({ context }) => {
+  const allTaskPositionssResult = await queryToBackend({
+    context,
+    query: new GetAllTaskPositionsQueryBuilder().build(),
+  });
+  const workResult = await queryToBackend({
+    context,
+    query: new GetWorkQueryBuilder().withProject().build(),
+    variables: {
+      id: context.query.work,
+    },
+  });
 
-function CreateTask() {
+  return {
+    props: {
+      allTaskPositions: allTaskPositionssResult.data.positions,
+      work: workResult.data.getWork,
+      project: workResult.data.getWork.project,
+    },
+  };
+});
+
+function CreateTask({ allTaskPositions, work, project }) {
   const router = useRouter();
   const newName = useRef(null);
   const [selectedUsers, setSelectedUsers] = useState();
   const [selectedPositions, setSelectedPositions] = useState();
   const [difficulty, setDifficulty] = useState();
-
-  const results = [
-    [null, useQuery(POSITIONS)],
-    [null, useQuery(GET_WORK, {variables: {id: router.query.work}})],
-    useMutation(CREATE_TASK),
-  ];
-  const [positions, getWork, createTask] = results.map(result => result[0]);
-  const allPositions = results[0][1].data?.positions;
-  const work = results[1][1].data?.getWork;
-  const project = results[1][1].data?.getWork.project;
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />;
-
-  project.getUsers.forEach(function(user){
-    user.onClick = (event, newValue) => {
-      setSelectedUsers(newValue);
-    };
-  });
 
   function handleNewNameChange() {
     newName.current.focus();
@@ -125,7 +85,7 @@ function CreateTask() {
       <PageTitleBar title="Create new task" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Add task name" icon=<ViewListIcon /> border={false} />}>
+        <SectionBox titleBar={<SectionTitleBar title="Add task name" icon={<ViewListIcon />} border={false} />}>
           <FormControl fullWidth variant="filled">
             <TextField
               inputRef={newName}
@@ -135,7 +95,7 @@ function CreateTask() {
             />
           </FormControl>
         </SectionBox>
-        <SectionBox titleBar={<SectionTitleBar title="Select assignee" icon=<PersonIcon /> border={false} />}>
+        <SectionBox titleBar={<SectionTitleBar title="Select assignee" icon={<PersonIcon />} border={false} />}>
           <Autocomplete
             multiple
             onChange={(event, newValue) => {
@@ -145,7 +105,7 @@ function CreateTask() {
             disableCloseOnSelect
             getOptionLabel={(option) => option.name}
             limitTags={2}
-            renderOption={(user, { selected }) => (
+            renderOption={user => (
               <>
                 <Avatar
                   alt={user.name}
@@ -163,23 +123,22 @@ function CreateTask() {
           />
 
         </SectionBox>
-        <SectionBox titleBar={<SectionTitleBar title="Select positions" icon=<AssignmentIndIcon /> border={false} />}>
-
+        <SectionBox titleBar={<SectionTitleBar title="Select positions" icon={<AssignmentIndIcon />} border={false} />}>
 
         <Autocomplete
           multiple
           onChange={(event, newValue) => {
             setSelectedPositions(newValue);
           }}
-          options={allPositions}
+          options={allTaskPositions}
           disableCloseOnSelect
           getOptionLabel={(option) => option.name}
           limitTags={2}
           renderOption={(option, { selected }) => (
             <>
               <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
+                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                checkedIcon={<CheckBoxIcon fontSize="small" />}
                 style={{ marginRight: 8 }}
                 checked={selected}
               />
@@ -192,7 +151,7 @@ function CreateTask() {
         />
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Select difficluty" icon=<EmojiFlagsIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Select difficluty" icon={<EmojiFlagsIcon />} />}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box style={{margin: "2rem"}}>
@@ -215,22 +174,29 @@ function CreateTask() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const taskRes = await createTask({ variables: {work: router.query.work, task: { name: newName.current.value, users: selectedUsers.map(user => user.id), positions: selectedPositions.map(position => position.id), difficulty }}});
-            router.push(`/works/${router.query.work}`);
+            await mutateToBackend({
+              mutation: new CreateTaskMutationBuilder().build(),
+              variables: {
+                work: work.id,
+                task: {
+                  name: newName.current.value,
+                  users: selectedUsers.map(user => user.id),
+                  positions: selectedPositions.map(position => position.id),
+                  difficulty
+                }
+              }
+            });
+            router.push(`/works/${work.id}`);
           }}
         >
           <Box align="center">
-            <Button variant="outlined" type="submit">Submit</Button>
+            <Button variant="contained" type="submit">Submit</Button>
           </Box>
         </form>
-
-
-        {createTask.loading && <p>Loading...</p>}
-        {createTask.error && <p>Error :( Please try again</p>}
       </Container>
 
     </Layout>
   );
 }
 
-export default withAuth(CreateTask);
+export default CreateTask;

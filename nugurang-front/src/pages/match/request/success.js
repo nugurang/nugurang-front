@@ -5,24 +5,25 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import withAuth from '../../../components/withAuth';
+import withAuthServerSide from '../../../utils/withAuthServerSide';
 import FullScreenDialogBox from '../../../components/FullScreenDialogBox';
 import Layout from '../../../components/Layout';
 import PageTitleBar from '../../../components/PageTitleBar';
 
+export const getServerSideProps = withAuthServerSide();
 
 function Success() {
   const router = useRouter();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Success" backButton />>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Success" backButton />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography variant="h4">Match requested successfullly.</Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button variant="outlined" onClick={() => router.push('/home')}>Go home</Button>
+              <Button variant="contained" onClick={() => router.push('/home')}>Go home</Button>
             </Box>
           </Grid>
         </Grid>
@@ -31,4 +32,4 @@ function Success() {
   );
 }
 
-export default withAuth(Success);
+export default Success;

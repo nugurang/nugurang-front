@@ -12,9 +12,8 @@ const useStyles = makeStyles(() => ({
     margin: '0.5rem',
   },
   borderlessPaper: {
-    border: '0.1rem solid',
+    border: '0rem solid',
     borderColor: 'rgba(0, 0, 0, 0)',
-    borderRadius: 5,
     margin: '0rem 1rem',
     padding: '0.5rem',
   },
@@ -26,7 +25,10 @@ export default function SectionBox({ children, border=true, titleBar=null, }) {
   let key = 0;
   return (
     <Box className={classes.margin}>
-      <Paper className={border ? null : classes.borderlessPaper} elevation={border ? 1 : 0}>
+      <Paper
+        className={border ? null : classes.borderlessPaper}
+        elevation={border ? 3 : 0}
+      >
         <Box className={classes.titleBarMargin} display={titleBar ? "block" : "none"}>
           {titleBar || null}
         </Box>

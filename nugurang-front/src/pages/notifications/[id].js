@@ -1,63 +1,35 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-
 import List from '@material-ui/core/List';
 
-import withAuth from '../../components/withAuth';
-import GraphQlError from '../../components/GraphQlError';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { queryToBackend } from "../../utils/requestToBackend";
+import { GetCurrentUserQueryBuilder } from '../../queries/user';
+
 import NotificationListItem from '../../components/NotificationListItem';
 import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
 import NoContentsBox from '../../components/NoContentsBox';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 
+export const getServerSideProps = withAuthServerSide( async ({ context }) => {
+  const currentUserResult = await queryToBackend({
+    context,
+    query: new GetCurrentUserQueryBuilder().withNotifications().build(),
+  });
 
-export const CURRENT_USER = gql`
-  query CurrentUser {
-    currentUser {
-      id
-      oauth2Provider
-      oauth2Id
-      name
-      getNotifications(page: 0, pageSize: 100) {
-        id
-        isRead
-        createdAt
-        data
-        type {
-          id
-          name
-        }
-        user {
-          id
-          name
-          image {
-            id
-            address
-          }
-        }
-      }
-    }
-  }
-`;
+  return {
+    props: {
+      currentUser: currentUserResult.data.currentUser,
+      notifications: currentUserResult.data.currentUser.notifications || [],
+    },
+  };
+});
 
-function Notifications(){
+function Notifications({ currentUser, notifications }) {
   const router = useRouter();
-  const results = [
-    [null, useQuery(CURRENT_USER)],
-  ];
-  const user = results[0][1].data?.currentUser;
-  const allNotifications = results[0][1].data?.currentUser.getNotifications;
 
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />;
-
-  allNotifications.forEach(function(notification){
+  notifications.forEach(notification => {
     if (notification.type.name == "TEAM_INVITATION") {
       notification.onClick = () => router.push({pathname: "/teams/join", query: { invitation: notification.data[0] }});
     } else if (notification.type.name == "PROJECT_INVITATION") {
@@ -75,8 +47,8 @@ function Notifications(){
       <SectionBox>
         <List>
           {
-            user.getNotifications && user.getNotifications.length
-            ? [user.getNotifications].flat().map((notification) => <NotificationListItem notification={notification} />)
+            currentUser.getNotifications && currentUser.getNotifications.length
+            ? [currentUser.getNotifications].flat().map((notification) => <NotificationListItem notification={notification} />)
             : <NoContentsBox />
           }        
         </List>
@@ -85,4 +57,4 @@ function Notifications(){
   );
 }
 
-export default withAuth(Notifications);
+export default Notifications;

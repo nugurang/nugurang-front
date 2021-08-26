@@ -1,7 +1,12 @@
-import Home from './home'
+import withAuthServerSide from '../utils/withAuthServerSide';
 
-export default function Index() {
-  return (
-    <Home />
-  );
-}
+export const getServerSideProps = withAuthServerSide(async () => {
+  return {
+    redirect: {
+      destination: '/home/',
+      permanent: false
+    }
+  };
+})
+
+export default function Index() {}

@@ -14,7 +14,7 @@ export default function ErrorPage({ errorCode }) {
   const router = useRouter();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Error!" backButton />>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Error!" backButton />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography variant="h5">{errorCode}</Typography>
@@ -22,7 +22,7 @@ export default function ErrorPage({ errorCode }) {
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">
-              <Button variant="outlined" onClick={() => router.push('/home')}>Go home</Button>
+              <Button variant="contained" onClick={() => router.push('/home')}>Go home</Button>
             </Box>
           </Grid>
         </Grid>

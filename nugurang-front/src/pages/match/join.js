@@ -1,4 +1,3 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -9,13 +8,13 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 
-import FullScreenDialogBox from '../../components/FullScreenDialogBox';
-import GraphQlError from '../../components/GraphQlError';
-import Layout from '../../components/Layout';
-import Loading from '../../components/Loading';
-import PageTitleBar from '../../components/PageTitleBar';
-import withAuth from '../../components/withAuth';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { queryToBackend } from "../../utils/requestToBackend";
+import { GetTeamQueryBuilder } from '../../queries/team';
 
+import FullScreenDialogBox from '../../components/FullScreenDialogBox';
+import Layout from '../../components/Layout';
+import PageTitleBar from '../../components/PageTitleBar';
 
 const useStyles = makeStyles(() => ({
   avatar: {
@@ -26,82 +25,38 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const CURRENT_USER = gql`
-  query {
-    currentUser {
-      id
-      name
-      image {
-        id
-        address
-      }
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide( async ({ context, currentUser }) => {
+  const teamResult = await queryToBackend({
+    context,
+    query: new GetTeamQueryBuilder().withProjects().build(),
+    variables: {
+      id: context.query.team,
+    },
+  });
 
+  return {
+    props: {
+      currentUser,
+      team: teamResult.data.getTeam,
+    },
+  };
+});
 
-const GET_EVENT = gql`
-  query GetEvent($id: ID!) {
-    getEvent(id: $id) {
-      id
-      name
-      description
-      recruitingStart
-      recruitingEnd
-      eventStart
-      eventEnd
-    }
-  }
-`;
-
-
-const GET_TEAM = gql`
-  query getTeam($id: ID!) {
-    getTeam(id: $id) {
-      id
-      name
-      projects {
-        id
-        name
-        finished
-      }
-    }
-  }
-`;
-
-
-
-function Join() {
+function Join({ currentUser, team }) {
   const router = useRouter();
   const classes = useStyles();
 
-  const results = [
-    [null, useQuery(CURRENT_USER)],
-    [null, useQuery(GET_EVENT, {variables: {id: router.query.event}})],
-    [null, useQuery(GET_TEAM, {variables: {id: router.query.team}})],
-  ];
-  const [currentUser, getEvent, getTeam] = results.map(result => result[0]);
-  const user = results[0][1].data?.currentUser;
-  const event = results[1][1].data?.getEvent;
-  const team = results[2][1].data?.getTeam;
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />;
-
   return (
     <Layout>
-      <FullScreenDialogBox titleBar=<PageTitleBar title="Match joined!" icon=<CheckIcon /> />>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Match joined!" icon={<CheckIcon />} />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Avatar className={classes.avatar}
-              alt={user.name}
-              src={user.image ? user.image.address : null}
+              alt={currentUser.name}
+              src={currentUser.image ? currentUser.image.address : null}
               variant="circle"
             >
-              {user.name.charAt(0).toUpperCase()}
+              {currentUser.name.charAt(0).toUpperCase()}
             </Avatar>
           </Grid>
           <Grid item xs={12} align="center">
@@ -112,7 +67,13 @@ function Join() {
           </Grid>
           <Grid item align="center">
             <Box align="center">
-              <Button variant="outlined" type="submit" onSubmit={() => { router.push(`/teams/${team.id}`); }}>Go to team</Button>
+              <Button
+                variant="outlined"
+                type="submit"
+                onSubmit={() => router.push(`/teams/${team.id}`)}
+              >
+                Go to team
+              </Button>
             </Box>
           </Grid>
         </Grid>
@@ -121,4 +82,4 @@ function Join() {
   );
 }
 
-export default withAuth(Join);
+export default Join;

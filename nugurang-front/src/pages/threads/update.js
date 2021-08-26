@@ -1,4 +1,3 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react'
 import Box from '@material-ui/core/Box';
@@ -7,75 +6,44 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-
 import ImageIcon from '@material-ui/icons/Image';
 import NotesIcon from '@material-ui/icons/Notes';
 import TitleIcon from '@material-ui/icons/Title';
+
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import { CreateImageMutationBuilder } from '../../queries/image';
+import {
+  GetThreadQueryBuilder,
+  UpdateThreadMutationBuilder,
+} from '../../queries/thread';
 
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import Loading from '../../components/Loading';
-import GraphQlError from '../../components/GraphQlError';
-import withAuth from '../../components/withAuth';
 
+export const getServerSideProps = withAuthServerSide( async ({ context }) => {
+  const threadResult = await queryToBackend({
+    context,
+    query: new GetThreadQueryBuilder().withFirstArticle().build(),
+    variables: {
+      id: context.query.thread,
+    },
+  });
 
-export const GET_THREAD = gql`
-  query getThread($id: ID!) {
-    getThread (id: $id) {
-      id
-      name
-      firstArticle {
-        id
-        title
-        content
-        images {
-          id
-          address
-        }
-      }
-    }
-  }
-`;
+  return {
+    props: {
+      thread: threadResult.data.getThread,
+    },
+  };
+});
 
-export const CREATE_IMAGE = gql`
-  mutation createImage($address: String!) {
-    createImage (address: $address) {
-      id
-    }
-  }
-`;
-
-export const UPDATE_THREAD = gql`
-  mutation updateThread($id: ID!, $thread: ThreadInput!) {
-    updateThread (id: $id, thread: $thread) {
-      id
-    }
-  }
-`;
-
-
-function Update() {
+function Update({ thread }) {
   const router = useRouter();
   const newName = useRef(null);
   const newContent = useRef(null);
   const newImageAddress = useRef(null);
-
-  const results = [
-    [null, useQuery(GET_THREAD, {variables: {id: router.query.thread}})],
-    useMutation(CREATE_IMAGE),
-    useMutation(UPDATE_THREAD)
-  ];
-  const [getThread, createImage, updateThread] = results.map(result => result[0]);
-  const thread = results[0][1].data ? results[0][1].data.getThread : null;
-  const firstArticle = results[0][1].data ? results[0][1].data.getThread.firstArticle : null;
-
-  if (results.some(result => result[1].loading))
-    return <Loading />;
-  const errorResult = results.find(result => result[1].error);
-  if (errorResult)
-    return <GraphQlError error={errorResult[1].error} />
 
   function handleNewTitleChange() {
     newTitle.current.focus();
@@ -94,12 +62,12 @@ function Update() {
       <PageTitleBar title="Edit thread" backButton />
 
       <Container maxWidth="md">
-        <SectionBox titleBar={<SectionTitleBar title="Edit name" icon=<TitleIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit name" icon={<TitleIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={firstArticle.title}
+                  defaultValue={thread.firstArticle.title}
                   inputRef={newName}
                   label="Enter name"
                   variant="outlined"
@@ -110,12 +78,12 @@ function Update() {
           </Grid>
         </SectionBox>
 
-        <SectionBox titleBar={<SectionTitleBar title="Edit content" icon=<NotesIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit content" icon={<NotesIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={firstArticle.content}
+                  defaultValue={thread.firstArticle.content}
                   inputRef={newContent}
                   label="Enter content"
                   variant="outlined"
@@ -127,12 +95,12 @@ function Update() {
         </SectionBox>
 
 
-        <SectionBox titleBar={<SectionTitleBar title="Edit image link" icon=<ImageIcon /> />}>
+        <SectionBox titleBar={<SectionTitleBar title="Edit image link" icon={<ImageIcon />} />}>
           <Grid container spacing={2} alignItems="center" justify="space-between">
             <Grid item xs>
               <FormControl fullWidth variant="filled">
                 <TextField
-                  defaultValue={firstArticle.image ? firstArticle.image.address : null}
+                  defaultValue={thread.firstArticle.image ? thread.firstArticle.image.address : null}
                   inputRef={newImageAddress}
                   label="Enter image link"
                   variant="outlined"
@@ -149,15 +117,33 @@ function Update() {
             e.preventDefault();
             let image;
             if (newImageAddress.current.value) {
-              const imageRes = await createImage({ variables: { address: newImageAddress.current.value }});
-              image = imageRes.data.createImage.id;
+              const imageResponse = await mutateToBackend({
+                mutation: new CreateImageMutationBuilder().build(),
+                variables: {
+                  address: newImageAddress.current.value
+                }
+              });
+              image = imageResponse.data.createImage.id;
             }
-            const threadRes = await updateThread({ variables: { id: thread.id, thread: { name: newName.current.value, firstArticle: { title: newName.current.value, content: newContent.current.value, images: []}}}});
-            router.push(`/threads/${threadRes.data.updateThread.id}`);
+            const threadResponse = await mutateToBackend({
+              mutation: new UpdateThreadMutationBuilder().build(),
+              variables: {
+                id: thread.id,
+                thread: {
+                  name: newName.current.value,
+                  firstArticle: {
+                    title: newName.current.value,
+                    content: newContent.current.value,
+                    images: []
+                  }
+                }
+              }
+            });
+            router.push(`/threads/${thread.id}`);
           }}
         >
           <Box align="center">
-            <Button variant="outlined" type="submit">Submit</Button>
+            <Button variant="contained" type="submit">Submit</Button>
           </Box>
         </form>
       </Container>
@@ -166,4 +152,4 @@ function Update() {
   );
 }
 
-export default withAuth(Update);
+export default Update;

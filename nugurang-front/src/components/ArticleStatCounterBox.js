@@ -4,9 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-import ChatIcon from '@material-ui/icons/Chat';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ImageIcon from '@material-ui/icons/Image';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -38,25 +36,33 @@ export default function ArticleStatCounterBox({ article, compact=false, onClickD
         </Grid>
         <Grid item>
           <Box display={article.viewCount ? "flex" : "flex"} alignItems="center">
-            <IconButton color="default"><VisibilityIcon fontSize={compact ? "small" : ""} /></IconButton>
+            <IconButton color="default">
+              <VisibilityIcon fontSize={compact ? "small" : ""} />
+            </IconButton>
             <Typography>{article.viewCount}</Typography>
           </Box>
         </Grid>
         <Grid item>
           <Box display={article.upCount ? "flex" : "flex"} alignItems="center">
-            <IconButton color="default" onClick={onClickUp}><ThumbUpIcon fontSize={compact ? "small" : ""} /></IconButton>
+            <IconButton color="default">
+              <ThumbUpIcon fontSize={compact ? "small" : ""} />
+            </IconButton>
             <Typography>{article.upCount}</Typography>
           </Box>
         </Grid>
         <Grid item>
           <Box display={article.downCount ? "flex" : "flex"} alignItems="center">
-            <IconButton color="default" onClick={onClickDown}><ThumbDownIcon fontSize={compact ? "small" : ""} /></IconButton>
+            <IconButton color="default">
+              <ThumbDownIcon fontSize={compact ? "small" : ""} />
+            </IconButton>
             <Typography>{article.downCount}</Typography>
           </Box>
         </Grid>
         <Grid item>
           <Box display={article.starCount ? "flex" : "flex"} alignItems="center">
-            <IconButton color="default" onClick={onClickStar}><FavoriteIcon fontSize={compact ? "small" : ""} /></IconButton>
+            <IconButton color="default">
+              <FavoriteIcon fontSize={compact ? "small" : ""} />
+            </IconButton>
             <Typography>{article.starCount}</Typography>
           </Box>
         </Grid>

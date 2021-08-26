@@ -5,14 +5,12 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import CheckIcon from '@material-ui/icons/Check';
 
+import withAuthServerSide from '../../../utils/withAuthServerSide';
 import Layout from '../../../components/Layout';
 import FullScreenDialogBox from '../../../components/FullScreenDialogBox';
 import PageTitleBar from '../../../components/PageTitleBar';
-import withAuth from '../../../components/withAuth';
-
 
 const useStyles = makeStyles(() => ({
   typography: {
@@ -25,20 +23,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+export const getServerSideProps = withAuthServerSide();
 
 function ThankYou() {
   const router = useRouter();
   const classes = useStyles();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar={<PageTitleBar title="Review completed" icon=<CheckIcon /> />}>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Review completed" icon={<CheckIcon /> }/>}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography className={classes.typography}>Thank you for your cooperation!</Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Box className={classes.box} align="center">
-              <Button variant="outlined" onClick={() => router.push('/home')}>Go home</Button>
+              <Button variant="contained" onClick={() => router.push('/home')}>Go home</Button>
             </Box>
           </Grid>
         </Grid>
@@ -47,4 +46,4 @@ function ThankYou() {
   );
 }
 
-export default withAuth(ThankYou);
+export default ThankYou;

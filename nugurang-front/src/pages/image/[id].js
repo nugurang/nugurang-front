@@ -1,37 +1,30 @@
-import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 
-import withAuth from '../../components/withAuth';
-import GraphQlError from '../../components/GraphQlError';
-import Loading from '../../components/Loading';
+import withAuthServerSide from '../../utils/withAuthServerSide';
+import { queryToBackend } from "../../utils/requestToBackend";
+import { GetImageQueryBuilder } from '../../queries/image';
 
-const GET_IMAGE = gql`
-  query getImage($id: ID!) {
-    getImage(id: $id) {
-      id
-      address
-    }
-  }
-`;
+export const getServerSideProps = withAuthServerSide( async ({ context }) => {
+  const imageResult = await queryToBackend({
+    context,
+    query: new GetImageQueryBuilder().build(),
+    variables: {
+      id: context.query.id,
+    },
+  });
 
-function ShowImage() {
+  return {
+    props: {
+      image: imageResult.data.getImage,
+    },
+  };
+});
+
+function ShowImage({ image }) {
   const router = useRouter();
-
-  const responses = [
-    useQuery(GET_IMAGE, {variables: {id: router.query.id}})
-  ];
-  const errorResponse = responses.find((response) => response.error)
-  if (errorResponse)
-    return <GraphQlError error={errorResponse.error} />
-
-  if (responses.some((response) => response.loading))
-    return <Loading />;
-
-  const image = responses[0].data.getImage;
-
   return (
     <img src={image.address} alt="Image clicked by user" />
   );
 }
 
-export default withAuth(ShowImage);
+export default ShowImage;
