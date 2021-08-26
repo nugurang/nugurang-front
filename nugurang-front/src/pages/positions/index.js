@@ -33,7 +33,7 @@ function Positions({ allTaskPositions }) {
       <PageTitleBar title="Positions" backButton />
       <Container maxWidth="md">
         <SectionBox>
-        {
+          {
           allTaskPositions && allTaskPositions.length
           ? <Grid container>{[allTaskPositions].flat().map((position) => <Grid item xs={12} sm={6} md={4}><PositionInfoCard position={position} /></Grid>)}</Grid>
           : <NoContentsBox />

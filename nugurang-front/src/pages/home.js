@@ -16,8 +16,8 @@ import withAuthServerSide from '../utils/withAuthServerSide';
 import { queryToBackend } from "../utils/requestToBackend";
 import { GetCurrentUserQueryBuilder } from '../queries/user';
 import {
-  GetThreadsByBoardNamesQueryBuilder,
   GetHotThreadsByBoardNamesQueryBuilder,
+  GetThreadsByBoardNamesQueryBuilder,
 } from '../queries/thread';
 
 import Layout from '../components/Layout';
@@ -115,7 +115,7 @@ function Home({ currentUser, hotThreads, events }) {
         <Grid item xs={12} md={6}>
           <SectionBox
             titleBar={(
-              <SectionTitleBar title="Hot threads" icon={<WhatshotIcon />}/>
+              <SectionTitleBar title="Hot threads" icon={<WhatshotIcon />} />
             )}
           >
             {

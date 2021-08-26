@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import TitleIcon from '@material-ui/icons/Title';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
-import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
 import {
   GetTeamQueryBuilder,
   UpdateTeamMutationBuilder,

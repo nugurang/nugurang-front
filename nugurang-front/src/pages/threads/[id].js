@@ -11,11 +11,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
-import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
 import {
-  GetThreadQueryBuilder,
-  GetAllThreadVoteTypesQueryBuilder,
   CreateThreadVoteMutationBuilder,
+  GetAllThreadVoteTypesQueryBuilder,
+  GetThreadQueryBuilder,
  } from '../../queries/thread';
 
 import ArticleLeader from '../../components/ArticleLeader';
@@ -103,7 +103,8 @@ function Thread({ currentUser, allVoteTypes, _thread }) {
 
                   <Box style={{margin: "0.5rem"}} display="flex" alignItems="center" justifyContent="flex-end">
                     <Typography variant="body1">
-                      {thread.event.matchRequests.length}{" requests"}
+                      {thread.event.matchRequests.length}
+                      {" requests"}
                     </Typography>
                     <Button variant="contained" onClick={() => router.push({pathname: "/match/request", query: { thread: router.query.id }})}>Match</Button>
                   </Box>
@@ -111,11 +112,11 @@ function Thread({ currentUser, allVoteTypes, _thread }) {
               )
               : <ArticleLeader article={thread.firstArticle} />
             }
-            <Typography></Typography>
-            <Typography></Typography>
+            <Typography />
+            <Typography />
             <ArticleStatCounterBox
               article={thread.firstArticle}
-              onClickUp = { async (e) => {
+              onClickUp={async (e) => {
                 e.preventDefault();
                 await mutateToBackend({
                   mutation: new CreateThreadVoteMutationBuilder().build(),
@@ -123,13 +124,13 @@ function Thread({ currentUser, allVoteTypes, _thread }) {
                     vote: {
                       user: currentUser.id,
                       article: thread.firstArticle.id,
-                      voteType: allVoteTypesRev["UP"]
+                      voteType: allVoteTypesRev.UP
                     }
                   }
                 });
                 refreshThread();
               }}
-              onClickDown = { async (e) => {
+              onClickDown={async (e) => {
                 e.preventDefault();
                 await mutateToBackend({
                   mutation: new CreateThreadVoteMutationBuilder().build(),
@@ -137,13 +138,13 @@ function Thread({ currentUser, allVoteTypes, _thread }) {
                     vote: {
                       user: currentUser.id,
                       article: thread.firstArticle.id,
-                      voteType: allVoteTypesRev["DOWN"]
+                      voteType: allVoteTypesRev.DOWN
                     }
                   }
                 });
                 refreshThread();
               }}
-              onClickStar = { async (e) => {
+              onClickStar={async (e) => {
                 e.preventDefault();
                 await mutateToBackend({
                   mutation: new CreateThreadVoteMutationBuilder().build(),
@@ -151,7 +152,7 @@ function Thread({ currentUser, allVoteTypes, _thread }) {
                     vote: {
                       user: currentUser.id,
                       article: thread.firstArticle.id,
-                      voteType: allVoteTypesRev["STAR"]
+                      voteType: allVoteTypesRev.STAR
                     }
                   }
                 });

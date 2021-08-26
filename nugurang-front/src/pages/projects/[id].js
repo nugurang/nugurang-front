@@ -19,9 +19,9 @@ import {
   queryToBackend
 } from "../../utils/requestToBackend";
 import {
+  DeleteProjectMutationBuilder,
   GetProjectQueryBuilder,
   UpdateProjectFinishMutationBuilder,
-  DeleteProjectMutationBuilder,
 } from '../../queries/project';
 
 import BaseTabs from '../../components/BaseTabs';
@@ -103,15 +103,17 @@ function ProjectInfo({ project, works, users }) {
     });
     return null;
   }
-  else return (
+  return (
     <Layout>
       <PageTitleBar title="Project info" backButton backButtonLink={`/teams/${project.team.id}`}>
-        <Button variant="" onClick={() => router.push({
+        <Button variant=""
+          onClick={() => router.push({
           pathname: "/works/create",
           query: {
             project: router.query.id
           }
-        })}>
+        })}
+        >
           <AddIcon />
           Work
         </Button>

@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     border: '0rem solid',
     borderColor: 'rgba(0, 0, 0, 0)',
     margin: '0rem 1rem',
-    padding: '0.5rem',
+    padding: '0rem',
   },
 }));
 

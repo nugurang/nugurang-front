@@ -14,8 +14,8 @@ import withAuthServerSide from '../../utils/withAuthServerSide';
 import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
 import { GetUserByNameQueryBuilder } from '../../queries/user';
 import {
-  GetTeamQueryBuilder,
   CreateTeamInvitationsMutationBuilder,
+  GetTeamQueryBuilder,
 } from '../../queries/team';
 
 import Layout from '../../components/Layout';
@@ -76,7 +76,7 @@ function Invite({ team }) {
             </Grid>
             <Grid item>
               <form
-                onSubmit = { async (e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
                   const userResponse = await queryToBackend({
                     query: new GetUserByNameQueryBuilder().withFollows().build(),
@@ -108,12 +108,12 @@ function Invite({ team }) {
         </SectionBox>
 
         <Box display={selectedUsers && selectedUsers.length ? "block" : "none"}>
-          <SectionBox titleBar={<SectionTitleBar title="Selected users" icon={<FindInPageIcon />} />} >
+          <SectionBox titleBar={<SectionTitleBar title="Selected users" icon={<FindInPageIcon />} />}>
             <Grid container>{[selectedUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
           </SectionBox>
         </Box>
 
-        <SectionBox titleBar={<SectionTitleBar title="Results" icon={<FindInPageIcon />} />} >
+        <SectionBox titleBar={<SectionTitleBar title="Results" icon={<FindInPageIcon />} />}>
           {
             users && users.length
             ? <Grid container>{[users].flat().map((user) => <Grid item xs={12} sm={6} md={4}><UserInfoCard user={user} /></Grid>)}</Grid>
@@ -121,7 +121,7 @@ function Invite({ team }) {
           }
         </SectionBox>
       </Container>
-      
+
       <form
         onSubmit={async (e) => {
           e.preventDefault();

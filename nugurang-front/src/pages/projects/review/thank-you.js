@@ -30,7 +30,7 @@ function ThankYou() {
   const classes = useStyles();
   return (
     <Layout>
-      <FullScreenDialogBox titleBar={<PageTitleBar title="Review completed" icon={<CheckIcon /> }/>}>
+      <FullScreenDialogBox titleBar={<PageTitleBar title="Review completed" icon={<CheckIcon />} />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
             <Typography className={classes.typography}>Thank you for your cooperation!</Typography>

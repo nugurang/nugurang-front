@@ -13,8 +13,8 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 import withAuthServerSide from '../../../../utils/withAuthServerSide';
 import {
-  queryToBackend,
   mutateToBackend,
+  queryToBackend,
 } from "../../../../utils/requestToBackend";
 import { GetProjectQueryBuilder } from '../../../../queries/project';
 import { GetAllTaskPositionsQueryBuilder } from '../../../../queries/task';
@@ -87,59 +87,59 @@ function Index({ allPositions, project, user }) {
             <Grid item xs={12}>
               <Typography variant="body1">Did very well of...</Typography>
 
-        <Autocomplete
-          multiple
-          onChange={(event, newValue) => {
+              <Autocomplete
+                multiple
+                onChange={(event, newValue) => {
             setNewUpvotes(newValue);
           }}
-          options={allPositions}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option.name}
-          limitTags={2}
-          renderOption={(option, { selected }) => (
-            <>
-              <Checkbox
-                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                checkedIcon={<CheckBoxIcon fontSize="small" />}
-                style={{ marginRight: 8 }}
-                checked={selected}
+                options={allPositions}
+                disableCloseOnSelect
+                getOptionLabel={(option) => option.name}
+                limitTags={2}
+                renderOption={(option, { selected }) => (
+                  <>
+                    <Checkbox
+                      icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                      checkedIcon={<CheckBoxIcon fontSize="small" />}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {option.name}
+                  </>
+          )}
+                renderInput={(params) => (
+                  <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
+          )}
               />
-              {option.name}
-            </>
-          )}
-          renderInput={(params) => (
-            <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
-          )}
-        />
 
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">Needs to go the extra mile to...</Typography>
 
-        <Autocomplete
-          multiple
-          onChange={(event, newValue) => {
+              <Autocomplete
+                multiple
+                onChange={(event, newValue) => {
             setNewDownvotes(newValue);
           }}
-          options={allPositions}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option.name}
-          limitTags={2}
-          renderOption={(option, { selected }) => (
-            <>
-              <Checkbox
-                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                checkedIcon={<CheckBoxIcon fontSize="small" />}
-                style={{ marginRight: 8 }}
-                checked={selected}
+                options={allPositions}
+                disableCloseOnSelect
+                getOptionLabel={(option) => option.name}
+                limitTags={2}
+                renderOption={(option, { selected }) => (
+                  <>
+                    <Checkbox
+                      icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                      checkedIcon={<CheckBoxIcon fontSize="small" />}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {option.name}
+                  </>
+          )}
+                renderInput={(params) => (
+                  <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
+          )}
               />
-              {option.name}
-            </>
-          )}
-          renderInput={(params) => (
-            <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
-          )}
-        />
 
             </Grid>
           </Grid>
@@ -150,7 +150,7 @@ function Index({ allPositions, project, user }) {
             onSubmit={async (e) => {
               e.preventDefault();
               const newHonors = [];
-              
+
               newUpvotes.forEach(function(position){
                 newHonors.push({position: position.id, honor: 5});
               });

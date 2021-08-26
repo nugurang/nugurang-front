@@ -7,12 +7,12 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TextsmsIcon from '@material-ui/icons/Textsms';
 
+import { makeStyles } from '@material-ui/styles';
 import BaseListItem from '../components/BaseListItem';
 import Layout from '../components/Layout';
 import NoContentsBox from '../components/NoContentsBox';
 import SectionBox from '../components/SectionBox';
 import PageTitleBar from '../components/PageTitleBar';
-import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(() => ({
   logo: {
@@ -54,7 +54,7 @@ export default function SignIn() {
       <PageTitleBar title="Sign In" backButton />
       <Container maxWidth="sm">
         <Grid container justify="center">
-          <img src="/images/nugurang-logo.png" class={classes.logo} />
+          <img src="/images/nugurang-logo.png" className={classes.logo} />
         </Grid>
         <SectionBox>
           {

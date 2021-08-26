@@ -1,4 +1,4 @@
-import { queryToBackend } from "../utils/requestToBackend";
+import { queryToBackend } from "./requestToBackend";
 import {
   GetCurrentOAuth2UserQueryBuilder,
   GetCurrentUserQueryBuilder,
@@ -39,13 +39,13 @@ export default function withAuthServerSide(getServerSidePropsFunction) {
         context,
         currentUser: currentUserResult.data.currentUser,
       });
-    } else {
+    }
       return {
         props: {
           currentUser: currentUserResult.data.currentUser,
         },
       }
-    }
+
 
   }
 }

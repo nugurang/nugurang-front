@@ -68,7 +68,8 @@ function Join({ currentUser, team }) {
           <Grid item xs={12} align="center">
             <Typography variant="h4">
               {"Your match request is finished and joined the team "}
-              {team.name}{"."}
+              {team.name}
+              {"."}
             </Typography>
           </Grid>
           <Grid item align="center">

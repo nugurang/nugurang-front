@@ -67,7 +67,7 @@ function Failed({ currentUser, event }) {
           </Grid>
           <Grid item xs={12} align="center">
             <Typography variant="h4">
-              {"Your match request is expired."}
+              Your match request is expired.
             </Typography>
           </Grid>
           <Grid item xs={12} align="center">

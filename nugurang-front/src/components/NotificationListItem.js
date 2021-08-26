@@ -38,11 +38,16 @@ export default function NotificationListItem({ notification }) {
               primary={(
                 <Box display='block'>
                   <Typography variant="body1">
-                    {createdAt.getFullYear()}-
-                    {createdAt.getMonth()}-
-                    {createdAt.getDate()}{" "}
-                    {createdAt.getHours()}:
-                    {createdAt.getMinutes()}{" "}
+                    {createdAt.getFullYear()}
+                    -
+                    {createdAt.getMonth()}
+                    -
+                    {createdAt.getDate()}
+                    {" "}
+                    {createdAt.getHours()}
+                    :
+                    {createdAt.getMinutes()}
+                    {" "}
                     {createdAt.getHours() < 12 ? "AM" : "PM"}
                   </Typography>
                 </Box>
@@ -50,16 +55,16 @@ export default function NotificationListItem({ notification }) {
             />
           </Box>
           <Box display={notification.type.name == "TEAM_INVITATION" ? "block" : "none"}>
-            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{"You are invited to team."}</Typography></Grid>)}
+            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">You are invited to team.</Typography></Grid>)}
           </Box>
           <Box display={notification.type.name == "PROJECT_INVITATION" ? "block" : "none"}>
-            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">{"You are invited to project."}</Typography></Grid>)}
+            {notification.data?.flat().map((string) => <Grid item><Typography variant="body2">You are invited to project.</Typography></Grid>)}
           </Box>
           <Box display={notification.type.name == "MATCH_SUCCESS" ? "block" : "none"}>
-            <Grid item><Typography variant="body2">{"Your match request has found the team."}</Typography></Grid>
+            <Grid item><Typography variant="body2">Your match request has found the team.</Typography></Grid>
           </Box>
           <Box display={notification.type.name == "MATCH_FAILURE" ? "block" : "none"}>
-            <Grid item><Typography variant="body2">{"Your match request has failed."}</Typography></Grid>
+            <Grid item><Typography variant="body2">Your match request has failed.</Typography></Grid>
           </Box>
         </Grid>
       </Grid>

@@ -11,7 +11,7 @@ import NotesIcon from '@material-ui/icons/Notes';
 import TitleIcon from '@material-ui/icons/Title';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
-import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
 import { CreateImageMutationBuilder } from '../../queries/image';
 import {
   GetThreadQueryBuilder,

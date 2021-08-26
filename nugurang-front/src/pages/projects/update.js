@@ -10,8 +10,8 @@ import TitleIcon from '@material-ui/icons/Title';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
 import {
-  queryToBackend,
   mutateToBackend,
+  queryToBackend,
 } from "../../utils/requestToBackend";
 import {
   GetProjectQueryBuilder,

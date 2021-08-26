@@ -72,31 +72,33 @@ function ProjectInfo({ project }) {
           project.getUsers && (project.getUsers.length)
           ? (
             <Grid container>
-            {
-              [project.getUsers].flat().map((user) => <Grid item xs={12} sm={6} md={4}>
-                <Card>
-                  <CardActionArea onClick={() => user.onClick ? user.onClick() : null}>
-                    <CardContent>
-                      <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
-                        <Grid item justify="flex-start">
-                          <Avatar
-                            alt={user.name}
-                            src={user.image ? user.image.address : null}
-                            variant="circle"
-                          >
-                            {user.name.charAt(0).toUpperCase()}
-                          </Avatar>
+              {
+              [project.getUsers].flat().map((user) => (
+                <Grid item xs={12} sm={6} md={4}>
+                  <Card>
+                    <CardActionArea onClick={() => user.onClick ? user.onClick() : null}>
+                      <CardContent>
+                        <Grid container spacing={2} alignItems="center" direction="row" justify="flex-start">
+                          <Grid item justify="flex-start">
+                            <Avatar
+                              alt={user.name}
+                              src={user.image ? user.image.address : null}
+                              variant="circle"
+                            >
+                              {user.name.charAt(0).toUpperCase()}
+                            </Avatar>
+                          </Grid>
+                          <Grid item xs justify="flex-start">
+                            <Typography variant="body1">
+                              {user.name}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item xs justify="flex-start">
-                          <Typography variant="body1">
-                            {user.name}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>)
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+))
             }
 
             </Grid>

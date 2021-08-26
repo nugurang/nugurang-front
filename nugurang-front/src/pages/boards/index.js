@@ -5,17 +5,17 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 
+import CategoryIcon from '@material-ui/icons/Category';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
 import withAuthServerSide from '../../utils/withAuthServerSide';
 import { queryToBackend } from "../../utils/requestToBackend";
 import { GetBoardsByNamesQueryBuilder } from '../../queries/board';
 import {
-  GetThreadsByBoardNamesQueryBuilder,
   GetHotThreadsByBoardNamesQueryBuilder,
+  GetThreadsByBoardNamesQueryBuilder,
 } from '../../queries/thread';
 
-import CategoryIcon from '@material-ui/icons/Category';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 import 'array-flat-polyfill';
 import { COMMON_BOARDS, EVENT_BOARDS } from '../../config';
@@ -112,20 +112,23 @@ function Boards({
           <SectionBox titleBar={<SectionTitleBar title="Categories" icon={<CategoryIcon />} />}>
             {
               currentBoards.length > 0
-              ? <Grid container>
-                {currentBoards.map(board =>
-                  <Grid item key={++key} xs={6} sm={4} md={3} align="center">
-                    <CallingCard
-                      label={board.name}
-                      image="/images/sample_1.jpg"
-                      onClick={e => {
+              ? (
+                <Grid container>
+                  {currentBoards.map(board => (
+                    <Grid item key={++key} xs={6} sm={4} md={3} align="center">
+                      <CallingCard
+                        label={board.name}
+                        image="/images/sample_1.jpg"
+                        onClick={e => {
                         e.preventDefault();
                         router.push(`/boards/${board.id}`);
                       }}
-                    />
-                  </Grid>
+                      />
+                    </Grid>
+                )
                 )}
-              </Grid>
+                </Grid>
+)
               : <NoContentsBox />
             }
           </SectionBox>

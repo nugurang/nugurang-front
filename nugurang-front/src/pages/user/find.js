@@ -52,7 +52,7 @@ function Find() {
             <Grid item>
               <form
                 onSubmit={async (e) => {
-                  if (!!keywordName.current.value) {
+                  if (keywordName.current.value) {
                     e.preventDefault();
                     const response = await queryToBackend({
                       query: new GetUserByNameQueryBuilder().withFollows().build(),

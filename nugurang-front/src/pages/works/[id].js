@@ -14,10 +14,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
-import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
 import {
-  GetWorkQueryBuilder,
   DeleteWorkMutationBuilder,
+  GetWorkQueryBuilder,
 } from '../../queries/work';
 
 import BaseTabs from '../../components/BaseTabs';

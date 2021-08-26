@@ -23,10 +23,9 @@ import {
   mutateToBackend,
   queryToBackend
 } from "../../utils/requestToBackend";
-import { GetWorkQueryBuilder } from '../../queries/task';
-import {
+import { CreateTaskMutationBuilder ,
   GetAllTaskPositionsQueryBuilder,
-  CreateTaskMutationBuilder,
+  GetWorkQueryBuilder,
 } from '../../queries/task';
 
 import Layout from '../../components/Layout';
@@ -131,30 +130,30 @@ function CreateTask({ allTaskPositions, work, project }) {
         </SectionBox>
         <SectionBox titleBar={<SectionTitleBar title="Select positions" icon={<AssignmentIndIcon />} border={false} />}>
 
-        <Autocomplete
-          multiple
-          onChange={(event, newValue) => {
+          <Autocomplete
+            multiple
+            onChange={(event, newValue) => {
             setSelectedPositions(newValue);
           }}
-          options={allTaskPositions}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option.name}
-          limitTags={2}
-          renderOption={(option, { selected }) => (
-            <>
-              <Checkbox
-                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                checkedIcon={<CheckBoxIcon fontSize="small" />}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.name}
-            </>
+            options={allTaskPositions}
+            disableCloseOnSelect
+            getOptionLabel={(option) => option.name}
+            limitTags={2}
+            renderOption={(option, { selected }) => (
+              <>
+                <Checkbox
+                  icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                  checkedIcon={<CheckBoxIcon fontSize="small" />}
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                />
+                {option.name}
+              </>
           )}
-          renderInput={(params) => (
-            <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
+            renderInput={(params) => (
+              <TextField {...params} variant="outlined" label="Select positions" placeholder="Positions" />
           )}
-        />
+          />
         </SectionBox>
 
         <SectionBox titleBar={<SectionTitleBar title="Select difficluty" icon={<EmojiFlagsIcon />} />}>

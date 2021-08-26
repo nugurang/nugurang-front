@@ -31,7 +31,7 @@ export default function ArticleStatCounterBox({ article, compact=false, onClickD
       <Grid container spacing={compact ? 0 : 1} alignItems="center" direction="row" justify="flex-end">
         <Grid item>
           <Box display={article.topic ? "block" : "none"}>
-            <Chip label="Test topic" size={compact ? "small" : ""}/>
+            <Chip label="Test topic" size={compact ? "small" : ""} />
           </Box>
         </Grid>
         <Grid item>

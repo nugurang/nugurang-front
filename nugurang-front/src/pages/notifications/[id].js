@@ -50,7 +50,7 @@ function Notifications({ currentUser, notifications }) {
             currentUser.getNotifications && currentUser.getNotifications.length
             ? [currentUser.getNotifications].flat().map((notification) => <NotificationListItem notification={notification} />)
             : <NoContentsBox />
-          }        
+          }
         </List>
       </SectionBox>
     </Layout>
