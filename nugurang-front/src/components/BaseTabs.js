@@ -64,7 +64,6 @@ export default function BaseTabs({ children, tabProps }) {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
   };
   let tabPropKey = 0;
   let tabKey = 0;

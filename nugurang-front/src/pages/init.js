@@ -72,35 +72,29 @@ function Init() {
         mutation: new CreateTeamMutationBuilder().build(),
         variables: {team: {name: 'Capstone'}}
       });
-      console.log(createTeam);
       const createProject = await mutateToBackend({
         mutation: new CreateProjectMutationBuilder().build(),
         variables: {team: createTeam.data.createTeam.id, project: {name: 'Capstone-Project'}}
       });
-      console.log(createProject);
       const createWork = await mutateToBackend({
         mutation: new CreateWorkMutationBuilder().build(),
         variables: {project: createProject.data.createProject.id, work: {name: 'Sprint1'}}
       });
-      console.log(createWork);
       const createTask = await mutateToBackend({
         mutation: new CreateTaskMutationBuilder().build(),
         variables: {work: createWork.data.createWork.id, task: {name: 'Sprint1', users: [], positions: []}}
       });
-      console.log(createTask);
       for (const name of ALL_POSITIONS) {
         const createPosition = await mutateToBackend({
           mutation: new CreateTaskPositionMutationBuilder().build(),
           variables: { position: {name}},
         });
-        console.log(createPosition);
       }
       for (const name of ALL_BOARDS) {
         const createBoard = await mutateToBackend({
           mutation: new CreateBoardMutationBuilder().build(),
           variables: {board: {name}},
         });
-        console.log(createBoard);
       }
       const getCommonBoards = await queryToBackend({
         query: new GetBoardsByNamesQueryBuilder().build(),
@@ -208,7 +202,6 @@ function Init() {
   useEffect(() => {
     init();
     if(done){
-      console.log("before");
       router.push(`/home`);
     }
   });

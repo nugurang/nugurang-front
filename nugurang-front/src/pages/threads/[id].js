@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -44,18 +45,28 @@ export const getServerSideProps = withAuthServerSide(async ({ context, currentUs
     props: {
       currentUser,
       allVoteTypes: allVoteTypesResult.data.voteTypes,
-      thread: threadResult.data.getThread,
+      _thread: threadResult.data.getThread,
     },
   };
 });
 
-function Thread({ currentUser, allVoteTypes, thread }) {
+function Thread({ currentUser, allVoteTypes, _thread }) {
   const router = useRouter();
-
+  const [thread, setThread] = useState(_thread);
   const allVoteTypesRev = {};
-  allVoteTypes.forEach(function(voteType){
+  allVoteTypes.forEach(voteType => {
     allVoteTypesRev[voteType.name] = Number(voteType.id);
   });
+
+  const refreshThread = async () => {
+    const newThreadResponse = await queryToBackend({
+      query: new GetThreadQueryBuilder().withEvent().withFirstArticle().withArticles().build(),
+      variables: {
+        id: thread.id,
+      },
+    });
+    setThread(newThreadResponse.data.getThread);
+  };
 
   return (
     <Layout>
@@ -94,6 +105,8 @@ function Thread({ currentUser, allVoteTypes, thread }) {
               )
               : <ArticleLeader article={thread.firstArticle} />
             }
+            <Typography></Typography>
+            <Typography></Typography>
             <ArticleStatCounterBox
               article={thread.firstArticle}
               onClickUp = { async (e) => {
@@ -108,6 +121,7 @@ function Thread({ currentUser, allVoteTypes, thread }) {
                     }
                   }
                 });
+                refreshThread();
               }}
               onClickDown = { async (e) => {
                 e.preventDefault();
@@ -121,6 +135,7 @@ function Thread({ currentUser, allVoteTypes, thread }) {
                     }
                   }
                 });
+                refreshThread();
               }}
               onClickStar = { async (e) => {
                 e.preventDefault();
@@ -134,6 +149,7 @@ function Thread({ currentUser, allVoteTypes, thread }) {
                     }
                   }
                 });
+                refreshThread();
               }}
             />
           </SectionBox>

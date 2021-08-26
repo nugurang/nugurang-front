@@ -29,7 +29,6 @@ export default function ImageUploadingBox({ image }) {
         selectedImageAddress: [reader.result]
       });
     }.bind(this);
-    console.log(url); // Would see a path?
 
     this.setState({
       selectedImageAddress: event.target.files[0],

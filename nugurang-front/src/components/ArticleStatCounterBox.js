@@ -44,7 +44,7 @@ export default function ArticleStatCounterBox({ article, compact=false, onClickD
         </Grid>
         <Grid item>
           <Box display={article.upCount ? "flex" : "flex"} alignItems="center">
-            <IconButton color="default">
+            <IconButton color="default" onClick={onClickUp}>
               <ThumbUpIcon fontSize={compact ? "small" : ""} />
             </IconButton>
             <Typography>{article.upCount}</Typography>
@@ -52,7 +52,7 @@ export default function ArticleStatCounterBox({ article, compact=false, onClickD
         </Grid>
         <Grid item>
           <Box display={article.downCount ? "flex" : "flex"} alignItems="center">
-            <IconButton color="default">
+            <IconButton color="default" onClick={onClickDown}>
               <ThumbDownIcon fontSize={compact ? "small" : ""} />
             </IconButton>
             <Typography>{article.downCount}</Typography>
@@ -60,7 +60,7 @@ export default function ArticleStatCounterBox({ article, compact=false, onClickD
         </Grid>
         <Grid item>
           <Box display={article.starCount ? "flex" : "flex"} alignItems="center">
-            <IconButton color="default">
+            <IconButton color="default" onClick={onClickStar}>
               <FavoriteIcon fontSize={compact ? "small" : ""} />
             </IconButton>
             <Typography>{article.starCount}</Typography>

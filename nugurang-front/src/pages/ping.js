@@ -23,7 +23,6 @@ export default function Ping() {
   if (loading)
     return (<p>Loading...</p>);
   if (error) {
-    console.log(error);
     return (<p>Error :(</p>);
   }
   return <h1>{data.ping}</h1>;
