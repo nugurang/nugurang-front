@@ -40,6 +40,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context, currentU
     },
   });
 
+  if (!invitationResult.data.GetProjectInvitation) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       currentUser,

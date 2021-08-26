@@ -26,6 +26,12 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
     },
   });
 
+  if (!workResult.data) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       work: workResult.data.getWork,

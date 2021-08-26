@@ -32,6 +32,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
+  if (!threadResult.data.getThread) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       thread: threadResult.data.getThread,
@@ -46,7 +52,7 @@ function Update({ thread }) {
   const newImageAddress = useRef(null);
 
   function handleNewTitleChange() {
-    newTitle.current.focus();
+    newName.current.focus();
   }
 
   function handleNewContentChange() {

@@ -17,7 +17,7 @@ export default function Welcome() {
       <FullScreenDialogBox titleBar={<PageTitleBar title="Error 404" backButton />}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12} align="center">
-            <Typography variant="h4">Something went wrong.</Typography>
+            <Typography variant="h4">Page not found</Typography>
           </Grid>
           <Grid item xs={12} align="center">
             <Box align="center">

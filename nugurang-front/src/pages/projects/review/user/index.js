@@ -48,6 +48,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
+  if (!projectResult.data.getProject || !userResult.data.getUser) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       allPositions: allPositionsResult.data.positions,

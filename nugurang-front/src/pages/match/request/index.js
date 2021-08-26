@@ -17,7 +17,7 @@ import {
   GetAllThreadMatchTypesQueryBuilder,
   GetThreadQueryBuilder,
   CreateThreadMatchRequestMutationBuilder,
-} from '../../../queries/user';
+} from '../../../queries/thread';
 
 import BaseSwitch from '../../../components/BaseSwitch';
 import EventInfoBox from '../../../components/EventInfoBox';
@@ -38,6 +38,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
       id: context.query.thread,
     },
   });
+
+  if (!threadResult.data.getThread) {
+    return {
+      notFound: true,
+    };
+  };
 
   return {
     props: {

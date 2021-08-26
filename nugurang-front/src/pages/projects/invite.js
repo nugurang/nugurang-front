@@ -33,6 +33,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
+  if (!projectResult.data.getProject) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       project: projectResult.data.getProject,

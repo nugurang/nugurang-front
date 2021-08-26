@@ -45,6 +45,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
+  if (!taskResult.data.getTask) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       task: taskResult.data.getThreadsByBoardNames,

@@ -54,6 +54,12 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
     },
   });
 
+  if (!taskResult.data.getTask) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       allTaskProgresses: allTaskProgressesResult.data.progresses,

@@ -24,6 +24,12 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
+  if (!boardResult.data.getBoard) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: {
       board: boardResult.data.getBoard,
