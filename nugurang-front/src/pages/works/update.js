@@ -28,7 +28,7 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
 
   return {
     props: {
-      work: workResult.data.work,
+      work: workResult.data.getWork,
     },
   };
 });
@@ -70,7 +70,7 @@ function Update({ work }) {
             const response = await mutateToBackend({
               mutation: new UpdateWorkMutationBuilder().build(),
               variables: {
-                id: router.query.work,
+                id: work.id,
                 work: {
                   name: newName.current.value
                 }

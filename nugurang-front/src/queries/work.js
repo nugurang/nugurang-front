@@ -83,3 +83,18 @@ export class UpdateWorkMutationBuilder {
   }
 
 }
+
+
+export class DeleteWorkMutationBuilder {
+
+  build() {
+    return gql`
+      mutation DeleteWork($id: ID!) {
+        deleteWork(id: $id) {
+          id
+        }
+      }
+    `;
+  }
+
+}

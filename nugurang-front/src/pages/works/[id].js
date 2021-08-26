@@ -14,8 +14,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
-import { queryToBackend } from "../../utils/requestToBackend";
-import { GetWorkQueryBuilder } from '../../queries/work';
+import { queryToBackend, mutateToBackend } from "../../utils/requestToBackend";
+import {
+  GetWorkQueryBuilder,
+  DeleteWorkMutationBuilder,
+} from '../../queries/work';
 
 import BaseTabs from '../../components/BaseTabs';
 import Layout from '../../components/Layout';
@@ -117,10 +120,14 @@ function WorkInfo({ work, tasks }) {
             <YesNoDialog
               title="Delete"
               content="Are you sure to delete?"
-              onClickYes={async (e) => {
-                e.preventDefault();
-                await deleteProject({ variables: { id: router.query.id }});
-                router.push(`/works/${work.project.id}`);
+              onClickYes={async () => {
+                await mutateToBackend({
+                  mutation: new DeleteWorkMutationBuilder().build(),
+                  variables: {
+                    id: router.query.id
+                  }
+                });
+                router.push(`/projects/${work.project.id}`);
               }}
             >
               <ListItemIcon><DeleteIcon fontSize="small" /></ListItemIcon>

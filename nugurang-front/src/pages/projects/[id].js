@@ -130,7 +130,7 @@ function ProjectInfo({ project, works, users }) {
                 await mutateToBackend({
                   mutation: new UpdateProjectFinishMutationBuilder().build(),
                   variables: {
-                    id: project.id
+                    id: project.id,
                   }
                 });
                 router.push({pathname: "/projects/review", query: { project: router.query.id }});

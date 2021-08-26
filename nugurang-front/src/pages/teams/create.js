@@ -68,8 +68,6 @@ function CreateTeam() {
             </Grid>
           </Grid>
         </SectionBox>
-        {mutationLoading && <p>Loading...</p>}
-        {mutationError && <p>Error :( Please try again</p>}
       </Container>
 
     </Layout>

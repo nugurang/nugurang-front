@@ -67,7 +67,7 @@ function Task({ allTaskProgresses, task }) {
   const selectableProgresses = [];
 
   allTaskProgresses.forEach(progress => {
-    if (task.progress.id != progress.id) {
+    if (task.progress.id !== progress.id) {
       selectableProgresses.push(progress);
     }
   });
@@ -97,7 +97,7 @@ function Task({ allTaskProgresses, task }) {
                         await mutateToBackend({
                           mutation: new UpdateTaskMutationBuilder().build(),
                           variables: {
-                            id: router.query.id,
+                            id: task.id,
                             task: {
                               name: task.name,
                               users: task.users.map(user => user.id),
