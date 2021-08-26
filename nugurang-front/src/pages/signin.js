@@ -28,24 +28,10 @@ export default function SignIn() {
   const SIGNIN_LIST = [
     {
       id: 1,
-      name: "Facebook",
-      title: "Sign in with Facebook",
-      icon: <FacebookIcon />,
-      onClick: () => alert('Facebook not supported')
-    },
-    {
-      id: 2,
       name: "GitHub",
       title: "Sign in with GitHub",
       icon: <GitHubIcon />,
       onClick: () => router.push(`${process.env.NEXT_PUBLIC_BACKEND_ADDR_PUBLIC}/oauth2/authorization/github`)
-    },
-    {
-      id: 3,
-      name: "Kakao",
-      title: "Sign in with Kakao",
-      icon: <TextsmsIcon />,
-      onClick: () => router.push(`${process.env.NEXT_PUBLIC_BACKEND_ADDR_PUBLIC}/oauth2/authorization/kakao`)
     },
 ];
 
