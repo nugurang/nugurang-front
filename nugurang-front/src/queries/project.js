@@ -125,7 +125,7 @@ export class CreateProjectMutationBuilder {
 
 }
 
-export class CreateProjectInvitationMutationBuilder {
+export class CreateProjectInvitationsMutationBuilder {
 
   build() {
     return gql`

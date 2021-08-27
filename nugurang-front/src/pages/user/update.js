@@ -170,7 +170,7 @@ function Update({ currentUser }) {
                     }
                   }
                 });
-                router.push(`/user/${user.id}`);
+                router.push(`/user/${currentUser.id}`);
               }}
             >
               <Box align="center">
