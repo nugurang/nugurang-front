@@ -23,16 +23,13 @@ import {
   mutateToBackend,
   queryToBackend
 } from "../../utils/requestToBackend";
-import { CreateTaskMutationBuilder ,
-  GetAllTaskPositionsQueryBuilder,
-  GetWorkQueryBuilder,
-} from '../../queries/task';
 
+import { CreateTaskMutationBuilder, GetAllTaskPositionsQueryBuilder } from '../../queries/task';
+import { GetWorkQueryBuilder } from '../../queries/work';
 import Layout from '../../components/Layout';
 import PageTitleBar from '../../components/PageTitleBar';
 import SectionBox from '../../components/SectionBox';
 import SectionTitleBar from '../../components/SectionTitleBar';
-import withAuth from '../../components/withAuth';
 
 const marks = [
   {
@@ -52,7 +49,7 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
   });
   const workResult = await queryToBackend({
     context,
-    query: new GetWorkQueryBuilder().withProject().build(),
+    query: new GetWorkQueryBuilder().build(),
     variables: {
       id: context.query.work,
     },
@@ -76,8 +73,8 @@ export const getServerSideProps = withAuthServerSide(async ({ context }) => {
 function CreateTask({ allTaskPositions, work, project }) {
   const router = useRouter();
   const newName = useRef(null);
-  const [selectedUsers, setSelectedUsers] = useState();
-  const [selectedPositions, setSelectedPositions] = useState();
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedPositions, setSelectedPositions] = useState([]);
   const [difficulty, setDifficulty] = useState();
 
   function handleNewNameChange() {

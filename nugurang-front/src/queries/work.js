@@ -41,6 +41,10 @@ export class GetWorkQueryBuilder {
           id
           project {
             id
+            getUsers(page: 0, pageSize: 100) {
+              id
+              name
+            }
           }
           name
           opened
@@ -51,7 +55,6 @@ export class GetWorkQueryBuilder {
       ${this.tasks ? FRAGMENT_TASKS : ''}
     `;
   }
-
 }
 
 export class CreateWorkMutationBuilder {

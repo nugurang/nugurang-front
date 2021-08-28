@@ -8,6 +8,7 @@ const FRAGMENT_PROGRESS = `
     }
   }
 `;
+
 const FRAGMENT_POSITIONS = `
   fragment positions on Task {
     positions {
@@ -21,6 +22,7 @@ const FRAGMENT_POSITIONS = `
     }
   }
 `;
+
 const FRAGMENT_USERS = `
   fragment users on Task {
     users {
@@ -33,6 +35,7 @@ const FRAGMENT_USERS = `
     }
   }
 `;
+
 const FRAGMENT_WORK = `
   fragment work on Task {
     work {
