@@ -411,7 +411,7 @@ export class CreateUserMutationBuilder {
   build() {
     return gql`
       mutation CreateUser($user: UserInput!) {
-        createUser (user: $user) {
+        createCurrentUser (user: $user) {
           id
         }
       }
@@ -437,7 +437,7 @@ export class UpdateUserMutationBuilder {
   build() {
     return gql`
       mutation UpdateUser($user: UserInput!) {
-        updateUser (user: $user) {
+        updateCurrentUser (user: $user) {
           id
         }
       }
