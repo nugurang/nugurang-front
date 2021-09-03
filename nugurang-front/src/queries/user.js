@@ -235,7 +235,7 @@ export class GetUserQueryBuilder {
 
 }
 
-export class GetUserByNameQueryBuilder {
+export class GetUsersByNameQueryBuilder {
 
   constructor() {
     this.follows = false;
@@ -278,8 +278,8 @@ export class GetUserByNameQueryBuilder {
 
   build() {
     return gql`
-      query GetUserByName($name: String!) {
-        getUserByName(name: $name) {
+      query GetUsersByName($name: String!) {
+        getUsersByName(name: $name, page: 0, pageSize: 100) {
           id
           name
           email

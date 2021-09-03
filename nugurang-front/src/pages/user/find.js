@@ -11,7 +11,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
 import { queryToBackend } from "../../utils/requestToBackend";
-import { GetUserByNameQueryBuilder } from '../../queries/user';
+import { GetUsersByNameQueryBuilder } from '../../queries/user';
 
 import Layout from '../../components/Layout';
 import NoContentsBox from '../../components/NoContentsBox'
@@ -55,13 +55,13 @@ function Find() {
                   if (keywordName.current.value) {
                     e.preventDefault();
                     const response = await queryToBackend({
-                      query: new GetUserByNameQueryBuilder().withFollows().build(),
+                      query: new GetUsersByNameQueryBuilder().withFollows().build(),
                       variables: {
                         name: keywordName.current.value || undefined,
                       },
                     });
-                    if (response.data && (response.data.getUserByName !== null)) {
-                      setUsers([response.data.getUserByName].map(user => {
+                    if (response.data && (response.data.getUsersByName !== null)) {
+                      setUsers(response.data.getUsersByName.map(user => {
                         return {
                           ...user,
                           onClick: () => router.push(`/user/${user.id}`),

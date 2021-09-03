@@ -12,7 +12,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import withAuthServerSide from '../../utils/withAuthServerSide';
 import { mutateToBackend, queryToBackend } from "../../utils/requestToBackend";
-import { GetUserByNameQueryBuilder } from '../../queries/user';
+import { GetUsersByNameQueryBuilder } from '../../queries/user';
 import {
   CreateTeamInvitationsMutationBuilder,
   GetTeamQueryBuilder,
@@ -79,12 +79,12 @@ function Invite({ team }) {
                 onSubmit={async (e) => {
                   e.preventDefault();
                   const userResponse = await queryToBackend({
-                    query: new GetUserByNameQueryBuilder().withFollows().build(),
+                    query: new GetUsersByNameQueryBuilder().withFollows().build(),
                     variables: {
                       name: keywordName.current.value
                     }
                   });
-                  setUsers(userResponse.data.getUserByName.map(user => {
+                  setUsers(userResponse.data.getUsersByName.map(user => {
                     return {
                       ...user,
                       onClick: () => {
