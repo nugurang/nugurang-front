@@ -65,8 +65,8 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
 
 function Index({ allPositions, project, user }) {
   const router = useRouter();
-  const [newUpvotes, setNewUpvotes] = useState();
-  const [newDownvotes, setNewDownvotes] = useState();
+  const [newUpvotes, setNewUpvotes] = useState([]);
+  const [newDownvotes, setNewDownvotes] = useState([]);
 
   let evaluation = null;
 
