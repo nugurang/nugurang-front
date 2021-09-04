@@ -68,13 +68,9 @@ function Index({ allPositions, project, user }) {
   const [newUpvotes, setNewUpvotes] = useState([]);
   const [newDownvotes, setNewDownvotes] = useState([]);
 
-  let evaluation = null;
-
-  user.getUserEvaluations.forEach(_evaluation => {
-    if (_evaluation.project.id === project.id) {
-      evaluation = _evaluation;
-    }
-  });
+  const evaluation = user.getUserEvaluations.find(
+    evaluation => evaluation.project.id === project.id
+  );
 
   return (
     <Layout>
