@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Error from 'next/error';
 
 import withAuthServerSide from '../../../../utils/withAuthServerSide';
 import {
@@ -48,7 +49,10 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
     },
   });
 
-  if (!projectResult.data.getProject || !userResult.data.getUser) {
+  const projectData = projectResult.data.getProject;
+  const userData = userResult.data.getUser;
+
+  if (!projectData || !userData || !userData.getUserEvaluations) {
     return {
       notFound: true,
     };
@@ -57,8 +61,8 @@ export const getServerSideProps = withAuthServerSide( async ({ context }) => {
   return {
     props: {
       allPositions: allPositionsResult.data.positions,
-      project: projectResult.data.getProject,
-      user: userResult.data.getUser,
+      project: projectData,
+      user: userData,
     },
   };
 });
@@ -71,6 +75,9 @@ function Index({ allPositions, project, user }) {
   const evaluation = user.getUserEvaluations.find(
     evaluation => evaluation.project.id === project.id
   );
+
+  if (!evaluation)
+    return (<Error statusCode={404} />);
 
   return (
     <Layout>
