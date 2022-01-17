@@ -1,7 +1,11 @@
-import Head from 'next/head'
-import type { NextPage } from 'next'
+import Head from 'next/head';
+import Link from 'next/link';
+import type { NextPage } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 /** @jsxImportSource @emotion/react */
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 const DivStyle = styled.div`
   ${(props: any) => `
@@ -17,7 +21,17 @@ const DivStyle = styled.div`
   `}
 `;
 
+export async function getStaticProps({ locale }: any) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}
+
 const Home: NextPage = () => {
+  const router = useRouter();
+  const { t } = useTranslation('common');
   return (
     <div>
       <Head>
@@ -28,8 +42,16 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <DivStyle>
-          <h3>Hello World</h3>
+          <h3>{t('helloWorld')}</h3>
         </DivStyle>
+        <Link
+          href='/'
+          locale={router.locale === 'en' ? 'ko' : 'en'}
+        >
+          <button>
+            {t('change-locale')}
+          </button>
+        </Link>
       </main>
     </div>
   );
