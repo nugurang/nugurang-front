@@ -1,7 +1,10 @@
-import { Global, css } from '@emotion/react'
+import { createGlobalStyle } from 'styled-components';
 
-const style = css`
+const GlobalStyle = createGlobalStyle`
+  @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
   * {
+    font-family: 'Nanum Gothic', sans-serif;
     margin: 0;
     padding: 0;
   }
@@ -10,9 +13,5 @@ const style = css`
     box-sizing: border-box;
   }
 `;
-
-const GlobalStyle = () => {
-  return <Global styles={style} />
-};
 
 export default GlobalStyle;

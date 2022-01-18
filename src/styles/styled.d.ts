@@ -1,6 +1,6 @@
-import '@emotion/react'
+import 'styled-components'
 
-declare module '@emotion/react' {
+declare module 'styled-components' {
   export interface Theme {
     color: {
       default: {
@@ -38,14 +38,8 @@ declare module '@emotion/react' {
         light: string
         dark: string
       },
-      text: {
-        light: string
-        dark: string
-      },
-      background: {
-        light: string
-        dark: string
-      },
+      text: string,
+      background: string,
     },
     mediaQuery: {
       gtWatch: string

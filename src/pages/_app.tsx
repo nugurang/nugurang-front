@@ -1,14 +1,17 @@
 import type { AppProps } from 'next/app'
 import GlobalStyle from '../styles/global';
-import { ThemeProvider } from '@emotion/react';
+import { ThemeProvider } from 'styled-components';
 import { appWithTranslation } from 'next-i18next';
-import theme from '../styles/theme';
+import darkTheme from '../styles/darkTheme';
+import lightTheme from '../styles/lightTheme';
+import { useState } from 'react';
 
 function RootApp({ Component, pageProps }: AppProps) {
+  const [isDark, setIsDark] = useState<boolean>(true);
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyle />
-      <Component {...pageProps} />
+      <Component {...pageProps} isDark={isDark} setIsDark={setIsDark}/>
     </ThemeProvider>
   );
 }
