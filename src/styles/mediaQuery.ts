@@ -1,23 +1,17 @@
-const size = {
-  smallest: '0',
-  small: '320px',
-  medium: '768px',
-  large: '1024px',
-  largest: '1280px',
-};
+import screenSize from './screenSize';
 
 const mediaQuery = {
-  gtWatch: `@media only screen and (min-width: ${size.smallest})`,
-  gtMobile: `@media only screen and (min-width: ${size.small})`,
-  gtTablet: `@media only screen and (min-width: ${size.medium})`,
-  gtLaptop: `@media only screen and (min-width: ${size.large})`,
-  gtDesktop: `@media only screen and (min-width: ${size.largest})`,
+  gtWatch: `@media only screen and (min-width: ${screenSize.minWatch})`,
+  gtMobile: `@media only screen and (min-width: ${screenSize.minMobile})`,
+  gtTablet: `@media only screen and (min-width: ${screenSize.minTablet})`,
+  gtLaptop: `@media only screen and (min-width: ${screenSize.minLaptop})`,
+  gtDesktop: `@media only screen and (min-width: ${screenSize.minDesktop})`,
 
-  isWatch: `@media only screen and (min-width: ${size.smallest}) and (max-width: ${size.small})`,
-  isMobile: `@media only screen and (min-width: ${size.small}) and (max-width: ${size.medium})`,
-  isTablet: `@media only screen and (min-width: ${size.medium}) and (max-width: ${size.large})`,
-  isLaptop: `@media only screen and (min-width: ${size.large}) and (max-width: ${size.largest})`,
-  isDesktop: `@media only screen and (min-width: ${size.largest})`,
+  isWatch: `@media only screen and (min-width: ${screenSize.minWatch}) and (max-width: ${screenSize.minMobile})`,
+  isMobile: `@media only screen and (min-width: ${screenSize.minMobile}) and (max-width: ${screenSize.minTablet})`,
+  isTablet: `@media only screen and (min-width: ${screenSize.minTablet}) and (max-width: ${screenSize.minDesktop})`,
+  isLaptop: `@media only screen and (min-width: ${screenSize.minLaptop}) and (max-width: ${screenSize.minLaptop})`,
+  isDesktop: `@media only screen and (min-width: ${screenSize.minDesktop})`,
 };
 
 export default mediaQuery;

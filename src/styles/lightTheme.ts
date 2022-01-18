@@ -1,8 +1,10 @@
 import mediaQuery from './mediaQuery';
+import screenSize from './screenSize';
 
 const lightTheme = {
   mediaQuery,
-  color: {
+  screenSize,
+  palette: {
     default: {
       main: '#C0C0C0', // Silver - https://en.wikipedia.org/wiki/Shades_of_gray
       light: '#F3F3F3',

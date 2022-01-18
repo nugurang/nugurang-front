@@ -1,3 +1,4 @@
+import Container from '../components/Container';
 import Head from 'next/head';
 import Link from 'next/link';
 import type { NextPage } from 'next';
@@ -6,24 +7,15 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
-const DivBackground = styled.div`
-  ${(props: any) => `
-    background-color: ${props.theme.color.background};
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
-  `}
-`;
-
 const DivBanner = styled.div`
   ${(props: any) => `
-    background-color: ${props.theme.color.primary.main};
-    color: white;
+    background-color: ${props.theme.palette.primary.main};
     font-size: 24px;
     border-radius: 4px;
     padding: 32px;
     text-align: center;
     ${props.theme.mediaQuery.isMobile} {
-      background-color: ${props.theme.color.primary.dark};
+      background-color: ${props.theme.palette.primary.dark};
     }
   `}
 `;
@@ -45,32 +37,30 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
-    <div>
+    <>
       <Head>
         <title>nugurang</title>
         <meta name='title' content='nugurang' />
         <meta name='description' content='nugurang' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main>
-        <DivBackground>
-          <DivBanner>
-            <h3>{t('helloWorld')}</h3>
-          </DivBanner>
-          <Link
-            href='/' passHref
-            locale={router.locale === 'en' ? 'ko' : 'en'}
-          >
-            <button>
-              {t('change-locale')}
-            </button>
-          </Link>
-          <button onClick={() => {setIsDark(!isDark)}}>
-            {isDark ? 'Dark' : 'Light'}
+      <Container>
+        <DivBanner>
+          <h3>{t('helloWorld')}</h3>
+        </DivBanner>
+        <Link
+          href='/' passHref
+          locale={router.locale === 'en' ? 'ko' : 'en'}
+        >
+          <button>
+            {t('change-locale')}
           </button>
-        </DivBackground>
-      </main>
-    </div>
+        </Link>
+        <button onClick={() => {setIsDark(!isDark)}}>
+          {isDark ? 'Dark' : 'Light'}
+        </button>
+      </Container>
+    </>
   );
 }
 
