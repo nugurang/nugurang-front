@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import type { NextPage } from 'next'
-import client from "../utils/ApolloClient";
-import { gql } from "@apollo/client";
+import client from '../utils/apollo-client';
+import { gql } from '@apollo/client';
 
 // https://countries.trevorblades.com
 

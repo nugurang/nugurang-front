@@ -1,3 +1,5 @@
 {
-  "helloWorld": "Hello, world!"
+  "_helloWorld": "Hello, world!",
+  "login": "Login",
+  "logout": "Logout"
 }

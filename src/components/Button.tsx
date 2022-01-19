@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 interface Props {
   label: string;
-  paletteType: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  paletteType?: string;
 }
 
 interface StyledButtonWrapProps {
@@ -23,9 +24,12 @@ const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
   `}
 `;
 
-const Button: NextPage<Props> = ({ label, paletteType }) => {
+const Button: NextPage<Props> = ({ label, onClick, paletteType }) => {
   return (
-    <StyledButtonWrap paletteType={paletteType}>
+    <StyledButtonWrap
+      onClick={onClick}
+      paletteType={paletteType || 'default'}
+    >
       { label }
     </StyledButtonWrap>
   );

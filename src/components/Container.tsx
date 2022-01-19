@@ -1,4 +1,5 @@
 import Footer from './Footer';
+import Head from 'next/head';
 import Header from './Header';
 import type { NextPage } from 'next';
 import React from 'react';
@@ -27,13 +28,21 @@ const StyledMainContainer = styled.main`
 
 const Wrap: NextPage = ({ children }) => {
   return (
-    <StyledDivWrap>
-      <Header />
-      <StyledMainContainer>
-        { children }
-      </StyledMainContainer>
-      <Footer />
-    </StyledDivWrap>
+    <>
+      <Head>
+        <title>nugurang</title>
+        <meta name='title' content='nugurang' />
+        <meta name='description' content='nugurang' />
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
+      <StyledDivWrap>
+        <Header />
+        <StyledMainContainer>
+          { children }
+        </StyledMainContainer>
+        <Footer />
+      </StyledDivWrap>
+    </>
   );
 }
 

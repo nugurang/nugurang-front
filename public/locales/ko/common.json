@@ -1,3 +1,5 @@
 {
-  "helloWorld": "반갑구나, 세상아!"
+  "_helloWorld": "반갑구나, 세상아!",
+  "login": "로그인",
+  "logout": "로그아웃"
 }

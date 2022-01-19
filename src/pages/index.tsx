@@ -1,11 +1,11 @@
 import Container from '../components/Container';
-import Head from 'next/head';
+import { GetServerSideProps } from 'next'
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { withServerSideProps } from '../utils/props';
 
 const DivBanner = styled.div`
   ${(props: any) => `
@@ -20,13 +20,7 @@ const DivBanner = styled.div`
   `}
 `;
 
-export async function getServerSideProps({ locale }: any) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
-}
+export const getServerSideProps: GetServerSideProps = withServerSideProps();
 
 interface Props {
   isDark: boolean;
@@ -37,30 +31,22 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
-    <>
-      <Head>
-        <title>nugurang</title>
-        <meta name='title' content='nugurang' />
-        <meta name='description' content='nugurang' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-      <Container>
-        <DivBanner>
-          <h3>{t('helloWorld')}</h3>
-        </DivBanner>
-        <Link
-          href='/' passHref
-          locale={router.locale === 'en' ? 'ko' : 'en'}
-        >
-          <button>
-            {t('change-locale')}
-          </button>
-        </Link>
-        <button onClick={() => {setIsDark(!isDark)}}>
-          {isDark ? 'Dark' : 'Light'}
+    <Container>
+      <DivBanner>
+        <h3>{t('helloWorld')}</h3>
+      </DivBanner>
+      <Link
+        href='/' passHref
+        locale={router.locale === 'en' ? 'ko' : 'en'}
+      >
+        <button>
+          {t('change-locale')}
         </button>
-      </Container>
-    </>
+      </Link>
+      <button onClick={() => {setIsDark(!isDark)}}>
+        {isDark ? 'Dark' : 'Light'}
+      </button>
+    </Container>
   );
 }
 

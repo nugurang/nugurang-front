@@ -11,9 +11,9 @@ const lightTheme = {
       dark: '#8D8D8D',
     },
     primary: {
-      main: '#B284BE', // African violet - https://en.wikipedia.org/wiki/Shades_of_violet
-      light: '#E5B7F1',
-      dark: '#7F518B',
+      main: '#9A4EAE', // Purpureus - https://en.wikipedia.org/wiki/Shades_of_violet
+      light: '#CD81E1',
+      dark: '#671B7B',
     },
     secondary: {
       main: '#6495ED', // Cornflower blue - https://en.wikipedia.org/wiki/Shades_of_azure
