@@ -7,8 +7,8 @@ import styled from 'styled-components';
 const StyledDivWrap = styled.div`
   ${(props: any) => `
     position: relative;
-    background-color: ${props.theme.color.background};
-    color: ${props.theme.color.text};
+    background-color: ${props.theme.palette.background.main};
+    color: ${props.theme.palette.text.main};
     min-height: 100%;
     transition-duration: 0.2s;
     transition-property: background-color, color;

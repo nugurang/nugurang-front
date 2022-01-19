@@ -38,8 +38,14 @@ declare module 'styled-components' {
         light: string
         dark: string
       },
-      text: string,
-      background: string,
+      text: {
+        main: string
+        sub: string
+      },
+      background: {
+        main: string
+        sub: string
+      },
     },
     mediaQuery: {
       gtWatch: string

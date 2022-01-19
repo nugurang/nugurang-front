@@ -15,6 +15,8 @@ const StyledFooterWrap = styled.footer`
     left: 0;
     right: 0;
     bottom: 0;
+    background-color: ${props.theme.palette.background.sub};
+    color: ${props.theme.palette.text.sub};
     height: 64px;
   `}
 `;

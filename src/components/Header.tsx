@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 const StyledHeaderWrap = styled.header`
   ${(props: any) => `
+    background-color: ${props.theme.palette.background.main};
+    color: ${props.theme.palette.text.main};
     height: 64px;
   `}
 `;

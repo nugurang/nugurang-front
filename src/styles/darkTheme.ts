@@ -40,8 +40,14 @@ const darkTheme = {
       light: '#FF6F64',
       dark: '#AD0900',
     },
-    text: '#fff',
-    background: '#000',
+    text: {
+      main: '#fff',
+      sub: '#aaa',
+    },
+    background: {
+      main: '#000',
+      sub: '#111',
+    },
   },
 };
 
