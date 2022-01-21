@@ -1,23 +1,16 @@
-import { signIn, signOut } from "next-auth/react"
-
 import Button from '../components/Button';
 import Container from '../components/Container';
 import { GetServerSideProps } from 'next'
-import type { NextPage } from 'next';
-import { Session } from 'next-auth';
+import Link from 'next/link';
+import { NextPage } from 'next';
+import { getWindowLocation } from '../utils/url';
 import { useSession } from "next-auth/react"
 import { useTranslation } from 'next-i18next';
 import { withServerSideProps } from '../utils/props';
 
 export const getServerSideProps: GetServerSideProps = withServerSideProps();
 
-interface Props {
-  session: Session;
-  isDark: boolean;
-  setIsDark: (isDark: boolean) => {};
-}
-
-const Login: NextPage<Props> = () => {
+const Login: NextPage = () => {
   const { data: session } = useSession();
   const { t } = useTranslation('common');
   return (
@@ -25,10 +18,19 @@ const Login: NextPage<Props> = () => {
       {session && session.user ? (
         <>
           Hello, {session.user.name}!
-          <Button label={t('logout')} onClick={() => signOut()} />
+          <Link href={{ pathname: '/session/logout', query: {
+            callbackUrl: getWindowLocation()
+          }}}>
+            <Button label={t('logout')} />
+          </Link>
         </>
       ) : (
-        <Button label={t('login')} onClick={() => signIn('github')} />
+        <Link href={{ pathname: '/session/login', query: {
+          callbackUrl: getWindowLocation(),
+          providerName: 'github'
+        }}}>
+          <Button label={t('login')} />
+        </Link>
       )}
     </Container>
   );

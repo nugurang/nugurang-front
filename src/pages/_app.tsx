@@ -8,7 +8,7 @@ import lightTheme from '../styles/lightTheme';
 import { useState } from 'react';
 
 function RootApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  const [isDark, setIsDark] = useState<boolean>(true);
+  const [isDark, setIsDark] = useState<boolean>(false);
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>

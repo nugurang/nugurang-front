@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
+  css?: string;
   label: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   paletteType?: string;
@@ -21,14 +22,16 @@ const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
     &:hover {
       background-color: ${props.theme.palette[props.paletteType].dark};
     }
+    ${props.css}
   `}
 `;
 
-const Button: NextPage<Props> = ({ label, onClick, paletteType }) => {
+const Button: NextPage<Props> = ({ css, label, onClick, paletteType = 'default' }) => {
   return (
     <StyledButtonWrap
+      css={css}
       onClick={onClick}
-      paletteType={paletteType || 'default'}
+      paletteType={paletteType}
     >
       { label }
     </StyledButtonWrap>
