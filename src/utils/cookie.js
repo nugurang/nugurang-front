@@ -39,10 +39,14 @@ export const parseCookies = (context) => {
   }
 };
 
-export const destroyCookie = (context, key) => {
+export const destroyCookie = (context, key, { path }) => {
   if (typeof window === "undefined") {
-    nookies.destroy(context, key)
+    nookies.destroy(context, key, {
+      path,
+    })
   } else {
-    nookieDestroyCookie(null, key)
+    nookieDestroyCookie(null, key, {
+      path,
+    })
   }
 };

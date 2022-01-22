@@ -4,14 +4,6 @@ const { i18n } = require('./next-i18next.config');
 const nextConfig = {
   i18n,
   reactStrictMode: true,
-  async rewrites() {
-    return [
-      {
-        source: '/backend/:path*',
-        destination: `${process.env.NEXT_PUBLIC_BACKEND_URI}/:path*`,
-      },
-    ]
-  },
 }
 
 module.exports = nextConfig;

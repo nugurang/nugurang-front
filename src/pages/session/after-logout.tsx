@@ -1,29 +1,23 @@
 import { GetServerSideProps, NextPage } from 'next';
 
 import { destroyCookie } from '../../utils/cookie';
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-
-interface Props {
-  callbackUrl: string;
-}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const query = context.query;
-  
+  const callbackUrl = context.query.callbackUrl;
+  destroyCookie(context, 'JSESSIONID', {
+    path: '/'
+  });
   return {
-    props: query,
+    redirect: {
+      permanent: false,
+      destination: callbackUrl,
+    },
+    props:{},
   };
 
 }
 
-const AfterLogin: NextPage<Props> = ({ callbackUrl }) => {
-  const router = useRouter();
-  useEffect(() => {
-    destroyCookie(null, 'JSESSIONID');
-    router.push(callbackUrl);
-  }, []);
-
+const AfterLogin: NextPage = () => {
   return <></>;
 };
 
