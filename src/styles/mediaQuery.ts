@@ -1,4 +1,4 @@
-import screenSize from './screenSize';
+import screenSize from '@/src/styles/screenSize';
 
 const mediaQuery = {
   gtWatch: `@media only screen and (min-width: ${screenSize.minWatch})`,

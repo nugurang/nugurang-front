@@ -1,11 +1,11 @@
-import Container from '../components/Container';
+import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next'
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import Text from '../components/Text';
+import Text from '@/src/components/Text';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { withServerSideProps } from '../utils/props';
+import { withServerSideProps } from '@/src/utils/props';
 export const getServerSideProps: GetServerSideProps = withServerSideProps();
 
 interface Props {

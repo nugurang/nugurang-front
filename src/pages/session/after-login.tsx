@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextPage } from 'next';
-import { parseHeaderSetCookie, setCookie } from '../../utils/cookie';
+import { parseHeaderSetCookie, setCookie } from '@/src/utils/cookie';
 
 import axios from 'axios';
 import { getSession } from 'next-auth/react';
@@ -27,13 +27,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         additionalParameters: {}
       },
       headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_FRONTEND_URI as string,
       },
       withCredentials: true
     });
     const { JSESSIONID, Path } = parseHeaderSetCookie(getJSessionResponse.headers['set-cookie'])[0];
-    console.log(JSESSIONID);
-    console.log(Path);
     setCookie(context, 'JSESSIONID', JSESSIONID, {
       maxAge: 30 * 24 * 60 * 60,
       path: Path,

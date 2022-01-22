@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 
-import { destroyCookie } from '../../utils/cookie';
+import { destroyCookie } from '@/src/utils/cookie';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const callbackUrl = context.query.callbackUrl;
@@ -14,7 +14,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
     props:{},
   };
-
 }
 
 const AfterLogin: NextPage = () => {

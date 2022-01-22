@@ -1,5 +1,5 @@
-import mediaQuery from './mediaQuery';
-import screenSize from './screenSize';
+import mediaQuery from '@/src/styles/mediaQuery';
+import screenSize from '@/src/styles/screenSize';
 
 const darkTheme = {
   mediaQuery,

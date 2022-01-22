@@ -1,6 +1,6 @@
-import Footer from './Footer';
+import Footer from '@/src/components/Footer';
 import Head from 'next/head';
-import Header from './Header';
+import Header from '@/src/components/Header';
 import type { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';

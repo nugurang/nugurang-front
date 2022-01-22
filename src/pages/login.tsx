@@ -1,12 +1,12 @@
-import Button from '../components/Button';
-import Container from '../components/Container';
+import Button from '@/src/components/Button';
+import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next'
 import Link from 'next/link';
 import { NextPage } from 'next';
-import { getWindowLocation } from '../utils/url';
+import { getWindowLocation } from '@/src/utils/url';
 import { useSession } from "next-auth/react"
 import { useTranslation } from 'next-i18next';
-import { withServerSideProps } from '../utils/props';
+import { withServerSideProps } from '@/src/utils/props';
 
 export const getServerSideProps: GetServerSideProps = withServerSideProps();
 

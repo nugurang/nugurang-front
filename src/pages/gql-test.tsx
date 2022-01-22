@@ -1,41 +1,44 @@
 import Head from 'next/head'
 import type { NextPage } from 'next'
-import client from '../utils/apollo-client';
+import apolloClient from '@/src/utils/apollo-client';
 import { gql } from '@apollo/client';
 
-// https://countries.trevorblades.com
-
-interface Countries {
+interface CurrentOAuth2User {
+  id: string;
   name: string;
-  code: string;
-  emoji: string;
+  email: string;
 }
 
 interface Props {
-  countries: Countries[];
+  currentOAuth2User: CurrentOAuth2User;
 }
 
-export async function getServerSideProps() {
-  const { data } = await client.query({
+export async function getServerSideProps(context: any) {
+  const { data } = await apolloClient.query({
     query: gql`
-      query Countries {
-        countries {
-          code
+      query CurrentOAuth2User {
+        currentOAuth2User {
+          id
           name
-          emoji
+          email
         }
       }
     `,
+    context: {
+      headers: {
+        cookie: context.req.headers.cookie
+      }
+    }
   });
 
   return {
     props: {
-      countries: data.countries.slice(0, 4),
+      currentOAuth2User: data.currentOAuth2User,
     },
   };
 }
 
-const GqlTest: NextPage<Props> = ({ countries }) => {
+const GqlTest: NextPage<Props> = ({ currentOAuth2User }) => {
   return (
     <div>
       <Head>
@@ -45,14 +48,9 @@ const GqlTest: NextPage<Props> = ({ countries }) => {
       </Head>
       <main>
         <div>
-          {countries.map((country) => (
-            <div key={country.code}>
-              <h3>{country.name}</h3>
-              <p>
-                {country.code} - {country.emoji}
-              </p>
-            </div>
-          ))}
+          <h1>{currentOAuth2User.id}</h1>
+          <h2>{currentOAuth2User.name}</h2>
+          <h2>{currentOAuth2User.email}</h2>
         </div>
       </main>
     </div>
