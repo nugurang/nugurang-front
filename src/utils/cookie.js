@@ -17,8 +17,12 @@ export const parseHeaderSetCookie = (rawStringList) => {
   })
 };
 
+export const stringifyCookies = (cookies) => {
+  return Object.entries(cookies).map(e => e.join('=')).join('; ');
+}
+
 export const setCookie = (context, key, value, { maxAge, path }) => {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     nookies.set(context, key, value, {
       maxAge,
       path,
@@ -32,7 +36,7 @@ export const setCookie = (context, key, value, { maxAge, path }) => {
 };
 
 export const parseCookies = (context) => {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return nookies.get(context)
   } else {
     return nookieParseCookies();
@@ -40,7 +44,7 @@ export const parseCookies = (context) => {
 };
 
 export const destroyCookie = (context, key, { path }) => {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     nookies.destroy(context, key, {
       path,
     })

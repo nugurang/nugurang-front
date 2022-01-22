@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import type { NextPage } from 'next'
-import apolloClient from '@/src/utils/apollo-client';
-import { gql } from '@apollo/client';
+import { NextPage } from 'next'
+import { queryToBackend } from '@/src/utils/backend';
 
 interface CurrentOAuth2User {
   id: string;
@@ -14,22 +13,15 @@ interface Props {
 }
 
 export async function getServerSideProps(context: any) {
-  const { data } = await apolloClient.query({
-    query: gql`
-      query CurrentOAuth2User {
-        currentOAuth2User {
-          id
-          name
-          email
-        }
-      }
-    `,
-    context: {
-      headers: {
-        cookie: context.req.headers.cookie
+  const { data } = await queryToBackend(context, `
+    query CurrentOAuth2User {
+      currentOAuth2User {
+        id
+        name
+        email
       }
     }
-  });
+  `);
 
   return {
     props: {
