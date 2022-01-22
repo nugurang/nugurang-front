@@ -1,4 +1,5 @@
 import Container from '@/src/components/Container';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link';
 import type { NextPage } from 'next';
@@ -31,6 +32,7 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
       <button onClick={() => {setIsDark(!isDark)}}>
         {isDark ? 'Dark' : 'Light'}
       </button>
+      <FontAwesomeIcon icon={['fas', 'coffee']} />
     </Container>
   );
 }
