@@ -1,25 +1,9 @@
-module.exports = {
-  /*
-    future: {
-        webpack5: true
-    },
-  */
-  images: {
-    domains: ['user-images.githubusercontent.com'],
-  },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack']
-    });
-    return config;
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/unsplash/:path*',
-        destination: 'https://source.unsplash.com/:path*',
-      },
-    ]
-  },
+/** @type {import('next').NextConfig} */
+const { i18n } = require('./next-i18next.config');
+
+const nextConfig = {
+  i18n,
+  reactStrictMode: true
 }
+
+module.exports = nextConfig;
