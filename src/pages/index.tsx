@@ -6,6 +6,7 @@ import Text from '@/src/components/Text';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { withServerSideProps } from '@/src/utils/props';
+
 export const getServerSideProps: GetServerSideProps = withServerSideProps();
 
 interface Props {
@@ -17,7 +18,7 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
-    <Container>
+    <Container header footer navigationBar>
       <Text>{t('_helloWorld')}</Text>
       <Link
         href='/' passHref

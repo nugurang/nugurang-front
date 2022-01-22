@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import React from 'react';
+import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from 'styled-components';
 
 const StyledHeaderWrap = styled.header`
@@ -10,21 +11,12 @@ const StyledHeaderWrap = styled.header`
   `}
 `;
 
-const StyledDivInnerWrap = styled.div`
-  ${(props: any) => `
-    margin: 0 auto;
-    ${props.theme.mediaQuery.gtLaptop} {
-      max-width: ${props.theme.screenSize.minLaptop};
-    }
-  `}
-`;
-
 const Header: NextPage = () => {
   return (
     <StyledHeaderWrap>
-      <StyledDivInnerWrap>
+      <WidthLimiter>
         Header
-      </StyledDivInnerWrap>
+      </WidthLimiter>
     </StyledHeaderWrap>
   );
 }

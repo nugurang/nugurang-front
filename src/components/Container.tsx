@@ -1,32 +1,40 @@
+import NavigationBar, { height as navigationBarHeight } from '@/src/components/NavigationBar';
+
 import Footer from '@/src/components/Footer';
 import Head from 'next/head';
 import Header from '@/src/components/Header';
 import type { NextPage } from 'next';
 import React from 'react';
+import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from 'styled-components';
 
-const StyledDivWrap = styled.div`
+interface Props {
+  footer?: boolean;
+  header?: boolean;
+  navigationBar?: boolean;
+}
+
+interface StyledButtonWrapProps {
+  navigationBar: boolean;
+}
+
+const StyledDivContainer = styled.div<StyledButtonWrapProps>`
   ${(props: any) => `
     position: relative;
     background-color: ${props.theme.palette.background.main};
     color: ${props.theme.palette.text.main};
-    min-height: 100%;
+    min-height: ${props.navigationBar ? `calc(100% - ${navigationBarHeight})` : '100%'};
     transition-duration: 0.2s;
     transition-property: background-color, color;
   `}
 `;
 
-const StyledMainContainer = styled.main`
-  ${(props: any) => `
-    position: relative;
-    margin: 0 auto;
-    ${props.theme.mediaQuery.gtLaptop} {
-      max-width: ${props.theme.screenSize.minLaptop};
-    }
-  `}
-`;
-
-const Wrap: NextPage = ({ children }) => {
+const Container: NextPage<Props> = ({
+  children,
+  footer = false,
+  header = false,
+  navigationBar = false
+}) => {
   return (
     <>
       <Head>
@@ -35,15 +43,16 @@ const Wrap: NextPage = ({ children }) => {
         <meta name='description' content='nugurang' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <StyledDivWrap>
-        <Header />
-        <StyledMainContainer>
+      <StyledDivContainer navigationBar={navigationBar}>
+        { header && <Header /> }
+        <WidthLimiter>
           { children }
-        </StyledMainContainer>
-        <Footer />
-      </StyledDivWrap>
+        </WidthLimiter>
+        { footer && <Footer /> }
+      </StyledDivContainer>
+      { navigationBar && <NavigationBar /> }
     </>
   );
 }
 
-export default Wrap;
+export default Container;
