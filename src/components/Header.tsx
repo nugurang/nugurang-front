@@ -6,8 +6,10 @@ import styled from 'styled-components';
 const StyledHeaderWrap = styled.header`
   ${(props: any) => `
     background-color: ${props.theme.palette.background.main};
-    color: ${props.theme.palette.text.main};
+    color: ${props.theme.palette.background.text};
     height: 64px;
+    transition-duration: 0.2s;
+    transition-property: background-color, color;
   `}
 `;
 

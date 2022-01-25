@@ -11,6 +11,7 @@ interface Props {
 
 interface StyledButtonWrapProps {
   paletteType: string;
+  css: string;
 }
 
 const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
@@ -26,7 +27,7 @@ const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
   `}
 `;
 
-const Button: NextPage<Props> = ({ css, label, onClick, paletteType = 'default' }) => {
+const Button: NextPage<Props> = ({ css = '', label, onClick, paletteType = 'default' }) => {
   return (
     <StyledButtonWrap
       css={css}

@@ -1,8 +1,9 @@
+import Button from '@/src/components/Button';
+import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link';
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import Text from '@/src/components/Text';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -19,20 +20,37 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
-    <Container header footer navigationBar>
-      <Text>{t('_helloWorld')}</Text>
-      <Link
-        href='/' passHref
-        locale={router.locale === 'en' ? 'ko' : 'en'}
-      >
-        <button>
-          change-locale
-        </button>
-      </Link>
-      <button onClick={() => {setIsDark(!isDark)}}>
-        {isDark ? 'Dark' : 'Light'}
-      </button>
-      <FontAwesomeIcon icon={['fas', 'coffee']} />
+    <Container
+      header
+      footer
+      navigationBar
+      navigationBarItems={[
+        {
+          href: '/',
+          icon: ['fas', 'coffee'],
+          label: 'index',
+          active: true
+        },
+        {
+          href: '/',
+          icon: ['fas', 'coffee'],
+          label: 'index',
+        },
+      ]}
+    >
+      <Card>
+        <Text>{t('_helloWorld')}</Text>
+        <Link
+          href='/' passHref
+          locale={router.locale === 'en' ? 'ko' : 'en'}
+        >
+          <Button label={`change-locale`} />
+        </Link>
+        <Button
+          label={isDark ? 'Dark' : 'Light'}
+          onClick={() => {setIsDark(!isDark)}}
+        />
+      </Card>
     </Container>
   );
 }

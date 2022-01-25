@@ -1,9 +1,10 @@
 import NavigationBar, { height as navigationBarHeight } from '@/src/components/NavigationBar';
+import NavigationBarItem, { Props as NavigationBarItemProps } from '@/src/components/NavigationBarItem';
 
 import Footer from '@/src/components/Footer';
 import Head from 'next/head';
 import Header from '@/src/components/Header';
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from 'styled-components';
@@ -12,6 +13,7 @@ interface Props {
   footer?: boolean;
   header?: boolean;
   navigationBar?: boolean;
+  navigationBarItems?: NavigationBarItemProps[];
 }
 
 interface StyledButtonWrapProps {
@@ -22,7 +24,7 @@ const StyledDivContainer = styled.div<StyledButtonWrapProps>`
   ${(props: any) => `
     position: relative;
     background-color: ${props.theme.palette.background.main};
-    color: ${props.theme.palette.text.main};
+    color: ${props.theme.palette.background.text};
     min-height: ${props.navigationBar ? `calc(100% - ${navigationBarHeight})` : '100%'};
     transition-duration: 0.2s;
     transition-property: background-color, color;
@@ -33,7 +35,8 @@ const Container: NextPage<Props> = ({
   children,
   footer = false,
   header = false,
-  navigationBar = false
+  navigationBar = false,
+  navigationBarItems = []
 }) => {
   return (
     <>
@@ -50,7 +53,17 @@ const Container: NextPage<Props> = ({
         </WidthLimiter>
         { footer && <Footer /> }
       </StyledDivContainer>
-      { navigationBar && <NavigationBar /> }
+      { navigationBar && <NavigationBar>
+        {navigationBarItems.map((navigationBarItem, index) => {
+          return <NavigationBarItem
+            active={navigationBarItem.active}
+            href={navigationBarItem.href}
+            icon={navigationBarItem.icon}
+            label={navigationBarItem.label}
+            key={index}
+          />;
+        })}
+      </NavigationBar> }
     </>
   );
 }
