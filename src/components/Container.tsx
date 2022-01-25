@@ -10,6 +10,7 @@ import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from 'styled-components';
 
 interface Props {
+  children: React.ReactNode;
   footer?: boolean;
   header?: boolean;
   navigationBar?: boolean;

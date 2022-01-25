@@ -24,8 +24,9 @@ const StyledFooterWrap = styled.footer`
   `}
 `;
 
-const StyledTextWrap = styled.div`
+const StyledCopyrightWrap = styled.div`
   ${(props: any) => `
+    font-size: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -40,9 +41,9 @@ const Footer: NextPage = () => {
       <StyledDivDummy />
       <StyledFooterWrap>
         <WidthLimiter>
-          <StyledTextWrap>
+          <StyledCopyrightWrap>
             &copy; nugurang. All rights reserved.
-          </StyledTextWrap>
+          </StyledCopyrightWrap>
         </WidthLimiter>
       </StyledFooterWrap>
     </>

@@ -2,6 +2,10 @@ import 'styled-components'
 
 declare module 'styled-components' {
   export interface Theme {
+    size: {
+      icon: string,
+      screen: string,
+    }
     palette: {
       default: {
         main: string

@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -7,8 +7,8 @@ const StyledDivWidthLimiter = styled.div`
     position: relative;
     margin: 0 auto;
     height: 100%;
-    ${props.theme.mediaQuery.gtTablet} {
-      max-width: ${props.theme.screenSize.minTablet};
+    ${props.theme.mediaQuery.gtMobile} {
+      max-width: ${props.theme.size.screen.mobile};
     }
   `}
 `;

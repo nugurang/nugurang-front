@@ -1,11 +1,11 @@
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
+  children: React.ReactNode;
   css?: string;
   href?: string | object;
-  label: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   paletteType?: string;
 }
@@ -18,7 +18,7 @@ interface StyledButtonWrapProps {
 const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
   ${(props: any) => `
     border: 0px solid #000;
-    border-radius: 10px;
+    border-radius: 4px;
     color: ${props.theme.palette[props.paletteType].text};
     background-color: ${props.theme.palette[props.paletteType].main};
     padding: 10px 20px;
@@ -31,8 +31,8 @@ const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
 `;
 
 const Button: NextPage<Props> = ({
+  children,
   css = '',
-  label,
   onClick,
   paletteType = 'default'
 }) => {
@@ -42,7 +42,7 @@ const Button: NextPage<Props> = ({
       onClick={onClick}
       paletteType={paletteType}
     >
-      { label }
+      { children }
     </StyledButtonWrap>
   );
 }

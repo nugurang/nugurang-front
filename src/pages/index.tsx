@@ -47,9 +47,10 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
           {`change-locale`}
         </Link>
         <Button
-          label={isDark ? 'Dark' : 'Light'}
           onClick={() => {setIsDark(!isDark)}}
-        />
+        >
+          {isDark ? 'Dark' : 'Light'}
+        </Button>
       </Card>
     </Container>
   );

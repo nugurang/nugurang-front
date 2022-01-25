@@ -32,7 +32,7 @@ const StyledAWrap = styled.a<StyledAWrapProps>`
 const StyledALikeButtonWrap = styled.a<StyledAWrapProps>`
   ${(props: any) => `
     border: 0px solid #000;
-    border-radius: 10px;
+    border-radius: 4px;
     color: ${props.theme.palette[props.paletteType].text};
     background-color: ${props.theme.palette[props.paletteType].main};
     padding: 10px 20px;

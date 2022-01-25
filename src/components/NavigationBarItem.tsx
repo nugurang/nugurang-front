@@ -22,7 +22,7 @@ const StyledDivWrap = styled.div<StyledDivWrapProps>`
   ${(props: any) => `
     color: ${props.active
       ? props.theme.palette.primary.main
-      : props.theme.palette.background.text
+      : props.theme.palette.background.smallText
     };
     padding: 5px 15px;
     text-align: center;
