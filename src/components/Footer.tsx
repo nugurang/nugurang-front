@@ -24,13 +24,25 @@ const StyledFooterWrap = styled.footer`
   `}
 `;
 
+const StyledTextWrap = styled.div`
+  ${(props: any) => `
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: ${props.theme.palette.background.smallText};
+  `}
+`;
+
 const Footer: NextPage = () => {
   return (
     <>
       <StyledDivDummy />
       <StyledFooterWrap>
         <WidthLimiter>
-          Footer
+          <StyledTextWrap>
+            &copy; nugurang. All rights reserved.
+          </StyledTextWrap>
         </WidthLimiter>
       </StyledFooterWrap>
     </>

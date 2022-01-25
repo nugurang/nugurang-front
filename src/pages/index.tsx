@@ -2,9 +2,8 @@ import Button from '@/src/components/Button';
 import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next'
-import Link from 'next/link';
+import Link from '@/src/components/Link';
 import { NextPage } from 'next';
-import Text from '@/src/components/Text';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { withServerSideProps } from '@/src/utils/props';
@@ -39,12 +38,13 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
       ]}
     >
       <Card>
-        <Text>{t('_helloWorld')}</Text>
+        {t('_helloWorld')}
         <Link
           href='/' passHref
           locale={router.locale === 'en' ? 'ko' : 'en'}
+          button
         >
-          <Button label={`change-locale`} />
+          {`change-locale`}
         </Link>
         <Button
           label={isDark ? 'Dark' : 'Light'}

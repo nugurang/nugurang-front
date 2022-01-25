@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 interface Props {
   css?: string;
+  href?: string | object;
   label: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   paletteType?: string;
@@ -17,9 +18,11 @@ interface StyledButtonWrapProps {
 const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
   ${(props: any) => `
     border: 0px solid #000;
-    color: #fff;
+    border-radius: 10px;
+    color: ${props.theme.palette[props.paletteType].text};
     background-color: ${props.theme.palette[props.paletteType].main};
     padding: 10px 20px;
+    cursor: pointer;
     &:hover {
       background-color: ${props.theme.palette[props.paletteType].dark};
     }
@@ -27,7 +30,12 @@ const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
   `}
 `;
 
-const Button: NextPage<Props> = ({ css = '', label, onClick, paletteType = 'default' }) => {
+const Button: NextPage<Props> = ({
+  css = '',
+  label,
+  onClick,
+  paletteType = 'default'
+}) => {
   return (
     <StyledButtonWrap
       css={css}

@@ -13,11 +13,23 @@ const StyledHeaderWrap = styled.header`
   `}
 `;
 
+const StyledTextWrap = styled.div`
+  ${(props: any) => `
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: ${props.theme.palette.primary.main};
+    font-size: 32px;
+    font-weight: bold;
+  `}
+`;
+
 const Header: NextPage = () => {
   return (
     <StyledHeaderWrap>
       <WidthLimiter>
-        Header
+        <StyledTextWrap>nugurang</StyledTextWrap>
       </WidthLimiter>
     </StyledHeaderWrap>
   );
