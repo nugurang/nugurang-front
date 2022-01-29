@@ -4,8 +4,12 @@ import { destroyCookie } from '@/src/utils/cookie';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const callbackUrl = context.query.callbackUrl;
-  destroyCookie(context, 'JSESSIONID', {
-    path: '/'
+  destroyCookie({
+    context,
+    key: 'JSESSIONID',
+    props: {
+      path: '/'
+    }
   });
   return {
     redirect: {

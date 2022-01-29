@@ -1,12 +1,12 @@
 import Button from '@/src/components/Button';
 import Container from '@/src/components/Container';
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
 import { getWindowLocation } from '@/src/utils/url';
 import { useRouter } from 'next/router';
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
 import { useTranslation } from 'next-i18next';
-import { withServerSideProps } from '@/src/utils/props';
+import { withServerSideProps } from '@/src/utils/server-side';
 
 export const getServerSideProps: GetServerSideProps = withServerSideProps();
 
@@ -20,18 +20,18 @@ const Login: NextPage = () => {
         <>
           Hello, {session.user.name}!
           <Button
-            label={t('logout')}
             onClick={() => router.push({
               pathname: '/session/logout',
               query: {
                 callbackUrl: getWindowLocation()
               },
             })}
-          />
+          >
+            {t('logout')}
+          </Button>
         </>
       ) : (
         <Button
-          label={t('login')}
           onClick={() => router.push({
             pathname: '/session/login',
             query: {
@@ -39,7 +39,9 @@ const Login: NextPage = () => {
               providerName: 'github'
             },
           })}
-        />
+        >
+          {t('login')}
+        </Button>
       )}
     </Container>
   );

@@ -1,12 +1,23 @@
 import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import Avatar from '@/src/components/Avatar';
+import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
 import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from 'styled-components';
+import { useTranslation } from 'next-i18next';
 
-interface StyledWrapProps {
+interface CssProps {
+  user?: {
+    name: string;
+    imageUrl?: string;
+  };
+}
+
+interface ComponentProps extends CssProps {}
+
+interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
@@ -65,7 +76,8 @@ const Logo: NextPage = () => {
   );
 };
 
-const Header: NextPage = () => {
+const Header: NextPage<ComponentProps> = ({ user }) => {
+  const { t } = useTranslation('common');
   return (
     <StyledHeaderWrap>
       <WidthLimiter>
@@ -73,8 +85,24 @@ const Header: NextPage = () => {
         </StyledLeftsideWrap>
         <Logo />
         <StyledRightsideWrap>
-          <Avatar alt='as'>
-          </Avatar>
+          {
+            user && (
+              <Avatar alt={user.name}>
+                <img alt=''></img>
+              </Avatar>
+            )
+          }
+          {
+            !user && (
+              <Link
+                button
+                href='/login'
+                palette='primary'
+              >
+                { t('login') }
+              </Link>
+            )
+          }
         </StyledRightsideWrap>
       </WidthLimiter>
     </StyledHeaderWrap>

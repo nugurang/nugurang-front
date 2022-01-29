@@ -13,6 +13,7 @@ interface StyledWrapProps {
 
 const StyledDivWidthLimiter = styled.div<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
+    position: relative;
     margin: 0 auto;
     height: 100%;
     ${props.theme.screenSizeMediaQuery.gtMobile} {

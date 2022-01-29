@@ -9,11 +9,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 }
 
-interface Props {
+interface PageProps {
   callbackUrl: string;
 }
 
-const Logout: NextPage<Props> = ({ callbackUrl }) => {
+const Logout: NextPage<PageProps> = ({ callbackUrl }) => {
   signOut({
     callbackUrl: `/session/after-logout?callbackUrl=${callbackUrl}`
   });

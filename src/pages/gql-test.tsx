@@ -8,7 +8,7 @@ interface CurrentOAuth2User {
   email: string;
 }
 
-interface Props {
+interface PageProps {
   currentOAuth2User: CurrentOAuth2User;
 }
 
@@ -30,7 +30,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const GqlTest: NextPage<Props> = ({ currentOAuth2User }) => {
+const GqlTest: NextPage<PageProps> = ({ currentOAuth2User }) => {
   return (
     <div>
       <Head>

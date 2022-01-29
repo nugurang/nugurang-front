@@ -5,13 +5,20 @@ import { gql } from '@apollo/client';
 
 export const queryToBackend = async (context: any, query: string) => {
   const cookies = parseCookies(context);
-  const queryResponse = await apolloClient.query({
-    query: gql(query),
-    context: {
-      headers: {
-        cookie: stringifyCookies(cookies)
+  try {
+    const queryResponse = await apolloClient.query({
+      query: gql(query),
+      context: {
+        headers: {
+          cookie: stringifyCookies(cookies)
+        }
       }
-    }
-  });
-  return queryResponse;
+    });
+    return queryResponse;
+  } catch (error: any) {
+    return {
+      data: null,
+      error
+    };
+  }
 }

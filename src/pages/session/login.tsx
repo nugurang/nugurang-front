@@ -9,12 +9,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 }
 
-interface Props {
+interface PageProps {
   providerName: string;
   callbackUrl: string;
 }
 
-const Login: NextPage<Props> = ({ providerName, callbackUrl }) => {
+const Login: NextPage<PageProps> = ({ providerName, callbackUrl }) => {
   signIn(providerName, {
     callbackUrl: `/session/after-login?callbackUrl=${callbackUrl}`
   });

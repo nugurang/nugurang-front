@@ -3,6 +3,15 @@
     "next/babel"
   ],
   "plugins": [
-    "babel-plugin-styled-components"
+    [
+      "babel-plugin-styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "fileName": true,
+        "preprocess": false,
+        "pure": true
+      }
+    ]
   ]
 }

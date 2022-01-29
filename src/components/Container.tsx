@@ -11,14 +11,15 @@ import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from 'styled-components';
 
 interface CssProps {
-  footer?: boolean;
-  header?: boolean;
   navigationBar?: boolean;
   navigationBarItems?: NavigationBarItemProps[];
 }
 
 interface ComponentProps extends CssProps {
   children?: React.ReactNode;
+  currentOAuth2User?: Object;
+  footer?: boolean;
+  header?: boolean;
 }
 
 interface StyledWrapProps extends CssProps {
@@ -38,11 +39,18 @@ const StyledDivWrap = styled.div<StyledWrapProps>`
 
 const Container: NextPage<ComponentProps> = ({
   children,
+  currentOAuth2User,
   footer = false,
   header = false,
   navigationBar = false,
   navigationBarItems = []
 }) => {
+  /*
+  const user = currentOAuth2User ? {
+    name: currentOAuth2User.name,
+    imageUrl: currentOAuth2User.imageUrl
+  } : null;
+  */
   return (
     <>
       <Head>

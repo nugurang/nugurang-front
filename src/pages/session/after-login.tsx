@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     if (session) {
       const getJSessionResponse = await axios({
-        url: `${process.env.NEXT_PUBLIC_BACKEND_URI}/login`,
+        url: `${process.env.BACKEND_URI}/login`,
         method: 'post',
         data: {
           clientRegistrationId: session.provider,
@@ -28,22 +28,29 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           additionalParameters: {}
         },
         headers: {
-          'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_FRONTEND_URI as string,
+          'Access-Control-Allow-Origin': process.env.FRONTEND_URI as string,
         },
         withCredentials: true
       });
-      const { JSESSIONID, Path } = parseHeaderSetCookie(getJSessionResponse.headers['set-cookie'])[0];
-      setCookie(context, 'JSESSIONID', JSESSIONID, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: Path,
-      });
-      return {
-        redirect: {
-          permanent: false,
-          destination: callbackUrl,
-        },
-        props:{},
-      };
+      if (getJSessionResponse.headers['set-cookie']) {
+        const { JSESSIONID, Path } = parseHeaderSetCookie(getJSessionResponse.headers['set-cookie'])[0];
+        setCookie({
+          context,
+          key: 'JSESSIONID', 
+          value: JSESSIONID, 
+          props: {
+            maxAge: parseInt(process.env.COOKIE_MAX_AGE as string),
+            path: Path,
+          }
+        });
+        return {
+          redirect: {
+            permanent: false,
+            destination: callbackUrl,
+          },
+          props:{},
+        };
+      } else throw new Error();
     } else throw new Error();
   } catch (error) {
     return {

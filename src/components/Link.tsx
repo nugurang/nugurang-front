@@ -41,6 +41,7 @@ const StyledALikeButtonWrap = styled.a<StyledWrapProps>`
     color: ${props.theme.palette[props.palette || 'default'].text};
     background-color: ${props.theme.palette[props.palette || 'default'].main};
     padding: 10px 20px;
+    text-decoration: none;
     &:hover {
       background-color: ${props.theme.palette[props.palette || 'default'].dark};
     }
