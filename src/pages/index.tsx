@@ -3,7 +3,7 @@ import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next'
 import Link from '@/src/components/Link';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { withServerSideProps } from '@/src/utils/props';
@@ -31,7 +31,7 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
           active: true
         },
         {
-          href: '/',
+          href: '/a',
           icon: ['fas', 'coffee'],
           label: 'index',
         },
@@ -40,9 +40,9 @@ const Home: NextPage<Props> = ({ isDark, setIsDark }) => {
       <Card>
         {t('_helloWorld')}
         <Link
-          href='/' passHref
+          href='/'
           locale={router.locale === 'en' ? 'ko' : 'en'}
-          button
+          button={true}
         >
           {`change-locale`}
         </Link>

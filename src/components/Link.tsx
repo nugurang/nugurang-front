@@ -1,78 +1,90 @@
+import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+
 import NextLink from 'next/link';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import React from 'react';
+import type { UrlObject } from 'url';
 import styled from 'styled-components';
 
-interface Props {
-  button?: boolean;
+interface CssProps {
   css?: string;
-  children: React.ReactNode;
-  href: string | object;
+  palette?: PaletteKey;
+}
+
+interface ComponentProps extends CssProps {
+  button?: boolean;
+  children?: React.ReactNode;
+  href: string | UrlObject;
   locale?: string;
-  paletteType?: string;
   passHref?: boolean;
   replace?: boolean;
 }
 
-interface StyledAWrapProps {
-  paletteType: string;
-  css?: string;
+interface StyledWrapProps extends CssProps {
+  theme: ThemeObject;
 }
 
-const StyledAWrap = styled.a<StyledAWrapProps>`
-  ${(props: any) => `
-    display: inline-block;
+const StyledAWrap = styled.a<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
     &:visited {
-      color: ${props.theme.palette[props.paletteType].text};
+      color: ${props.theme.palette[props.palette || 'default'].text};
     }
     ${props.css}
   `}
 `;
 
-const StyledALikeButtonWrap = styled.a<StyledAWrapProps>`
-  ${(props: any) => `
+const StyledALikeButtonWrap = styled.a<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    display: inline-block;
     border: 0px solid #000;
     border-radius: 4px;
-    color: ${props.theme.palette[props.paletteType].text};
-    background-color: ${props.theme.palette[props.paletteType].main};
+    color: ${props.theme.palette[props.palette || 'default'].text};
+    background-color: ${props.theme.palette[props.palette || 'default'].main};
     padding: 10px 20px;
-    display: inline-block;
-    text-decoration: none;
     &:hover {
-      background-color: ${props.theme.palette[props.paletteType].dark};
+      background-color: ${props.theme.palette[props.palette || 'default'].dark};
     }
     &:visited {
-      color: ${props.theme.palette[props.paletteType].text};
+      color: ${props.theme.palette[props.palette || 'default'].text};
     }
     ${props.css}
   `}
 `;
 
-const Link: NextPage<Props> = ({
-  button = false,
-  css = '',
+const Link: NextPage<ComponentProps> = ({
+  button,
+  css,
   children,
   href,
-  locale = undefined,
-  paletteType = 'default',
-  passHref = false,
-  replace = false
+  locale,
+  palette,
+  replace
 }) => {
   if (button) return (
-    <NextLink href={href} locale={locale} passHref={passHref} replace={replace}>
+    <NextLink
+      href={href}
+      locale={locale}
+      passHref
+      replace={replace}
+    >
       <StyledALikeButtonWrap
         css={css}
-        paletteType={paletteType}
+        palette={palette}
       >
         { children }
       </StyledALikeButtonWrap>
     </NextLink>
   );
   else return (
-    <NextLink href={href} passHref replace={replace}>
+    <NextLink
+      href={href}
+      locale={locale}
+      passHref
+      replace={replace}
+    >
       <StyledAWrap
         css={css}
-        paletteType={paletteType}
+        palette={palette}
       >
         { children }
       </StyledAWrap>

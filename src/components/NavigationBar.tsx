@@ -1,3 +1,5 @@
+import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+
 import type { NextPage } from 'next';
 import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
@@ -5,8 +7,17 @@ import styled from 'styled-components';
 
 export const height = '64px';
 
-interface Props {
+interface CssProps {
+  css?: string;
+  palette?: PaletteKey;
+}
+
+interface ComponentProps extends CssProps {
   children: React.ReactNode;
+}
+
+interface StyledWrapProps extends CssProps {
+  theme: ThemeObject;
 }
 
 // NavigationBar가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
@@ -16,8 +27,8 @@ const StyledDivDummy = styled.div`
   `}
 `;
 
-const StyledNavigationBarWrap = styled.nav`
-  ${(props: any) => `
+const StyledNavigationBarWrap = styled.nav<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
     position: fixed;
     left: 0;
     right: 0;
@@ -31,7 +42,10 @@ const StyledNavigationBarWrap = styled.nav`
   `}
 `;
 
-const NavigationBar: NextPage<Props> = ({ children }) => {
+const NavigationBar: NextPage<ComponentProps> = ({
+  css,
+  children
+ }) => {
   return (
     <>
       <StyledDivDummy />

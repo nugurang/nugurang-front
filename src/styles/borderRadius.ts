@@ -1,11 +1,6 @@
-export const iconBorderRadius = {
-  square: '0',
-  roundCircle: '4px',
-  circle: '50%',
-};
+export type BorderRadiusKeys = 'default';
+export type BorderRadiusObject = {[key in BorderRadiusKeys]: string};
 
 export const borderRadius = {
-  icon: iconBorderRadius,
-}
-
-export default borderRadius;
+  default: '4px',
+};

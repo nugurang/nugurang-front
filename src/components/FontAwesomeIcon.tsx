@@ -1,28 +1,43 @@
+import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import React from "react";
 import { FontAwesomeIcon as ReactFontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components";
 
-export interface Props {
-  icon: IconProp;
-  fontSize?: string;
+type SizeKeys = 'small'
+              | 'medium'
+              | 'large';
+
+const iconSize = {
+  small: '16px',
+  medium: '24px',
+  large: '32px',
+};
+
+interface CssProps {
+  icon?: IconProp;
+  size?: SizeKeys;
 }
 
-const StyledFontAwesomeIcon = styled(ReactFontAwesomeIcon)`
-  ${(props: any) => `
-    ${props.fontSize ? `height: ${props.fontSize};` : ''};
-    ${props.fontSize ? `width: ${props.fontSize};` : ''};
-  `}
-`;
+interface ComponentProps extends CssProps {
+  children?: React.ReactNode;
+}
 
-const FontAwesomeIcon: NextPage<Props> =  ({ icon, fontSize }) => {
+interface StyledWrapProps extends CssProps {
+  theme: ThemeObject;
+}
+
+const FontAwesomeIcon: NextPage<ComponentProps> =  ({ icon, size }) => {
     return (
-       <StyledFontAwesomeIcon
-         icon={icon}
-         fixedWidth
-         fontSize={fontSize}
-       />
+      <ReactFontAwesomeIcon
+        icon={icon || ['fas', 'question']}
+        fixedWidth
+        style={{
+          height: iconSize[`${size || 'medium'}`],
+          width: iconSize[`${size || 'medium'}`],
+        }}
+      />
     );
 }
 export default FontAwesomeIcon;

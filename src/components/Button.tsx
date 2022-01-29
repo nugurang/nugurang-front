@@ -1,46 +1,50 @@
-import { NextPage } from 'next';
+import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+
+import type { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
-interface Props {
-  children: React.ReactNode;
+interface CssProps {
   css?: string;
+  palette?: PaletteKey;
+}
+
+interface ComponentProps extends CssProps {
+  children?: React.ReactNode;
   href?: string | object;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  paletteType?: string;
 }
 
-interface StyledButtonWrapProps {
-  paletteType: string;
-  css: string;
+interface StyledWrapProps extends CssProps {
+  theme: ThemeObject;
 }
 
-const StyledButtonWrap = styled.button<StyledButtonWrapProps>`
-  ${(props: any) => `
+const StyledButtonWrap = styled.button<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
     border: 0px solid #000;
     border-radius: 4px;
-    color: ${props.theme.palette[props.paletteType].text};
-    background-color: ${props.theme.palette[props.paletteType].main};
+    color: ${props.theme.palette[`${props.palette || 'default'}`].text};
+    background-color: ${props.theme.palette[props.palette || 'default'].main};
     padding: 10px 20px;
     cursor: pointer;
     &:hover {
-      background-color: ${props.theme.palette[props.paletteType].dark};
+      background-color: ${props.theme.palette[props.palette || 'default'].dark};
     }
-    ${props.css}
+    ${props.css || ''}
   `}
 `;
 
-const Button: NextPage<Props> = ({
+const Button: NextPage<ComponentProps> = ({
   children,
-  css = '',
+  css,
   onClick,
-  paletteType = 'default'
+  palette,
 }) => {
   return (
     <StyledButtonWrap
       css={css}
       onClick={onClick}
-      paletteType={paletteType}
+      palette={palette}
     >
       { children }
     </StyledButtonWrap>

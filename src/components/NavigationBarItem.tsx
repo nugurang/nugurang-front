@@ -1,62 +1,91 @@
+import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+
 import FontAwesomeIcon from '@/src/components/FontAwesomeIcon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Link from '@/src/components/Link';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import React from 'react';
+import type { UrlObject } from 'url';
 import styled from 'styled-components';
 
-export interface Props {
-  active?: boolean;
+interface CssProps {
   css?: string;
-  href?: string;
+  palette?: PaletteKey;
+}
+
+// NavigationBar 컴포넌트에서 사용하기 위해 export함
+export interface ComponentProps extends CssProps {
+  active?: boolean;
+  href: string | UrlObject;
   icon?: IconProp;
   label: string;
 }
 
-export interface StyledDivWrapProps {
-  active: boolean;
-  css: string;
+interface StyledWrapProps extends CssProps {
+  active?: boolean;
+  theme: ThemeObject;
 }
 
-const StyledDivWrap = styled.div<StyledDivWrapProps>`
-  ${(props: any) => `
+interface StyledWrapProps extends CssProps {
+  active?: boolean;
+  theme: ThemeObject;
+}
+
+const StyledLinkWrap = styled(Link)<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    text-align: center;
+  `}
+`;
+
+const StyledDivWrap = styled.div<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    display: inline-block;
     color: ${props.active
       ? props.theme.palette.primary.main
-      : props.theme.palette.background.smallText
+      : props.theme.palette.background.subtext
     };
-    padding: 5px 15px;
-    text-align: center;
+    height: 100%;
+    padding: 10px 15px;
+    cursor: pointer;
     ${props.css}
   `}
 `;
 
-const StyledLabelDivWrap = styled.div`
+const StyledDivLabelWrap = styled.div`
   ${(props: any) => `
     line-height: 12px;
   `}
 `;
 
-const NavigationBarItem: NextPage<Props> = ({
-  active = false,
-  css = '',
-  href = '',
+const NavigationBarItem: NextPage<ComponentProps> = ({
+  active,
+  css,
+  href,
   icon,
   label
 }) => {
   return (
-    <Link href={href}>
-      <StyledDivWrap active={active} css={css}>
+    <StyledLinkWrap
+      href={href}
+      passHref
+    >
+      <StyledDivWrap
+        active={active}
+        css={css}
+      >
         { icon && 
           <FontAwesomeIcon
             icon={icon}
-            fontSize='36px'
           />
         }
-        <StyledLabelDivWrap>
+        <StyledDivLabelWrap>
           { label }
-        </StyledLabelDivWrap>
+        </StyledDivLabelWrap>
       </StyledDivWrap>
-    </Link>
+    </StyledLinkWrap>
   );
 }
 

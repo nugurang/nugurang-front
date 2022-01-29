@@ -1,38 +1,53 @@
 import type { NextPage } from 'next';
 import React from 'react';
+import type { ThemeObject } from '@/src/styles/theme';
 import styled from 'styled-components';
 
-interface Props {
-  alt?: string;
+type SizeKeys = 'small'
+              | 'medium'
+              | 'large';
+
+const iconSize = {
+  small: '24px',
+  medium: '32px',
+  large: '40px',
+};
+const fontSize = {
+  small: '12px',
+  medium: '16px',
+  large: '20px',
+};
+
+interface CssProps {
   backgroundColor?: string;
-  borderRadius?: string;
-  children: React.ReactNode;
   css?: string;
-  size?: string;
+  size?: SizeKeys;
 }
 
-interface StyledAvatarWrapProps {
-  backgroundColor: string;
-  borderRadius: string;
-  css: string;
-  size: string;
+interface ComponentProps extends CssProps {
+  alt?: string;
+  children?: React.ReactNode;
 }
 
-const StyledAvatarWrap = styled.span<StyledAvatarWrapProps>`
-  ${(props: any) => `
+interface StyledWrapProps extends CssProps {
+  theme: ThemeObject;
+}
+
+const StyledAvatarWrap = styled.span<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
     display: inline-block;
-    background-color: ${props.backgroundColor};
+    background-color: ${props.backgroundColor || '#888'};
     position: relative;
-    border-radius: ${props.theme.borderRadius.icon[props.borderRadius]};
-    height: ${props.theme.size.icon[props.size]};
-    width: ${props.theme.size.icon[props.size]};
-    font-size: ${props.theme.size.font[props.size]};
+    border-radius: ${props.theme.borderRadius.default};
+    height: ${iconSize[`${props.size || 'medium'}`]};
+    width: ${iconSize[`${props.size || 'medium'}`]};
+    font-size: ${fontSize[`${props.size || 'medium'}`]};
     overflow: hidden;
-    ${props.css}
+    ${props.css || ''}
   `}
 `;
 
-const StyledChildrenWrap = styled.span`
+const StyledAvatarChildrenWrap = styled.span`
   ${(props: any) => `
     position: absolute;
     top: 50%;
@@ -43,7 +58,7 @@ const StyledChildrenWrap = styled.span`
   `}
 `;
 
-const StyledAltWrap = styled.span`
+const StyledAvatarAltWrap = styled.span`
   ${(props: any) => `
     position: absolute;
     top: 50%;
@@ -55,26 +70,24 @@ const StyledAltWrap = styled.span`
   `}
 `;
 
-const Avatar: NextPage<Props> = ({
-  alt = '',
-  backgroundColor = '#888',
-  borderRadius = 'circle',
+const Avatar: NextPage<ComponentProps> = ({
+  alt,
+  backgroundColor,
   children,
-  css = '',
-  size = 'medium',
+  css,
+  size,
 }) => {
   return (
     <StyledAvatarWrap
       backgroundColor={backgroundColor}
-      borderRadius={borderRadius}
       css={css}
       size={size}
     >
       {children &&
-        <StyledChildrenWrap>{children}</StyledChildrenWrap>
+        <StyledAvatarChildrenWrap>{children}</StyledAvatarChildrenWrap>
       }
       {!children &&
-        <StyledAltWrap>{alt}</StyledAltWrap>
+        <StyledAvatarAltWrap>{alt || ''}</StyledAvatarAltWrap>
       }
     </StyledAvatarWrap>
   );

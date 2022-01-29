@@ -1,8 +1,24 @@
-import { NextPage } from 'next';
+import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+
+import type { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledDivContainer = styled.div`
+interface CssProps {
+  palette?: PaletteKey;
+  css?: string;
+}
+
+interface ComponentProps extends CssProps {
+  children?: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+interface StyledWrapProps extends CssProps {
+  theme: ThemeObject;
+}
+
+const styledWrapCss = `
   ${(props: any) => `
     position: relative;
     background-color: ${props.theme.palette.background.main};
@@ -11,14 +27,28 @@ const StyledDivContainer = styled.div`
     transition-property: background-color, color;
   `}
 `;
+const StyledDivWrap = styled.div<StyledWrapProps>`${styledWrapCss}`;
+const StyledButtonWrap = styled.button<StyledWrapProps>`${styledWrapCss}`;
 
-const Card: NextPage = ({
+const Card: NextPage<ComponentProps> = ({
   children,
+  onClick,
+  palette,
 }) => {
-  return (
-    <StyledDivContainer>
+  if (onClick) return (
+    <StyledButtonWrap
+      onClick={onClick}
+      palette={palette}
+    >
       { children }
-    </StyledDivContainer>
+    </StyledButtonWrap>
+  );
+  else return (
+    <StyledDivWrap
+      palette={palette}
+    >
+      { children }
+    </StyledDivWrap>
   );
 }
 

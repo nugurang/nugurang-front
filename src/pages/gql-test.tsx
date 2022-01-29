@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { NextPage } from 'next'
+import type { NextPage } from 'next'
 import { queryToBackend } from '@/src/utils/backend';
 
 interface CurrentOAuth2User {

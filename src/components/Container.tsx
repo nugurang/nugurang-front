@@ -1,28 +1,32 @@
 import NavigationBar, { height as navigationBarHeight } from '@/src/components/NavigationBar';
-import NavigationBarItem, { Props as NavigationBarItemProps } from '@/src/components/NavigationBarItem';
+import NavigationBarItem, { ComponentProps as NavigationBarItemProps } from '@/src/components/NavigationBarItem';
+import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import Footer from '@/src/components/Footer';
 import Head from 'next/head';
 import Header from '@/src/components/Header';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from 'styled-components';
 
-interface Props {
-  children: React.ReactNode;
+interface CssProps {
   footer?: boolean;
   header?: boolean;
   navigationBar?: boolean;
   navigationBarItems?: NavigationBarItemProps[];
 }
 
-interface StyledButtonWrapProps {
-  navigationBar: boolean;
+interface ComponentProps extends CssProps {
+  children?: React.ReactNode;
 }
 
-const StyledDivContainer = styled.div<StyledButtonWrapProps>`
-  ${(props: any) => `
+interface StyledWrapProps extends CssProps {
+  theme: ThemeObject;
+}
+
+const StyledDivWrap = styled.div<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
     position: relative;
     background-color: ${props.theme.palette.background.main};
     color: ${props.theme.palette.background.text};
@@ -32,7 +36,7 @@ const StyledDivContainer = styled.div<StyledButtonWrapProps>`
   `}
 `;
 
-const Container: NextPage<Props> = ({
+const Container: NextPage<ComponentProps> = ({
   children,
   footer = false,
   header = false,
@@ -47,13 +51,13 @@ const Container: NextPage<Props> = ({
         <meta name='description' content='nugurang' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <StyledDivContainer navigationBar={navigationBar}>
+      <StyledDivWrap navigationBar={navigationBar}>
         { header && <Header /> }
         <WidthLimiter>
           { children }
         </WidthLimiter>
         { footer && <Footer /> }
-      </StyledDivContainer>
+      </StyledDivWrap>
       { navigationBar && <NavigationBar>
         {navigationBarItems.map((navigationBarItem, index) => {
           return <NavigationBarItem
