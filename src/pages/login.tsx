@@ -6,9 +6,9 @@ import { getWindowLocation } from '@/src/utils/url';
 import { useRouter } from 'next/router';
 import { useSession } from "next-auth/react";
 import { useTranslation } from 'next-i18next';
-import { withServerSideProps } from '@/src/utils/server-side';
+import { withAuthServerSideProps } from '@/src/utils/server-side';
 
-export const getServerSideProps: GetServerSideProps = withServerSideProps();
+export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');
 
 const Login: NextPage = () => {
   const router = useRouter();

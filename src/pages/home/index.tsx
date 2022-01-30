@@ -5,18 +5,18 @@ import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { withAuthServerSideProps } from '@/src/utils/server-side';
 
-export const getServerSideProps: GetServerSideProps = withAuthServerSideProps();
+export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');
 
 interface PageProps {
-  currentOAuth2User: any,
+  currentUser: any,
   pathname: string,
 }
 
-const HomeIndex: NextPage<PageProps> = ({ currentOAuth2User, pathname }) => {
+const HomeIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
   const { t } = useTranslation('common');
   return (
     <Container
-      currentOAuth2User={currentOAuth2User}
+      currentUser={currentUser}
       header
       footer
       navigationBar

@@ -31,7 +31,7 @@ const StyledButtonWrap = styled.button<StyledWrapProps>`
     padding: 10px 20px;
     cursor: pointer;
     &:hover {
-      background-color: ${props.theme.palette[props.palette || 'default'].dark};
+      background-color: ${props.theme.palette[props.palette || 'default'].low};
     }
     transition-duration: 0.2s;
     transition-property: background-color, color;

@@ -18,7 +18,7 @@ const StyledDivWidthLimiter = styled.div<StyledWrapProps>`
     margin: 0 auto;
     height: 100%;
     min-width: ${props.theme.screenSize.watch};
-    ${props.theme.screenSizeMediaQuery.gtTablet} {
+    ${props.theme.screenSizeMediaQuery.gteTablet} {
       max-width: ${props.theme.screenSize.tablet};
     }
   `}

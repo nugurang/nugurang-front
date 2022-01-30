@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
-import { withServerSideProps } from '@/src/utils/server-side';
+import { withAuthServerSideProps } from '@/src/utils/server-side';
 
-export const getServerSideProps: GetServerSideProps = withServerSideProps((context: any, props: any) => {
+export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all', (context: any, props: any) => {
   return {
     props,
     redirect: {

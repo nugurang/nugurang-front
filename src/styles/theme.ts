@@ -1,9 +1,10 @@
+import { deviceMediaQuery, screenSizeMediaQuery } from '@/src/styles/mediaQuery';
+
 import type { BorderRadiusObject } from '@/src/styles/borderRadius';
 import type { ScreenSizeMediaQueryObject } from '@/src/styles/mediaQuery';
 import type { ScreenSizeObject } from '@/src/styles/size';
 import { borderRadius } from '@/src/styles/borderRadius';
 import { screenSize } from '@/src/styles/size';
-import { screenSizeMediaQuery } from '@/src/styles/mediaQuery';
 
 type BasePaletteRowKey = 'main'
                        | 'light'
@@ -200,6 +201,7 @@ export const darkPalette = {
 
 export const lightTheme = {
   borderRadius,
+  deviceMediaQuery,
   palette: lightPalette,
   screenSize,
   screenSizeMediaQuery,
@@ -207,6 +209,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   borderRadius,
+  deviceMediaQuery,
   palette: darkPalette,
   screenSize,
   screenSizeMediaQuery,

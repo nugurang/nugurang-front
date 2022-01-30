@@ -37,7 +37,7 @@ interface CssProps {
 
 interface ComponentProps extends CssProps {
   children?: React.ReactNode;
-  currentOAuth2User?: Object;
+  currentUser?: any;
   footer?: boolean;
   header?: boolean;
   pathname?: string;
@@ -67,16 +67,16 @@ const StyledMainDiv = styled.div<StyledWrapProps>`
 const Container: NextPage<ComponentProps> = ({
   children,
   className,
-  currentOAuth2User,
+  currentUser,
   footer = false,
   header = false,
   pathname,
   navigationBar = false,
 }) => {
   /*
-  const user = currentOAuth2User ? {
-    name: currentOAuth2User.name,
-    imageUrl: currentOAuth2User.imageUrl
+  const user = currentUser ? {
+    name: currentUser.name,
+    imageAddress: currentUser.image.address
   } : null;
   */
   return (

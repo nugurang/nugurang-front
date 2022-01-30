@@ -1,3 +1,4 @@
+import Button from '@/src/components/Button';
 import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next';
@@ -5,14 +6,16 @@ import Image from '@/src/components/Image';
 import LoginProviderSelector from '@/src/components/LoginProviderSelector';
 import type { NextPage } from 'next';
 import type { ThemeObject } from '@/src/styles/theme';
+import { getWindowLocation } from '@/src/utils/url';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { withServerSideProps } from '@/src/utils/server-side';
+import { withAuthServerSideProps } from '@/src/utils/server-side';
 
-export const getServerSideProps: GetServerSideProps = withServerSideProps();
+export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');
 
 interface PageProps {
-  currentOAuth2User: any,
+  currentUser: any,
   pathname: string,
 }
 
@@ -29,7 +32,7 @@ const StyledLoginCardWrap = styled(Card)<StyledWrapProps>`
 const StyledLoginHeaderCardWrap = styled(Card)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
-    ${props.theme.screenSizeMediaQuery.gtTablet} {
+    ${props.theme.screenSizeMediaQuery.gteTablet} {
       display: inline-block;
       width: 50%;
       vertical-align: top;
@@ -60,7 +63,7 @@ const StyledLoginHeaderTextWrap = styled.div<StyledWrapProps>`
 const StyledLoginProviderSelectorCardWrap = styled(Card)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
-    ${props.theme.screenSizeMediaQuery.gtTablet} {
+    ${props.theme.screenSizeMediaQuery.gteTablet} {
       display: inline-block;
       width: 50%;
       min-height: 480px;
@@ -72,7 +75,7 @@ const StyledLoginProviderSelectorCardWrap = styled(Card)<StyledWrapProps>`
 const StyledLoginProviderSelector = styled(LoginProviderSelector)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     margin-top: 50px;
-    ${props.theme.screenSizeMediaQuery.gtTablet} {
+    ${props.theme.screenSizeMediaQuery.gteTablet} {
       margin-top: 0;
       display: block;
       position: absolute;
@@ -84,29 +87,51 @@ const StyledLoginProviderSelector = styled(LoginProviderSelector)<StyledWrapProp
   `}
 `;
 
-const MyPageIndex: NextPage<PageProps> = ({ currentOAuth2User, pathname }) => {
+const MyPageIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
+  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <Container
-      currentOAuth2User={currentOAuth2User}
+      currentUser={currentUser}
       header
       footer
       navigationBar
       pathname={pathname}
     >
-      <StyledLoginCardWrap>
-        <StyledLoginHeaderCardWrap>
-          <StyledLoginHeaderImageWrap
-            src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
-          ></StyledLoginHeaderImageWrap>
-          <StyledLoginHeaderTextWrap>
-            {t('_pleaseLogin')}
-          </StyledLoginHeaderTextWrap>
-        </StyledLoginHeaderCardWrap>
-        <StyledLoginProviderSelectorCardWrap>
-          <StyledLoginProviderSelector />
-        </StyledLoginProviderSelectorCardWrap>
-      </StyledLoginCardWrap>
+      {
+        !currentUser && (
+          <StyledLoginCardWrap>
+            <StyledLoginHeaderCardWrap>
+              <StyledLoginHeaderImageWrap
+                src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
+              ></StyledLoginHeaderImageWrap>
+              <StyledLoginHeaderTextWrap>
+                {t('_pleaseLogin')}
+              </StyledLoginHeaderTextWrap>
+            </StyledLoginHeaderCardWrap>
+            <StyledLoginProviderSelectorCardWrap>
+              <StyledLoginProviderSelector />
+            </StyledLoginProviderSelectorCardWrap>
+          </StyledLoginCardWrap>
+        )
+      }
+      {
+        currentUser && (
+          <>
+            {currentUser.name}
+              <Button
+                onClick={() => router.push({
+                  pathname: '/session/logout',
+                  query: {
+                    callbackUrl: getWindowLocation()
+                  },
+                })}
+              >
+                {t('logout')}
+              </Button>
+          </>
+        )
+      }
     </Container>
   );
 }

@@ -1,16 +1,20 @@
+import { getSession } from 'next-auth/react';
 import { queryToBackend } from '@/src/utils/backend';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 async function getCommonServerSideProps(context: any) {
+  const callbackUrl = context.query.callbackUrl ?? context.resolvedUrl;
   const [translation] = await Promise.all([
     serverSideTranslations(context.locale, ['common'])
   ]);
   return {
     pathname: context.resolvedUrl,
+    callbackUrl,
     ...translation,
   };
 }
 
+/*
 export function withServerSideProps(serverSidePropsFunc?: Function) {
   return async (context: any) => {
     const commonServerSideProps = await getCommonServerSideProps(context);
@@ -27,45 +31,65 @@ export function withServerSideProps(serverSidePropsFunc?: Function) {
     }
   };
 }
+*/
 
-export function withAuthServerSideProps(serverSidePropsFunc?: Function) {
+type AuthType = 'all'
+              | 'session'
+              | 'user';
+
+export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?: Function) {
   return async (context: any) => {
     const commonServerSideProps = await getCommonServerSideProps(context);
-    const { data: currentOAuth2User, error } = await queryToBackend(context, `
-      query CurrentOAuth2User {
-        currentOAuth2User {
+    const session = await getSession(context);
+
+    if (!session && (authType != 'all')) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: `/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
+        },
+        props: {
+          ...commonServerSideProps,
+        }
+      }
+    }
+
+    const currentUserResponse = await queryToBackend(context, `
+      query CurrentUser {
+        currentUser {
           id
+          oauth2Provider
+          oauth2Id
           name
           email
+          image {
+            id
+            address
+          }
+          biography
         }
       }
     `);
 
-    if (error
-      && (error.hasOwnProperty('networkError'))
-      && (error.networkError.hasOwnProperty('statusCode'))
+    if (currentUserResponse.error
+      && (currentUserResponse.error.hasOwnProperty('networkError'))
+      && (currentUserResponse.error.networkError.hasOwnProperty('statusCode'))
     ) {
-      const networkErrorStatusCode = error.networkError.statusCode;
+      const networkErrorStatusCode = currentUserResponse.error.networkError.statusCode;
       switch (networkErrorStatusCode) {
         case 401:
-          /*
-          const callbackUrl = context.resolvedUrl;
-          return {
-            redirect: {
-              permanent: false,
-              destination: `/session/logout?callbackUrl=${callbackUrl}`,
-            },
-            props: {
-              callbackUrl
+          if ((authType != 'all') && (authType != 'session')) {
+            return {
+              redirect: {
+                permanent: false,
+                destination: `/myaccount/register?callbackUrl=${commonServerSideProps.callbackUrl}`,
+              },
+              props: {
+                ...commonServerSideProps,
+              }
             }
           }
-          */
-          return {
-            props: {
-              ...commonServerSideProps,
-              errorCode: networkErrorStatusCode,
-            }
-          }
+          break;
         default:
           return {
             props: {
@@ -76,18 +100,20 @@ export function withAuthServerSideProps(serverSidePropsFunc?: Function) {
       }
     }
 
+    const currentUser = currentUserResponse.data ? currentUserResponse.data.currentUser : null;
+
     if (serverSidePropsFunc) {
       return {
         ...(await serverSidePropsFunc(context, {
           ...commonServerSideProps,
-          currentOAuth2User
+          currentUser
         })),
       };
     } else {
       return {
         props: {
           ...commonServerSideProps,
-          currentOAuth2User,
+          currentUser
         }
       };
     }
