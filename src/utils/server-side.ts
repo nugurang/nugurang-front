@@ -14,25 +14,6 @@ async function getCommonServerSideProps(context: any) {
   };
 }
 
-/*
-export function withServerSideProps(serverSidePropsFunc?: Function) {
-  return async (context: any) => {
-    const commonServerSideProps = await getCommonServerSideProps(context);
-    if (serverSidePropsFunc) {
-      return {
-        ...(await serverSidePropsFunc(context, commonServerSideProps)),
-      };
-    } else {
-      return {
-        props: {
-          ...commonServerSideProps,
-        }
-      };
-    }
-  };
-}
-*/
-
 type AuthType = 'all'
               | 'session'
               | 'user';
@@ -76,31 +57,26 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
       && (currentUserResponse.error.networkError.hasOwnProperty('statusCode'))
     ) {
       const networkErrorStatusCode = currentUserResponse.error.networkError.statusCode;
-      switch (networkErrorStatusCode) {
-        case 401:
-          if ((authType != 'all') && (authType != 'session')) {
-            return {
-              redirect: {
-                permanent: false,
-                destination: `/myaccount/register?callbackUrl=${commonServerSideProps.callbackUrl}`,
-              },
-              props: {
-                ...commonServerSideProps,
-              }
-            }
-          }
-          break;
-        default:
-          return {
-            props: {
-              ...commonServerSideProps,
-              errorCode: networkErrorStatusCode,
-            }
-          }
+      return {
+        props: {
+          ...commonServerSideProps,
+          errorCode: networkErrorStatusCode,
+        }
       }
     }
-
+    
     const currentUser = currentUserResponse.data ? currentUserResponse.data.currentUser : null;
+    if (!currentUser) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: `/myaccount/register?callbackUrl=${commonServerSideProps.callbackUrl}`,
+        },
+        props: {
+          ...commonServerSideProps,
+        }
+      }
+    }
 
     if (serverSidePropsFunc) {
       return {

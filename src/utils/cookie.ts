@@ -6,18 +6,16 @@ import {
 
 import nookies from 'nookies';
 
-export const parseHeaderSetCookie = (rawStringList: string[]) => {
-  return rawStringList.map(rawString => {
-    const list = rawString.replace(' ', '').split(';').map(e => e.split('='));
-    let result: { [key: string]: string } = {};
-    list.forEach(e => {
-      result[e[0]] = e[1];
-    })
-    return result;
+export const parseHeaderSetCookie: any = (rawString: string) => {
+  const list = rawString.replace(' ', '').split(';').map(e => e.split('='));
+  let result: { [key: string]: string } = {};
+  list.forEach(e => {
+    result[e[0]] = e[1];
   })
+  return result;
 };
 
-export const stringifyCookies = (cookies: object) => {
+export const stringifyCookies = (cookies: any) => {
   return Object.entries(cookies).map(e => e.join('=')).join('; ');
 }
 

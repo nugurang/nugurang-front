@@ -23,13 +23,13 @@ interface StyledWrapProps {
   theme: ThemeObject;
 }
 
-const StyledLoginCardWrap = styled(Card)<StyledWrapProps>`
+const StyledLoginDivWrap = styled.div<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     position: relative;
   `}
 `;
 
-const StyledLoginHeaderCardWrap = styled(Card)<StyledWrapProps>`
+const StyledLoginHeaderDivWrap = styled.div<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     ${props.theme.screenSizeMediaQuery.gteTablet} {
@@ -60,7 +60,7 @@ const StyledLoginHeaderTextWrap = styled.div<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginProviderSelectorCardWrap = styled(Card)<StyledWrapProps>`
+const StyledLoginProviderSelectorDivWrap = styled.div<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     ${props.theme.screenSizeMediaQuery.gteTablet} {
@@ -100,19 +100,19 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
     >
       {
         !currentUser && (
-          <StyledLoginCardWrap>
-            <StyledLoginHeaderCardWrap>
+          <StyledLoginDivWrap>
+            <StyledLoginHeaderDivWrap>
               <StyledLoginHeaderImageWrap
                 src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
               ></StyledLoginHeaderImageWrap>
               <StyledLoginHeaderTextWrap>
                 {t('_pleaseLogin')}
               </StyledLoginHeaderTextWrap>
-            </StyledLoginHeaderCardWrap>
-            <StyledLoginProviderSelectorCardWrap>
+            </StyledLoginHeaderDivWrap>
+            <StyledLoginProviderSelectorDivWrap>
               <StyledLoginProviderSelector />
-            </StyledLoginProviderSelectorCardWrap>
-          </StyledLoginCardWrap>
+            </StyledLoginProviderSelectorDivWrap>
+          </StyledLoginDivWrap>
         )
       }
       {
