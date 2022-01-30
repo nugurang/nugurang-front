@@ -1,6 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
+import { Global, css } from "@emotion/react";
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyles = css`
   /* 
   * Nanum Gothic (Korean) http://www.google.com/webfonts/earlyaccess
   */
@@ -94,4 +94,4 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-export default GlobalStyle;
+export default GlobalStyles;

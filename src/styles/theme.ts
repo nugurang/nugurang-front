@@ -1,7 +1,7 @@
+import type { DeviceMediaQueryObject, ScreenSizeMediaQueryObject } from '@/src/styles/mediaQuery';
 import { deviceMediaQuery, screenSizeMediaQuery } from '@/src/styles/mediaQuery';
 
 import type { BorderRadiusObject } from '@/src/styles/borderRadius';
-import type { ScreenSizeMediaQueryObject } from '@/src/styles/mediaQuery';
 import type { ScreenSizeObject } from '@/src/styles/size';
 import { borderRadius } from '@/src/styles/borderRadius';
 import { screenSize } from '@/src/styles/size';
@@ -50,6 +50,7 @@ export type ThemeKey = 'light'
                      | 'dark';
 export type ThemeObject = {
   borderRadius: BorderRadiusObject;
+  deviceMediaQuery: DeviceMediaQueryObject;
   palette: PaletteObject;
   screenSize: ScreenSizeObject;
   screenSizeMediaQuery: ScreenSizeMediaQueryObject;

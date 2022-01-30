@@ -20,7 +20,8 @@ module.exports = {
     ];
     config.resolve.alias = {
       ...config.resolve.alias,
-      "@/src": path.resolve(__dirname, "../src")
+      "@/src": path.resolve(__dirname, "../src"),
+      '@emotion/core': toPath('node_modules/@emotion/react'),
     };
     return config;
   }

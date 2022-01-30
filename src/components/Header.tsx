@@ -3,9 +3,8 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 import Avatar from '@/src/components/Avatar';
 import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
-import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
 export const height = '64px';

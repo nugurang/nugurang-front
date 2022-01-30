@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import type { NextPage } from 'next';
 import React from 'react';
 import type { UrlObject } from 'url';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface CssProps {
   className?: string;

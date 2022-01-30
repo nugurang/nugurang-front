@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface ComponentProps {
   className?: string;

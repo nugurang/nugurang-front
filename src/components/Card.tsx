@@ -2,16 +2,16 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import type { NextPage } from 'next';
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface CssProps {
   palette?: PaletteKey;
+  className?: string;
   css?: string;
 }
 
 interface ComponentProps extends CssProps {
   children?: React.ReactNode;
-  className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -39,22 +39,30 @@ const Card: NextPage<ComponentProps> = ({
   onClick,
   palette,
 }) => {
-  if (onClick) return (
-    <StyledButtonWrap
-      className={className}
-      onClick={onClick}
-      palette={palette}
-    >
-      { children }
-    </StyledButtonWrap>
-  );
-  else return (
-    <StyledDivWrap
-      className={className}
-      palette={palette}
-    >
-      { children }
-    </StyledDivWrap>
+  return (
+    <>
+      {
+        onClick && (
+          <StyledButtonWrap
+            className={className}
+            onClick={onClick}
+            palette={palette}
+          >
+            { children }
+          </StyledButtonWrap>
+        )
+      }
+      {
+        !onClick && (
+          <StyledDivWrap
+            className={className}
+            palette={palette}
+          >
+            { children }
+          </StyledDivWrap>
+        )
+      }
+    </>
   );
 }
 

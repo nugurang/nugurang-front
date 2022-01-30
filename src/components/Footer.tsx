@@ -1,9 +1,12 @@
 import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import type { NextPage } from 'next';
-import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
+
+interface CssProps {
+  theme: ThemeObject;
+}
 
 interface StyledWrapProps {
   theme: ThemeObject;

@@ -1,10 +1,11 @@
-import { ThemeProvider } from 'styled-components';
-import darkTheme from '../src/styles/darkTheme';
-import lightTheme from '../src/styles/lightTheme';
+import GlobalStyle from '../src/styles/global'
+import { ThemeProvider } from '@emotion/react'
+import { lightTheme } from '../src/styles/theme'
 
 export const decorators = [
-  (Story) => (
+  Story => (
     <ThemeProvider theme={lightTheme}>
+      <GlobalStyle />
       <Story />
     </ThemeProvider>
   ),
@@ -18,4 +19,4 @@ export const parameters = {
       date: /Date$/,
     },
   },
-}
+};

@@ -10,7 +10,7 @@ import type { NextPage } from 'next';
 import type { ThemeObject } from '@/src/styles/theme';
 import { ellipsis } from '@/src/styles/preset';
 import { getWindowLocation } from '@/src/utils/url';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { withAuthServerSideProps } from '@/src/utils/server-side';
@@ -146,6 +146,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
             secondChild={
               <Card>
                 <Button
+                  fullwidth
                   onClick={() => router.push({
                     pathname: '/session/logout',
                     query: {

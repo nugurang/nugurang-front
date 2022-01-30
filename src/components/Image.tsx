@@ -2,7 +2,7 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import type { NextPage } from 'next';
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface CssProps {
   css?: string;

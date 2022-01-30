@@ -4,6 +4,7 @@ export type DeviceMediaQueryKeys = 'touchscreen'
                                  | 'digitizer'
                                  | 'controller'
                                  | 'pointer';
+export type DeviceMediaQueryObject = {[key in DeviceMediaQueryKeys]: string};
 export const deviceMediaQuery = {
   touchscreen: `@media (hover: none)  and (pointer: coarse)`,
   digitizer:   `@media (hover: none)  and (pointer: fine)`,

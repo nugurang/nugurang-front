@@ -1,9 +1,10 @@
+import { Global, css } from "@emotion/react";
+import { ThemeProvider, jsx } from '@emotion/react'
 import { darkTheme, lightTheme } from '@/src/styles/theme';
 
 import type { AppProps } from 'next/app'
-import GlobalStyle from '@/src/styles/global';
+import GlobalStyles from '@/src/styles/global';
 import { SessionProvider } from 'next-auth/react';
-import { ThemeProvider } from 'styled-components';
 import { appWithTranslation } from 'next-i18next';
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
@@ -18,7 +19,7 @@ function RootApp({ Component, pageProps: { session, ...pageProps } }: AppProps) 
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <GlobalStyle />
+        <Global styles={GlobalStyles} />
         <Component {...pageProps} isDark={isDark} setIsDark={setIsDark}/>
       </ThemeProvider>
     </SessionProvider>

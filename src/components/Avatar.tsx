@@ -3,7 +3,7 @@ import Image from '@/src/components/Image';
 import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 type SizeKeys = 'small'
               | 'medium'

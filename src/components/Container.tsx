@@ -9,7 +9,7 @@ import NavigationBarItem from '@/src/components/NavigationBarItem';
 import type { NextPage } from 'next';
 import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface NavigationBarItem {
   href: string;
@@ -68,10 +68,10 @@ const Container: NextPage<ComponentProps> = ({
   children,
   className,
   currentUser,
-  footer = false,
-  header = false,
+  footer,
+  header,
   pathname,
-  navigationBar = false,
+  navigationBar,
 }) => {
   /*
   const user = currentUser ? {

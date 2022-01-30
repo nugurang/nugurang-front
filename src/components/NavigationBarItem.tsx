@@ -6,7 +6,7 @@ import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
 import React from 'react';
 import type { UrlObject } from 'url';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
 interface CssProps {

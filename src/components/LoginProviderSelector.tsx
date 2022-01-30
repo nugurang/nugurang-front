@@ -5,7 +5,7 @@ import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
 import { getWindowLocation } from '@/src/utils/url';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
