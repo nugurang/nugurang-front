@@ -1,18 +1,38 @@
 import NavigationBar, { height as navigationBarHeight } from '@/src/components/NavigationBar';
-import NavigationBarItem, { ComponentProps as NavigationBarItemProps } from '@/src/components/NavigationBarItem';
 import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import Footer from '@/src/components/Footer';
 import Head from 'next/head';
 import Header from '@/src/components/Header';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import NavigationBarItem from '@/src/components/NavigationBarItem';
 import type { NextPage } from 'next';
 import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from 'styled-components';
 
+interface NavigationBarItem {
+  href: string;
+  icon: IconProp;
+  label: string;
+}
+
+const navigationBarItems: NavigationBarItem[] = [
+  {
+    href: '/home',
+    icon: ['fas', 'coffee'],
+    label: 'home',
+  },
+  {
+    href: '/mypage',
+    icon: ['fas', 'user'],
+    label: 'myPage',
+  },
+];
+
 interface CssProps {
+  className?: string;
   navigationBar?: boolean;
-  navigationBarItems?: NavigationBarItemProps[];
 }
 
 interface ComponentProps extends CssProps {
@@ -20,13 +40,20 @@ interface ComponentProps extends CssProps {
   currentOAuth2User?: Object;
   footer?: boolean;
   header?: boolean;
+  pathname?: string;
 }
 
 interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledDivWrap = styled.div<StyledWrapProps>`
+const StyledWrap = styled.div<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    height: 100%;
+  `}
+`;
+
+const StyledMainDiv = styled.div<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     position: relative;
     background-color: ${props.theme.palette.background.main};
@@ -39,11 +66,12 @@ const StyledDivWrap = styled.div<StyledWrapProps>`
 
 const Container: NextPage<ComponentProps> = ({
   children,
+  className,
   currentOAuth2User,
   footer = false,
   header = false,
+  pathname,
   navigationBar = false,
-  navigationBarItems = []
 }) => {
   /*
   const user = currentOAuth2User ? {
@@ -52,24 +80,24 @@ const Container: NextPage<ComponentProps> = ({
   } : null;
   */
   return (
-    <>
+    <StyledWrap className={className}>
       <Head>
         <title>nugurang</title>
         <meta name='title' content='nugurang' />
         <meta name='description' content='nugurang' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <StyledDivWrap navigationBar={navigationBar}>
+      <StyledMainDiv navigationBar={navigationBar}>
         { header && <Header /> }
         <WidthLimiter>
           { children }
         </WidthLimiter>
         { footer && <Footer /> }
-      </StyledDivWrap>
+      </StyledMainDiv>
       { navigationBar && <NavigationBar>
         {navigationBarItems.map((navigationBarItem, index) => {
           return <NavigationBarItem
-            active={navigationBarItem.active}
+            active={navigationBarItem.href == pathname}
             href={navigationBarItem.href}
             icon={navigationBarItem.icon}
             label={navigationBarItem.label}
@@ -77,7 +105,7 @@ const Container: NextPage<ComponentProps> = ({
           />;
         })}
       </NavigationBar> }
-    </>
+    </StyledWrap>
   );
 }
 

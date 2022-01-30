@@ -6,7 +6,7 @@ export type ScreenSizeKeys = 'watch'
 export type ScreenSizeObject = {[key in ScreenSizeKeys]: string};
 
 export const screenSize = {
-  watch: '0',
+  watch: '128px',
   mobile: '320px',
   tablet: '768px',
   laptop: '1024px',

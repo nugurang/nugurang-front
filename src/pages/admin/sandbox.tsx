@@ -21,24 +21,7 @@ const Sandbox: NextPage<PageProps> = ({ currentOAuth2User, isDark, setIsDark }) 
   const { t } = useTranslation('common');
   console.log(currentOAuth2User);
   return (
-    <Container
-      header
-      footer
-      navigationBar
-      navigationBarItems={[
-        {
-          href: '/',
-          icon: ['fas', 'coffee'],
-          label: 'index',
-          active: true
-        },
-        {
-          href: '/',
-          icon: ['fas', 'coffee'],
-          label: 'index',
-        },
-      ]}
-    >
+    <Container>
       <Card>
         {t('_helloWorld')}
         <Link

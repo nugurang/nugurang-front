@@ -6,6 +6,7 @@ async function getCommonServerSideProps(context: any) {
     serverSideTranslations(context.locale, ['common'])
   ]);
   return {
+    pathname: context.resolvedUrl,
     ...translation,
   };
 }

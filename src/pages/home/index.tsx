@@ -9,9 +9,10 @@ export const getServerSideProps: GetServerSideProps = withAuthServerSideProps();
 
 interface PageProps {
   currentOAuth2User: any,
+  pathname: string,
 }
 
-const HomeIndex: NextPage<PageProps> = ({ currentOAuth2User }) => {
+const HomeIndex: NextPage<PageProps> = ({ currentOAuth2User, pathname }) => {
   const { t } = useTranslation('common');
   return (
     <Container
@@ -19,19 +20,7 @@ const HomeIndex: NextPage<PageProps> = ({ currentOAuth2User }) => {
       header
       footer
       navigationBar
-      navigationBarItems={[
-        {
-          href: '/',
-          icon: ['fas', 'coffee'],
-          label: 'index',
-          active: true
-        },
-        {
-          href: '/',
-          icon: ['fas', 'coffee'],
-          label: 'index',
-        },
-      ]}
+      pathname={pathname}
     >
       <Card>
         {t('_helloWorld')}

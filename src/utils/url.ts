@@ -1,7 +1,7 @@
 export const getWindowLocation = () => {
   if (typeof window !== 'undefined') {
     return getWindowLocationOrigin()
-        + window.location.pathname
+        + getWindowLocationPathname()
         + window.location.search
         + window.location.hash;
   }
@@ -14,4 +14,10 @@ export const getWindowLocationOrigin = () => {
         + window.location.hostname 
         + (window.location.port ? ':' + window.location.port : '');
   }
+};
+
+export const getWindowLocationPathname = () => {
+  if (typeof window !== 'undefined') {
+    return window.location.pathname;
+  } else return '';
 };

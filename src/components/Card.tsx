@@ -11,6 +11,7 @@ interface CssProps {
 
 interface ComponentProps extends CssProps {
   children?: React.ReactNode;
+  className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -32,11 +33,13 @@ const StyledButtonWrap = styled.button<StyledWrapProps>`${styledWrapCss}`;
 
 const Card: NextPage<ComponentProps> = ({
   children,
+  className,
   onClick,
   palette,
 }) => {
   if (onClick) return (
     <StyledButtonWrap
+      className={className}
       onClick={onClick}
       palette={palette}
     >
@@ -45,6 +48,7 @@ const Card: NextPage<ComponentProps> = ({
   );
   else return (
     <StyledDivWrap
+      className={className}
       palette={palette}
     >
       { children }

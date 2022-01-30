@@ -4,6 +4,7 @@ import type { ThemeObject } from '@/src/styles/theme';
 import styled from 'styled-components';
 
 interface ComponentProps {
+  className?: string;
   children?: React.ReactNode;
 }
 
@@ -16,15 +17,21 @@ const StyledDivWidthLimiter = styled.div<StyledWrapProps>`
     position: relative;
     margin: 0 auto;
     height: 100%;
-    ${props.theme.screenSizeMediaQuery.gtMobile} {
-      max-width: ${props.theme.screenSize.mobile};
+    min-width: ${props.theme.screenSize.watch};
+    ${props.theme.screenSizeMediaQuery.gtTablet} {
+      max-width: ${props.theme.screenSize.tablet};
     }
   `}
 `;
 
-const WidthLimiter: NextPage<ComponentProps> = ({ children }) => {
+const WidthLimiter: NextPage<ComponentProps> = ({
+  children,
+  className,
+}) => {
   return (
-    <StyledDivWidthLimiter>
+    <StyledDivWidthLimiter
+      className={className}
+    >
       { children }
     </StyledDivWidthLimiter>
   );

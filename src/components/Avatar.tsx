@@ -20,6 +20,7 @@ const fontSize = {
 
 interface CssProps {
   backgroundColor?: string;
+  className?: string;
   css?: string;
   size?: SizeKeys;
 }
@@ -74,12 +75,14 @@ const Avatar: NextPage<ComponentProps> = ({
   alt,
   backgroundColor,
   children,
+  className,
   css,
   size,
 }) => {
   return (
     <StyledAvatarWrap
       backgroundColor={backgroundColor}
+      className={className}
       css={css}
       size={size}
     >

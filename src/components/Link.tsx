@@ -7,6 +7,7 @@ import type { UrlObject } from 'url';
 import styled from 'styled-components';
 
 interface CssProps {
+  className?: string;
   css?: string;
   palette?: PaletteKey;
 }
@@ -37,7 +38,7 @@ const StyledALikeButtonWrap = styled.a<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: inline-block;
     border: 0px solid #000;
-    border-radius: 4px;
+    border-radius: ${props.theme.borderRadius.default};
     color: ${props.theme.palette[props.palette || 'default'].text};
     background-color: ${props.theme.palette[props.palette || 'default'].main};
     padding: 10px 20px;
@@ -48,6 +49,8 @@ const StyledALikeButtonWrap = styled.a<StyledWrapProps>`
     &:visited {
       color: ${props.theme.palette[props.palette || 'default'].text};
     }
+    transition-duration: 0.2s;
+    transition-property: background-color, color;
     ${props.css}
   `}
 `;
@@ -56,6 +59,7 @@ const Link: NextPage<ComponentProps> = ({
   button,
   css,
   children,
+  className,
   href,
   locale,
   palette,
@@ -69,6 +73,7 @@ const Link: NextPage<ComponentProps> = ({
       replace={replace}
     >
       <StyledALikeButtonWrap
+        className={className}
         css={css}
         palette={palette}
       >
@@ -84,6 +89,7 @@ const Link: NextPage<ComponentProps> = ({
       replace={replace}
     >
       <StyledAWrap
+        className={className}
         css={css}
         palette={palette}
       >

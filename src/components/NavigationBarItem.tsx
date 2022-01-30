@@ -7,6 +7,7 @@ import type { NextPage } from 'next';
 import React from 'react';
 import type { UrlObject } from 'url';
 import styled from 'styled-components';
+import { useTranslation } from 'next-i18next';
 
 interface CssProps {
   css?: string;
@@ -56,7 +57,9 @@ const StyledDivWrap = styled.div<StyledWrapProps>`
 
 const StyledDivLabelWrap = styled.div`
   ${(props: any) => `
-    line-height: 12px;
+    font-size: 10px;
+    line-height: 14px;
+    margin: 4px 0;
   `}
 `;
 
@@ -67,6 +70,7 @@ const NavigationBarItem: NextPage<ComponentProps> = ({
   icon,
   label
 }) => {
+  const { t } = useTranslation('common');
   return (
     <StyledLinkWrap
       href={href}
@@ -82,7 +86,7 @@ const NavigationBarItem: NextPage<ComponentProps> = ({
           />
         }
         <StyledDivLabelWrap>
-          { label }
+          { t(label) }
         </StyledDivLabelWrap>
       </StyledDivWrap>
     </StyledLinkWrap>
