@@ -38,7 +38,7 @@ const StyledALikeButtonWrap = styled.a<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: inline-block;
     border: 0px solid #000;
-    border-radius: ${props.theme.borderRadius.default};
+    border-radius: ${props.theme.borderRadius.round};
     color: ${props.theme.palette[props.palette || 'default'].text};
     background-color: ${props.theme.palette[props.palette || 'default'].main};
     padding: 10px 20px;

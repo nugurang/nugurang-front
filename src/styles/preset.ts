@@ -6,3 +6,9 @@ export const alignCenter = `
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
 `;
+
+export const ellipsis = `
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+`

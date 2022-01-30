@@ -1,3 +1,5 @@
+import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
+import Image from '@/src/components/Image';
 import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
@@ -20,14 +22,15 @@ const fontSize = {
 
 interface CssProps {
   backgroundColor?: string;
+  edge?: string;
   className?: string;
   css?: string;
   size?: SizeKeys;
 }
 
 interface ComponentProps extends CssProps {
+  src? :string;
   alt?: string;
-  children?: React.ReactNode;
 }
 
 interface StyledWrapProps extends CssProps {
@@ -39,7 +42,7 @@ const StyledAvatarWrap = styled.span<StyledWrapProps>`
     display: inline-block;
     background-color: ${props.backgroundColor || '#888'};
     position: relative;
-    border-radius: ${props.theme.borderRadius.default};
+    border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'circle']};
     height: ${iconSize[`${props.size || 'medium'}`]};
     width: ${iconSize[`${props.size || 'medium'}`]};
     font-size: ${fontSize[`${props.size || 'medium'}`]};
@@ -48,14 +51,10 @@ const StyledAvatarWrap = styled.span<StyledWrapProps>`
   `}
 `;
 
-const StyledAvatarChildrenWrap = styled.span`
+const StyledAvatarImage = styled(Image)`
   ${(props: any) => `
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%;
   `}
 `;
 
@@ -74,22 +73,26 @@ const StyledAvatarAltWrap = styled.span`
 const Avatar: NextPage<ComponentProps> = ({
   alt,
   backgroundColor,
-  children,
   className,
   css,
+  edge,
   size,
+  src,
 }) => {
   return (
     <StyledAvatarWrap
       backgroundColor={backgroundColor}
       className={className}
       css={css}
+      edge={edge}
       size={size}
     >
-      {children &&
-        <StyledAvatarChildrenWrap>{children}</StyledAvatarChildrenWrap>
+      {src &&
+        <StyledAvatarImage
+          src={src}
+        />
       }
-      {!children &&
+      {!src &&
         <StyledAvatarAltWrap>{alt || ''}</StyledAvatarAltWrap>
       }
     </StyledAvatarWrap>

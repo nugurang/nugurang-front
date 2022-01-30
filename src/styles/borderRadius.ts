@@ -1,6 +1,10 @@
-export type BorderRadiusKeys = 'default';
+export type BorderRadiusKeys = 'square'
+                             | 'round'
+                             | 'circle';
 export type BorderRadiusObject = {[key in BorderRadiusKeys]: string};
 
 export const borderRadius = {
-  default: '4px',
+  square: '0',
+  round: '4px',
+  circle: '50%',
 };

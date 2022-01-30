@@ -1,7 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { parseHeaderSetCookie, setCookie } from '@/src/utils/cookie';
 
-import axios from 'axios';
 import { getSession } from 'next-auth/react';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

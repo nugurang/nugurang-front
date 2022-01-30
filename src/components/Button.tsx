@@ -25,7 +25,7 @@ const StyledButtonWrap = styled.button<StyledWrapProps>`
     display: ${props.fullwidth ? 'block' : 'inline'};
     width: ${props.fullwidth ? '100%' : 'auto'};
     border: 0px solid #000;
-    border-radius: ${props.theme.borderRadius.default};
+    border-radius: ${props.theme.borderRadius.round};
     color: ${props.theme.palette[`${props.palette || 'default'}`].text};
     background-color: ${props.theme.palette[props.palette || 'default'].main};
     padding: 10px 20px;

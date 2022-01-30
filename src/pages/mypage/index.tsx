@@ -1,11 +1,14 @@
+import Avatar from '@/src/components/Avatar';
 import Button from '@/src/components/Button';
 import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
+import DualDiv from '@/src/components/DualDiv';
 import { GetServerSideProps } from 'next';
 import Image from '@/src/components/Image';
 import LoginProviderSelector from '@/src/components/LoginProviderSelector';
 import type { NextPage } from 'next';
 import type { ThemeObject } from '@/src/styles/theme';
+import { ellipsis } from '@/src/styles/preset';
 import { getWindowLocation } from '@/src/utils/url';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
@@ -22,23 +25,6 @@ interface PageProps {
 interface StyledWrapProps {
   theme: ThemeObject;
 }
-
-const StyledLoginDivWrap = styled.div<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
-    position: relative;
-  `}
-`;
-
-const StyledLoginHeaderDivWrap = styled.div<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
-    display: block;
-    ${props.theme.screenSizeMediaQuery.gteTablet} {
-      display: inline-block;
-      width: 50%;
-      vertical-align: top;
-    }
-  `}
-`;
 
 const StyledLoginHeaderImageWrap = styled(Image)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
@@ -60,18 +46,6 @@ const StyledLoginHeaderTextWrap = styled.div<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginProviderSelectorDivWrap = styled.div<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
-    display: block;
-    ${props.theme.screenSizeMediaQuery.gteTablet} {
-      display: inline-block;
-      width: 50%;
-      min-height: 480px;
-      vertical-align: top;
-    }
-  `}
-`;
-
 const StyledLoginProviderSelector = styled(LoginProviderSelector)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     margin-top: 50px;
@@ -84,6 +58,38 @@ const StyledLoginProviderSelector = styled(LoginProviderSelector)<StyledWrapProp
       transform: translateY(-50%);
       width: inherit;
     }
+  `}
+`;
+
+const UserBriefProfileAvatar = styled(Avatar)<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    height: 72px;
+    width: 72px;
+  `}
+`;
+
+const UserBriefProfileTextGroupDiv = styled.div<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    display: inline-block;
+    margin: 4px 0 4px 16px;
+    vertical-align: top;
+  `}
+`;
+
+const UserBriefProfileNameDiv = styled.div<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    font-size: 24px;
+    line-height: 32px;
+    ${ellipsis}
+  `}
+`;
+
+const UserBriefProfileEmailDiv = styled.div<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    font-size: 16px;
+    line-height: 20px;
+    margin-top: 4px;
+    ${ellipsis}
   `}
 `;
 
@@ -100,36 +106,58 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
     >
       {
         !currentUser && (
-          <StyledLoginDivWrap>
-            <StyledLoginHeaderDivWrap>
-              <StyledLoginHeaderImageWrap
-                src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
-              ></StyledLoginHeaderImageWrap>
-              <StyledLoginHeaderTextWrap>
-                {t('_pleaseLogin')}
-              </StyledLoginHeaderTextWrap>
-            </StyledLoginHeaderDivWrap>
-            <StyledLoginProviderSelectorDivWrap>
-              <StyledLoginProviderSelector />
-            </StyledLoginProviderSelectorDivWrap>
-          </StyledLoginDivWrap>
+          <DualDiv
+            firstChild={
+              <Card>
+                <StyledLoginHeaderImageWrap
+                  src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
+                ></StyledLoginHeaderImageWrap>
+                <StyledLoginHeaderTextWrap>
+                  {t('_pleaseLogin')}
+                </StyledLoginHeaderTextWrap>
+              </Card>
+            }
+            secondChild={
+              <Card>
+                <StyledLoginProviderSelector />
+              </Card>
+            }
+          />
         )
       }
       {
         currentUser && (
-          <>
-            {currentUser.name}
-              <Button
-                onClick={() => router.push({
-                  pathname: '/session/logout',
-                  query: {
-                    callbackUrl: getWindowLocation()
-                  },
-                })}
-              >
-                {t('logout')}
-              </Button>
-          </>
+          <DualDiv
+            firstChild={
+              <Card>
+                <UserBriefProfileAvatar
+                  src={currentUser.image.address}
+                />
+                <UserBriefProfileTextGroupDiv>
+                  <UserBriefProfileNameDiv>
+                    {currentUser.name}
+                  </UserBriefProfileNameDiv>
+                  <UserBriefProfileEmailDiv>
+                    {currentUser.email}
+                  </UserBriefProfileEmailDiv>
+                </UserBriefProfileTextGroupDiv>
+              </Card>
+            }
+            secondChild={
+              <Card>
+                <Button
+                  onClick={() => router.push({
+                    pathname: '/session/logout',
+                    query: {
+                      callbackUrl: getWindowLocation()
+                    },
+                  })}
+                >
+                  {t('logout')}
+                </Button>
+              </Card>
+            }
+          />
         )
       }
     </Container>

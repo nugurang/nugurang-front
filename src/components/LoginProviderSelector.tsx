@@ -51,13 +51,14 @@ const StyledWrap = styled.div<StyledWrapProps>`
 
 const StyledLoginProviderItemButton = styled(Button)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
-    margin-left: 10px;
-    &:first-child {
-      margin-left: 0;
-    }
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    width: calc(50% - 40px);
+    max-width: 120px;
     ${props.theme.screenSizeMediaQuery.gteTablet} {
       display: block;
       width: 100%;
+      max-width: none;
       margin-top: 10px;
       margin-left: 0;
       &:first-child {
@@ -69,10 +70,14 @@ const StyledLoginProviderItemButton = styled(Button)<StyledWrapProps>`
 
 const StyledLoginProviderItemLabelSpan = styled.span<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
-    display: inline-block;
-    margin-left: 8px;
-    vertical-align: top;
-    line-height: 32px;
+    display: block;
+    margin-top: 8px;
+    ${props.theme.screenSizeMediaQuery.gteTablet} {
+      display: inline-block;
+      margin: 0 0 0 8px;
+      vertical-align: top;
+      line-height: 32px;
+    }
   `}
 `;
 

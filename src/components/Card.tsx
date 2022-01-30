@@ -19,17 +19,19 @@ interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
-const styledWrapCss = `
+const styledWrap = `
   ${(props: any) => `
     position: relative;
     background-color: ${props.theme.palette.background.main};
     color: ${props.theme.palette.background.text};
     transition-duration: 0.2s;
     transition-property: background-color, color;
+    margin: 4px;
+    padding: 20px;
   `}
 `;
-const StyledDivWrap = styled.div<StyledWrapProps>`${styledWrapCss}`;
-const StyledButtonWrap = styled.button<StyledWrapProps>`${styledWrapCss}`;
+const StyledDivWrap = styled.div<StyledWrapProps>`${styledWrap}`;
+const StyledButtonWrap = styled.button<StyledWrapProps>`${styledWrap}`;
 
 const Card: NextPage<ComponentProps> = ({
   children,
