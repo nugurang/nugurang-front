@@ -38,6 +38,7 @@ const StyledSingleDiv = styled.div<StyledWrapProps>`
 const StyledFirstChildDiv = styled(StyledSingleDiv)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     ${props.theme.screenSizeMediaQuery.gteTablet} {
+      height: 100%;
       width: calc(50% - 10px);
       padding-right: 10px;
     }
@@ -47,6 +48,7 @@ const StyledFirstChildDiv = styled(StyledSingleDiv)<StyledWrapProps>`
 const StyledSecondChildDiv = styled(StyledSingleDiv)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     ${props.theme.screenSizeMediaQuery.gteTablet} {
+      height: 100%;
       width: calc(50% - 10px);
       padding-left: 10px;
     }

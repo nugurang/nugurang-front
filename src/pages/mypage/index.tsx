@@ -48,15 +48,9 @@ const StyledLoginHeaderTextWrap = styled.div<StyledWrapProps>`
 
 const StyledLoginProviderSelector = styled(LoginProviderSelector)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
-    margin-top: 50px;
+    margin-top: 24px;
     ${props.theme.screenSizeMediaQuery.gteTablet} {
-      margin-top: 0;
-      display: block;
-      position: absolute;
-      top: 50%;
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
-      width: inherit;
+      margin-top: 128px;
     }
   `}
 `;
@@ -147,6 +141,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
               <Card>
                 <Button
                   fullwidth
+                  palette='danger'
                   onClick={() => router.push({
                     pathname: '/session/logout',
                     query: {
