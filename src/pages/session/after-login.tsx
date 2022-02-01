@@ -2,6 +2,8 @@ import { GetServerSideProps, NextPage } from 'next';
 import { parseHeaderSetCookie, setCookie } from '@/src/utils/cookie';
 
 import { getSession } from 'next-auth/react';
+import { logout } from '@/src/utils/session';
+import { useEffect } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
@@ -43,10 +45,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const setCookieRawString = getJSessionResponse.headers.get('set-cookie');
   if (!setCookieRawString) {
     return {
-      redirect: {
-        permanent: false,
-        destination: `/session/logout?callbackUrl=${callbackUrl}`,
-      },
       props: {
         callbackUrl
       },
@@ -73,7 +71,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 }
 
-const AfterLogin: NextPage = () => {
+interface PageProps {
+  callbackUrl: string,
+}
+
+const AfterLogin: NextPage<PageProps> = ({ callbackUrl }) => {
+  useEffect (() => {
+    logout(callbackUrl);
+  }, [])
   return <></>;
 };
 
