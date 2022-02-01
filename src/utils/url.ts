@@ -4,7 +4,7 @@ export const getWindowLocation = () => {
         + getWindowLocationPathname()
         + window.location.search
         + window.location.hash;
-  }
+  } else return '';
 };
 
 export const getWindowLocationOrigin = () => {
@@ -13,7 +13,7 @@ export const getWindowLocationOrigin = () => {
     else return window.location.protocol + '//'
         + window.location.hostname 
         + (window.location.port ? ':' + window.location.port : '');
-  }
+  } else return '';
 };
 
 export const getWindowLocationPathname = () => {

@@ -1,6 +1,43 @@
 import { getSession } from 'next-auth/react';
+import { mutateToBackend } from '@/src/utils/backend';
 import { queryToBackend } from '@/src/utils/backend';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
+const registerUser = async (context: any, session: any) => {
+
+  let imageId;
+  if (session.user!.image) {
+    const createImageResponse = await mutateToBackend(context, `
+      mutation CreateImage($address: String!) {
+        createImage (address: $address) {
+          id
+          address
+        }
+      }
+    `, {
+      address: session.user!.image
+    });
+    imageId = createImageResponse.data.createImage.id;
+  }
+  const createCurrentUserResponse = await mutateToBackend(context, `
+    mutation CreateCurrentUser($user: UserInput!) {
+      createCurrentUser (user: $user) {
+        id
+      }
+    }
+  `, {
+    user: {
+      name: session.user!.name,
+      email: session.user!.email,
+      biography: '',
+      image: imageId,
+    }
+  }) as any;
+  if (createCurrentUserResponse.hasOwnProperty('error')) {
+    return false;
+  }
+  return true;
+};
 
 async function getCommonServerSideProps(context: any) {
   const callbackUrl = context.query.callbackUrl ?? context.resolvedUrl;
@@ -67,10 +104,11 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
     
     const currentUser = currentUserResponse.data ? currentUserResponse.data.currentUser : null;
     if (!currentUser) {
-      return {
+      const registerUserResult = await registerUser(context, session);
+      if (!registerUserResult) return {
         redirect: {
           permanent: false,
-          destination: `/myaccount/register?callbackUrl=${commonServerSideProps.callbackUrl}`,
+          destination: `/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
         },
         props: {
           ...commonServerSideProps,

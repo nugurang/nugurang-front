@@ -5,6 +5,7 @@ import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
 import { getWindowLocation } from '@/src/utils/url';
+import { login } from '@/src/utils/session';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -96,13 +97,10 @@ const LoginProviderSelector: NextPage<ComponentProps> = ({
         loginProviderItems.map((loginProviderItem, index) => {
           return <StyledLoginProviderItemButton
             key={index}
-            onClick={() => router.push({
-              pathname: '/session/login',
-              query: {
-                callbackUrl: getWindowLocation(),
-                providerName: loginProviderItem.providerName,
-              },
-            })}
+            onClick={() => login(
+              loginProviderItem.providerName,
+              getWindowLocation()
+            )}
           >
             <FontAwesomeIcon
               icon={loginProviderItem.icon}

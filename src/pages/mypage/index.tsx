@@ -10,6 +10,7 @@ import type { NextPage } from 'next';
 import type { ThemeObject } from '@/src/styles/theme';
 import { ellipsis } from '@/src/styles/preset';
 import { getWindowLocation } from '@/src/utils/url';
+import { logout } from '@/src/utils/session';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -142,12 +143,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
                 <Button
                   fullwidth
                   palette='danger'
-                  onClick={() => router.push({
-                    pathname: '/session/logout',
-                    query: {
-                      callbackUrl: getWindowLocation()
-                    },
-                  })}
+                  onClick={() => logout(getWindowLocation())}
                 >
                   {t('logout')}
                 </Button>
