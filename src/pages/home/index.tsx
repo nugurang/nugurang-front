@@ -9,18 +9,18 @@ export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('a
 
 interface PageProps {
   currentUser: any,
-  pathname: string,
+  callbackUrl: string,
 }
 
-const HomeIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
+const HomeIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
   const { t } = useTranslation('common');
   return (
     <Container
+      callbackUrl={callbackUrl}
       currentUser={currentUser}
       header
       footer
       navigationBar
-      pathname={pathname}
     >
       <Card>
         {t('_helloWorld')}

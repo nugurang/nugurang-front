@@ -28,6 +28,21 @@ const navigationBarItems: NavigationBarItem[] = [
     icon: ['fas', 'user'],
     label: 'myPage',
   },
+  {
+    href: '/boards',
+    icon: ['fas', 'book-reader'],
+    label: 'boards',
+  },
+  {
+    href: '/admin/sandbox',
+    icon: ['fas', 'flask'],
+    label: 'sandbox',
+  },
+  {
+    href: '/admin/console',
+    icon: ['fas', 'terminal'],
+    label: 'console',
+  },
 ];
 
 interface CssProps {
@@ -36,11 +51,11 @@ interface CssProps {
 }
 
 interface ComponentProps extends CssProps {
+  callbackUrl?: string;
   children?: React.ReactNode;
   currentUser?: any;
   footer?: boolean;
   header?: boolean;
-  pathname?: string;
 }
 
 interface StyledWrapProps extends CssProps {
@@ -65,12 +80,12 @@ const StyledMainDiv = styled.div<StyledWrapProps>`
 `;
 
 const Container: NextPage<ComponentProps> = ({
+  callbackUrl,
   children,
   className,
   currentUser,
   footer,
   header,
-  pathname,
   navigationBar,
 }) => {
   /*
@@ -88,7 +103,7 @@ const Container: NextPage<ComponentProps> = ({
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <StyledMainDiv navigationBar={navigationBar}>
-        { header && <Header /> }
+        { header && <Header callbackUrl={callbackUrl} /> }
         <WidthLimiter>
           { children }
         </WidthLimiter>
@@ -97,7 +112,7 @@ const Container: NextPage<ComponentProps> = ({
       { navigationBar && <NavigationBar>
         {navigationBarItems.map((navigationBarItem, index) => {
           return <NavigationBarItem
-            active={navigationBarItem.href == pathname}
+            active={navigationBarItem.href == new URL(callbackUrl as string).pathname}
             href={navigationBarItem.href}
             icon={navigationBarItem.icon}
             label={navigationBarItem.label}

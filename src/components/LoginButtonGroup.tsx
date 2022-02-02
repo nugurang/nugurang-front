@@ -5,7 +5,6 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
-import { getWindowLocation } from '@/src/utils/url';
 import { login } from '@/src/utils/session';
 import styled from '@emotion/styled';
 import { useState } from 'react';
@@ -37,6 +36,7 @@ interface CssProps {
 
 interface ComponentProps extends CssProps {
   alt?: string;
+  callbackUrl?: string;
   children?: React.ReactNode;
 }
 
@@ -63,7 +63,7 @@ const StyledLoginButton = styled(Button)<StyledWrapProps>`
       max-width: none;
       margin-top: 10px;
       margin-left: 0;
-      &:first-child {
+      &:first-of-type {
         margin-top: 0;
       }
     }
@@ -74,6 +74,9 @@ const StyledLoginButtonLabelSpan = styled.span<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     margin-top: 8px;
+    & :first-of-type {
+      margin-top: 0;
+    }
     ${props.theme.screenSizeMediaQuery.gteTablet} {
       display: inline-block;
       margin: 0 0 0 8px;
@@ -84,6 +87,7 @@ const StyledLoginButtonLabelSpan = styled.span<StyledWrapProps>`
 `;
 
 const LoginButtonGroup: NextPage<ComponentProps> = ({
+  callbackUrl,
   className,
   css,
 }) => {
@@ -103,7 +107,7 @@ const LoginButtonGroup: NextPage<ComponentProps> = ({
                 setOpen(true);
                 login(
                   loginProviderItem.providerName,
-                  getWindowLocation()
+                  callbackUrl ?? '/'
                 );
               }}
             >
@@ -121,7 +125,6 @@ const LoginButtonGroup: NextPage<ComponentProps> = ({
       <Dialog
         acrylic={true}
         open={open}
-        setOpen={setOpen}
         loader={true}
         title={t('login')}
       />

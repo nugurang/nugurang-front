@@ -16,7 +16,9 @@ interface CssProps {
   };
 }
 
-interface ComponentProps extends CssProps {}
+interface ComponentProps extends CssProps {
+  callbackUrl?: string;
+}
 
 interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
@@ -81,7 +83,7 @@ const Logo: NextPage = () => {
   );
 };
 
-const Header: NextPage<ComponentProps> = ({ user }) => {
+const Header: NextPage<ComponentProps> = ({ user, callbackUrl }) => {
   const { t } = useTranslation('common');
   return (
     <>
@@ -103,7 +105,7 @@ const Header: NextPage<ComponentProps> = ({ user }) => {
               !user && (
                 <Link
                   button
-                  href='/login'
+                  href={`/login?callbackUrl=${callbackUrl || '/'}`}
                   palette='primary'
                 >
                   { t('login') }

@@ -40,12 +40,11 @@ const registerUser = async (context: any, session: any) => {
 };
 
 async function getCommonServerSideProps(context: any) {
-  const callbackUrl = context.query.callbackUrl ?? context.resolvedUrl;
+  const callbackUrl = context.query.callbackUrl ?? `${process.env.NEXT_PUBLIC_FRONTEND_URI}${context.resolvedUrl}`;
   const [translation] = await Promise.all([
     serverSideTranslations(context.locale, ['common'])
   ]);
   return {
-    pathname: context.resolvedUrl,
     callbackUrl,
     ...translation,
   };
@@ -89,29 +88,31 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
       }
     `);
 
+
     if (currentUserResponse.error
       && (currentUserResponse.error.hasOwnProperty('networkError'))
       && (currentUserResponse.error.networkError.hasOwnProperty('statusCode'))
+      && (authType != 'all')
     ) {
-      const networkErrorStatusCode = currentUserResponse.error.networkError.statusCode;
       return {
-        props: {
-          ...commonServerSideProps,
-          errorCode: networkErrorStatusCode,
-        }
+        redirect: {
+          permanent: false,
+          destination: `/`,
+        },
+        props: {}
       }
     }
     
     const currentUser = currentUserResponse.data ? currentUserResponse.data.currentUser : null;
-    if (!currentUser) {
+    if (!currentUser && (authType != 'all')) {
       const registerUserResult = await registerUser(context, session);
-      if (!registerUserResult) return {
-        redirect: {
-          permanent: false,
-          destination: `/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
-        },
-        props: {
-          ...commonServerSideProps,
+      if (!registerUserResult) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: `/`,
+          },
+          props: {}
         }
       }
     }

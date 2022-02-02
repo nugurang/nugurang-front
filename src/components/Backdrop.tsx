@@ -11,7 +11,7 @@ interface CssProps {
 
 interface ComponentProps extends CssProps {
   className?: string;
-  onClick: () => void;
+  onClick?: (() => void) | undefined;
 }
 
 interface StyledWrapProps extends CssProps {
@@ -41,7 +41,7 @@ const Modal: NextPage<ComponentProps> = ({
     <StyledWrapButton
       className={className}
       open={open}
-      onClick={() => {open && onClick()}}
+      onClick={() => {open && onClick && onClick()}}
       transitionTimeout={transitionTimeout}
     />
   );

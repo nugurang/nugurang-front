@@ -26,8 +26,6 @@ const StyledDivWrap = styled.div<StyledWrapProps>`
     position: relative;
     background-color: ${props.theme.palette[props.palette || 'background'].main};
     color: ${props.theme.palette[props.palette || 'background'].text};
-    margin: 4px;
-    padding: 20px;
     ${props.acrylic ? `
       background-color: ${hexToRGB(props.theme.palette[props.palette || 'background'].main, 0.75)};
       @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
@@ -44,8 +42,6 @@ const StyledButtonWrap = styled.button<StyledWrapProps>`
     position: relative;
     background-color: ${props.theme.palette[props.palette || 'background'].main};
     color: ${props.theme.palette[props.palette || 'background'].text};
-    margin: 4px;
-    padding: 20px;
     ${props.acrylic ? `
       background-color: ${hexToRGB(props.theme.palette[props.palette || 'background'].main, 0.75)};
       @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
@@ -87,6 +83,7 @@ const Card: NextPage<ComponentProps> = ({
             acrylic={acrylic}
             className={className}
             css={css}
+            onClick={onClick}
             palette={palette}
           >
             { children }

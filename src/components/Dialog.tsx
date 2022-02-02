@@ -17,15 +17,15 @@ interface CssProps {
 
 interface ComponentProps extends CssProps {
   className?: string;
-  setOpen: (open: boolean) => void;
+  onClickBackdrop: (() => void) | undefined;
   title?: string;
   content?: string;
   yesLabel?: string;
   noLabel?: string;
   cancelLabel?: string;
-  onYes?: () => void;
-  onNo?: () => void;
-  onCancel?: () => void;
+  onYes?: (() => void) | undefined;
+  onNo?: (() => void) | undefined;
+  onCancel?: (() => void) | undefined;
 }
 
 interface StyledWrapProps extends CssProps {
@@ -95,7 +95,7 @@ const Dialog: NextPage<ComponentProps> = ({
   acrylic,
   className,
   open,
-  setOpen,
+  onClickBackdrop,
   palette,
   loader,
   title,
@@ -114,7 +114,7 @@ const Dialog: NextPage<ComponentProps> = ({
       className={className}
       open={open}
       palette={palette}
-      setOpen={() => setOpen(!open)}
+      onClickBackdrop={onClickBackdrop}
     >
       <StyledWidthLimiter>
         <StyledInfoDiv>

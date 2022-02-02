@@ -13,7 +13,7 @@ const link = from([
     if (networkError) console.log(`[Network error]: ${networkError}`);
   }),
   createHttpLink({
-    uri: `${process.env.BACKEND_URI}/graphql`,
+    uri: `${process.env.NEXT_PUBLIC_BACKEND_URI}/graphql`,
     credentials: 'include'
   }),
 ]);

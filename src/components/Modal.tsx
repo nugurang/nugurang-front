@@ -19,7 +19,7 @@ interface CssProps {
 interface ComponentProps extends CssProps {
   children?: React.ReactNode;
   className?: string;
-  setOpen: (open: boolean) => void;
+  onClickBackdrop?: (() => void) | undefined;
 }
 
 interface StyledWrapProps extends CssProps {
@@ -28,8 +28,8 @@ interface StyledWrapProps extends CssProps {
 
 const StyledBackdrop = styled(Backdrop)<StyledWrapProps>`
   ${(props: any) => `
-    transition: opacity ${props.transitionTimeout}s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-transition: opacity ${props.transitionTimeout}s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all ${props.transitionTimeout}s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-transition: all ${props.transitionTimeout}s cubic-bezier(0.22, 1, 0.36, 1);
   `}
 `;
 
@@ -70,7 +70,7 @@ const Modal: NextPage<ComponentProps> = ({
   css,
   open,
   palette,
-  setOpen
+  onClickBackdrop
 }) => {
   const [cssActive, setCSSActive] = useState(false);
   const transitionTimeout = 0.5;
@@ -82,7 +82,7 @@ const Modal: NextPage<ComponentProps> = ({
     >
       <StyledBackdrop
         open={cssActive}
-        onClick={() => setOpen(!open)}
+        onClick={onClickBackdrop}
         transitionTimeout={transitionTimeout}
       />
       <StyledModalDiv
