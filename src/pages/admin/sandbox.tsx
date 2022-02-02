@@ -1,9 +1,11 @@
+import Acryl from '@/src/components/Acryl';
 import Button from '@/src/components/Button';
 import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
 import Link from '@/src/components/Link';
+import Loader from '@/src/components/Loader';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -24,36 +26,34 @@ const Sandbox: NextPage<PageProps> = ({ currentOAuth2User, isDark, setIsDark }) 
   const [open, setOpen] = useState(false);
   return (
     <Container>
-      <Card>
-        {t('_helloWorld')}
-        <Link
-          href='/'
-          locale={router.locale === 'en' ? 'ko' : 'en'}
-          button={true}
-        >
-          {`change-locale`}
-        </Link>
-        <Button
-          onClick={() => setIsDark(!isDark)}
-        >
-          {isDark ? 'Dark' : 'Light'}
-        </Button>
-        <Button
-          onClick={() => setOpen(!open)}
-        >
-          Toggle Modal
-        </Button>
-        <Dialog
-          open={open}
-          setOpen={setOpen}
-          title={'테스트 제목입니다.'}
-          content={'테스트 본문입니다.'}
-          onYes={() => {}}
-          onNo={() => {}}
-        >
-            Hello
-        </Dialog>
-      </Card>
+      {t('_helloWorld')}
+      <Link
+        href='/'
+        locale={router.locale === 'en' ? 'ko' : 'en'}
+        button={true}
+      >
+        {`change-locale`}
+      </Link>
+      <Button
+        onClick={() => setIsDark(!isDark)}
+      >
+        {isDark ? 'Dark' : 'Light'}
+      </Button>
+      <Button
+        onClick={() => setOpen(!open)}
+      >
+        Toggle Modal
+      </Button>
+      <Loader />
+      <Dialog
+        acrylic={true}
+        open={open}
+        setOpen={setOpen}
+        title={'테스트 제목입니다.'}
+        content={'테스트 본문입니다.'}
+        onYes={() => {}}
+        onNo={() => {}}
+      />
     </Container>
   );
 }

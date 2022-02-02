@@ -2,12 +2,14 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import type { NextPage } from 'next';
 import React from 'react';
+import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
 
 interface CssProps {
-  palette?: PaletteKey;
+  acrylic?: boolean;
   className?: string;
   css?: string;
+  palette?: PaletteKey;
 }
 
 interface ComponentProps extends CssProps {
@@ -22,29 +24,45 @@ interface StyledWrapProps extends CssProps {
 const StyledDivWrap = styled.div<StyledWrapProps>`
   ${(props: any) => `
     position: relative;
-    background-color: ${props.theme.palette.background.main};
-    color: ${props.theme.palette.background.text};
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
+    background-color: ${props.theme.palette[props.palette || 'background'].main};
+    color: ${props.theme.palette[props.palette || 'background'].text};
     margin: 4px;
     padding: 20px;
+    ${props.acrylic ? `
+      background-color: ${hexToRGB(props.theme.palette[props.palette || 'background'].main, 0.75)};
+      @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background-color: ${hexToRGB(props.theme.palette[props.palette || 'background'].main, 0.75)};
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+    ` : ''}
+    ${props.css || ''}
   `}
 `;
 const StyledButtonWrap = styled.button<StyledWrapProps>`
   ${(props: any) => `
     position: relative;
-    background-color: ${props.theme.palette.background.main};
-    color: ${props.theme.palette.background.text};
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
+    background-color: ${props.theme.palette[props.palette || 'background'].main};
+    color: ${props.theme.palette[props.palette || 'background'].text};
     margin: 4px;
     padding: 20px;
+    ${props.acrylic ? `
+      background-color: ${hexToRGB(props.theme.palette[props.palette || 'background'].main, 0.75)};
+      @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background-color: ${hexToRGB(props.theme.palette[props.palette || 'background'].main, 0.75)};
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+    ` : ''}
+    ${props.css || ''}
   `}
 `;
 
 const Card: NextPage<ComponentProps> = ({
+  acrylic,
   children,
   className,
+  css,
   onClick,
   palette,
 }) => {
@@ -53,7 +71,9 @@ const Card: NextPage<ComponentProps> = ({
       {
         onClick && (
           <StyledButtonWrap
+            acrylic={acrylic}
             className={className}
+            css={css}
             onClick={onClick}
             palette={palette}
           >
@@ -64,7 +84,9 @@ const Card: NextPage<ComponentProps> = ({
       {
         !onClick && (
           <StyledDivWrap
+            acrylic={acrylic}
             className={className}
+            css={css}
             palette={palette}
           >
             { children }

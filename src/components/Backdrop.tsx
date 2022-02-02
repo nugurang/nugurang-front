@@ -27,7 +27,6 @@ const StyledWrapButton = styled.button<StyledWrapProps>`
     height: 100%;
     background-color: #000;
     opacity: ${props.open ? '0.5' : '0'};
-    transition: opacity ${props.transitionTimeout}s linear;
     z-index: 500;
   `}
 `;

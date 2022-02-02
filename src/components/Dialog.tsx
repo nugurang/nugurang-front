@@ -8,8 +8,9 @@ import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
 interface CssProps {
-  css?: string;
+  acrylic?: boolean;
   open: boolean;
+  palette?: PaletteKey;
 }
 
 interface ComponentProps extends CssProps {
@@ -63,7 +64,6 @@ const StyledContentDiv = styled.div<StyledWrapProps>`
 
 const StyledButtonGroup = styled.div<StyledWrapProps>`
   ${(props: any) => `
-    margin: 0 auto;
     & > * {
       margin-left: 8px;
     }
@@ -75,19 +75,16 @@ const StyledButtonGroup = styled.div<StyledWrapProps>`
 
 const StyledButton = styled(Button)<StyledWrapProps>`
   ${(props: any) => `
-    display: ${ props.active ? 'block' : 'none' };
-    width: 100%;
-    ${props.theme.screenSizeMediaQuery.gteTablet} {
-      display: ${ props.active ? 'inline' : 'none' };
-      width: initial;
-    }
+    display: ${ props.active ? 'inline' : 'none' };
   `}
 `;
 
 const Dialog: NextPage<ComponentProps> = ({
+  acrylic,
   className,
   open,
   setOpen,
+  palette,
   title,
   content,
   yesLabel,
@@ -100,8 +97,10 @@ const Dialog: NextPage<ComponentProps> = ({
   const { t } = useTranslation('common');
   return (
     <Modal
+      acrylic={acrylic}
       className={className}
       open={open}
+      palette={palette}
       setOpen={() => setOpen(!open)}
     >
       <StyledWidthLimiter>

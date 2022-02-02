@@ -34,16 +34,18 @@ export type PaletteKey = 'default'
                        | 'info'
                        | 'warning'
                        | 'danger'
-                       | 'background';
+                       | 'background'
+                       | 'transparent';
 export type PaletteObject = {
-  default:    PaletteRowObject;
-  primary:    PaletteRowObject;
-  secondary:  PaletteRowObject;
-  success:    PaletteRowObject;
-  info:       PaletteRowObject;
-  warning:    PaletteRowObject;
-  danger:     PaletteRowObject;
-  background: PaletteRowObject;
+  default:     PaletteRowObject;
+  primary:     PaletteRowObject;
+  secondary:   PaletteRowObject;
+  success:     PaletteRowObject;
+  info:        PaletteRowObject;
+  warning:     PaletteRowObject;
+  danger:      PaletteRowObject;
+  background:  PaletteRowObject;
+  transparent: PaletteRowObject;
 };
 
 export type ThemeKey = 'light'
@@ -171,6 +173,23 @@ const backgroundDarkPBasePaletteRow = {
 const backgroundLightPaletteRow = createPaletteRow(backgroundLightBasePaletteRow, 'light');
 const backgroundDarkPaletteRow = createPaletteRow(backgroundDarkPBasePaletteRow, 'dark');
 
+const transparentLightBasePaletteRow = {
+  main: '#ffff',
+  light: '#ffff',
+  dark: '#ffff',
+  text: '#000',
+  subtext: '#888',
+};
+const transparentDarkBasePaletteRow = {
+  main: '#000f',
+  light: '#000f',
+  dark: '#000f',
+  text: '#fff',
+  subtext: '#888',
+};
+const transparentLightPaletteRow = createPaletteRow(transparentLightBasePaletteRow, 'light');
+const transparentDarkPaletteRow = createPaletteRow(transparentDarkBasePaletteRow, 'dark');
+
 const constantPaletteRow = {
   white: '#fff',
   black: '#000',
@@ -185,6 +204,7 @@ export const lightPalette = {
   warning: warningLightPaletteRow,
   danger: dangerLightPaletteRow,
   background: backgroundLightPaletteRow,
+  transparent: transparentLightPaletteRow,
   constant: constantPaletteRow
 };
 
@@ -197,6 +217,7 @@ export const darkPalette = {
   warning: warningDarkPaletteRow,
   danger: dangerDarkPaletteRow,
   background: backgroundDarkPaletteRow,
+  transparent: transparentDarkPaletteRow,
   constant: constantPaletteRow
 };
 

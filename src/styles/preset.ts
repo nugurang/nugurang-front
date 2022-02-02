@@ -11,4 +11,4 @@ export const ellipsis = `
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-`
+`;

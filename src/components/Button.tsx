@@ -33,8 +33,6 @@ const StyledButtonWrap = styled.button<StyledWrapProps>`
     &:hover {
       background-color: ${props.theme.palette[props.palette || 'default'].dark};
     }
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
     ${props.css || ''}
   `}
 `;
