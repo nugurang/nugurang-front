@@ -1,6 +1,4 @@
-import Acryl from '@/src/components/Acryl';
 import Button from '@/src/components/Button';
-import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';

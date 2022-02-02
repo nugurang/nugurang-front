@@ -1,6 +1,7 @@
 import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import Button from '@/src/components/Button';
+import Loader from '@/src/components/Loader';
 import Modal from '@/src/components/Modal';
 import type { NextPage } from 'next';
 import WidthLimiter from '@/src/components/WidthLimiter';
@@ -9,7 +10,8 @@ import { useTranslation } from 'next-i18next';
 
 interface CssProps {
   acrylic?: boolean;
-  open: boolean;
+  loader?: boolean;
+  open?: boolean;
   palette?: PaletteKey;
 }
 
@@ -32,17 +34,27 @@ interface StyledWrapProps extends CssProps {
 
 const StyledWidthLimiter = styled(WidthLimiter)<StyledWrapProps>`
   ${(props: any) => `
-    padding: 24px 0;
+    padding: 48px 0;
     text-align: center;
-    ${props.theme.screenSizeMediaQuery.gteTablet} {
-      padding: 48px 0;
-    }
+  `}
+`;
+
+const StyledInfoDiv = styled.div<StyledWrapProps>`
+  ${(props: any) => `
+    margin-bottom: 32px;
+  `}
+`;
+
+const StyledLoader = styled(Loader)<StyledWrapProps>`
+  ${(props: any) => `
+    display: ${props.loader ? 'inline-block' : 'none'};
+    margin-bottom: 32px;
   `}
 `;
 
 const StyledTextDiv = styled.div<StyledWrapProps>`
   ${(props: any) => `
-    margin-bottom: 32px;
+    display: block;
   `}
 `;
 
@@ -85,6 +97,7 @@ const Dialog: NextPage<ComponentProps> = ({
   open,
   setOpen,
   palette,
+  loader,
   title,
   content,
   yesLabel,
@@ -104,28 +117,34 @@ const Dialog: NextPage<ComponentProps> = ({
       setOpen={() => setOpen(!open)}
     >
       <StyledWidthLimiter>
-        <StyledTextDiv>
-          <StyledTitleDiv>
-            {title}
-          </StyledTitleDiv>
-          <StyledContentDiv>
-            {content}
-          </StyledContentDiv>
-        </StyledTextDiv>
+        <StyledInfoDiv>
+          <StyledLoader loader={loader}/>
+          <StyledTextDiv>
+            <StyledTitleDiv>
+              {title}
+            </StyledTitleDiv>
+            <StyledContentDiv>
+              {content}
+            </StyledContentDiv>
+          </StyledTextDiv>
+        </StyledInfoDiv>
         <StyledButtonGroup>
           <StyledButton
             active={onYes}
+            onClick={onYes}
           >
             {yesLabel || t('yes')}
           </StyledButton>
           <StyledButton
             palette='danger'
             active={onNo}
+            onClick={onNo}
           >
             {noLabel || t('no')}
           </StyledButton>
           <StyledButton
             active={onCancel}
+            onClick={onCancel}
           >
             {cancelLabel || t('cancel')}
           </StyledButton>

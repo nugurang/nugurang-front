@@ -41,7 +41,7 @@ const Modal: NextPage<ComponentProps> = ({
     <StyledWrapButton
       className={className}
       open={open}
-      onClick={() => onClick()}
+      onClick={() => {open && onClick()}}
       transitionTimeout={transitionTimeout}
     />
   );

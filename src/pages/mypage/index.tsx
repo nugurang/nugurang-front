@@ -5,7 +5,8 @@ import Container from '@/src/components/Container';
 import DualDiv from '@/src/components/DualDiv';
 import { GetServerSideProps } from 'next';
 import Image from '@/src/components/Image';
-import LoginProviderSelector from '@/src/components/LoginProviderSelector';
+import LoginButtonGroup from '@/src/components/LoginButtonGroup';
+import LogoutButton from '@/src/components/LogoutButton';
 import type { NextPage } from 'next';
 import type { ThemeObject } from '@/src/styles/theme';
 import { ellipsis } from '@/src/styles/preset';
@@ -47,7 +48,7 @@ const StyledLoginHeaderTextWrap = styled.div<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginProviderSelector = styled(LoginProviderSelector)<StyledWrapProps>`
+const StyledLoginButtonGroup = styled(LoginButtonGroup)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     margin-top: 24px;
     ${props.theme.screenSizeMediaQuery.gteTablet} {
@@ -114,7 +115,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
             }
             secondChild={
               <Card>
-                <StyledLoginProviderSelector />
+                <LoginButtonGroup />
               </Card>
             }
           />
@@ -140,13 +141,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, pathname }) => {
             }
             secondChild={
               <Card>
-                <Button
-                  fullwidth
-                  palette='danger'
-                  onClick={() => logout(getWindowLocation())}
-                >
-                  {t('logout')}
-                </Button>
+                <LogoutButton />
               </Card>
             }
           />

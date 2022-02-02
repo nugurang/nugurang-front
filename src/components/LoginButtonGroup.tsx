@@ -1,4 +1,5 @@
 import Button from '@/src/components/Button';
+import Dialog from '@/src/components/Dialog';
 import FontAwesomeIcon from '@/src/components/FontAwesomeIcon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { NextPage } from 'next';
@@ -7,7 +8,7 @@ import type { ThemeObject } from '@/src/styles/theme';
 import { getWindowLocation } from '@/src/utils/url';
 import { login } from '@/src/utils/session';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 
 interface LoginProviderItem {
@@ -50,7 +51,7 @@ const StyledWrap = styled.div<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginProviderItemButton = styled(Button)<StyledWrapProps>`
+const StyledLoginButton = styled(Button)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: inline-block;
     margin: 0 10px 10px 0;
@@ -69,7 +70,7 @@ const StyledLoginProviderItemButton = styled(Button)<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginProviderItemLabelSpan = styled.span<StyledWrapProps>`
+const StyledLoginButtonLabelSpan = styled.span<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     margin-top: 8px;
@@ -82,38 +83,50 @@ const StyledLoginProviderItemLabelSpan = styled.span<StyledWrapProps>`
   `}
 `;
 
-const LoginProviderSelector: NextPage<ComponentProps> = ({
+const LoginButtonGroup: NextPage<ComponentProps> = ({
   className,
   css,
 }) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
+  const [open, setOpen] = useState(false);
   return (
-    <StyledWrap
-      className={className}
-      css={css}
-    >
-      {
-        loginProviderItems.map((loginProviderItem, index) => {
-          return <StyledLoginProviderItemButton
-            key={index}
-            onClick={() => login(
-              loginProviderItem.providerName,
-              getWindowLocation()
-            )}
-          >
-            <FontAwesomeIcon
-              icon={loginProviderItem.icon}
-              size='large'
-            />
-            <StyledLoginProviderItemLabelSpan>
-              {t(loginProviderItem.label)}
-            </StyledLoginProviderItemLabelSpan>
-          </StyledLoginProviderItemButton>
-        })
-      }
-    </StyledWrap>
+    <>
+      <StyledWrap
+        className={className}
+        css={css}
+      >
+        {
+          loginProviderItems.map((loginProviderItem, index) => {
+            return <StyledLoginButton
+              key={index}
+              onClick={() => {
+                setOpen(true);
+                login(
+                  loginProviderItem.providerName,
+                  getWindowLocation()
+                );
+              }}
+            >
+              <FontAwesomeIcon
+                icon={loginProviderItem.icon}
+                size='large'
+              />
+              <StyledLoginButtonLabelSpan>
+                {t(loginProviderItem.label)}
+              </StyledLoginButtonLabelSpan>
+            </StyledLoginButton>
+          })
+        }
+      </StyledWrap>
+      <Dialog
+        acrylic={true}
+        open={open}
+        setOpen={setOpen}
+        loader={true}
+        title={t('login')}
+      />
+    </>
   );
 }
 
-export default LoginProviderSelector;
+export default LoginButtonGroup;
