@@ -1,14 +1,16 @@
 import Button from '@/src/components/Button';
 import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
+import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
 import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { withAuthServerSideProps } from '@/src/utils/server-side';
 
-export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('user');
+export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');
 
 interface PageProps {
   currentOAuth2User: Object,
@@ -19,7 +21,7 @@ interface PageProps {
 const Sandbox: NextPage<PageProps> = ({ currentOAuth2User, isDark, setIsDark }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
-  console.log(currentOAuth2User);
+  const [open, setOpen] = useState(false);
   return (
     <Container>
       <Card>
@@ -32,10 +34,22 @@ const Sandbox: NextPage<PageProps> = ({ currentOAuth2User, isDark, setIsDark }) 
           {`change-locale`}
         </Link>
         <Button
-          onClick={() => {setIsDark(!isDark)}}
+          onClick={() => setIsDark(!isDark)}
         >
           {isDark ? 'Dark' : 'Light'}
         </Button>
+        <Button
+          onClick={() => setOpen(!open)}
+        >
+          Toggle Modal
+        </Button>
+        <Dialog
+          open={open}
+          setOpen={setOpen}
+          onYes={() => {}}
+        >
+            Hello
+        </Dialog>
       </Card>
     </Container>
   );

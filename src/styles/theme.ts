@@ -205,7 +205,7 @@ export const lightTheme = {
   deviceMediaQuery,
   palette: lightPalette,
   screenSize,
-  screenSizeMediaQuery,
+  screenSizeMediaQuery
 };
 
 export const darkTheme = {
@@ -213,5 +213,5 @@ export const darkTheme = {
   deviceMediaQuery,
   palette: darkPalette,
   screenSize,
-  screenSizeMediaQuery,
+  screenSizeMediaQuery
 };
