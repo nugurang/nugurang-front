@@ -1,10 +1,13 @@
 {
   "_helloWorld": "Hello, world!",
   "_pleaseLogin": "Please login.",
+  "cancel": "Cancel",
   "gitHub": "GitHub",
   "google": "Google",
   "home": "home",
   "login": "Login",
   "logout": "Logout",
-  "myPage": "My Page"
+  "myPage": "My Page",
+  "no": "No",
+  "yes": "Yes"
 }

@@ -46,7 +46,10 @@ const Sandbox: NextPage<PageProps> = ({ currentOAuth2User, isDark, setIsDark }) 
         <Dialog
           open={open}
           setOpen={setOpen}
+          title={'테스트 제목입니다.'}
+          content={'테스트 본문입니다.'}
           onYes={() => {}}
+          onNo={() => {}}
         >
             Hello
         </Dialog>

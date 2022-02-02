@@ -39,9 +39,37 @@ const StyledWidthLimiter = styled(WidthLimiter)<StyledWrapProps>`
   `}
 `;
 
+const StyledTextDiv = styled.div<StyledWrapProps>`
+  ${(props: any) => `
+    margin-bottom: 32px;
+  `}
+`;
+
+const StyledTitleDiv = styled.div<StyledWrapProps>`
+  ${(props: any) => `
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 16px;
+  `}
+`;
+
+const StyledContentDiv = styled.div<StyledWrapProps>`
+  ${(props: any) => `
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 16px;
+  `}
+`;
+
 const StyledButtonGroup = styled.div<StyledWrapProps>`
   ${(props: any) => `
     margin: 0 auto;
+    & > * {
+      margin-left: 8px;
+    }
+    & :first-of-type {
+      margin-left: 0;
+    }
   `}
 `;
 
@@ -77,6 +105,14 @@ const Dialog: NextPage<ComponentProps> = ({
       setOpen={() => setOpen(!open)}
     >
       <StyledWidthLimiter>
+        <StyledTextDiv>
+          <StyledTitleDiv>
+            {title}
+          </StyledTitleDiv>
+          <StyledContentDiv>
+            {content}
+          </StyledContentDiv>
+        </StyledTextDiv>
         <StyledButtonGroup>
           <StyledButton
             active={onYes}

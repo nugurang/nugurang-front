@@ -1,10 +1,13 @@
 {
   "_helloWorld": "반갑구나, 세상아!",
   "_pleaseLogin": "로그인해주세요.",
+  "cancel": "취소",
   "gitHub": "GitHub",
   "google": "Google",
   "home": "홈",
   "login": "로그인",
   "logout": "로그아웃",
-  "myPage": "마이페이지"
+  "myPage": "마이페이지",
+  "no": "아니오",
+  "yes": "네"
 }
