@@ -9,6 +9,7 @@ import NavigationBarItem from '@/src/components/NavigationBarItem';
 import type { NextPage } from 'next';
 import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
+import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 
 interface NavigationBarItem {
@@ -76,6 +77,7 @@ const StyledMainDiv = styled.div<StyledWrapProps>`
     min-height: ${props.navigationBar ? `calc(100% - ${navigationBarHeight})` : '100%'};
     transition-duration: 0.2s;
     transition-property: background-color, color;
+    ${fontFamily}
   `}
 `;
 

@@ -3,6 +3,7 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 import type { NextPage } from 'next';
 import React from 'react';
 import { fontFamily } from '@/src/styles/preset';
+import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
 
 interface CssProps {
@@ -13,37 +14,41 @@ interface CssProps {
 
 interface ComponentProps extends CssProps {
   children?: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledWrap = styled.div<StyledWrapProps>`
+const StyledDivWrap = styled.div<StyledWrapProps>`
   ${(props: any) => `
     position: relative;
-    background-color: ${props.theme.palette[props.palette || 'default'].main};
-    color: ${props.theme.palette[props.palette || 'default'].text};
+    border-radius: ${props.theme.borderRadius.round};
+    margin: 8px;
+    padding: 8px;
+    color: ${props.theme.palette[props.palette || 'background'].text};
+    background-color: ${props.theme.palette[props.palette || 'background'].main};
     ${fontFamily}
     ${props.css || ''}
   `}
 `;
 
-const Card: NextPage<ComponentProps> = ({
+const Section: NextPage<ComponentProps> = ({
   children,
   className,
   css,
   palette,
 }) => {
   return (
-    <StyledWrap
+    <StyledDivWrap
       className={className}
       css={css}
       palette={palette}
     >
       { children }
-    </StyledWrap>
+    </StyledDivWrap>
   );
 }
 
-export default Card;
+export default Section;

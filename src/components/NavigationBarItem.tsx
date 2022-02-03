@@ -1,10 +1,10 @@
 import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+import { ellipsis, fontFamily } from '@/src/styles/preset';
 
 import FontAwesomeIcon from '@/src/components/FontAwesomeIcon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
-import React from 'react';
 import type { UrlObject } from 'url';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
@@ -35,8 +35,9 @@ interface StyledWrapProps extends CssProps {
 const StyledLinkWrap = styled(Link)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: inline-block;
-    position: relative;
     height: 100%;
+    padding: 0;
+    width: 72px;
     text-align: center;
   `}
 `;
@@ -49,8 +50,7 @@ const StyledDivWrap = styled.div<StyledWrapProps>`
       : props.theme.palette.background.subtext
     };
     height: 100%;
-    padding: 10px 15px;
-    cursor: pointer;
+    padding: 8px 12px;
     ${props.css}
   `}
 `;
@@ -60,6 +60,8 @@ const StyledDivLabelWrap = styled.div`
     font-size: 10px;
     line-height: 14px;
     margin: 4px 0;
+    ${ellipsis}
+    ${fontFamily}
   `}
 `;
 

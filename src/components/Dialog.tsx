@@ -5,11 +5,11 @@ import Loader from '@/src/components/Loader';
 import Modal from '@/src/components/Modal';
 import type { NextPage } from 'next';
 import WidthLimiter from '@/src/components/WidthLimiter';
+import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
 interface CssProps {
-  acrylic?: boolean;
   loader?: boolean;
   open?: boolean;
   palette?: PaletteKey;
@@ -61,8 +61,10 @@ const StyledTextDiv = styled.div<StyledWrapProps>`
 const StyledTitleDiv = styled.div<StyledWrapProps>`
   ${(props: any) => `
     font-size: 24px;
+    font-weight: bold;
     line-height: 28px;
     margin-bottom: 16px;
+    ${fontFamily}
   `}
 `;
 
@@ -71,6 +73,7 @@ const StyledContentDiv = styled.div<StyledWrapProps>`
     font-size: 20px;
     line-height: 24px;
     margin-bottom: 16px;
+    ${fontFamily}
   `}
 `;
 
@@ -92,7 +95,6 @@ const StyledButton = styled(Button)<StyledWrapProps>`
 `;
 
 const Dialog: NextPage<ComponentProps> = ({
-  acrylic,
   className,
   open,
   onClickBackdrop,
@@ -110,7 +112,6 @@ const Dialog: NextPage<ComponentProps> = ({
   const { t } = useTranslation('common');
   return (
     <Modal
-      acrylic={acrylic}
       className={className}
       open={open}
       palette={palette}

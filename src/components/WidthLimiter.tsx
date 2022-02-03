@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
+import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 
 interface ComponentProps {
@@ -21,6 +22,7 @@ const StyledDivWidthLimiter = styled.div<StyledWrapProps>`
     ${props.theme.screenSizeMediaQuery.gteTablet} {
       max-width: ${props.theme.screenSize.tablet};
     }
+    ${fontFamily}
   `}
 `;
 

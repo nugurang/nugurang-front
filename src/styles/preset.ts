@@ -12,3 +12,7 @@ export const ellipsis = `
   text-overflow:ellipsis;
   white-space:nowrap;
 `;
+
+export const fontFamily = `
+  font-family: 'Nanum Gothic', sans-serif;
+`;

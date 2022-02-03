@@ -2,6 +2,7 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import type { NextPage } from 'next';
 import WidthLimiter from '@/src/components/WidthLimiter';
+import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 
 interface CssProps {
@@ -30,19 +31,17 @@ const StyledFooterWrap = styled.footer<StyledWrapProps>`
     height: 64px;
     transition-duration: 0.2s;
     transition-property: background-color, color;
+    ${fontFamily}
   `}
 `;
 
-const StyledCopyrightWrap = styled.div<StyledWrapProps>`
+const StyledCopyrightDiv = styled.div<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     font-size: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    text-align: center;
     color: ${props.theme.palette.background.subtext};
+    margin-top: 26px;
+    ${fontFamily}
   `}
 `;
 
@@ -52,9 +51,9 @@ const Footer: NextPage = () => {
       <StyledDivDummy />
       <StyledFooterWrap>
         <WidthLimiter>
-          <StyledCopyrightWrap>
+          <StyledCopyrightDiv>
             &copy; nugurang. All rights reserved.
-          </StyledCopyrightWrap>
+          </StyledCopyrightDiv>
         </WidthLimiter>
       </StyledFooterWrap>
     </>

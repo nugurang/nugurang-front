@@ -1,8 +1,8 @@
 import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
 import Image from '@/src/components/Image';
 import type { NextPage } from 'next';
-import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
+import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 
 type SizeKeys = 'small'
@@ -67,6 +67,7 @@ const StyledAvatarAltWrap = styled.span`
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     color: #fff;
+    ${fontFamily}
   `}
 `;
 

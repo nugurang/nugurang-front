@@ -2,6 +2,7 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
 import type { NextPage } from 'next';
 import React from 'react';
+import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 
 interface CssProps {
@@ -23,6 +24,7 @@ interface StyledWrapProps extends CssProps {
 const StyledButtonWrap = styled.button<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: ${props.fullwidth ? 'block' : 'inline'};
+    position: relative;
     width: ${props.fullwidth ? '100%' : 'auto'};
     border: 0px solid #000;
     border-radius: ${props.theme.borderRadius.round};
@@ -30,10 +32,30 @@ const StyledButtonWrap = styled.button<StyledWrapProps>`
     background-color: ${props.theme.palette[props.palette || 'default'].main};
     padding: 10px 20px;
     cursor: pointer;
+    transition-duration: 0.2s;
+    transition-property: background-color, color;
     &:hover {
       background-color: ${props.theme.palette[props.palette || 'default'].dark};
     }
+    ${fontFamily}
     ${props.css || ''}
+  `}
+`;
+
+const StyledHoverEffectDiv = styled.div<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    display: ${props.palette != 'transparent' ? 'none' : 'block'};
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #0000;
+    transition-duration: 0.2s;
+    transition-property: background-color, color;
+    &:hover {
+      background-color: #0002;
+    }
   `}
 `;
 
@@ -54,6 +76,7 @@ const Button: NextPage<ComponentProps> = ({
       palette={palette}
     >
       { children }
+      <StyledHoverEffectDiv />
     </StyledButtonWrap>
   );
 }

@@ -4,6 +4,7 @@ import Avatar from '@/src/components/Avatar';
 import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
 import WidthLimiter from '@/src/components/WidthLimiter';
+import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
@@ -43,13 +44,17 @@ const StyledHeaderWrap = styled.header<StyledWrapProps>`
     z-index: 20;
     transition-duration: 0.2s;
     transition-property: background-color, color;
+    ${fontFamily}
   `}
 `;
 
 const StyledLogoTextWrap = styled.span<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
+    display: inline-block;
     color: ${props.theme.palette.primary.text};
     font-size: 24px;
+    margin-left: 8px;
+    ${fontFamily}
   `}
 `;
 
@@ -62,6 +67,7 @@ const StyledLeftsideWrap = styled.span`
     top: 0;
     bottom: 0;
     left: 10px;
+    ${fontFamily}
   `}
 `;
 
@@ -74,6 +80,7 @@ const StyledRightsideWrap = styled.span`
     top: 0;
     bottom: 0;
     right: 10px;
+    ${fontFamily}
   `}
 `;
 

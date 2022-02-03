@@ -1,15 +1,15 @@
+import { ellipsis, fontFamily } from '@/src/styles/preset';
+
 import Avatar from '@/src/components/Avatar';
 import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
-import DualDiv from '@/src/components/DualDiv';
 import { GetServerSideProps } from 'next';
 import Image from '@/src/components/Image';
 import LoginButtonGroup from '@/src/components/LoginButtonGroup';
 import LogoutButton from '@/src/components/LogoutButton';
 import type { NextPage } from 'next';
+import Section from '@/src/components/Section';
 import type { ThemeObject } from '@/src/styles/theme';
-import { ellipsis } from '@/src/styles/preset';
-import { getWindowLocation } from '@/src/utils/url';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -37,7 +37,7 @@ const StyledBannerGridDiv = styled.div<StyledProps>`
   `}
 `;
 
-const StyledBannerGridItemCard = styled(Card)<StyledProps>`
+const StyledBannerGridItemDiv = styled.div<StyledProps>`
   ${(props: StyledProps) => `
     margin: auto 0;
   `}
@@ -67,13 +67,14 @@ const UserBriefProfileAvatar = styled(Avatar)<StyledProps>`
   ${(props: StyledProps) => `
     height: 72px;
     width: 72px;
+    margin-right: 16px;
   `}
 `;
 
 const UserBriefProfileTextGroupDiv = styled.div<StyledProps>`
   ${(props: StyledProps) => `
     display: inline-block;
-    margin: 4px 0 4px 16px;
+    margin: 4px 0;
     vertical-align: top;
   `}
 `;
@@ -81,8 +82,10 @@ const UserBriefProfileTextGroupDiv = styled.div<StyledProps>`
 const UserBriefProfileNameDiv = styled.div<StyledProps>`
   ${(props: StyledProps) => `
     font-size: 24px;
+    font-weight: bold;
     line-height: 32px;
     ${ellipsis}
+    ${fontFamily}
   `}
 `;
 
@@ -92,6 +95,7 @@ const UserBriefProfileEmailDiv = styled.div<StyledProps>`
     line-height: 20px;
     margin-top: 4px;
     ${ellipsis}
+    ${fontFamily}
   `}
 `;
 
@@ -106,49 +110,51 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
       footer
       navigationBar
     >
-      {
-        !currentUser && (
-          <StyledBannerGridDiv>
-            <StyledBannerGridItemCard>
-              <StyledLoginHeaderImageWrap
-                src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
-              ></StyledLoginHeaderImageWrap>
-              <StyledLoginHeaderTextWrap>
-                {t('_pleaseLogin')}
-              </StyledLoginHeaderTextWrap>
-            </StyledBannerGridItemCard>
-            <StyledBannerGridItemCard>
-              <LoginButtonGroup
-                callbackUrl={callbackUrl}
-              />
-            </StyledBannerGridItemCard>
-          </StyledBannerGridDiv>
-        )
-      }
-      {
-        currentUser && (
-          <StyledBannerGridDiv>
-            <StyledBannerGridItemCard>
-              <UserBriefProfileAvatar
-                src={currentUser.image.address}
-              />
-              <UserBriefProfileTextGroupDiv>
-                <UserBriefProfileNameDiv>
-                  {currentUser.name}
-                </UserBriefProfileNameDiv>
-                <UserBriefProfileEmailDiv>
-                  {currentUser.email}
-                </UserBriefProfileEmailDiv>
-              </UserBriefProfileTextGroupDiv>
-            </StyledBannerGridItemCard>
-            <StyledBannerGridItemCard>
-              <LogoutButton 
-                callbackUrl={callbackUrl}
-              />
-            </StyledBannerGridItemCard>
-          </StyledBannerGridDiv>
-        )
-      }
+      <Section>
+        {
+          !currentUser && (
+            <StyledBannerGridDiv>
+              <StyledBannerGridItemDiv>
+                <StyledLoginHeaderImageWrap
+                  src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
+                ></StyledLoginHeaderImageWrap>
+                <StyledLoginHeaderTextWrap>
+                  {t('_pleaseLogin')}
+                </StyledLoginHeaderTextWrap>
+              </StyledBannerGridItemDiv>
+              <StyledBannerGridItemDiv>
+                <LoginButtonGroup
+                  callbackUrl={callbackUrl}
+                />
+              </StyledBannerGridItemDiv>
+            </StyledBannerGridDiv>
+          )
+        }
+        {
+          currentUser && (
+            <StyledBannerGridDiv>
+              <StyledBannerGridItemDiv>
+                <UserBriefProfileAvatar
+                  src={currentUser.image.address}
+                />
+                <UserBriefProfileTextGroupDiv>
+                  <UserBriefProfileNameDiv>
+                    {currentUser.name}
+                  </UserBriefProfileNameDiv>
+                  <UserBriefProfileEmailDiv>
+                    {currentUser.email}
+                  </UserBriefProfileEmailDiv>
+                </UserBriefProfileTextGroupDiv>
+              </StyledBannerGridItemDiv>
+              <StyledBannerGridItemDiv>
+                <LogoutButton 
+                  callbackUrl={callbackUrl}
+                />
+              </StyledBannerGridItemDiv>
+            </StyledBannerGridDiv>
+          )
+        }
+      </Section>
     </Container>
   );
 }
