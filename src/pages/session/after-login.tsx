@@ -19,11 +19,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {},
     };
   }
-  const getJSessionResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/login`, {
+  const getJSessionResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_FRONTEND_URI as string,
+      'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_FRONTEND_URL as string,
     },
     body: JSON.stringify({
       clientRegistrationId: session.provider,

@@ -13,7 +13,6 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import { wait } from '@/src/utils/system';
 import { withAuthServerSideProps } from '@/src/utils/server-side';
 
 export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');

@@ -1,7 +1,43 @@
+import {
+  AccessDeniedError,
+  LoginRequiredError
+} from '@/src/errors/Errors';
+
 import { getSession } from 'next-auth/react';
 import { mutateToBackend } from '@/src/utils/backend';
 import { queryToBackend } from '@/src/utils/backend';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
+async function getCommonServerSideProps(context: any) {
+  const callbackUrl = context.query.callbackUrl ?? `${process.env.NEXT_PUBLIC_FRONTEND_URL}${context.resolvedUrl}`;
+  const [translation] = await Promise.all([
+    serverSideTranslations(context.locale, ['common'])
+  ]);
+  return {
+    callbackUrl,
+    ...translation,
+  };
+}
+
+async function getCurrentUser(context: any) {
+  const currentUserResponse = await queryToBackend(context, `
+    query CurrentUser {
+      currentUser {
+        id
+        oauth2Provider
+        oauth2Id
+        name
+        email
+        image {
+          id
+          address
+        }
+        biography
+      }
+    }
+  `);
+  return currentUserResponse?.data?.currentUser ?? null;
+}
 
 const registerUser = async (context: any, session: any) => {
 
@@ -33,22 +69,9 @@ const registerUser = async (context: any, session: any) => {
       image: imageId,
     }
   }) as any;
-  if (createCurrentUserResponse.hasOwnProperty('error')) {
-    return false;
-  }
-  return true;
+  if (createCurrentUserResponse.hasOwnProperty('error')) return null;
+  else return createCurrentUserResponse.data.createCurrentUser;
 };
-
-async function getCommonServerSideProps(context: any) {
-  const callbackUrl = context.query.callbackUrl ?? `${process.env.NEXT_PUBLIC_FRONTEND_URI}${context.resolvedUrl}`;
-  const [translation] = await Promise.all([
-    serverSideTranslations(context.locale, ['common'])
-  ]);
-  return {
-    callbackUrl,
-    ...translation,
-  };
-}
 
 type AuthType = 'all'
               | 'session'
@@ -56,81 +79,54 @@ type AuthType = 'all'
 
 export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?: Function) {
   return async (context: any) => {
+
     const commonServerSideProps = await getCommonServerSideProps(context);
+    let currentUser = await getCurrentUser(context);
     const session = await getSession(context);
 
-    if (!session && (authType != 'all')) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: `/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
-        },
-        props: {
-          ...commonServerSideProps,
-        }
-      }
+    if (session && !currentUser) {
+      await registerUser(context, session);
+      currentUser = await getCurrentUser(context);
     }
 
-    const currentUserResponse = await queryToBackend(context, `
-      query CurrentUser {
-        currentUser {
-          id
-          oauth2Provider
-          oauth2Id
-          name
-          email
-          image {
-            id
-            address
-          }
-          biography
-        }
-      }
-    `);
+    try {
 
-
-    if (currentUserResponse.error
-      && (currentUserResponse.error.hasOwnProperty('networkError'))
-      && (currentUserResponse.error.networkError.hasOwnProperty('statusCode'))
-      && (authType != 'all')
-    ) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: `/`,
-        },
-        props: {}
+      if ((['all'].find(e => e == authType) === undefined) && !session) {
+        throw new LoginRequiredError();
       }
-    }
-    
-    const currentUser = currentUserResponse.data ? currentUserResponse.data.currentUser : null;
-    if (!currentUser && (authType != 'all')) {
-      const registerUserResult = await registerUser(context, session);
-      if (!registerUserResult) {
-        return {
-          redirect: {
-            permanent: false,
-            destination: `/`,
-          },
-          props: {}
-        }
+      if ((['all', 'session'].find(e => e == authType) === undefined) && !currentUser) {
+        throw new AccessDeniedError();
       }
-    }
-
-    if (serverSidePropsFunc) {
-      return {
+  
+      return serverSidePropsFunc ? {
         ...(await serverSidePropsFunc(context, {
           ...commonServerSideProps,
           currentUser
         })),
-      };
-    } else {
-      return {
+      } : {
         props: {
           ...commonServerSideProps,
           currentUser
         }
       };
+
+    } catch(error) {
+      if (error instanceof LoginRequiredError) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: `/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
+          },
+          props: {
+            ...commonServerSideProps,
+          }
+        }
+      } else if (error instanceof AccessDeniedError) {
+        console.error(error);
+      } else {
+        console.error(error);
+      }
     }
+
   };
 }

@@ -9,7 +9,7 @@ export const getWindowLocationOrigin = (context?: any) => {
     else return window.location.protocol + '//'
         + window.location.hostname 
         + (window.location.port ? ':' + window.location.port : '');
-  } else return process.env.NEXT_PUBLIC_FRONTEND_URI;
+  } else return process.env.NEXT_PUBLIC_FRONTEND_URL;
 };
 
 export const getWindowLocationPathname = (context?: any) => {
