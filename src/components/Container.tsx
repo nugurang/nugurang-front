@@ -74,7 +74,6 @@ const StyledMainDiv = styled(Div)<StyledWrapProps>`
     position: relative;
     
     background-color: ${props.theme.palette.background.main};
-    color: ${props.theme.palette.background.text};
     min-height: ${props.isFrameActive ? `calc(100% - ${navigationBarHeight})` : '100%'};
 
     transition-duration: 0.2s;
@@ -94,7 +93,9 @@ const Container: NextPage<ComponentProps> = ({
     imageAddress: currentUser.image.address
   } : null;
   */
-  const isFrameActive = callbackUrl && navigationBarItems.map((e: any) => e.pathname).find((e: string) => e == new URL(callbackUrl as string).pathname);
+  const isFrameActive = callbackUrl && navigationBarItems
+                        .map((e: any) => e.pathname)
+                        .find((e: string) => e == new URL(callbackUrl as string).pathname);
   return (
     <StyledWrap className={className}>
       <Head>

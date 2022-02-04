@@ -22,18 +22,13 @@ export interface ComponentProps extends CssProps {
   label: string;
 }
 
-interface StyledWrapProps extends CssProps {
+interface StyledProps extends CssProps {
   active?: boolean;
   theme: ThemeObject;
 }
 
-interface StyledWrapProps extends CssProps {
-  active?: boolean;
-  theme: ThemeObject;
-}
-
-const StyledButton = styled(Button)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledButton = styled(Button)<StyledProps>`
+  ${(props: StyledProps) => `
     display: inline-block;
     height: 100%;
     width: 64px;
@@ -42,64 +37,64 @@ const StyledButton = styled(Button)<StyledWrapProps>`
   `}
 `;
 
-const StyledDivWrap = styled(Div)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledDivWrap = styled(Div)<StyledProps>`
+  ${(props: StyledProps) => `
     display: block;
-    color: ${props.active
-      ? props.theme.palette.primary.main
-      : props.theme.palette.background.subtext
-    };
     padding: 8px 0;
     ${props.css}
   `}
 `;
 
-const StyledIcon = styled(Icon)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledIcon = styled(Icon)<StyledProps>`
+  ${(props: StyledProps) => `
     height: 28px;
     width: 28px;
+    color: ${props.active
+      ? props.theme.palette.primary.main
+      : props.theme.palette.background.subtext
+    };
   `}
 `;
 
-
-const StyledDivLabelWrap = styled(Div)`
+const StyledDivLabelWrap = styled(Div)<StyledProps>`
   ${(props: any) => `
     font-size: 12px;
     line-height: 12px;
     padding-top: 4px;
 
+    color: ${props.active
+      ? props.theme.palette.primary.main
+      : props.theme.palette.background.subtext
+    };
+    
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   `}
 `;
 
-const NavigationBarItem: NextPage<ComponentProps> = ({
-  active,
-  css,
-  pathname,
-  icon,
-  label
-}) => {
+const NavigationBarItem: NextPage<ComponentProps> = (props) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <StyledButton
       variant='transparent'
-      onClick={() => router.push(pathname)}
+      onClick={() => router.push(props.pathname)}
     >
       <StyledDivWrap
-        active={active}
-        css={css}
+        css={props.css}
       >
-        { icon && 
+        { props.icon && 
           <StyledIcon
-            src={icon}
+            src={props.icon}
             type='fontAwesomeIcon'
+            active={props.active}
           />
         }
-        <StyledDivLabelWrap>
-          { t(label) }
+        <StyledDivLabelWrap
+          active={props.active}
+        >
+          { t(props.label) }
         </StyledDivLabelWrap>
       </StyledDivWrap>
     </StyledButton>
