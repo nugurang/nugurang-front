@@ -20,7 +20,6 @@ export const stringifyCookies = (cookies: any) => {
 }
 
 interface SetCookieProps {
-  context?: any;
   key: string;
   value: string;
   props: {
@@ -29,37 +28,32 @@ interface SetCookieProps {
   }
 }
 
-export const setCookie = (props: SetCookieProps) => {
-  if (typeof window === 'undefined') {
-    nookies.set(props.context, props.key, props.value, props.props)
+export const setCookie = (context: any, props: SetCookieProps) => {
+  if (context) {
+    nookies.set(context, props.key, props.value, props.props)
   } else {
     nookieSetCookie(null, props.key, props.value, props.props)
   }
 };
 
-interface ParseCookiesProps {
-  context?: any;
-}
-
-export const parseCookies = (props: ParseCookiesProps) => {
-  if (typeof window === 'undefined') {
-    return nookies.get(props.context);
+export const parseCookies: any = (context: any) => {
+  if (context) {
+    return nookies.get(context);
   } else {
     return nookieParseCookies();
   }
 };
 
 interface DestroyCookieProps {
-  context?: any;
   key: string;
   props: {
     path: string;
   }
 }
 
-export const destroyCookie = (props: DestroyCookieProps) => {
-  if (typeof window === 'undefined') {
-    nookies.destroy(props.context, props.key, props.props)
+export const destroyCookie = (context: any, props: DestroyCookieProps) => {
+  if (context) {
+    nookies.destroy(context, props.key, props.props)
   } else {
     nookieDestroyCookie(null, props.key, props.props)
   }

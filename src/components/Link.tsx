@@ -28,6 +28,7 @@ interface StyledWrapProps extends CssProps {
 
 const StyledAWrap = styled.a<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
+    display: inline-block;
     position: relative;
     overflow: hidden;
     border: 0px solid #000;

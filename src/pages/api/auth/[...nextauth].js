@@ -1,5 +1,8 @@
-import GithubProvider from "next-auth/providers/github"
-import NextAuth from "next-auth"
+import { deleteJSessionIdFromCookie, isJSessionIdExistFromCookie } from '@/src/utils/backend';
+
+import GithubProvider from 'next-auth/providers/github';
+import NextAuth from 'next-auth';
+import { logoutFromSession } from '@/src/utils/session';
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -23,6 +26,7 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
+      
       session.provider = token.provider;
       session.type = token.type;
       session.accessToken = token.accessToken;
@@ -30,7 +34,13 @@ export default NextAuth({
       session.scopes = token.scope.split(',');
       if(token.iat) session.issued = new Date(token.iat * 1000).toISOString().slice(0,-5)+"Z";
       if(token.exp) session.expires = new Date(token.exp * 1000).toISOString().slice(0,-5)+"Z";
+
+      // session 및 backend 로그인 상태 동기화
+      if ( session && !isJSessionIdExistFromCookie(null)) logoutFromSession();
+      if (!session &&  isJSessionIdExistFromCookie(null)) deleteJSessionIdFromCookie(null);
+      
       return session;
+
     }
   }
 })

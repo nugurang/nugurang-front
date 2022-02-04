@@ -3,7 +3,7 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 import Button from '@/src/components/Button';
 import Dialog from '@/src/components/Dialog';
 import type { NextPage } from 'next';
-import { logout } from '@/src/utils/session';
+import { logoutFromSession } from '@/src/utils/session';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
@@ -46,7 +46,6 @@ const LogoutButton: NextPage<ComponentProps> = ({
         {t('logout')}
       </StyledButton>
       <Dialog
-        acrylic={true}
         open={open}
         onClickBackdrop={(open && pending) ? undefined : () => setOpen(false)}
         loader={pending}
@@ -54,7 +53,7 @@ const LogoutButton: NextPage<ComponentProps> = ({
         noLabel={t('logout')}
         onNo={(open && pending) ? undefined : () => {
           setPending(true);
-          logout(callbackUrl ?? '/');
+          logoutFromSession({ callbackUrl: callbackUrl ?? '/' });
         }}
         onCancel={(open && pending) ? undefined : () => setOpen(false)}
       />

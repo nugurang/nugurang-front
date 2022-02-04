@@ -19,8 +19,9 @@ interface StyledWrapProps extends CssProps {
 
 const StyledImageWrap = styled.img<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
-    display: block;
-    width: 100%;
+    object-fit: cover;
+    height:100%;
+    width:100%;
     vertical-align: top;
     ${props.css || ''}
   `}

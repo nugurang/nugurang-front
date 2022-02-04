@@ -1,11 +1,11 @@
-import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next';
 import Image from '@/src/components/Image';
 import LoginButtonGroup from '@/src/components/LoginButtonGroup';
 import type { NextPage } from 'next';
+import PageOverview from '@/src/components/PageOverview';
+import Section from '@/src/components/Section';
 import type { ThemeObject } from '@/src/styles/theme';
-import { getWindowLocation } from '@/src/utils/url';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -30,7 +30,7 @@ interface StyledWrapProps {
   theme: ThemeObject;
 }
 
-const StyledLoginHeaderImageWrap = styled(Image)<StyledWrapProps>`
+const StyledPageOverviewImageWrap = styled(Image)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     width: 100%;
@@ -41,7 +41,7 @@ const StyledLoginHeaderImageWrap = styled(Image)<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginHeaderTextWrap = styled.div<StyledWrapProps>`
+const StyledPageOverviewTextWrap = styled.div<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     margin-top: 24px;
     font-size: 24px;
@@ -61,19 +61,23 @@ const Login: NextPage<PageProps> = ({ callbackUrl }) => {
   const { t } = useTranslation('common');
   return (
     <Container>
-      <Card>
-        <StyledLoginHeaderImageWrap
-          src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
-        ></StyledLoginHeaderImageWrap>
-        <StyledLoginHeaderTextWrap>
-          {t('_pleaseLogin')}
-        </StyledLoginHeaderTextWrap>
-      </Card>
-      <Card>
-        <StyledLoginButtonGroup
-          callbackUrl={callbackUrl}
+      <Section>
+        <PageOverview
+          firstChildren={<>
+            <StyledPageOverviewImageWrap
+              src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
+            />
+            <StyledPageOverviewTextWrap>
+              {t('_pleaseLogin')}
+            </StyledPageOverviewTextWrap>
+          </>}
+          secondChildren={<>
+            <StyledLoginButtonGroup
+              callbackUrl={callbackUrl}
+            />
+          </>}
         />
-      </Card>
+      </Section>
     </Container>
   );
 }

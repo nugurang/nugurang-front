@@ -2,10 +2,12 @@ import {
   AccessDeniedError,
   LoginRequiredError
 } from '@/src/errors/Errors';
+import {
+  getCurrentUserFromBackend,
+  mutateToBackend
+} from '@/src/utils/backend';
 
 import { getSession } from 'next-auth/react';
-import { mutateToBackend } from '@/src/utils/backend';
-import { queryToBackend } from '@/src/utils/backend';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 async function getCommonServerSideProps(context: any) {
@@ -19,74 +21,60 @@ async function getCommonServerSideProps(context: any) {
   };
 }
 
-async function getCurrentUser(context: any) {
-  const currentUserResponse = await queryToBackend(context, `
-    query CurrentUser {
-      currentUser {
-        id
-        oauth2Provider
-        oauth2Id
-        name
-        email
-        image {
-          id
-          address
-        }
-        biography
-      }
-    }
-  `);
-  return currentUserResponse?.data?.currentUser ?? null;
-}
-
 const registerUser = async (context: any, session: any) => {
 
-  let imageId;
-  if (session.user!.image) {
-    const createImageResponse = await mutateToBackend(context, `
-      mutation CreateImage($address: String!) {
-        createImage (address: $address) {
+  try {
+    let imageId;
+    if (session.user!.image) {
+      const createImageResponse = await mutateToBackend(context, `
+        mutation CreateImage($address: String!) {
+          createImage (address: $address) {
+            id
+            address
+          }
+        }
+      `, {
+        address: session.user!.image
+      });
+      if (createImageResponse.hasOwnProperty('error')) throw new Error('Unknown Error');
+      imageId = createImageResponse.data.createImage.id;
+    }
+    const createCurrentUserResponse = await mutateToBackend(context, `
+      mutation CreateCurrentUser($user: UserInput!) {
+        createCurrentUser (user: $user) {
           id
-          address
         }
       }
     `, {
-      address: session.user!.image
-    });
-    imageId = createImageResponse.data.createImage.id;
-  }
-  const createCurrentUserResponse = await mutateToBackend(context, `
-    mutation CreateCurrentUser($user: UserInput!) {
-      createCurrentUser (user: $user) {
-        id
+      user: {
+        name: session.user!.name,
+        email: session.user!.email,
+        biography: '',
+        image: imageId,
       }
-    }
-  `, {
-    user: {
-      name: session.user!.name,
-      email: session.user!.email,
-      biography: '',
-      image: imageId,
-    }
-  }) as any;
-  if (createCurrentUserResponse.hasOwnProperty('error')) return null;
-  else return createCurrentUserResponse.data.createCurrentUser;
+    }) as any;
+    if (createCurrentUserResponse.hasOwnProperty('error')) throw new Error('Unknown Error');
+    return createCurrentUserResponse.data.createCurrentUser;
+  } catch {
+    return false;
+  }
 };
 
 type AuthType = 'all'
               | 'session'
-              | 'user';
+              | 'user'
+              | 'administrator';
 
 export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?: Function) {
   return async (context: any) => {
 
     const commonServerSideProps = await getCommonServerSideProps(context);
-    let currentUser = await getCurrentUser(context);
+    let currentUser = await getCurrentUserFromBackend(context);
     const session = await getSession(context);
 
     if (session && !currentUser) {
       await registerUser(context, session);
-      currentUser = await getCurrentUser(context);
+      currentUser = await getCurrentUserFromBackend(context);
     }
 
     try {
@@ -110,7 +98,7 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
         }
       };
 
-    } catch(error) {
+    } catch (error) {
       if (error instanceof LoginRequiredError) {
         return {
           redirect: {
@@ -123,8 +111,20 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
         }
       } else if (error instanceof AccessDeniedError) {
         console.error(error);
+        return {
+          props: {
+            ...commonServerSideProps,
+            errorCode: 401
+          }
+        }
       } else {
         console.error(error);
+        return {
+          props: {
+            ...commonServerSideProps,
+            errorCode: 500
+          }
+        }
       }
     }
 

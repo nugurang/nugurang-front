@@ -9,6 +9,8 @@ import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
 import Image from '@/src/components/Image';
 import type { NextPage } from 'next';
+import PageOverview from '@/src/components/PageOverview';
+import Section from '@/src/components/Section';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -100,24 +102,24 @@ const Console: NextPage<PageProps> = ({ currentOAuth2User }) => {
 
   return (
     <Container>
-      <StyledBannerGridDiv>
-        <StyledBannerGridItemCard>
-          <Image
-            src='https://image.freepik.com/free-vector/visual-data-concept-illustration_114360-1713.jpg?'
-          />
-        </StyledBannerGridItemCard>
-        <StyledBannerGridItemCard>
-          Console
-        </StyledBannerGridItemCard>
-      </StyledBannerGridDiv>
-      <Button
-        fullwidth
-        onClick={onClickCreateBoardButton}
-      >
-        Create Boards
-      </Button>
+      <Section>
+        <PageOverview
+          firstChildren={<>
+            <Image
+              src='https://image.freepik.com/free-vector/visual-data-concept-illustration_114360-1713.jpg?'
+            />
+          </>}
+          secondChildren={<>
+            Console
+          </>}
+        />
+        <Button
+          onClick={onClickCreateBoardButton}
+        >
+          Create Boards
+        </Button>
+      </Section>
       <Dialog
-        acrylic={true}
         open={dialog.open}
         loader={dialog.pending}
         title={dialog.title}

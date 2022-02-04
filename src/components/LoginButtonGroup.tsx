@@ -5,7 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
-import { login } from '@/src/utils/session';
+import { loginToSession } from '@/src/utils/session';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
@@ -105,10 +105,10 @@ const LoginButtonGroup: NextPage<ComponentProps> = ({
               key={index}
               onClick={() => {
                 setOpen(true);
-                login(
-                  loginProviderItem.providerName,
-                  callbackUrl ?? '/'
-                );
+                loginToSession({
+                  providerName: loginProviderItem.providerName,
+                  callbackUrl: callbackUrl ?? '/'
+                });
               }}
             >
               <FontAwesomeIcon
@@ -123,7 +123,6 @@ const LoginButtonGroup: NextPage<ComponentProps> = ({
         }
       </StyledWrap>
       <Dialog
-        acrylic={true}
         open={open}
         loader={true}
         title={t('login')}

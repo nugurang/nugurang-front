@@ -3,7 +3,6 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 import type { NextPage } from 'next';
 import React from 'react';
 import { fontFamily } from '@/src/styles/preset';
-import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
 
 interface CssProps {

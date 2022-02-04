@@ -7,6 +7,7 @@ import { GetServerSideProps } from 'next';
 import Image from '@/src/components/Image';
 import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
+import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
 import { fontFamily } from '@/src/styles/preset';
 import { hexToRGB } from '@/src/utils/color';
@@ -62,6 +63,17 @@ interface StyledProps {
   theme: ThemeObject;
 }
 
+const StyledPageOverviewImageWrap = styled(Image)<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    display: block;
+    width: 100%;
+    max-height: 480px;
+    max-width: 480px;
+    margin: 0 auto;
+    vertical-align: top;
+  `}
+`;
+
 const StyledBoardGridDiv = styled.div<StyledProps>`
   ${(props: StyledProps) => `
     display: grid;
@@ -71,7 +83,7 @@ const StyledBoardGridDiv = styled.div<StyledProps>`
       grid-template-columns: repeat(2, 1fr);
     }
     ${props.theme.screenSizeMediaQuery.gteLaptop} {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   `}
 `;
@@ -134,9 +146,21 @@ const BoardsIndex: NextPage<PageProps> = ({
       callbackUrl={callbackUrl}
     >
       <Section>
+        <PageOverview
+          firstChildren={<>
+            <StyledPageOverviewImageWrap
+              src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
+            />
+          </>}
+          secondChildren={<>
+            Hello
+          </>}
+        />
         <StyledBoardGridDiv>
           {
-            boards.map((board: Board, index: number) => {
+            boards
+            .sort((lhs, rhs) => t(lhs.name) > t(rhs.name) ? 1 : -1)
+            .map((board: Board, index: number) => {
               return <StyledBoardGridItemLink
                 key={index}
                 href={{

@@ -1,16 +1,12 @@
 import { GetServerSideProps, NextPage } from 'next';
 
-import { destroyCookie } from '@/src/utils/cookie';
+import { logoutFromBackend } from '@/src/utils/backend';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const callbackUrl = context.query.callbackUrl;
-  destroyCookie({
-    context,
-    key: 'JSESSIONID',
-    props: {
-      path: '/'
-    }
-  });
+  
+  await logoutFromBackend(context);
+
   return {
     redirect: {
       permanent: false,
