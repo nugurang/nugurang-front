@@ -1,5 +1,3 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { NextPage } from 'next';
 import React from "react";
@@ -22,10 +20,6 @@ interface CssProps {
 
 interface ComponentProps extends CssProps {
   children?: React.ReactNode;
-}
-
-interface StyledWrapProps extends CssProps {
-  theme: ThemeObject;
 }
 
 const FontAwesomeIcon: NextPage<ComponentProps> =  ({ icon, size }) => {

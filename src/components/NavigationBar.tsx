@@ -42,6 +42,17 @@ const StyledNavigationBarWrap = styled.nav<StyledWrapProps>`
   `}
 `;
 
+const StyledWidthLimiter = styled.div`
+  ${(props: any) => `
+    & > * {
+      margin-left: 4px;
+    }
+    & > *:first-of-type {
+      margin-left: 0;
+    }
+  `}
+`;
+
 const NavigationBar: NextPage<ComponentProps> = ({
   css,
   children
@@ -50,9 +61,9 @@ const NavigationBar: NextPage<ComponentProps> = ({
     <>
       <StyledDivDummy />
       <StyledNavigationBarWrap>
-        <WidthLimiter>
+        <StyledWidthLimiter>
           { children }
-        </WidthLimiter>
+        </StyledWidthLimiter>
       </StyledNavigationBarWrap>
     </>
   );

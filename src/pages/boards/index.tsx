@@ -5,12 +5,10 @@ import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next';
 import Image from '@/src/components/Image';
-import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
 import ThumbnailLink from '@/src/components/ThumbnailLink';
-import { fontFamily } from '@/src/styles/preset';
 import { queryToBackend } from '@/src/utils/backend';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -79,6 +77,7 @@ const StyledBoardGridDiv = styled.div<StyledProps>`
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 8px;
+    margin-top: 16px;
     ${props.theme.screenSizeMediaQuery.gtePhablet} {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -118,7 +117,7 @@ const BoardsIndex: NextPage<PageProps> = ({
         <PageOverview
           firstChildren={<>
             <StyledPageOverviewImageWrap
-              src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
+              src='https://image.freepik.com/free-vector/tiny-characters-sitting-laptop-with-lorem-ipsum-title_74855-20389.jpg?w=996'
             />
           </>}
           secondChildren={<>

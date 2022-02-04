@@ -1,9 +1,14 @@
 import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Image from '@/src/components/Image';
 import type { NextPage } from 'next';
+import { FontAwesomeIcon as ReactFontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ThemeObject } from '@/src/styles/theme';
 import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
+
+type VariantKeys = 'image'
+                 | 'fontAwesomeIcon';
 
 type SizeKeys = 'small'
               | 'medium'
@@ -26,23 +31,29 @@ interface CssProps {
   className?: string;
   css?: string;
   size?: SizeKeys;
+  variant?: VariantKeys;
 }
 
 interface ComponentProps extends CssProps {
-  src? :string;
+  src? :string | IconProp;
   alt?: string;
 }
 
-interface StyledWrapProps extends CssProps {
+interface StyledProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledAvatarWrap = styled.span<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledWrap = styled.span<StyledProps>`
+  ${(props: StyledProps) => `
     display: inline-block;
-    background-color: ${props.backgroundColor || '#888'};
+    background-color: ${props.backgroundColor || '#0000'};
     position: relative;
+
     border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'circle']};
+    ${props.variant == 'fontAwesomeIcon' && `
+      border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'square']};
+    `}
+
     height: ${iconSize[`${props.size || 'medium'}`]};
     width: ${iconSize[`${props.size || 'medium'}`]};
     font-size: ${fontSize[`${props.size || 'medium'}`]};
@@ -51,15 +62,15 @@ const StyledAvatarWrap = styled.span<StyledWrapProps>`
   `}
 `;
 
-const StyledAvatarImage = styled(Image)`
-  ${(props: any) => `
+const StyledImage = styled(Image)<StyledProps>`
+  ${(props: StyledProps) => `
     height: 100%;
     width: 100%;
   `}
 `;
 
-const StyledAvatarAltWrap = styled.span`
-  ${(props: any) => `
+const StyledAltWrap = styled.span<StyledProps>`
+  ${(props: StyledProps) => `
     position: absolute;
     top: 50%;
     left: 50%;
@@ -71,7 +82,14 @@ const StyledAvatarAltWrap = styled.span`
   `}
 `;
 
-const Avatar: NextPage<ComponentProps> = ({
+const StyledReactFontAwesomeIconp = styled(ReactFontAwesomeIcon)<StyledProps>`
+  ${(props: StyledProps) => `
+    height: 100%;
+    width: 100%;
+  `}
+`;
+
+const Icon: NextPage<ComponentProps> = ({
   alt,
   backgroundColor,
   className,
@@ -79,25 +97,33 @@ const Avatar: NextPage<ComponentProps> = ({
   edge,
   size,
   src,
+  variant,
 }) => {
   return (
-    <StyledAvatarWrap
+    <StyledWrap
       backgroundColor={backgroundColor}
       className={className}
       css={css}
       edge={edge}
       size={size}
+      variant={variant}
     >
-      {src &&
-        <StyledAvatarImage
+      {src && ((variant == 'image') || (variant === undefined)) &&
+        <StyledImage
           src={src}
         />
       }
-      {!src &&
-        <StyledAvatarAltWrap>{alt || ''}</StyledAvatarAltWrap>
+      {src && (variant == 'fontAwesomeIcon') &&
+        <StyledReactFontAwesomeIconp
+          icon={src || ['fas', 'question']}
+          fixedWidth
+        />
       }
-    </StyledAvatarWrap>
+      {!src &&
+        <StyledAltWrap>{alt || ''}</StyledAltWrap>
+      }
+    </StyledWrap>
   );
 }
 
-export default Avatar;
+export default Icon;

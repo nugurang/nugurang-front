@@ -11,20 +11,22 @@ interface StyledWrapProps extends CssProps {}
 
 const StyledCard = styled(Card)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
-    margin-top: 16px;
+    width: 100%;
   `}
 `;
 
-const Section: NextPage = ({
+const ListItem: NextPage = ({
   children,
 }) => {
   return (
-    <StyledCard
-      variant='transparent'
-    >
-      { children }
-    </StyledCard>
+    <li>
+      <StyledCard
+        variant='transparent'
+      >
+        { children }
+      </StyledCard>
+    </li>
   );
 }
 
-export default Section;
+export default ListItem;

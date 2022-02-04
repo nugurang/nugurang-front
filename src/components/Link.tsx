@@ -7,10 +7,15 @@ import type { UrlObject } from 'url';
 import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 
+type VariantKeys = 'filled'
+                 | 'outlined'
+                 | 'transparent';
+
 interface CssProps {
   className?: string;
   css?: string;
   palette?: PaletteKey;
+  variant?: VariantKeys;
 }
 
 interface ComponentProps extends CssProps {
@@ -34,6 +39,7 @@ const StyledAWrap = styled.a<StyledWrapProps>`
     position: relative;
     overflow: hidden;
     border-radius: ${props.theme.borderRadius.round};
+    text-decoration: none;
     &:visited {
       color: ${props.theme.palette[props.palette || 'transparent'].text};
     }
@@ -51,13 +57,22 @@ const StyledALikeButtonWrap = styled.a<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: inline-block;
     position: relative;
-    border: 0px solid #000;
-    border-radius: ${props.theme.borderRadius.round};
-    color: ${props.theme.palette[props.palette || 'transparent'].text};
-    background-color: ${props.theme.palette[props.palette || 'transparent'].main};
     padding: 10px 20px;
     text-decoration: none;
     overflow: hidden;
+
+    color: ${props.theme.palette[props.palette || 'transparent'].text};
+    border-radius: ${props.theme.borderRadius.round};
+    border: 1px solid #0000;
+    background-color: ${props.theme.palette[props.palette || 'default'].main};
+    ${props.variant == 'outlined' ? `
+      border: 1px solid ${props.theme.palette[props.palette || 'default'].light};
+      background-color: ${props.theme.palette.transparent.main};
+    ` : ''};
+    ${props.variant == 'transparent' ? `
+      background-color: ${props.theme.palette.transparent.main};
+    ` : ''};
+
     &:hover {
       background-color: ${props.theme.palette[props.palette || 'transparent'].dark};
     }
@@ -67,6 +82,7 @@ const StyledALikeButtonWrap = styled.a<StyledWrapProps>`
     &:active {
       transform: scale(0.9);
     }
+    
     -webkit-transition: background-color 0.2s, transform 0.2s;
     transition: background-color 0.2s, transform 0.2s;
     ${fontFamily}
@@ -100,7 +116,8 @@ const Link: NextPage<ComponentProps> = ({
   onMouseEnter,
   onMouseLeave,
   palette,
-  replace
+  replace,
+  variant
 }) => {
   if (button) return (
     <NextLink
@@ -115,6 +132,7 @@ const Link: NextPage<ComponentProps> = ({
         palette={palette}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        variant={variant}
       >
         { children }
         <StyledHoverEffectDiv />

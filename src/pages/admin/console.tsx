@@ -3,7 +3,6 @@ import * as constants from '@/src/constants';
 import { mutateToBackend, queryToBackend } from '@/src/utils/backend';
 
 import Button from '@/src/components/Button';
-import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
@@ -11,7 +10,6 @@ import Image from '@/src/components/Image';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';

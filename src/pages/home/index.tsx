@@ -2,6 +2,7 @@ import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
+import Section from '@/src/components/Section';
 import { useTranslation } from 'next-i18next';
 import { withAuthServerSideProps } from '@/src/utils/server-side';
 
@@ -19,9 +20,9 @@ const HomeIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
       callbackUrl={callbackUrl}
       currentUser={currentUser}
     >
-      <Card>
+      <Section>
         {t('_helloWorld')}
-      </Card>
+      </Section>
     </Container>
   );
 }

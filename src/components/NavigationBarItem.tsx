@@ -1,7 +1,7 @@
 import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 import { ellipsis, fontFamily } from '@/src/styles/preset';
 
-import FontAwesomeIcon from '@/src/components/FontAwesomeIcon';
+import Icon from '@/src/components/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
@@ -36,30 +36,36 @@ const StyledLinkWrap = styled(Link)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: inline-block;
     height: 100%;
-    padding: 0;
-    width: 72px;
+    width: 64px;
     text-align: center;
   `}
 `;
 
 const StyledDivWrap = styled.div<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
-    display: inline-block;
+    display: block;
     color: ${props.active
       ? props.theme.palette.primary.main
       : props.theme.palette.background.subtext
     };
-    height: 100%;
-    padding: 8px 12px;
+    padding: 8px 0;
     ${props.css}
   `}
 `;
 
+const StyledIcon = styled(Icon)<StyledWrapProps>`
+  ${(props: StyledWrapProps) => `
+    height: 28px;
+    width: 28px;
+  `}
+`;
+
+
 const StyledDivLabelWrap = styled.div`
   ${(props: any) => `
-    font-size: 10px;
-    line-height: 14px;
-    margin: 4px 0;
+    font-size: 12px;
+    line-height: 12px;
+    padding-top: 4px;
     ${ellipsis}
     ${fontFamily}
   `}
@@ -83,8 +89,9 @@ const NavigationBarItem: NextPage<ComponentProps> = ({
         css={css}
       >
         { icon && 
-          <FontAwesomeIcon
-            icon={icon}
+          <StyledIcon
+            src={icon}
+            variant='fontAwesomeIcon'
           />
         }
         <StyledDivLabelWrap>

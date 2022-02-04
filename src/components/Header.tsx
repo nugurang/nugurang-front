@@ -1,6 +1,6 @@
 import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 
-import Avatar from '@/src/components/Avatar';
+import Icon from '@/src/components/Icon';
 import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
 import WidthLimiter from '@/src/components/WidthLimiter';
@@ -103,9 +103,9 @@ const Header: NextPage<ComponentProps> = ({ user, callbackUrl }) => {
           <StyledRightsideWrap>
             {
               user && (
-                <Avatar alt={user.name}>
+                <Icon alt={user.name}>
                   <img alt=''></img>
-                </Avatar>
+                </Icon>
               )
             }
             {

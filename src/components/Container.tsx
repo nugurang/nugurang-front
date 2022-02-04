@@ -25,14 +25,14 @@ const navigationBarItems: NavigationBarItem[] = [
     label: 'home',
   },
   {
-    href: '/mypage',
-    icon: ['fas', 'user'],
-    label: 'myPage',
-  },
-  {
     href: '/boards',
     icon: ['fas', 'book-reader'],
     label: 'boards',
+  },
+  {
+    href: '/mypage',
+    icon: ['fas', 'user'],
+    label: 'myPage',
   },
   {
     href: '/admin/sandbox',

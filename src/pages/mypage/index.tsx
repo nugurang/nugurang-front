@@ -1,9 +1,11 @@
-import { ellipsis, fontFamily } from '@/src/styles/preset';
-
-import Avatar from '@/src/components/Avatar';
+import BriefUserProfile from '@/src/components/BriefUserProfile';
+import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next';
 import Image from '@/src/components/Image';
+import Link from '@/src/components/Link';
+import List from '@/src/components/List';
+import ListItem from '@/src/components/ListItem';
 import LoginButtonGroup from '@/src/components/LoginButtonGroup';
 import LogoutButton from '@/src/components/LogoutButton';
 import type { NextPage } from 'next';
@@ -26,7 +28,7 @@ interface StyledProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImageWrap = styled(Image)<StyledProps>`
+const StyledPageOverviewLoginImageWrap = styled(Image)<StyledProps>`
   ${(props: StyledProps) => `
     display: block;
     width: 100%;
@@ -37,7 +39,7 @@ const StyledPageOverviewImageWrap = styled(Image)<StyledProps>`
   `}
 `;
 
-const StyledPageOverviewTextWrap = styled.div<StyledProps>`
+const StyledPageOverviewLoginTextWrap = styled.div<StyledProps>`
   ${(props: StyledProps) => `
     margin-top: 10px;
     font-size: 24px;
@@ -46,39 +48,26 @@ const StyledPageOverviewTextWrap = styled.div<StyledProps>`
   `}
 `;
 
-const StyledUserBriefProfileAvatar = styled(Avatar)<StyledProps>`
+const StyledSectionGridDiv = styled.div<StyledProps>`
   ${(props: StyledProps) => `
-    height: 72px;
-    width: 72px;
-    margin-right: 16px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+    margin: 0 auto;
+    ${props.theme.screenSizeMediaQuery.gteTablet} {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: ${props.theme.screenSize.tablet};
+    }
+    ${props.theme.screenSizeMediaQuery.gteDesktop} {
+      grid-template-columns: repeat(3, 1fr);
+      max-width: ${props.theme.screenSize.desktop};
+    }
   `}
 `;
 
-const StyledUserBriefProfileTextGroupDiv = styled.div<StyledProps>`
+const StyledMenuCard = styled(Card)<StyledProps>`
   ${(props: StyledProps) => `
-    display: inline-block;
-    margin: 4px 0;
-    vertical-align: top;
-  `}
-`;
-
-const StyledUserBriefProfileNameDiv = styled.div<StyledProps>`
-  ${(props: StyledProps) => `
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 32px;
-    ${ellipsis}
-    ${fontFamily}
-  `}
-`;
-
-const StyledUserBriefProfileEmailDiv = styled.div<StyledProps>`
-  ${(props: StyledProps) => `
-    font-size: 16px;
-    line-height: 20px;
-    margin-top: 4px;
-    ${ellipsis}
-    ${fontFamily}
+    width: 100%;
   `}
 `;
 
@@ -95,12 +84,12 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
           !currentUser && (
             <PageOverview
               firstChildren={<>
-                <StyledPageOverviewImageWrap
+                <StyledPageOverviewLoginImageWrap
                   src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
                 />
-                <StyledPageOverviewTextWrap>
+                <StyledPageOverviewLoginTextWrap>
                   {t('_pleaseLogin')}
-                </StyledPageOverviewTextWrap>
+                </StyledPageOverviewLoginTextWrap>
               </>}
               secondChildren={<>
                 <LoginButtonGroup
@@ -114,17 +103,11 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
           currentUser && (
             <PageOverview
               firstChildren={<>
-                <StyledUserBriefProfileAvatar
-                  src={currentUser.image.address}
+                <BriefUserProfile
+                  name={currentUser.name}
+                  email={currentUser.email}
+                  imageUrl={currentUser.image.address}
                 />
-                <StyledUserBriefProfileTextGroupDiv>
-                  <StyledUserBriefProfileNameDiv>
-                    {currentUser.name}
-                  </StyledUserBriefProfileNameDiv>
-                  <StyledUserBriefProfileEmailDiv>
-                    {currentUser.email}
-                  </StyledUserBriefProfileEmailDiv>
-                </StyledUserBriefProfileTextGroupDiv>
               </>}
               secondChildren={<>
                 <LogoutButton 
@@ -135,6 +118,31 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
           )
         }
       </Section>
+      <StyledSectionGridDiv>
+        <Section>
+          <List>
+            <ListItem>
+              <Card>
+
+              </Card>
+            </ListItem>
+          </List>
+        </Section>
+        <Section>
+          <List>
+            <ListItem>
+              설정
+            </ListItem>
+          </List>
+        </Section>
+        <Section>
+          <List>
+            <ListItem>
+              설정
+            </ListItem>
+          </List>
+        </Section>
+      </StyledSectionGridDiv>
     </Container>
   );
 }
