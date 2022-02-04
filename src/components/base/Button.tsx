@@ -61,6 +61,9 @@ const StyledHoverEffect = styled.div<CSSProps>`
     &:hover {
       background-color: #0002;
     }
+
+    -webkit-transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   `}
 `;
 
