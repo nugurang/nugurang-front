@@ -1,19 +1,15 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import React from 'react';
-import { fontFamily } from '@/src/styles/preset';
+import type { VariantKeys } from '@/src/components/base/common';
 import styled from '@emotion/styled';
-
-type VariantKeys = 'filled'
-                 | 'outlined'
-                 | 'transparent';
 
 interface CssProps {
   className?: string;
   css?: string;
-  padding?: boolean;
-  palette?: PaletteKey;
+  palette?: PaletteKeys;
   variant?: VariantKeys;
 }
 
@@ -21,28 +17,12 @@ interface ComponentProps extends CssProps {
   children?: React.ReactNode;
 }
 
-interface StyledWrapProps extends CssProps {
+interface StyledProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledWrap = styled.div<StyledWrapProps>`
+const StyledDiv = styled(Div)<StyledProps>`
   ${(props: any) => `
-    position: relative;
-    padding: ${props.padding !== false ? '0 8px' : '0'}
-    
-    color: ${props.theme.palette[props.palette || 'default'].text};
-    border-radius: ${props.theme.borderRadius.round};
-    border: 1px solid #0000;
-    background-color: ${props.theme.palette[props.palette || 'default'].main};
-    ${props.variant == 'outlined' ? `
-      border: 1px solid ${props.theme.palette[props.palette || 'default'].light};
-      background-color: ${props.theme.palette.transparent.main};
-    ` : ''};
-    ${props.variant == 'transparent' ? `
-      background-color: ${props.theme.palette.transparent.main};
-    ` : ''};
-    
-    ${fontFamily}
     ${props.css || ''}
   `}
 `;
@@ -51,20 +31,18 @@ const Card: NextPage<ComponentProps> = ({
   children,
   className,
   css,
-  padding,
   palette,
   variant
 }) => {
   return (
-    <StyledWrap
+    <StyledDiv
       className={className}
       css={css}
-      padding={padding}
       palette={palette}
       variant={variant}
     >
       { children }
-    </StyledWrap>
+    </StyledDiv>
   );
 }
 

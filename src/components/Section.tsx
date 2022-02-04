@@ -11,7 +11,7 @@ interface StyledWrapProps extends CssProps {}
 
 const StyledCard = styled(Card)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
-    margin-top: 16px;
+    margin: 16px 8px;
   `}
 `;
 

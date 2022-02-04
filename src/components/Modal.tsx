@@ -1,18 +1,17 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import Backdrop from '@/src/components/Backdrop';
 import DOMToggleProvider from '@/src/components/DOMToggleProvider';
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import React from 'react';
-import { fontFamily } from '@/src/styles/preset';
-import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
 interface CssProps {
   css?: string;
   open: boolean;
-  palette?: PaletteKey;
+  palette?: PaletteKeys;
   transitionTimeout: number;
 }
 
@@ -26,28 +25,21 @@ interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledBackdrop = styled(Backdrop)<StyledWrapProps>`
-  ${(props: any) => `
-    transition: all ${props.transitionTimeout}s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-transition: all ${props.transitionTimeout}s cubic-bezier(0.22, 1, 0.36, 1);
-  `}
-`;
-
-const StyledModalDiv = styled.div<StyledWrapProps>`
+const StyledModalDiv = styled(Div)<StyledWrapProps>`
   ${(props: any) => `
     position: fixed;
     top: ${props.open ? '50%' : '100%'};
     bottom: initial;
     left: 0;
     width: 100%;
+    
     color: ${props.theme.palette.background.text};
     background-color: ${props.theme.palette.background.main};
-    z-index: 510;
+    z-index: ${props.theme.zIndex.modal};
     opacity: ${props.open ? '1' : '0'};
+
     transform: translateY(-50%);
-    transition: all ${props.transitionTimeout}s cubic-bezier(0.22, 1, 0.36, 1);
-    -webkit-transition: all ${props.transitionTimeout}s cubic-bezier(0.22, 1, 0.36, 1);
-    ${fontFamily}
+
     ${props.css || ''}
   `}
 `;
@@ -68,7 +60,7 @@ const Modal: NextPage<ComponentProps> = ({
       setCSSActive={setCSSActive}
       transitionTimeout={transitionTimeout}
     >
-      <StyledBackdrop
+      <Backdrop
         open={cssActive}
         onClick={onClickBackdrop}
         transitionTimeout={transitionTimeout}

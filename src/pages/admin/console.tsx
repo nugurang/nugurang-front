@@ -2,11 +2,11 @@ import * as constants from '@/src/constants';
 
 import { mutateToBackend, queryToBackend } from '@/src/utils/backend';
 
-import Button from '@/src/components/Button';
+import Button from '@/src/components/base/Button';
 import Container from '@/src/components/Container';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
-import Image from '@/src/components/Image';
+import Img from '@/src/components/base/Img';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
@@ -97,7 +97,7 @@ const Console: NextPage<PageProps> = ({
       <Section>
         <PageOverview
           firstChildren={<>
-            <Image
+            <Img
               src='https://image.freepik.com/free-vector/visual-data-concept-illustration_114360-1713.jpg?'
             />
           </>}

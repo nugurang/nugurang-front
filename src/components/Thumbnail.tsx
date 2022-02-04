@@ -1,10 +1,9 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-import { ellipsis, fontFamily } from '@/src/styles/preset';
+import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
-import Image from '@/src/components/Image';
-import Link from '@/src/components/Link';
+import Button from '@/src/components/base/Button';
+import Div from '@/src/components/base/Div';
+import Img from '@/src/components/base/Img';
 import type { NextPage } from 'next';
-import type { UrlObject } from 'url';
 import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
 import { useState } from 'react';
@@ -13,9 +12,9 @@ interface CssProps {
   className?: string;
   css?: string;
   imageUrl?: string;
-  palette?: PaletteKey;
+  palette?: PaletteKeys;
   title?: string;
-  href?: string | UrlObject | undefined;
+  onClick?: () => void;
 }
 
 interface ComponentProps extends CssProps {}
@@ -24,32 +23,21 @@ interface StyledProps extends CssProps {
   isHover?: boolean;
   theme: ThemeObject;
 }
-/*
-const StyledWrap = styled.div<StyledWrapProps>`
-  ${(props: any) => `
-    position: relative;
-    background-color: ${props.theme.palette[props.palette || 'default'].main};
-    color: ${props.theme.palette[props.palette || 'default'].text};
-    ${fontFamily}
-    ${props.css || ''}
-  `}
-`;
-*/
 
-const StyledLink = styled(Link)<StyledProps>`
+const StyledButton = styled(Button)<StyledProps>`
   ${(props: StyledProps) => `
+    overflow: hidden;
     height: 128px;
     ${props.theme.screenSizeMediaQuery.gteMobile} {
       height: 192px;
     }
-    transition: all 0.2s ease-out;
     &:active {
       transform: scale(0.95);
     }
   `}
 `;
 
-const StyledImage = styled(Image)<StyledProps>`
+const StyledImg = styled(Img)<StyledProps>`
   ${(props: StyledProps) => `
     position: absolute;
     top: 0;
@@ -59,30 +47,31 @@ const StyledImage = styled(Image)<StyledProps>`
   `}
 `;
 
-const StyledNameDiv = styled.div<StyledProps>`
+const StyledNameDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
+
     padding: 16px;
     font-size: 20px;
+
     color: #fff;
+    border-radius: 0;
     background-color: ${hexToRGB(props.theme.palette.primary.light, 0.9)};
     @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
       -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
     };
-    ${ellipsis}
-    ${fontFamily}
   `}
 `;
 
-const ThumbnailLink: NextPage<ComponentProps> = ({
+const Thumbnail: NextPage<ComponentProps> = ({
   className,
   css,
-  href,
   imageUrl,
+  onClick,
   palette,
   title
 }) => {
@@ -90,22 +79,24 @@ const ThumbnailLink: NextPage<ComponentProps> = ({
     isHover: false,
   });
   return (
-    <StyledLink
+    <StyledButton
       className={className}
       css={css}
-      href={href}
+      variant='transparent'
+      onClick={onClick}
       isHover={state.isHover}
       onMouseEnter={() => setState((state: any) => ({ ...state, isHover: true }))}
       onMouseLeave={() => setState((state: any) => ({ ...state, isHover: false }))}
     >
-      <StyledImage src={imageUrl}/>
+      <StyledImg src={imageUrl}/>
       <StyledNameDiv
         palette={palette}
+        ellipsis={1}
       >
         {title}
       </StyledNameDiv>
-    </StyledLink>
+    </StyledButton>
   );
 }
 
-export default ThumbnailLink;
+export default Thumbnail;

@@ -1,15 +1,14 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-import { ellipsis, fontFamily } from '@/src/styles/preset';
-
+import Card from '@/src/components/Card';
+import Div from '@/src/components/base/Div';
 import Icon from '@/src/components/Icon';
 import type { NextPage } from 'next';
 import React from 'react';
+import type { ThemeObject } from '@/src/components/base/common';
 import styled from '@emotion/styled';
 
 interface CssProps {
   className?: string;
   css?: string;
-  palette?: PaletteKey;
 }
 
 interface ComponentProps extends CssProps {
@@ -23,12 +22,12 @@ interface StyledProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledWrap = styled.div<StyledProps>`
+const StyledWrapCard = styled(Card)<StyledProps>`
   ${(props: StyledProps) => `
   `}
 `;
 
-const StyledUserBriefProfileIcon = styled(Icon)<StyledProps>`
+const StyledIcon = styled(Icon)<StyledProps>`
   ${(props: StyledProps) => `
     height: 72px;
     width: 72px;
@@ -36,7 +35,7 @@ const StyledUserBriefProfileIcon = styled(Icon)<StyledProps>`
   `}
 `;
 
-const StyledUserBriefProfileTextGroupDiv = styled.div<StyledProps>`
+const StyledTextDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     display: inline-block;
     margin: 4px 0;
@@ -44,52 +43,48 @@ const StyledUserBriefProfileTextGroupDiv = styled.div<StyledProps>`
   `}
 `;
 
-const StyledUserBriefProfileNameDiv = styled.div<StyledProps>`
+const StyledNameDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
-    ${ellipsis}
-    ${fontFamily}
+    
   `}
 `;
 
-const StyledUserBriefProfileEmailDiv = styled.div<StyledProps>`
+const StyledEmailDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     font-size: 16px;
     line-height: 20px;
     margin-top: 4px;
-    ${ellipsis}
-    ${fontFamily}
+    
   `}
 `;
 
 const BriefUserProfile: NextPage<ComponentProps> = ({
   className,
   css,
-  palette,
+  imageUrl,
   name,
-  email,
-  imageUrl
+  email
 }) => {
   return (
-    <StyledWrap
+    <StyledWrapCard
       className={className}
       css={css}
-      palette={palette}
     >
-      <StyledUserBriefProfileIcon
+      <StyledIcon
         src={imageUrl}
       />
-      <StyledUserBriefProfileTextGroupDiv>
-        <StyledUserBriefProfileNameDiv>
+      <StyledTextDiv>
+        <StyledNameDiv>
           {name}
-        </StyledUserBriefProfileNameDiv>
-        <StyledUserBriefProfileEmailDiv>
+        </StyledNameDiv>
+        <StyledEmailDiv>
           {email}
-        </StyledUserBriefProfileEmailDiv>
-      </StyledUserBriefProfileTextGroupDiv>
-    </StyledWrap>
+        </StyledEmailDiv>
+      </StyledTextDiv>
+    </StyledWrapCard>
   );
 }
 

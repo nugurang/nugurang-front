@@ -1,6 +1,7 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-
 import type { NextPage } from 'next';
+import Ol from '@/src/components/base/Ol';
+import type { ThemeObject } from '@/src/components/base/common';
+import Ul from '@/src/components/base/Ul';
 import styled from '@emotion/styled';
 
 interface CssProps {
@@ -12,23 +13,27 @@ interface ComponentProps extends CssProps {
   ordered?: boolean;
 }
 
-interface StyledWrapProps extends CssProps {
+interface StyledProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledOl = styled.ol<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
-    &:not(:first-of-type)::before {
-      content: '';
-      display: block;
-      border-top: 1px solid ${props.theme.palette.default.high};
-    }
+const commonStyled = (props: StyledProps) => `
+  &:not(:first-of-type)::before {
+    content: '';
+    display: block;
+    border-top: 1px solid ${props.theme.palette.default.high};
+  }
+`;
+
+const StyledOl = styled(Ol)<StyledProps>`
+  ${(props: StyledProps) => `
+    ${commonStyled}
   `}
 `;
 
-const StyledUl = styled.ul<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
-    width: 100%;
+const StyledUl = styled(Ul)<StyledProps>`
+  ${(props: StyledProps) => `
+    ${commonStyled}
   `}
 `;
 

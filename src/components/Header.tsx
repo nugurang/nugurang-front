@@ -1,39 +1,36 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-
-import Icon from '@/src/components/Icon';
-import Link from '@/src/components/Link';
+import Button from '@/src/components/base/Button';
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
+import Span from '@/src/components/base/Span';
+import type { ThemeObject } from '@/src/styles/theme';
 import WidthLimiter from '@/src/components/WidthLimiter';
-import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
 export const height = '64px';
 
-interface CssProps {
+interface ComponentProps {
+  callbackUrl?: string;
   user?: {
     name: string;
     imageUrl?: string;
   };
 }
 
-interface ComponentProps extends CssProps {
-  callbackUrl?: string;
-}
-
-interface StyledWrapProps extends CssProps {
+interface StyledProps {
   theme: ThemeObject;
 }
 
 // Header가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
-const StyledDivDummy = styled.div`
+const StyledDivDummy = styled(Div)`
   ${(props: any) => `
     height: ${height};
   `}
 `;
 
-const StyledHeaderWrap = styled.header<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledHeaderWrap = styled.header<StyledProps>`
+  ${(props: StyledProps) => `
     position: fixed;
     left: 0;
     right: 0;
@@ -44,22 +41,20 @@ const StyledHeaderWrap = styled.header<StyledWrapProps>`
     z-index: 20;
     transition-duration: 0.2s;
     transition-property: background-color, color;
-    ${fontFamily}
   `}
 `;
 
-const StyledLogoTextWrap = styled.span<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledLogoTextWrap = styled(Span)<StyledProps>`
+  ${(props: StyledProps) => `
     display: inline-block;
     color: ${props.theme.palette.primary.text};
     font-size: 24px;
     margin-left: 8px;
-    ${fontFamily}
   `}
 `;
 
-const StyledLeftsideWrap = styled.span`
-  ${(props: any) => `
+const StyledLeftsideWrap = styled(Span)<StyledProps>`
+  ${(props: StyledProps) => `
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -67,12 +62,11 @@ const StyledLeftsideWrap = styled.span`
     top: 0;
     bottom: 0;
     left: 10px;
-    ${fontFamily}
   `}
 `;
 
-const StyledRightsideWrap = styled.span`
-  ${(props: any) => `
+const StyledRightsideWrap = styled(Span)<StyledProps>`
+  ${(props: StyledProps) => `
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -80,7 +74,6 @@ const StyledRightsideWrap = styled.span`
     top: 0;
     bottom: 0;
     right: 10px;
-    ${fontFamily}
   `}
 `;
 
@@ -91,6 +84,7 @@ const Logo: NextPage = () => {
 };
 
 const Header: NextPage<ComponentProps> = ({ user, callbackUrl }) => {
+  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <>
@@ -102,22 +96,17 @@ const Header: NextPage<ComponentProps> = ({ user, callbackUrl }) => {
           </StyledLeftsideWrap>
           <StyledRightsideWrap>
             {
-              user && (
-                <Icon alt={user.name}>
-                  <img alt=''></img>
-                </Icon>
-              )
-            }
-            {
-              !user && (
-                <Link
-                  button
-                  href={`/login?callbackUrl=${callbackUrl || '/'}`}
+              !user && <>
+                <Button
                   palette='primary'
+                  onClick={() => router.push({
+                    pathname: '/login',
+                    query: { callbackUrl },
+                  })}
                 >
                   { t('login') }
-                </Link>
-              )
+                </Button>
+              </>
             }
           </StyledRightsideWrap>
         </WidthLimiter>

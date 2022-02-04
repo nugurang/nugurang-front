@@ -1,7 +1,8 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
 import { css, jsx, keyframes } from '@emotion/react'
 
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
+import type { ThemeObject } from '@/src/components/base/common';
 import styled from '@emotion/styled';
 
 interface CssProps {
@@ -20,7 +21,7 @@ const spinKeyframes = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
-const StyledWrap = styled.div<StyledWrapProps>`
+const StyledWrap = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => css`
     border: 12px solid ${props.theme.palette.background.low};
     border-top: 12px solid ${props.theme.palette.primary.main};

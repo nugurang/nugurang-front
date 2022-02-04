@@ -1,20 +1,15 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
+import type { ThemeObject } from '@/src/components/base/common';
 import WidthLimiter from '@/src/components/WidthLimiter';
-import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
-
-interface CssProps {
-  theme: ThemeObject;
-}
 
 interface StyledWrapProps {
   theme: ThemeObject;
 }
 
 // Footer가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
-const StyledDivDummy = styled.div`
+const StyledDivDummy = styled(Div)`
   ${(props: any) => `
     height: 64px;
   `}
@@ -31,17 +26,15 @@ const StyledFooterWrap = styled.footer<StyledWrapProps>`
     height: 64px;
     transition-duration: 0.2s;
     transition-property: background-color, color;
-    ${fontFamily}
   `}
 `;
 
-const StyledCopyrightDiv = styled.div<StyledWrapProps>`
+const StyledCopyrightDiv = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     font-size: 10px;
     text-align: center;
     color: ${props.theme.palette.background.subtext};
     margin-top: 26px;
-    ${fontFamily}
   `}
 `;
 

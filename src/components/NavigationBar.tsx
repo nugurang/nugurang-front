@@ -1,5 +1,7 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
+import Div from '@/src/components/base/Div';
+import Nav from '@/src/components/base/Nav';
 import type { NextPage } from 'next';
 import React from 'react';
 import WidthLimiter from '@/src/components/WidthLimiter';
@@ -9,7 +11,7 @@ export const height = '64px';
 
 interface CssProps {
   css?: string;
-  palette?: PaletteKey;
+  palette?: PaletteKeys;
 }
 
 interface ComponentProps extends CssProps {
@@ -21,13 +23,13 @@ interface StyledWrapProps extends CssProps {
 }
 
 // NavigationBar가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
-const StyledDivDummy = styled.div`
+const StyledDivDummy = styled(Div)`
   ${(props: any) => `
     height: ${height};
   `}
 `;
 
-const StyledNavigationBarWrap = styled.nav<StyledWrapProps>`
+const StyledNavigationBarWrap = styled(Nav)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     position: fixed;
     left: 0;
@@ -42,7 +44,7 @@ const StyledNavigationBarWrap = styled.nav<StyledWrapProps>`
   `}
 `;
 
-const StyledWidthLimiter = styled.div`
+const StyledWidthLimiter = styled(WidthLimiter)`
   ${(props: any) => `
     & > * {
       margin-left: 4px;

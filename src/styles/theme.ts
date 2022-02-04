@@ -4,15 +4,17 @@ import { deviceMediaQuery, screenSizeMediaQuery } from '@/src/styles/mediaQuery'
 import type { BorderRadiusObject } from '@/src/styles/borderRadius';
 import type { FontObject } from '@/src/styles/font';
 import type { ScreenSizeObject } from '@/src/styles/size';
+import type { ZIndexObject } from '@/src/styles/zIndex';
 import { borderRadius } from '@/src/styles/borderRadius';
 import { font } from '@/src/styles/font';
 import { screenSize } from '@/src/styles/size';
+import { zIndex } from '@/src/styles/zIndex';
 
-type BasePaletteRowKey = 'main'
-                       | 'light'
-                       | 'dark'
-                       | 'text'
-                       | 'subtext';
+type BasePaletteRowKeys = 'main'
+                        | 'light'
+                        | 'dark'
+                        | 'text'
+                        | 'subtext';
 type BasePaletteRowObject = {
   main:    string;
   light:   string;
@@ -21,23 +23,23 @@ type BasePaletteRowObject = {
   subtext: string;
 };
 
-export type PaletteRowKey = BasePaletteRowKey
-                          | 'high'
-                          | 'low';
+export type PaletteRowKeys = BasePaletteRowKeys
+                           | 'high'
+                           | 'low';
 export type PaletteRowObject = BasePaletteRowObject & {
   high: string;
   low:  string;
 };
 
-export type PaletteKey = 'default'
-                       | 'primary'
-                       | 'secondary'
-                       | 'success'
-                       | 'info'
-                       | 'warning'
-                       | 'danger'
-                       | 'background'
-                       | 'transparent';
+export type PaletteKeys = 'default'
+                        | 'primary'
+                        | 'secondary'
+                        | 'success'
+                        | 'info'
+                        | 'warning'
+                        | 'danger'
+                        | 'background'
+                        | 'transparent';
 export type PaletteObject = {
   default:     PaletteRowObject;
   primary:     PaletteRowObject;
@@ -50,8 +52,8 @@ export type PaletteObject = {
   transparent: PaletteRowObject;
 };
 
-export type ThemeKey = 'light'
-                     | 'dark';
+export type ThemeKeys = 'light'
+                      | 'dark';
 export type ThemeObject = {
   borderRadius: BorderRadiusObject;
   deviceMediaQuery: DeviceMediaQueryObject;
@@ -59,11 +61,12 @@ export type ThemeObject = {
   palette: PaletteObject;
   screenSize: ScreenSizeObject;
   screenSizeMediaQuery: ScreenSizeMediaQueryObject;
+  zIndex: ZIndexObject;
 };
 
 const createPaletteRow = (
   basePaletteRowObject: BasePaletteRowObject,
-  themeKey: ThemeKey
+  themeKey: ThemeKeys
 ) => {
   switch (themeKey) {
     case 'light':
@@ -177,16 +180,16 @@ const backgroundLightPaletteRow = createPaletteRow(backgroundLightBasePaletteRow
 const backgroundDarkPaletteRow = createPaletteRow(backgroundDarkPBasePaletteRow, 'dark');
 
 const transparentLightBasePaletteRow = {
-  main: '#ffff',
-  light: '#ffff',
-  dark: '#ffff',
+  main: '#ffffff01',
+  light: '#ffffff01',
+  dark: '#ffffff01',
   text: '#000',
   subtext: '#888',
 };
 const transparentDarkBasePaletteRow = {
-  main: '#000f',
-  light: '#000f',
-  dark: '#000f',
+  main: '#00000001',
+  light: '#00000001',
+  dark: '#00000001',
   text: '#fff',
   subtext: '#888',
 };
@@ -224,20 +227,21 @@ export const darkPalette = {
   constant: constantPaletteRow
 };
 
-export const lightTheme = {
+const theme = {
   borderRadius,
   deviceMediaQuery,
   font,
-  palette: lightPalette,
   screenSize,
-  screenSizeMediaQuery
+  screenSizeMediaQuery,
+  zIndex
+};
+
+export const lightTheme = {
+  ...theme,
+  palette: lightPalette
 };
 
 export const darkTheme = {
-  borderRadius,
-  deviceMediaQuery,
-  font,
-  palette: darkPalette,
-  screenSize,
-  screenSizeMediaQuery
+  ...theme,
+  palette: darkPalette
 };

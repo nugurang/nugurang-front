@@ -1,9 +1,9 @@
 import BriefUserProfile from '@/src/components/BriefUserProfile';
 import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
+import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
-import Image from '@/src/components/Image';
-import Link from '@/src/components/Link';
+import Img from '@/src/components/base/Img';
 import List from '@/src/components/List';
 import ListItem from '@/src/components/ListItem';
 import LoginButtonGroup from '@/src/components/LoginButtonGroup';
@@ -28,7 +28,7 @@ interface StyledProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewLoginImageWrap = styled(Image)<StyledProps>`
+const StyledPageOverviewLoginImageWrap = styled(Img)<StyledProps>`
   ${(props: StyledProps) => `
     display: block;
     width: 100%;
@@ -39,7 +39,7 @@ const StyledPageOverviewLoginImageWrap = styled(Image)<StyledProps>`
   `}
 `;
 
-const StyledPageOverviewLoginTextWrap = styled.div<StyledProps>`
+const StyledPageOverviewLoginTextWrap = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     margin-top: 10px;
     font-size: 24px;
@@ -48,7 +48,7 @@ const StyledPageOverviewLoginTextWrap = styled.div<StyledProps>`
   `}
 `;
 
-const StyledSectionGridDiv = styled.div<StyledProps>`
+const StyledSectionGridDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     display: grid;
     grid-template-columns: repeat(1, 1fr);
@@ -62,12 +62,6 @@ const StyledSectionGridDiv = styled.div<StyledProps>`
       grid-template-columns: repeat(3, 1fr);
       max-width: ${props.theme.screenSize.desktop};
     }
-  `}
-`;
-
-const StyledMenuCard = styled(Card)<StyledProps>`
-  ${(props: StyledProps) => `
-    width: 100%;
   `}
 `;
 
@@ -123,7 +117,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
           <List>
             <ListItem>
               <Card>
-
+                설정
               </Card>
             </ListItem>
           </List>

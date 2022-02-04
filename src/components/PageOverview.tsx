@@ -1,6 +1,6 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
+import type { ThemeObject } from '@/src/components/base/common';
 import styled from '@emotion/styled';
 
 interface CssProps {
@@ -17,7 +17,7 @@ interface StyledProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledGridDiv = styled.div<StyledProps>`
+const StyledGridDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     display: grid;
     grid-template-columns: repeat(1, 1fr);
@@ -30,7 +30,7 @@ const StyledGridDiv = styled.div<StyledProps>`
   `}
 `;
 
-const StyledGridItemDiv = styled.div<StyledProps>`
+const StyledGridItemDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     margin: auto 0;
     max-height: 50vh;

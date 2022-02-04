@@ -1,8 +1,7 @@
-import Button from '@/src/components/Button';
+import Button from '@/src/components/base/Button';
 import Container from '@/src/components/Container';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
-import Link from '@/src/components/Link';
 import Loader from '@/src/components/Loader';
 import type { NextPage } from 'next';
 import Section from '@/src/components/Section';
@@ -11,7 +10,7 @@ import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { withAuthServerSideProps } from '@/src/utils/server-side';
 
-export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('user');
+export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');
 
 interface PageProps {
   currentOAuth2User: Object,
@@ -37,14 +36,16 @@ const Sandbox: NextPage<PageProps> = ({
     >
       <Section>
         {t('_helloWorld')}
-        <Link
-          href='/'
-          locale={router.locale === 'en' ? 'ko' : 'en'}
-          button={true}
+        <Button
+          variant='filled'
+          palette='primary'
+          onClick={() => router.push('/admin/sandbox', '/admin/sandbox', { locale: router.locale === 'en' ? 'ko' : 'en' })}
         >
           {`change-locale`}
-        </Link>
+        </Button>
         <Button
+          variant='filled'
+          palette='primary'
           onClick={() => setIsDark(!isDark)}
         >
           {isDark ? 'Dark' : 'Light'}

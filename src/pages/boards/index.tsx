@@ -1,14 +1,14 @@
 import * as constants from '@/src/constants';
 
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-
 import Container from '@/src/components/Container';
+import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
-import Image from '@/src/components/Image';
+import Img from '@/src/components/base/Img';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
-import ThumbnailLink from '@/src/components/ThumbnailLink';
+import type { ThemeObject } from '@/src/components/base/common';
+import Thumbnail from '@/src/components/Thumbnail';
 import { queryToBackend } from '@/src/utils/backend';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -61,7 +61,7 @@ interface StyledProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImageWrap = styled(Image)<StyledWrapProps>`
+const StyledPageOverviewImageWrap = styled(Img)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     width: 100%;
@@ -72,7 +72,7 @@ const StyledPageOverviewImageWrap = styled(Image)<StyledWrapProps>`
   `}
 `;
 
-const StyledBoardGridDiv = styled.div<StyledProps>`
+const StyledBoardGridDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     display: grid;
     grid-template-columns: repeat(1, 1fr);
@@ -129,14 +129,14 @@ const BoardsIndex: NextPage<PageProps> = ({
             boards
             .sort((lhs, rhs) => t(lhs.name) > t(rhs.name) ? 1 : -1)
             .map((board: Board, index: number) => {
-              return <ThumbnailLink
+              return <Thumbnail
                 key={index}
                 imageUrl={board.image.address}
                 title={t(board.name)}
-                href={{
+                onClick={() => router.push({
                   pathname: '/boards/[id]',
                   query: { id: board.id },
-                }}
+                })}
               />
             })
           }

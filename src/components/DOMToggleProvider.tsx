@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import React from 'react';
 import type { ThemeObject } from '@/src/styles/theme';
@@ -23,7 +24,7 @@ interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledWrap = styled.div<StyledWrapProps>`
+const StyledWrap = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: ${props.domActive ? 'block' : 'none'};
   `}

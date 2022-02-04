@@ -1,5 +1,6 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+import type { PaletteKeys, ThemeObject } from '@/src/styles/theme';
 
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 
@@ -17,7 +18,7 @@ interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledImageWrap = styled.img<StyledWrapProps>`
+const StyledWrap = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     object-fit: cover;
     height:100%;
@@ -34,7 +35,7 @@ const Button: NextPage<ComponentProps> = ({
   alt,
 }) => {
   return (
-    <StyledImageWrap
+    <StyledWrap
       className={className}
       css={css}
       src={src}

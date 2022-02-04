@@ -1,9 +1,11 @@
-import Button from '@/src/components/Button';
+import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
-import FontAwesomeIcon from '@/src/components/FontAwesomeIcon';
+import Div from '@/src/components/base/Div';
+import Icon from '@/src/components/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { NextPage } from 'next';
 import React from 'react';
+import Span from '@/src/components/base/Span';
 import type { ThemeObject } from '@/src/styles/theme';
 import { loginToSession } from '@/src/utils/session';
 import styled from '@emotion/styled';
@@ -11,19 +13,19 @@ import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 
 interface LoginProviderItem {
-  icon: IconProp;
+  src: IconProp;
   label: string;
   providerName: string;
 }
 
 const loginProviderItems: LoginProviderItem[] = [
   {
-    icon: ['fab', 'github'],
+    src: ['fab', 'github'],
     label: 'gitHub',
     providerName: 'github',
   },
   {
-    icon: ['fab', 'google'],
+    src: ['fab', 'google'],
     label: 'google',
     providerName: 'google',
   },
@@ -44,7 +46,7 @@ interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledWrap = styled.div<StyledWrapProps>`
+const StyledWrap = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     text-align: center;
     ${props.css || ''}
@@ -70,7 +72,7 @@ const StyledLoginButton = styled(Button)<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginButtonLabelSpan = styled.span<StyledWrapProps>`
+const StyledLoginButtonLabelSpan = styled(Span)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     margin-top: 8px;
@@ -111,8 +113,9 @@ const LoginButtonGroup: NextPage<ComponentProps> = ({
                 });
               }}
             >
-              <FontAwesomeIcon
-                icon={loginProviderItem.icon}
+              <Icon
+                src={loginProviderItem.src}
+                type='fontAwesomeIcon'
                 size='large'
               />
               <StyledLoginButtonLabelSpan>

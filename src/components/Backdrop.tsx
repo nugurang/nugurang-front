@@ -1,33 +1,38 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-
+import Button from '@/src/components/base/Button';
 import type { NextPage } from 'next'
+import type { ThemeObject } from '@/src/components/BaseComponent';
 import styled from '@emotion/styled';
 
 interface CssProps {
   css?: string;
+  onClick?: (() => void) | undefined;
   open: boolean;
   transitionTimeout: number;
 }
 
 interface ComponentProps extends CssProps {
   className?: string;
-  onClick?: (() => void) | undefined;
 }
 
-interface StyledWrapProps extends CssProps {
+interface StyledProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledWrapButton = styled.button<StyledWrapProps>`
-  ${(props: any) => `
+const StyledButton = styled(Button)<StyledProps>`
+  ${(props: StyledProps) => `
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 0;
     background-color: #000;
     opacity: ${props.open ? '0.5' : '0'};
-    z-index: 500;
+    &:active {
+      opacity: ${props.open ? '0.6' : '0'};
+      transform: none;
+    }
+    z-index: ${props.theme.zIndex.backdrop};
   `}
 `;
 
@@ -38,7 +43,7 @@ const Modal: NextPage<ComponentProps> = ({
   transitionTimeout
 }) => {
   return (
-    <StyledWrapButton
+    <StyledButton
       className={className}
       open={open}
       onClick={() => {open && onClick && onClick()}}

@@ -3,34 +3,27 @@ import type { NextPage } from 'next';
 import React from "react";
 import { FontAwesomeIcon as ReactFontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-type SizeKeys = 'small'
-              | 'medium'
-              | 'large';
-
-const iconSize = {
-  small: '16px',
-  medium: '24px',
-  large: '32px',
-};
-
 interface CssProps {
+  className?: string;
+  css?: string;
   icon?: IconProp;
-  size?: SizeKeys;
 }
 
 interface ComponentProps extends CssProps {
   children?: React.ReactNode;
 }
 
-const FontAwesomeIcon: NextPage<ComponentProps> =  ({ icon, size }) => {
+const FontAwesomeIcon: NextPage<ComponentProps> = ({
+  className,
+  css,
+  icon
+}) => {
     return (
       <ReactFontAwesomeIcon
+        className={className}
+        css={css}
         icon={icon || ['fas', 'question']}
         fixedWidth
-        style={{
-          height: iconSize[`${size || 'medium'}`],
-          width: iconSize[`${size || 'medium'}`],
-        }}
       />
     );
 }

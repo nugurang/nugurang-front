@@ -1,6 +1,6 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
-import Button from '@/src/components/Button';
+import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
 import type { NextPage } from 'next';
 import { logoutFromSession } from '@/src/utils/session';

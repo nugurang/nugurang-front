@@ -1,18 +1,18 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
+import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
-import Button from '@/src/components/Button';
+import Button from '@/src/components/base/Button';
+import Div from '@/src/components/base/Div';
 import Loader from '@/src/components/Loader';
 import Modal from '@/src/components/Modal';
 import type { NextPage } from 'next';
 import WidthLimiter from '@/src/components/WidthLimiter';
-import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
 interface CssProps {
   loader?: boolean;
   open?: boolean;
-  palette?: PaletteKey;
+  palette?: PaletteKeys;
 }
 
 interface ComponentProps extends CssProps {
@@ -39,7 +39,7 @@ const StyledWidthLimiter = styled(WidthLimiter)<StyledWrapProps>`
   `}
 `;
 
-const StyledInfoDiv = styled.div<StyledWrapProps>`
+const StyledInfoDiv = styled(Div)<StyledWrapProps>`
   ${(props: any) => `
     margin-bottom: 32px;
   `}
@@ -52,32 +52,30 @@ const StyledLoader = styled(Loader)<StyledWrapProps>`
   `}
 `;
 
-const StyledTextDiv = styled.div<StyledWrapProps>`
+const StyledTextDiv = styled(Div)<StyledWrapProps>`
   ${(props: any) => `
     display: block;
   `}
 `;
 
-const StyledTitleDiv = styled.div<StyledWrapProps>`
+const StyledTitleDiv = styled(Div)<StyledWrapProps>`
   ${(props: any) => `
     font-size: 24px;
     font-weight: bold;
     line-height: 28px;
     margin-bottom: 16px;
-    ${fontFamily}
   `}
 `;
 
-const StyledContentDiv = styled.div<StyledWrapProps>`
+const StyledContentDiv = styled(Div)<StyledWrapProps>`
   ${(props: any) => `
     font-size: 20px;
     line-height: 24px;
     margin-bottom: 16px;
-    ${fontFamily}
   `}
 `;
 
-const StyledButtonGroup = styled.div<StyledWrapProps>`
+const StyledButtonGroup = styled(Div)<StyledWrapProps>`
   ${(props: any) => `
     & > * {
       margin-left: 8px;

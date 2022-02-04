@@ -1,23 +1,23 @@
-import type { PaletteKey, ThemeObject } from '@/src/styles/theme';
-import { ellipsis, fontFamily } from '@/src/styles/preset';
+import type { PaletteKeys, ThemeObject } from '@/src/styles/theme';
 
+import Button from '@/src/components/base/Button';
+import Div from '@/src/components/base/Div';
 import Icon from '@/src/components/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
-import type { UrlObject } from 'url';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
 interface CssProps {
   css?: string;
-  palette?: PaletteKey;
+  palette?: PaletteKeys;
 }
 
 // NavigationBar 컴포넌트에서 사용하기 위해 export함
 export interface ComponentProps extends CssProps {
   active?: boolean;
-  href: string | UrlObject;
+  pathname: string;
   icon?: IconProp;
   label: string;
 }
@@ -32,16 +32,17 @@ interface StyledWrapProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledLinkWrap = styled(Link)<StyledWrapProps>`
+const StyledButton = styled(Button)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: inline-block;
     height: 100%;
     width: 64px;
+    padding: 0;
     text-align: center;
   `}
 `;
 
-const StyledDivWrap = styled.div<StyledWrapProps>`
+const StyledDivWrap = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     color: ${props.active
@@ -61,28 +62,31 @@ const StyledIcon = styled(Icon)<StyledWrapProps>`
 `;
 
 
-const StyledDivLabelWrap = styled.div`
+const StyledDivLabelWrap = styled(Div)`
   ${(props: any) => `
     font-size: 12px;
     line-height: 12px;
     padding-top: 4px;
-    ${ellipsis}
-    ${fontFamily}
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   `}
 `;
 
 const NavigationBarItem: NextPage<ComponentProps> = ({
   active,
   css,
-  href,
+  pathname,
   icon,
   label
 }) => {
+  const router = useRouter();
   const { t } = useTranslation('common');
   return (
-    <StyledLinkWrap
-      href={href}
-      passHref
+    <StyledButton
+      variant='transparent'
+      onClick={() => router.push(pathname)}
     >
       <StyledDivWrap
         active={active}
@@ -91,14 +95,14 @@ const NavigationBarItem: NextPage<ComponentProps> = ({
         { icon && 
           <StyledIcon
             src={icon}
-            variant='fontAwesomeIcon'
+            type='fontAwesomeIcon'
           />
         }
         <StyledDivLabelWrap>
           { t(label) }
         </StyledDivLabelWrap>
       </StyledDivWrap>
-    </StyledLinkWrap>
+    </StyledButton>
   );
 }
 

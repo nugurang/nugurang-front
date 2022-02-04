@@ -1,37 +1,23 @@
+import type { PaletteKeys, ThemeObject } from '@/src/styles/theme';
+
 import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Image from '@/src/components/Image';
+import Img from '@/src/components/base/Img';
 import type { NextPage } from 'next';
 import { FontAwesomeIcon as ReactFontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { ThemeObject } from '@/src/styles/theme';
-import { fontFamily } from '@/src/styles/preset';
+import Span from '@/src/components/base/Span';
 import styled from '@emotion/styled';
 
-type VariantKeys = 'image'
-                 | 'fontAwesomeIcon';
-
-type SizeKeys = 'small'
-              | 'medium'
-              | 'large';
-
-const iconSize = {
-  small: '24px',
-  medium: '32px',
-  large: '40px',
-};
-const fontSize = {
-  small: '12px',
-  medium: '16px',
-  large: '20px',
-};
+type TypeKeys = 'image'
+              | 'fontAwesomeIcon';
 
 interface CssProps {
   backgroundColor?: string;
   edge?: string;
   className?: string;
   css?: string;
-  size?: SizeKeys;
-  variant?: VariantKeys;
+  palette?: PaletteKeys;
+  type?: TypeKeys;
 }
 
 interface ComponentProps extends CssProps {
@@ -43,33 +29,24 @@ interface StyledProps extends CssProps {
   theme: ThemeObject;
 }
 
-const StyledWrap = styled.span<StyledProps>`
+const StyledImg = styled(Img)<StyledProps>`
   ${(props: StyledProps) => `
-    display: inline-block;
-    background-color: ${props.backgroundColor || '#0000'};
-    position: relative;
-
+    ${props.css || ''}
     border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'circle']};
-    ${props.variant == 'fontAwesomeIcon' && `
-      border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'square']};
-    `}
+    overflow: hidden;
+  `}
+`;
 
-    height: ${iconSize[`${props.size || 'medium'}`]};
-    width: ${iconSize[`${props.size || 'medium'}`]};
-    font-size: ${fontSize[`${props.size || 'medium'}`]};
+const StyledReactFontAwesomeIcon = styled(ReactFontAwesomeIcon)<StyledProps>`
+  ${(props: StyledProps) => `
+    color: ${props.theme.palette[props.palette || 'default'].main};
+    border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'square']};
     overflow: hidden;
     ${props.css || ''}
   `}
 `;
 
-const StyledImage = styled(Image)<StyledProps>`
-  ${(props: StyledProps) => `
-    height: 100%;
-    width: 100%;
-  `}
-`;
-
-const StyledAltWrap = styled.span<StyledProps>`
+const StyledAltSpan = styled(Span)<StyledProps>`
   ${(props: StyledProps) => `
     position: absolute;
     top: 50%;
@@ -78,51 +55,44 @@ const StyledAltWrap = styled.span<StyledProps>`
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     color: #fff;
-    ${fontFamily}
-  `}
-`;
-
-const StyledReactFontAwesomeIconp = styled(ReactFontAwesomeIcon)<StyledProps>`
-  ${(props: StyledProps) => `
-    height: 100%;
-    width: 100%;
   `}
 `;
 
 const Icon: NextPage<ComponentProps> = ({
   alt,
-  backgroundColor,
   className,
   css,
   edge,
-  size,
+  palette,
   src,
-  variant,
+  type,
 }) => {
   return (
-    <StyledWrap
-      backgroundColor={backgroundColor}
-      className={className}
-      css={css}
-      edge={edge}
-      size={size}
-      variant={variant}
-    >
-      {src && ((variant == 'image') || (variant === undefined)) &&
-        <StyledImage
-          src={src}
+    <>
+      {src && ((type == 'image') || (type === undefined)) &&
+        <StyledImg
+          className={className}
+          css={css}
+          edge={edge}
+          type={type}
+          src={src as string}
         />
       }
-      {src && (variant == 'fontAwesomeIcon') &&
-        <StyledReactFontAwesomeIconp
+      {src && (type == 'fontAwesomeIcon') &&
+        <StyledReactFontAwesomeIcon
+          className={className}
+          css={css}
+          palette={palette}
           icon={src || ['fas', 'question']}
+          edge={edge}
+          type={type}
           fixedWidth
         />
       }
       {!src &&
-        <StyledAltWrap>{alt || ''}</StyledAltWrap>
+        <StyledAltSpan>{alt || ''}</StyledAltSpan>
       }
-    </StyledWrap>
+    </>
   );
 }
 

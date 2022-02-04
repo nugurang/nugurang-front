@@ -1,6 +1,6 @@
 import Container from '@/src/components/Container';
 import { GetServerSideProps } from 'next';
-import Image from '@/src/components/Image';
+import Img from '@/src/components/base/Img';
 import LoginButtonGroup from '@/src/components/LoginButtonGroup';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
@@ -41,7 +41,7 @@ const StyledPageOverviewImageWrap = styled(Image)<StyledWrapProps>`
   `}
 `;
 
-const StyledPageOverviewTextWrap = styled.div<StyledWrapProps>`
+const StyledPageOverviewTextWrap = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     margin-top: 24px;
     font-size: 24px;
