@@ -16,8 +16,10 @@ interface CssProps {
 interface ComponentProps extends CssProps {
   button?: boolean;
   children?: React.ReactNode;
-  href: string | UrlObject;
+  href: string | UrlObject | undefined;
   locale?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   passHref?: boolean;
   replace?: boolean;
 }
@@ -31,14 +33,15 @@ const StyledAWrap = styled.a<StyledWrapProps>`
     display: inline-block;
     position: relative;
     overflow: hidden;
-    border: 0px solid #000;
     border-radius: ${props.theme.borderRadius.round};
-    color: ${props.theme.palette.transparent.text};
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
     &:visited {
       color: ${props.theme.palette[props.palette || 'transparent'].text};
     }
+    &:active {
+      transform: scale(0.9);
+    }
+    -webkit-transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
     ${fontFamily}
     ${props.css}
   `}
@@ -55,14 +58,17 @@ const StyledALikeButtonWrap = styled.a<StyledWrapProps>`
     padding: 10px 20px;
     text-decoration: none;
     overflow: hidden;
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
     &:hover {
       background-color: ${props.theme.palette[props.palette || 'transparent'].dark};
     }
     &:visited {
       color: ${props.theme.palette[props.palette || 'transparent'].text};
     }
+    &:active {
+      transform: scale(0.9);
+    }
+    -webkit-transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
     ${fontFamily}
     ${props.css}
   `}
@@ -77,8 +83,7 @@ const StyledHoverEffectDiv = styled.div<StyledWrapProps>`
     left: 0;
     right: 0;
     background-color: #0000;
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
+    transition: background-color 0.2s;
     &:hover {
       background-color: #0002;
     }
@@ -92,6 +97,8 @@ const Link: NextPage<ComponentProps> = ({
   className,
   href,
   locale,
+  onMouseEnter,
+  onMouseLeave,
   palette,
   replace
 }) => {
@@ -106,6 +113,8 @@ const Link: NextPage<ComponentProps> = ({
         className={className}
         css={css}
         palette={palette}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         { children }
         <StyledHoverEffectDiv />
@@ -123,6 +132,8 @@ const Link: NextPage<ComponentProps> = ({
         className={className}
         css={css}
         palette={palette}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         { children }
         <StyledHoverEffectDiv />

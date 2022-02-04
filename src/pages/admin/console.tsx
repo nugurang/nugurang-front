@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { withAuthServerSideProps } from '@/src/utils/server-side';
 
-export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');
+export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('user');
 
 interface PageProps {
   currentOAuth2User: Object,
@@ -43,24 +43,15 @@ const createBoard = async (props: CreateBoardProps) => {
   });
 };
 
-const StyledBannerGridDiv = styled.div<StyledProps>`
-  ${(props: StyledProps) => `
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
-    ${props.theme.screenSizeMediaQuery.gteTablet} {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  `}
-`;
+interface PageProps {
+  callbackUrl: string,
+  currentUser: any
+}
 
-const StyledBannerGridItemCard = styled(Card)<StyledProps>`
-  ${(props: StyledProps) => `
-    margin: auto 0;
-  `}
-`;
-
-const Console: NextPage<PageProps> = ({ currentOAuth2User }) => {
+const Console: NextPage<PageProps> = ({
+  callbackUrl,
+  currentUser
+}) => {
   const router = useRouter();
   const { t } = useTranslation('common');
 
@@ -101,7 +92,10 @@ const Console: NextPage<PageProps> = ({ currentOAuth2User }) => {
   };
 
   return (
-    <Container>
+    <Container
+      currentUser={currentUser}
+      callbackUrl={callbackUrl}
+    >
       <Section>
         <PageOverview
           firstChildren={<>

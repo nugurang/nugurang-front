@@ -6,10 +6,12 @@ import { fontFamily } from '@/src/styles/preset';
 import styled from '@emotion/styled';
 
 interface CssProps {
+  className?: string;
   css?: string;
   fullwidth?: boolean;
   palette?: PaletteKey;
-  className?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 interface ComponentProps extends CssProps {
@@ -32,11 +34,14 @@ const StyledButtonWrap = styled.button<StyledWrapProps>`
     background-color: ${props.theme.palette[props.palette || 'default'].main};
     padding: 10px 20px;
     cursor: pointer;
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
     &:hover {
       background-color: ${props.theme.palette[props.palette || 'default'].dark};
     }
+    &:active {
+      transform: scale(0.9);
+    }
+    -webkit-transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
     ${fontFamily}
     ${props.css || ''}
   `}
@@ -51,8 +56,8 @@ const StyledHoverEffectDiv = styled.div<StyledWrapProps>`
     left: 0;
     right: 0;
     background-color: #0000;
-    transition-duration: 0.2s;
-    transition-property: background-color, color;
+    -webkit-transition: background-color 0.2s;
+    transition: background-color 0.2s;
     &:hover {
       background-color: #0002;
     }
@@ -65,6 +70,8 @@ const Button: NextPage<ComponentProps> = ({
   css,
   fullwidth,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
   palette
 }) => {
   return (
@@ -73,6 +80,8 @@ const Button: NextPage<ComponentProps> = ({
       css={css}
       fullwidth={fullwidth}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       palette={palette}
     >
       { children }

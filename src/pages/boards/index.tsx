@@ -9,8 +9,8 @@ import Link from '@/src/components/Link';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
+import ThumbnailLink from '@/src/components/ThumbnailLink';
 import { fontFamily } from '@/src/styles/preset';
-import { hexToRGB } from '@/src/utils/color';
 import { queryToBackend } from '@/src/utils/backend';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -88,34 +88,6 @@ const StyledBoardGridDiv = styled.div<StyledProps>`
   `}
 `;
 
-const StyledBoardGridItemLink = styled(Link)<StyledProps>`
-  ${(props: StyledProps) => `
-    position: relative;
-    height: 128px;
-    ${props.theme.screenSizeMediaQuery.gteMobile} {
-      height: 192px;
-    }
-  `}
-`;
-
-const StyledBoardGridItemNameDiv = styled.div<StyledProps>`
-  ${(props: StyledProps) => `
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 16px;
-    font-size: 20px;
-    color: #fff;
-    background-color: ${hexToRGB(props.theme.palette.primary.light, 0.9)};
-    ${fontFamily}
-    @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-      -webkit-backdrop-filter: blur(4px);
-      backdrop-filter: blur(4px);
-    }
-  `}
-`;
-
 interface Board {
   id: number;
   name: string;
@@ -140,9 +112,6 @@ const BoardsIndex: NextPage<PageProps> = ({
   return (
     <Container
       currentUser={currentUser}
-      header
-      footer
-      navigationBar
       callbackUrl={callbackUrl}
     >
       <Section>
@@ -161,20 +130,15 @@ const BoardsIndex: NextPage<PageProps> = ({
             boards
             .sort((lhs, rhs) => t(lhs.name) > t(rhs.name) ? 1 : -1)
             .map((board: Board, index: number) => {
-              return <StyledBoardGridItemLink
+              return <ThumbnailLink
                 key={index}
+                imageUrl={board.image.address}
+                title={t(board.name)}
                 href={{
                   pathname: '/boards/[id]',
                   query: { id: board.id },
                 }}
-              >
-                <Image
-                  src={board.image.address}
-                />
-                <StyledBoardGridItemNameDiv>
-                  {t(board.name)}
-                </StyledBoardGridItemNameDiv>
-              </StyledBoardGridItemLink>
+              />
             })
           }
         </StyledBoardGridDiv>

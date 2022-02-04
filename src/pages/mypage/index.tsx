@@ -89,9 +89,6 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
     <Container
       callbackUrl={callbackUrl}
       currentUser={currentUser}
-      header
-      footer
-      navigationBar
     >
       <Section>
         {

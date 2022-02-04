@@ -48,7 +48,7 @@ const navigationBarItems: NavigationBarItem[] = [
 
 interface CssProps {
   className?: string;
-  navigationBar?: boolean;
+  isFrameActive?: boolean;
 }
 
 interface ComponentProps extends CssProps {
@@ -74,7 +74,7 @@ const StyledMainDiv = styled.div<StyledWrapProps>`
     position: relative;
     background-color: ${props.theme.palette.background.main};
     color: ${props.theme.palette.background.text};
-    min-height: ${props.navigationBar ? `calc(100% - ${navigationBarHeight})` : '100%'};
+    min-height: ${props.isFrameActive ? `calc(100% - ${navigationBarHeight})` : '100%'};
     transition-duration: 0.2s;
     transition-property: background-color, color;
     ${fontFamily}
@@ -86,9 +86,6 @@ const Container: NextPage<ComponentProps> = ({
   children,
   className,
   currentUser,
-  footer,
-  header,
-  navigationBar,
 }) => {
   /*
   const user = currentUser ? {
@@ -96,6 +93,7 @@ const Container: NextPage<ComponentProps> = ({
     imageAddress: currentUser.image.address
   } : null;
   */
+  const isFrameActive = callbackUrl && navigationBarItems.map((e: any) => e.href).find((e: string) => e == new URL(callbackUrl as string).pathname);
   return (
     <StyledWrap className={className}>
       <Head>
@@ -104,14 +102,14 @@ const Container: NextPage<ComponentProps> = ({
         <meta name='description' content='nugurang' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <StyledMainDiv navigationBar={navigationBar}>
-        { header && <Header callbackUrl={callbackUrl} /> }
+      <StyledMainDiv isFrameActive={isFrameActive}>
+        { isFrameActive && <Header callbackUrl={callbackUrl} /> }
         <WidthLimiter>
           { children }
         </WidthLimiter>
-        { footer && <Footer /> }
+        { isFrameActive && <Footer /> }
       </StyledMainDiv>
-      { navigationBar && <NavigationBar>
+      { isFrameActive && <NavigationBar>
         {navigationBarItems.map((navigationBarItem, index) => {
           return <NavigationBarItem
             active={navigationBarItem.href == new URL(callbackUrl as string).pathname}

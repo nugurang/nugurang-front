@@ -9,7 +9,7 @@ interface CssProps {
 }
 
 interface ComponentProps extends CssProps {
-  src: string;
+  src?: string;
   alt?: string;
 }
 
