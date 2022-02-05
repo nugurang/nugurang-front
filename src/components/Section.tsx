@@ -1,13 +1,12 @@
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+
 import Card from '@/src/components/Card';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 
-interface CssProps {
-  css?: string;
-  className?: string;
-}
+interface ComponentProps extends CommonProps {}
 
-interface StyledWrapProps extends CssProps {}
+interface StyledWrapProps extends CommonProps {}
 
 const StyledCard = styled(Card)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
@@ -15,14 +14,13 @@ const StyledCard = styled(Card)<StyledWrapProps>`
   `}
 `;
 
-const Section: NextPage = ({
-  children,
-}) => {
+const Section: NextPage<ComponentProps> = props => {
   return (
     <StyledCard
-      variant='transparent'
+      variant='acrylic'
+      palette='default'
     >
-      { children }
+      { props.children }
     </StyledCard>
   );
 }

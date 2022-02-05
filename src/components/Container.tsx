@@ -1,3 +1,4 @@
+import type { CommonProps, ThemeObject } from '@/src/components/base/common';
 import NavigationBar, { height as navigationBarHeight } from '@/src/components/NavigationBar';
 
 import Div from '@/src/components/base/Div';
@@ -8,7 +9,6 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import NavigationBarItem from '@/src/components/NavigationBarItem';
 import type { NextPage } from 'next';
 import React from 'react';
-import type { ThemeObject } from '@/src/components/base/common';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from '@emotion/styled';
 
@@ -46,31 +46,25 @@ const navigationBarItems: NavigationBarItem[] = [
   },
 ];
 
-interface CssProps {
-  className?: string;
-  isFrameActive?: boolean;
-}
-
-interface ComponentProps extends CssProps {
+interface ComponentProps extends CommonProps {
   callbackUrl?: string;
-  children?: React.ReactNode;
   currentUser?: any;
   footer?: boolean;
   header?: boolean;
 }
 
-interface StyledWrapProps extends CssProps {
-  theme: ThemeObject;
+interface StyledProps extends CommonProps {
+  isFrameActive?: boolean;
 }
 
-const StyledWrap = styled(Div)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledWrap = styled(Div)<StyledProps>`
+  ${(props: StyledProps) => `
     height: 100%;
   `}
 `;
 
-const StyledMainDiv = styled(Div)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledMainDiv = styled(Div)<StyledProps>`
+  ${(props: StyledProps) => `
     position: relative;
     
     background-color: ${props.theme.palette.background.main};
@@ -81,23 +75,18 @@ const StyledMainDiv = styled(Div)<StyledWrapProps>`
   `}
 `;
 
-const Container: NextPage<ComponentProps> = ({
-  callbackUrl,
-  children,
-  className,
-  currentUser,
-}) => {
+const Container: NextPage<ComponentProps> = props => {
   /*
-  const user = currentUser ? {
-    name: currentUser.name,
-    imageAddress: currentUser.image.address
+  const user = props.currentUser ? {
+    name: props.currentUser.name,
+    imageAddress: props.currentUser.image.address
   } : null;
   */
-  const isFrameActive = callbackUrl && navigationBarItems
+  const isFrameActive = props.callbackUrl && navigationBarItems
                         .map((e: any) => e.pathname)
-                        .find((e: string) => e == new URL(callbackUrl as string).pathname);
+                        .find((e: string) => e == new URL(props.callbackUrl as string).pathname);
   return (
-    <StyledWrap className={className}>
+    <StyledWrap className={props.className}>
       <Head>
         <title>nugurang</title>
         <meta name='title' content='nugurang' />
@@ -105,16 +94,16 @@ const Container: NextPage<ComponentProps> = ({
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <StyledMainDiv isFrameActive={isFrameActive}>
-        { isFrameActive && <Header callbackUrl={callbackUrl} /> }
+        { isFrameActive && <Header callbackUrl={props.callbackUrl} /> }
         <WidthLimiter>
-          { children }
+          { props.children }
         </WidthLimiter>
         { isFrameActive && <Footer /> }
       </StyledMainDiv>
       { isFrameActive && <NavigationBar>
         {navigationBarItems.map((navigationBarItem, index) => {
           return <NavigationBarItem
-            active={navigationBarItem.pathname == new URL(callbackUrl as string).pathname}
+            active={navigationBarItem.pathname == new URL(props.callbackUrl as string).pathname}
             pathname={navigationBarItem.pathname}
             icon={navigationBarItem.icon}
             label={navigationBarItem.label}

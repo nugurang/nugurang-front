@@ -1,27 +1,20 @@
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 import { useEffect, useState } from 'react';
 
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
-import React from 'react';
-import type { ThemeObject } from '@/src/styles/theme';
 import styled from '@emotion/styled';
 
-interface CssProps {
+interface ComponentProps extends CommonProps {
   active: boolean;
-  css?: string;
-  className?: string;
-}
-
-interface ComponentProps extends CssProps {
-  children?: React.ReactNode;
   setCSSActive: (cssActive: boolean) => void;
   transitionTimeout: number;
 }
 
-interface StyledWrapProps extends CssProps {
+interface StyledWrapProps extends CommonProps {
+  active: boolean;
   cssActive: boolean;
   domActive: boolean;
-  theme: ThemeObject;
 }
 
 const StyledWrap = styled(Div)<StyledWrapProps>`
@@ -30,40 +23,34 @@ const StyledWrap = styled(Div)<StyledWrapProps>`
   `}
 `;
 
-const DOMToggleProvider: NextPage<ComponentProps> = ({
-  active,
-  children,
-  className,
-  setCSSActive,
-  transitionTimeout
-}) => {
-  const [domActive, setDOMActive] = useState(active);
+const DOMToggleProvider: NextPage<ComponentProps> = props => {
+  const [domActive, setDOMActive] = useState(props.active);
 
   useEffect(
     () => {
-      if (active) {
-        setDOMActive(active);
-        const transitionTimer = setTimeout(() => setCSSActive(active), 100);
+      if (props.active) {
+        setDOMActive(props.active);
+        const transitionTimer = setTimeout(() => props.setCSSActive(props.active), 100);
         return () => {
           clearTimeout(transitionTimer);
         };
       } else {
-        setCSSActive(active);
-        const transitionTimer = setTimeout(() => setDOMActive(active), transitionTimeout * 1000);
+        props.setCSSActive(props.active);
+        const transitionTimer = setTimeout(() => setDOMActive(props.active), props.transitionTimeout * 1000);
         return () => {
           clearTimeout(transitionTimer);
         };
       };
-    }, [active]
+    }, [props.active]
   );
 
   return (
     <StyledWrap
-      active={active}
+      active={props.active}
       domActive={domActive}
-      className={className}
+      className={props.className}
     >
-      { children }
+      { props.children }
     </StyledWrap>
   );
 }

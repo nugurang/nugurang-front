@@ -1,8 +1,9 @@
+import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+
 import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import Span from '@/src/components/base/Span';
-import type { ThemeObject } from '@/src/styles/theme';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -10,17 +11,17 @@ import { useTranslation } from 'next-i18next';
 
 export const height = '64px';
 
-interface ComponentProps {
-  callbackUrl?: string;
-  user?: {
-    name: string;
-    imageUrl?: string;
-  };
+type User = {
+  name: string;
+  imageUrl?: string;
 }
 
-interface StyledProps {
-  theme: ThemeObject;
+interface ComponentProps extends CommonProps {
+  callbackUrl?: string;
+  user?: User;
 }
+
+interface StyledProps extends CommonProps {}
 
 // Header가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
 const StyledDivDummy = styled(Div)`

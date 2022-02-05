@@ -1,30 +1,31 @@
+import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
-import type { ThemeObject } from '@/src/styles/theme';
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 import useResize from '@/src/hooks/useResize';
 
-interface CssProps {
-  className?: string;
-  css?: string;
-  column: {
-    default: number;
-    gteMobile?: number;
-    gtePhablet?: number;
-    gteTablet?: number;
-    gteLaptop?: number;
-    gteDesktop?: number;
-  }
+type Column = {
+  default: number;
+  gteMobile?: number;
+  gtePhablet?: number;
+  gteTablet?: number;
+  gteLaptop?: number;
+  gteDesktop?: number;
 }
 
-interface PageProps extends CssProps {}
+type Size = {
+  width: number;
+}
 
-interface StyledProps extends CssProps {
-  theme: ThemeObject;
-  size: {
-    width: number;
-  }
+interface ComponentProps extends CommonProps {
+  column: Column;
+}
+
+interface StyledProps extends CommonProps {
+  column: Column;
+  size: Size;
 }
 
 const StyledSectionGridDiv = styled(Div)<StyledProps>`
@@ -57,7 +58,7 @@ const StyledSectionGridDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const Grid: NextPage<PageProps> = ({
+const Grid: NextPage<ComponentProps> = ({
   className,
   children,
   column

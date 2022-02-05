@@ -1,21 +1,15 @@
+import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+
 import type { NextPage } from 'next';
 import Ol from '@/src/components/base/Ol';
-import type { ThemeObject } from '@/src/components/base/common';
 import Ul from '@/src/components/base/Ul';
 import styled from '@emotion/styled';
 
-interface CssProps {
-  css?: string;
-  className?: string;
-}
-
-interface ComponentProps extends CssProps {
+interface ComponentProps extends CommonProps {
   ordered?: boolean;
 }
 
-interface StyledProps extends CssProps {
-  theme: ThemeObject;
-}
+interface StyledProps extends CommonProps {}
 
 const commonStyled = (props: StyledProps) => `
   &:not(:first-of-type)::before {
@@ -37,23 +31,19 @@ const StyledUl = styled(Ul)<StyledProps>`
   `}
 `;
 
-const ListItem: NextPage<ComponentProps> = ({
-  children,
-  className,
-  ordered,
-}) => {
-  if (ordered) return (
+const ListItem: NextPage<ComponentProps> = props => {
+  if (props.ordered) return (
     <StyledOl
-      className={className}
+      className={props.className}
     >
-      { children }
+      { props.children }
     </StyledOl>
   );
   else return (
     <StyledUl
-      className={className}
+      className={props.className}
     >
-      { children }
+      { props.children }
     </StyledUl>
   );
 }

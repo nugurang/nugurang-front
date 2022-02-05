@@ -1,5 +1,7 @@
 import * as constants from '@/src/constants';
 
+import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+
 import Container from '@/src/components/Container';
 import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
@@ -8,7 +10,6 @@ import Img from '@/src/components/base/Img';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
-import type { ThemeObject } from '@/src/components/base/common';
 import Thumbnail from '@/src/components/Thumbnail';
 import { queryToBackend } from '@/src/utils/backend';
 import styled from '@emotion/styled';

@@ -7,8 +7,8 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonProps {
-  name: string;
-  email: string;
+  title?: string;
+  subtitle?: string;
   imageUrl?: string;
 }
 
@@ -35,7 +35,7 @@ const StyledTextDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const StyledNameDiv = styled(Div)<StyledProps>`
+const StyledTitleDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     font-size: 24px;
     font-weight: bold;
@@ -44,7 +44,7 @@ const StyledNameDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const StyledEmailDiv = styled(Div)<StyledProps>`
+const StyledSubtitleDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     font-size: 16px;
     line-height: 20px;
@@ -53,7 +53,7 @@ const StyledEmailDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const BriefUserProfile: NextPage<ComponentProps> = props => {
+const BriefCard: NextPage<ComponentProps> = props => {
   return (
     <StyledWrapCard
       className={props.className}
@@ -63,15 +63,16 @@ const BriefUserProfile: NextPage<ComponentProps> = props => {
         src={props.imageUrl}
       />
       <StyledTextDiv>
-        <StyledNameDiv>
-          {props.name}
-        </StyledNameDiv>
-        <StyledEmailDiv>
-          {props.email}
-        </StyledEmailDiv>
+        <StyledTitleDiv>
+          {props.title}
+        </StyledTitleDiv>
+        <StyledSubtitleDiv>
+          {props.subtitle}
+        </StyledSubtitleDiv>
       </StyledTextDiv>
+      {props.children}
     </StyledWrapCard>
   );
 }
 
-export default BriefUserProfile;
+export default BriefCard;

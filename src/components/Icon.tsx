@@ -1,4 +1,4 @@
-import type { PaletteKeys, ThemeObject } from '@/src/styles/theme';
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,22 +11,16 @@ import styled from '@emotion/styled';
 type TypeKeys = 'image'
               | 'fontAwesomeIcon';
 
-interface CssProps {
-  backgroundColor?: string;
-  edge?: string;
-  className?: string;
-  css?: string;
-  palette?: PaletteKeys;
+interface ComponentProps extends CommonProps {
   type?: TypeKeys;
-}
-
-interface ComponentProps extends CssProps {
+  edge?: string;
   src?: string | IconProp;
   alt?: string;
 }
 
-interface StyledProps extends CssProps {
-  theme: ThemeObject;
+interface StyledProps extends CommonProps {
+  type?: TypeKeys;
+  edge?: string;
 }
 
 const StyledImg = styled(Img)<StyledProps>`
@@ -62,39 +56,31 @@ const StyledAltSpan = styled(Span)<StyledProps>`
   `}
 `;
 
-const Icon: NextPage<ComponentProps> = ({
-  alt,
-  className,
-  css,
-  edge,
-  palette,
-  src,
-  type,
-}) => {
+const Icon: NextPage<ComponentProps> = props => {
   return (
     <>
-      {src && ((type == 'image') || (type === undefined)) &&
+      {props.src && ((props.type == 'image') || (props.type === undefined)) &&
         <StyledImg
-          className={className}
-          css={css}
-          edge={edge}
-          type={type}
-          src={src as string}
+          className={props.className}
+          css={props.css}
+          edge={props.edge}
+          type={props.type}
+          src={props.src as string}
         />
       }
-      {src && (type == 'fontAwesomeIcon') &&
+      {props.src && (props.type == 'fontAwesomeIcon') &&
         <StyledFontAwesomeIcon
-          className={className}
-          css={css}
-          palette={palette}
-          icon={src ? src as IconProp : ['fas', 'question']}
-          edge={edge}
-          type={type}
+          className={props.className}
+          css={props.css}
+          palette={props.palette}
+          icon={props.src ? props.src as IconProp : ['fas', 'question']}
+          edge={props.edge}
+          type={props.type}
           fixedWidth
         />
       }
-      {!src &&
-        <StyledAltSpan>{alt || ''}</StyledAltSpan>
+      {!props.src &&
+        <StyledAltSpan>{props.alt || ''}</StyledAltSpan>
       }
     </>
   );

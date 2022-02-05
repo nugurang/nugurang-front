@@ -1,4 +1,4 @@
-import type { PaletteKeys, ThemeObject } from '@/src/styles/theme';
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
@@ -9,22 +9,16 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
-interface CssProps {
-  css?: string;
-  palette?: PaletteKeys;
-}
-
 // NavigationBar 컴포넌트에서 사용하기 위해 export함
-export interface ComponentProps extends CssProps {
+export interface ComponentProps extends CommonProps {
   active?: boolean;
   pathname: string;
   icon?: IconProp;
   label: string;
 }
 
-interface StyledProps extends CssProps {
+interface StyledProps extends CommonProps {
   active?: boolean;
-  theme: ThemeObject;
 }
 
 const StyledButton = styled(Button)<StyledProps>`
@@ -73,7 +67,7 @@ const StyledDivLabelWrap = styled(Div)<StyledProps>`
   `}
 `;
 
-const NavigationBarItem: NextPage<ComponentProps> = (props) => {
+const NavigationBarItem: NextPage<ComponentProps> = props => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (

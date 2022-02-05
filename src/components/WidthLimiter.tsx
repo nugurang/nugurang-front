@@ -1,20 +1,15 @@
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
-import React from 'react';
-import type { ThemeObject } from '@/src/styles/theme';
 import styled from '@emotion/styled';
 
-interface CssProps {
+interface ComponentProps extends CommonProps {
   maxWidth?: string;
 }
 
-interface ComponentProps extends CssProps {
-  className?: string;
-  children?: React.ReactNode;
-}
-
-interface StyledWrapProps extends CssProps {
-  theme: ThemeObject;
+interface StyledWrapProps extends CommonProps {
+  maxWidth?: string;
 }
 
 const StyledDivWidthLimiter = styled(Div)<StyledWrapProps>`
@@ -26,17 +21,13 @@ const StyledDivWidthLimiter = styled(Div)<StyledWrapProps>`
   `}
 `;
 
-const WidthLimiter: NextPage<ComponentProps> = ({
-  children,
-  className,
-  maxWidth
-}) => {
+const WidthLimiter: NextPage<ComponentProps> = props => {
   return (
     <StyledDivWidthLimiter
-      className={className}
-      maxWidth={maxWidth}
+      className={props.className}
+      maxWidth={props.maxWidth}
     >
-      { children }
+      { props.children }
     </StyledDivWidthLimiter>
   );
 }

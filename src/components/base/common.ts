@@ -23,21 +23,19 @@ export type VariantKeys = 'transparent'
 export interface CommonProps {
   className?: string;
   css?: string;
+  theme: ThemeObject;
+  children?: React.ReactNode;
 
-  acrylic?: boolean;
   ellipsis?: number;
   enable?: boolean;
+  onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   palette?: PaletteKeys;
   variant?: VariantKeys;
 }
 
-interface CSSProps extends CommonProps {
-  theme: ThemeObject;
-}
-
-export const CommonStyledAttributes = (props: CSSProps) => `
+export const CommonStyledAttributes = (props: CommonProps) => `
   font-family: 'Nanum Gothic', sans-serif;
 
   border: 0px solid #000;
@@ -52,16 +50,17 @@ export const CommonStyledAttributes = (props: CSSProps) => `
     background-color: ${props.theme.palette[props.palette || 'default'].main};
     color: ${props.theme.palette[props.palette || 'default'].text};
   ` : ''}
+  /*
   ${props.variant == 'acrylic' ? `
     background-color: ${hexToRGB(props.theme.palette[props.palette || 'default'].main), 0.9}; // 아크릴 효과 fallback
     @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
       background-color: ${hexToRGB(props.theme.palette[props.palette || 'default'].main), 0.9};
       -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
-    };
+    }
     color: ${props.theme.palette[props.palette || 'default'].text};
   ` : ''}
-
+*/
   ${props.ellipsis == 1 ? `
     overflow: hidden;
     text-overflow: ellipsis;

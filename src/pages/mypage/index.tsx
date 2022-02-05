@@ -1,5 +1,5 @@
+import BriefCard from '@/src/components/BriefCard';
 import BriefUserProfile from '@/src/components/BriefUserProfile';
-import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
@@ -106,9 +106,9 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
         <Section>
           <List>
             <ListItem>
-              <Card>
-                설정
-              </Card>
+              <BriefCard
+                title='설정'
+              />
             </ListItem>
           </List>
         </Section>

@@ -1,4 +1,4 @@
-import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
@@ -8,18 +8,14 @@ import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-interface CssProps {
-  className?: string;
-  css?: string;
+interface ComponentProps extends CommonProps {
   imageUrl?: string;
-  palette?: PaletteKeys;
   title?: string;
-  onClick?: () => void;
 }
 
-interface ComponentProps extends CssProps {}
-
-interface StyledProps extends CssProps {
+interface StyledProps extends CommonProps {
+  imageUrl?: string;
+  title?: string;
   isHover?: boolean;
   theme: ThemeObject;
 }
@@ -67,33 +63,26 @@ const StyledNameDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const Thumbnail: NextPage<ComponentProps> = ({
-  className,
-  css,
-  imageUrl,
-  onClick,
-  palette,
-  title
-}) => {
+const Thumbnail: NextPage<ComponentProps> = props => {
   const [state, setState] = useState({
     isHover: false,
   });
   return (
     <StyledButton
-      className={className}
-      css={css}
+      className={props.className}
+      css={props.css}
       variant='transparent'
-      onClick={onClick}
+      onClick={props.onClick}
       isHover={state.isHover}
       onMouseEnter={() => setState((state: any) => ({ ...state, isHover: true }))}
       onMouseLeave={() => setState((state: any) => ({ ...state, isHover: false }))}
     >
-      <StyledImg src={imageUrl}/>
+      <StyledImg src={props.imageUrl}/>
       <StyledNameDiv
-        palette={palette}
+        palette={props.palette}
         ellipsis={1}
       >
-        {title}
+        {props.title}
       </StyledNameDiv>
     </StyledButton>
   );

@@ -1,25 +1,24 @@
+import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
-import type { ThemeObject } from '@/src/components/base/common';
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 import useResize from '@/src/hooks/useResize';
 
-interface CssProps {
-  css?: string;
-  className?: string;
+type Size = {
+  width: number;
 }
 
-interface ComponentProps extends CssProps {
+interface ComponentProps extends CommonProps {
+  children: undefined;
   firstChildren: React.ReactNode;
   secondChildren?: React.ReactNode;
 }
 
-interface StyledProps extends CssProps {
+interface StyledProps extends CommonProps {
   theme: ThemeObject;
-  size: {
-    width: number;
-  }
+  size: Size;
 }
 
 const StyledGridDiv = styled(Div)<StyledProps>`
@@ -43,12 +42,7 @@ const StyledGridItemDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const PageOverview: NextPage<ComponentProps> = ({
-  className,
-  css,
-  firstChildren,
-  secondChildren,
-}) => {
+const PageOverview: NextPage<ComponentProps> = props => {
   const componentRef = useRef();
   const size = useResize(componentRef);
   return (
@@ -57,16 +51,16 @@ const PageOverview: NextPage<ComponentProps> = ({
       size={size}
     >
       <StyledGridItemDiv
-        className={className}
-        css={css}
+        className={props.className}
+        css={props.css}
       >
-        {firstChildren}
+        {props.firstChildren}
       </StyledGridItemDiv>
       <StyledGridItemDiv
-        className={className}
-        css={css}
+        className={props.className}
+        css={props.css}
       >
-        {secondChildren}
+        {props.secondChildren}
       </StyledGridItemDiv>
     </StyledGridDiv>
   );

@@ -1,4 +1,4 @@
-import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
@@ -9,14 +9,9 @@ import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
-interface CssProps {
-  className?: string;
+interface ComponentProps extends CommonProps {
   loader?: boolean;
   open?: boolean;
-  palette?: PaletteKeys;
-}
-
-interface ComponentProps extends CssProps {
   onClickBackdrop: (() => void) | undefined;
   title?: string;
   content?: string;
@@ -28,37 +23,39 @@ interface ComponentProps extends CssProps {
   onCancel?: (() => void) | undefined;
 }
 
-interface StyledWrapProps extends CssProps {
-  theme: ThemeObject;
+interface StyledProps extends CommonProps {
+  loader?: boolean;
+  open?: boolean;
+  active?: boolean;
 }
 
-const StyledWidthLimiter = styled(WidthLimiter)<StyledWrapProps>`
+const StyledWidthLimiter = styled(WidthLimiter)<StyledProps>`
   ${(props: any) => `
     padding: 48px 0;
     text-align: center;
   `}
 `;
 
-const StyledInfoDiv = styled(Div)<StyledWrapProps>`
+const StyledInfoDiv = styled(Div)<StyledProps>`
   ${(props: any) => `
     margin-bottom: 32px;
   `}
 `;
 
-const StyledLoader = styled(Loader)<StyledWrapProps>`
+const StyledLoader = styled(Loader)<StyledProps>`
   ${(props: any) => `
     display: ${props.loader ? 'inline-block' : 'none'};
     margin-bottom: 32px;
   `}
 `;
 
-const StyledTextDiv = styled(Div)<StyledWrapProps>`
+const StyledTextDiv = styled(Div)<StyledProps>`
   ${(props: any) => `
     display: block;
   `}
 `;
 
-const StyledTitleDiv = styled(Div)<StyledWrapProps>`
+const StyledTitleDiv = styled(Div)<StyledProps>`
   ${(props: any) => `
     font-size: 24px;
     font-weight: bold;
@@ -67,7 +64,7 @@ const StyledTitleDiv = styled(Div)<StyledWrapProps>`
   `}
 `;
 
-const StyledContentDiv = styled(Div)<StyledWrapProps>`
+const StyledContentDiv = styled(Div)<StyledProps>`
   ${(props: any) => `
     font-size: 20px;
     line-height: 24px;
@@ -75,7 +72,7 @@ const StyledContentDiv = styled(Div)<StyledWrapProps>`
   `}
 `;
 
-const StyledButtonGroup = styled(Div)<StyledWrapProps>`
+const StyledButtonGroupDiv = styled(Div)<StyledProps>`
   ${(props: any) => `
     & > * {
       margin-left: 8px;
@@ -86,68 +83,54 @@ const StyledButtonGroup = styled(Div)<StyledWrapProps>`
   `}
 `;
 
-const StyledButton = styled(Button)<StyledWrapProps>`
+const StyledButton = styled(Button)<StyledProps>`
   ${(props: any) => `
     display: ${ props.active ? 'inline' : 'none' };
   `}
 `;
 
-const Dialog: NextPage<ComponentProps> = ({
-  className,
-  open,
-  onClickBackdrop,
-  palette,
-  loader,
-  title,
-  content,
-  yesLabel,
-  noLabel,
-  cancelLabel,
-  onYes,
-  onNo,
-  onCancel
-}) => {
+const Dialog: NextPage<ComponentProps> = props => {
   const { t } = useTranslation('common');
   return (
     <Modal
-      className={className}
-      open={open}
-      palette={palette}
-      onClickBackdrop={onClickBackdrop}
+      className={props.className}
+      open={props.open}
+      palette={props.palette}
+      onClickBackdrop={props.onClickBackdrop}
     >
       <StyledWidthLimiter>
         <StyledInfoDiv>
-          <StyledLoader loader={loader}/>
+          <StyledLoader loader={props.loader}/>
           <StyledTextDiv>
             <StyledTitleDiv>
-              {title}
+              {props.title}
             </StyledTitleDiv>
             <StyledContentDiv>
-              {content}
+              {props.content}
             </StyledContentDiv>
           </StyledTextDiv>
         </StyledInfoDiv>
-        <StyledButtonGroup>
+        <StyledButtonGroupDiv>
           <StyledButton
-            active={onYes}
-            onClick={onYes}
+            active={props.onYes}
+            onClick={props.onYes}
           >
-            {yesLabel || t('yes')}
+            {props.yesLabel || t('yes')}
           </StyledButton>
           <StyledButton
             palette='danger'
-            active={onNo}
-            onClick={onNo}
+            active={props.onNo}
+            onClick={props.onNo}
           >
-            {noLabel || t('no')}
+            {props.noLabel || t('no')}
           </StyledButton>
           <StyledButton
-            active={onCancel}
-            onClick={onCancel}
+            active={props.onCancel}
+            onClick={props.onCancel}
           >
-            {cancelLabel || t('cancel')}
+            {props.cancelLabel || t('cancel')}
           </StyledButton>
-        </StyledButtonGroup>
+        </StyledButtonGroupDiv>
       </StyledWidthLimiter>
     </Modal>
   );

@@ -1,4 +1,4 @@
-import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
@@ -8,38 +8,27 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 
-interface CssProps {
-  css?: string;
-  className?: string;
-}
-
-interface ComponentProps extends CssProps {
+interface ComponentProps extends CommonProps {
   callbackUrl?: string;
 }
 
-interface StyledWrapProps extends CssProps {
-  theme: ThemeObject;
-}
+interface StyledProps extends CommonProps {}
 
-const StyledButton = styled(Button)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledButton = styled(Button)<StyledProps>`
+  ${(props: StyledProps) => `
     ${props.css || ''}
   `}
 `;
 
-const LogoutButton: NextPage<ComponentProps> = ({
-  callbackUrl,
-  className,
-  css,
-}) => {
+const LogoutButton: NextPage<ComponentProps> = props => {
   const { t } = useTranslation('common');
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   return (
     <>
       <StyledButton
-        className={className}
-        css={css}
+        className={props.className}
+        css={props.css}
         onClick={() => setOpen(true)}
         palette='danger'
       >
@@ -53,7 +42,7 @@ const LogoutButton: NextPage<ComponentProps> = ({
         noLabel={t('logout')}
         onNo={(open && pending) ? undefined : () => {
           setPending(true);
-          logoutFromSession({ callbackUrl: callbackUrl ?? '/' });
+          logoutFromSession({ callbackUrl: props.callbackUrl ?? '/' });
         }}
         onCancel={(open && pending) ? undefined : () => setOpen(false)}
       />

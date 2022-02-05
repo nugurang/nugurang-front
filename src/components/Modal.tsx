@@ -1,79 +1,67 @@
-import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import Backdrop from '@/src/components/Backdrop';
+import Card from '@/src/components/Card';
 import DOMToggleProvider from '@/src/components/DOMToggleProvider';
-import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import React from 'react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-interface CssProps {
-  css?: string;
-  open: boolean;
-  palette?: PaletteKeys;
-  transitionTimeout: number;
-}
-
-interface ComponentProps extends CssProps {
+interface ComponentProps extends CommonProps {
   children?: React.ReactNode;
   className?: string;
+  open: boolean;
+  transitionTimeout: number;
   onClickBackdrop?: (() => void) | undefined;
 }
 
-interface StyledWrapProps extends CssProps {
-  theme: ThemeObject;
+interface StyledProps extends CommonProps {
+  open: boolean;
+  transitionTimeout: number;
 }
 
-const StyledModalDiv = styled(Div)<StyledWrapProps>`
+const StyledModalCard = styled(Card)<StyledProps>`
   ${(props: any) => `
     position: fixed;
     top: ${props.open ? '50%' : '100%'};
     bottom: initial;
     left: 0;
     width: 100%;
-    
-    color: ${props.theme.palette.background.text};
-    background-color: ${props.theme.palette.background.main};
-    z-index: ${props.theme.zIndex.modal};
-    opacity: ${props.open ? '1' : '0'};
-
     transform: translateY(-50%);
 
+    border-radius: 0;
+    background-color: ${props.theme.palette[props.palette || 'default'].low};
+
+    opacity: ${props.open ? '1' : '0'};
+    z-index: ${props.theme.zIndex.modal};
+    
     ${props.css || ''}
   `}
 `;
 
-const Modal: NextPage<ComponentProps> = ({
-  children,
-  className,
-  css,
-  open,
-  palette,
-  onClickBackdrop
-}) => {
+const Modal: NextPage<ComponentProps> = props => {
   const [cssActive, setCSSActive] = useState(false);
   const transitionTimeout = 0.5;
   return (
     <DOMToggleProvider
-      active={open}
+      active={props.open}
       setCSSActive={setCSSActive}
       transitionTimeout={transitionTimeout}
     >
       <Backdrop
         open={cssActive}
-        onClick={onClickBackdrop}
-        transitionTimeout={transitionTimeout}
+        onClick={props.onClickBackdrop}
       />
-      <StyledModalDiv
-        className={className}
-        css={css}
+      <StyledModalCard
+        className={props.className}
+        css={props.css}
         open={cssActive}
-        palette={palette}
+        palette={props.palette ? props.palette : 'background'}
         transitionTimeout={transitionTimeout}
       >
-        {children}
-      </StyledModalDiv>
+        {props.children}
+      </StyledModalCard>
     </DOMToggleProvider>
   );
 }

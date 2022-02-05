@@ -1,18 +1,13 @@
+import type { CommonProps, ThemeObject } from '@/src/components/base/common';
 import { css, jsx, keyframes } from '@emotion/react'
 
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
-import type { ThemeObject } from '@/src/components/base/common';
 import styled from '@emotion/styled';
 
-interface CssProps {
-  css?: string;
-  className?: string;
-}
+interface ComponentProps extends CommonProps {}
 
-interface ComponentProps extends CssProps {}
-
-interface StyledWrapProps extends CssProps {
+interface StyledWrapProps extends CommonProps {
   theme: ThemeObject;
 }
 
@@ -33,14 +28,11 @@ const StyledWrap = styled(Div)<StyledWrapProps>`
   `}
 `;
 
-const Loader: NextPage<ComponentProps> = ({
-  className,
-  css,
-}) => {
+const Loader: NextPage<ComponentProps> = props => {
   return (
     <StyledWrap
-      className={className}
-      css={css}
+      className={props.className}
+      css={props.css}
     />
   );
 }

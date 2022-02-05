@@ -1,3 +1,5 @@
+import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+
 import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
 import Div from '@/src/components/base/Div';
@@ -5,8 +7,6 @@ import Icon from '@/src/components/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { NextPage } from 'next';
 import React from 'react';
-import Span from '@/src/components/base/Span';
-import type { ThemeObject } from '@/src/styles/theme';
 import { loginToSession } from '@/src/utils/session';
 import styled from '@emotion/styled';
 import { useState } from 'react';
@@ -31,20 +31,12 @@ const loginProviderItems: LoginProviderItem[] = [
   },
 ];
 
-interface CssProps {
-  css?: string;
-  className?: string;
-}
-
-interface ComponentProps extends CssProps {
+interface ComponentProps extends CommonProps {
   alt?: string;
   callbackUrl?: string;
-  children?: React.ReactNode;
 }
 
-interface StyledWrapProps extends CssProps {
-  theme: ThemeObject;
-}
+interface StyledWrapProps extends CommonProps {}
 
 const StyledWrap = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
@@ -69,18 +61,14 @@ const StyledIcon = styled(Icon)<StyledWrapProps>`
   `}
 `;
 
-const LoginButtonGroup: NextPage<ComponentProps> = ({
-  callbackUrl,
-  className,
-  css,
-}) => {
+const LoginButtonGroup: NextPage<ComponentProps> = props => {
   const { t } = useTranslation('common');
   const [open, setOpen] = useState(false);
   return (
     <>
       <StyledWrap
-        className={className}
-        css={css}
+        className={props.className}
+        css={props.css}
       >
         {
           loginProviderItems.map((loginProviderItem, index) => {
@@ -90,7 +78,7 @@ const LoginButtonGroup: NextPage<ComponentProps> = ({
                 setOpen(true);
                 loginToSession({
                   providerName: loginProviderItem.providerName,
-                  callbackUrl: callbackUrl ?? '/'
+                  callbackUrl: props.callbackUrl ?? '/'
                 });
               }}
             >

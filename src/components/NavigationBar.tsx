@@ -1,4 +1,4 @@
-import type { PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import Div from '@/src/components/base/Div';
 import Nav from '@/src/components/base/Nav';
@@ -9,18 +9,9 @@ import styled from '@emotion/styled';
 
 export const height = '64px';
 
-interface CssProps {
-  css?: string;
-  palette?: PaletteKeys;
-}
+interface ComponentProps extends CommonProps {}
 
-interface ComponentProps extends CssProps {
-  children: React.ReactNode;
-}
-
-interface StyledWrapProps extends CssProps {
-  theme: ThemeObject;
-}
+interface StyledWrapProps extends CommonProps {}
 
 // NavigationBar가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
 const StyledDivDummy = styled(Div)`
@@ -55,16 +46,13 @@ const StyledWidthLimiter = styled(WidthLimiter)`
   `}
 `;
 
-const NavigationBar: NextPage<ComponentProps> = ({
-  css,
-  children
- }) => {
+const NavigationBar: NextPage<ComponentProps> = props => {
   return (
     <>
       <StyledDivDummy />
       <StyledNavigationBarWrap>
         <StyledWidthLimiter>
-          { children }
+          { props.children }
         </StyledWidthLimiter>
       </StyledNavigationBarWrap>
     </>
