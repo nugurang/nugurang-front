@@ -1,4 +1,5 @@
 import Container from '@/src/components/Container';
+import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
 import Img from '@/src/components/base/Img';
 import LoginButtonGroup from '@/src/components/LoginButtonGroup';
@@ -7,7 +8,6 @@ import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
 import type { ThemeObject } from '@/src/styles/theme';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { withAuthServerSideProps } from '@/src/utils/server-side';
 
@@ -30,7 +30,7 @@ interface StyledWrapProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImageWrap = styled(Image)<StyledWrapProps>`
+const StyledPageOverviewImgWrap = styled(Img)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     width: 100%;
@@ -57,14 +57,13 @@ const StyledLoginButtonGroup = styled(LoginButtonGroup)<StyledWrapProps>`
 `;
 
 const Login: NextPage<PageProps> = ({ callbackUrl }) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <Container>
       <Section>
         <PageOverview
           firstChildren={<>
-            <StyledPageOverviewImageWrap
+            <StyledPageOverviewImgWrap
               src='https://image.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg'
             />
             <StyledPageOverviewTextWrap>
