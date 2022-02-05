@@ -11,23 +11,13 @@ interface ComponentProps extends CommonProps {
 
 interface StyledProps extends CommonProps {}
 
-const commonStyled = (props: StyledProps) => `
-  &:not(:first-of-type)::before {
-    content: '';
-    display: block;
-    border-top: 1px solid ${props.theme.palette.default.high};
-  }
-`;
-
 const StyledOl = styled(Ol)<StyledProps>`
   ${(props: StyledProps) => `
-    ${commonStyled}
   `}
 `;
 
 const StyledUl = styled(Ul)<StyledProps>`
   ${(props: StyledProps) => `
-    ${commonStyled}
   `}
 `;
 

@@ -1,25 +1,67 @@
 import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 
 import Card from '@/src/components/Card';
+import Div from '@/src/components/base/Div';
+import Icon from '@/src/components/Icon';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import type { IconTypeKeys } from '@/src/components/Icon';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 
-interface ComponentProps extends CommonProps {}
+interface ComponentProps extends CommonProps {
+  title?: string;
+  icon?: {
+    type?: IconTypeKeys;
+    src?: string | IconProp;
+  };
+  enablePadding?: boolean;
+}
 
-interface StyledWrapProps extends CommonProps {}
+interface StyledProps extends CommonProps {
+  enablePadding?: boolean;
+}
 
-const StyledCard = styled(Card)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
-    margin: 16px 8px;
+const StyledCard = styled(Card)<StyledProps>`
+  ${(props: StyledProps) => `
+    margin: 8px;
+    padding: ${props.enablePadding ? '8px' : '0'};
+  `}
+`;
+
+const StyledHeaderDiv = styled(Div)<StyledProps>`
+  ${(props: StyledProps) => `
+    padding: 8px;
+  `}
+`;
+
+const StyledIcon = styled(Icon)<StyledProps>`
+  ${(props: StyledProps) => `
+    float: left;
+    height: 28px;
+    width: 28px;
+    margin-right: 16px;
+  `}
+`;
+
+const StyledTitleDiv = styled(Div)<StyledProps>`
+  ${(props: StyledProps) => `
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: bold;
   `}
 `;
 
 const Section: NextPage<ComponentProps> = props => {
   return (
     <StyledCard
-      variant='acrylic'
-      palette='default'
+      variant={props.variant ?? 'outlined'}
+      palette={props.palette ?? 'default'}
+      enablePadding={props.enablePadding ?? true}
     >
+      <StyledHeaderDiv>
+        <StyledIcon type={props?.icon?.type} src={props?.icon?.src} />
+        <StyledTitleDiv>{ props.title }</StyledTitleDiv>
+      </StyledHeaderDiv>
       { props.children }
     </StyledCard>
   );

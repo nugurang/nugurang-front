@@ -11,6 +11,12 @@ interface StyledWrapProps extends CommonProps {}
 const StyledLi = styled(Li)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     width: 100%;
+    &:not(:first-of-type)::before {
+      content: '';
+      display: block;
+      border-top: 1px solid ${props.theme.palette.default.high};
+      margin: 4px 0;
+    }
   `}
 `;
 

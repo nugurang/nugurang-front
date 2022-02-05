@@ -25,10 +25,17 @@ type BasePaletteRowObject = {
 
 export type PaletteRowKeys = BasePaletteRowKeys
                            | 'high'
-                           | 'low';
+                           | 'low'
+                           | 'contrast';
 export type PaletteRowObject = BasePaletteRowObject & {
-  high: string;
-  low:  string;
+  high:     string;
+  low:      string;
+  contrast: string;
+};
+
+type ConstantPaletteRowObject = {
+  white: string;
+  black: string;
 };
 
 export type PaletteKeys = 'default'
@@ -50,6 +57,7 @@ export type PaletteObject = {
   danger:      PaletteRowObject;
   background:  PaletteRowObject;
   transparent: PaletteRowObject;
+  constant:    ConstantPaletteRowObject;
 };
 
 export type ThemeKeys = 'light'
@@ -78,6 +86,7 @@ const createPaletteRow = (
         low:     basePaletteRowObject.dark,
         text:    basePaletteRowObject.text,
         subtext: basePaletteRowObject.subtext,
+        contrast: '#000'
       }
     case 'dark':
       return {
@@ -88,6 +97,7 @@ const createPaletteRow = (
         low:     basePaletteRowObject.light,
         text:    basePaletteRowObject.text,
         subtext: basePaletteRowObject.subtext,
+        contrast: '#fff'
       }
     }
 }

@@ -57,7 +57,9 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
       callbackUrl={callbackUrl}
       currentUser={currentUser}
     >
-      <Section>
+      <Section
+        variant='transparent'
+      >
         {
           !currentUser && (
             <PageOverview
@@ -103,26 +105,63 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
           gteDesktop: 3
         }}
       >
-        <Section>
+        <Section
+          title='보드'
+        >
           <List>
             <ListItem>
               <BriefCard
-                title='설정'
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'book-reader']
+                }}
+                title='보드'
+                onClick={() => router.push('/settings')}
               />
             </ListItem>
           </List>
         </Section>
-        <Section>
+        <Section
+          title='팀'
+        >
           <List>
             <ListItem>
-              설정
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'users']
+                }}
+                title='팀'
+                onClick={() => router.push('/settings')}
+              />
             </ListItem>
           </List>
         </Section>
-        <Section>
+        <Section
+          title='일반'
+        >
           <List>
             <ListItem>
-              설정
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'cog']
+                }}
+                title='설정'
+                subtitle='알림, 테마, 내게 필요한 옵션'
+                onClick={() => router.push('/settings')}
+              />
+            </ListItem>
+            <ListItem>
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'info-circle']
+                }}
+                title='정보'
+                subtitle='웹 앱 정보'
+                onClick={() => router.push('/settings')}
+              />
             </ListItem>
           </List>
         </Section>

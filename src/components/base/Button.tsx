@@ -16,9 +16,7 @@ interface ComponentProps extends CommonProps {
   onClick?: () => void;
 }
 
-interface CSSProps extends CommonProps {
-  theme: ThemeObject;
-}
+interface CSSProps extends CommonProps {}
 
 const StyledButton = styled.button<CSSProps>`
   ${(props: CSSProps) => `
@@ -69,7 +67,6 @@ const Button: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       css={props.css}
       ref={ref}
 
-      acrylic={props.acrylic}
       ellipsis={props.ellipsis}
       enable={props.enable}
       onMouseEnter={props.onMouseEnter}
@@ -78,6 +75,7 @@ const Button: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       variant={props.variant ? props.variant : 'filled'}
 
       onClick={props.onClick}
+      enablePadding={props.enablePadding ?? true}
     >
       { props.children }
       <StyledHoverEffect />

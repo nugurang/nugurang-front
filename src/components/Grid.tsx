@@ -21,10 +21,12 @@ type Size = {
 
 interface ComponentProps extends CommonProps {
   column: Column;
+  gap?: number;
 }
 
 interface StyledProps extends CommonProps {
   column: Column;
+  gap?: number;
   size: Size;
 }
 
@@ -32,7 +34,7 @@ const StyledSectionGridDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
     display: grid;
     grid-template-columns: repeat(${props.column.default}, 1fr);
-    gap: 10px;
+    gap: ${props.gap ?? '8px'};
     margin: 0 auto;
 
     ${props.size.width >= props.theme.screenPixelSize.mobile && `

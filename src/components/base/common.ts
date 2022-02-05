@@ -61,6 +61,7 @@ export const CommonStyledAttributes = (props: CommonProps) => `
     color: ${props.theme.palette[props.palette || 'default'].text};
   ` : ''}
 */
+
   ${props.ellipsis == 1 ? `
     overflow: hidden;
     text-overflow: ellipsis;

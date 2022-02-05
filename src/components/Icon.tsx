@@ -8,18 +8,18 @@ import type { NextPage } from 'next';
 import Span from '@/src/components/base/Span';
 import styled from '@emotion/styled';
 
-type TypeKeys = 'image'
-              | 'fontAwesomeIcon';
+export type IconTypeKeys = 'image'
+                         | 'fontAwesomeIcon';
 
 interface ComponentProps extends CommonProps {
-  type?: TypeKeys;
+  type?: IconTypeKeys;
   edge?: string;
-  src?: string | IconProp;
-  alt?: string;
+  src?:  string | IconProp;
+  alt?:  string;
 }
 
 interface StyledProps extends CommonProps {
-  type?: TypeKeys;
+  type?: IconTypeKeys;
   edge?: string;
 }
 
@@ -37,7 +37,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)<StyledProps>`
   ${(props: StyledProps) => `
     height: 32px;
     width: 32px;
-    color: ${props.palette ? props.theme.palette[props.palette].main : props.theme.palette.default.text };
+    color: ${props.palette ? props.theme.palette[props.palette].main : props.theme.palette.default.contrast };
     border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'square']};
     overflow: hidden;
     ${props.css || ''}
@@ -80,7 +80,7 @@ const Icon: NextPage<ComponentProps> = props => {
         />
       }
       {!props.src &&
-        <StyledAltSpan>{props.alt || ''}</StyledAltSpan>
+        <StyledAltSpan>{props.alt ?? ''}</StyledAltSpan>
       }
     </>
   );
