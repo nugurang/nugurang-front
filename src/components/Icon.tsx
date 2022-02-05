@@ -1,10 +1,10 @@
 import type { PaletteKeys, ThemeObject } from '@/src/styles/theme';
 
 import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Img from '@/src/components/base/Img';
 import type { NextPage } from 'next';
-import { FontAwesomeIcon as ReactFontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Span from '@/src/components/base/Span';
 import styled from '@emotion/styled';
 
@@ -21,7 +21,7 @@ interface CssProps {
 }
 
 interface ComponentProps extends CssProps {
-  src? :string | IconProp;
+  src?: string | IconProp;
   alt?: string;
 }
 
@@ -31,15 +31,19 @@ interface StyledProps extends CssProps {
 
 const StyledImg = styled(Img)<StyledProps>`
   ${(props: StyledProps) => `
-    ${props.css || ''}
+    height: 32px;
+    width: 32px;
     border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'circle']};
     overflow: hidden;
+    ${props.css || ''}
   `}
 `;
 
-const StyledReactFontAwesomeIcon = styled(ReactFontAwesomeIcon)<StyledProps>`
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)<StyledProps>`
   ${(props: StyledProps) => `
-    color: ${props.theme.palette[props.palette || 'default'].main};
+    height: 32px;
+    width: 32px;
+    color: ${props.palette ? props.theme.palette[props.palette].main : props.theme.palette.default.text };
     border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'square']};
     overflow: hidden;
     ${props.css || ''}
@@ -79,11 +83,11 @@ const Icon: NextPage<ComponentProps> = ({
         />
       }
       {src && (type == 'fontAwesomeIcon') &&
-        <StyledReactFontAwesomeIcon
+        <StyledFontAwesomeIcon
           className={className}
           css={css}
           palette={palette}
-          icon={src || ['fas', 'question']}
+          icon={src ? src as IconProp : ['fas', 'question']}
           edge={edge}
           type={type}
           fixedWidth

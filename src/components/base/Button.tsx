@@ -35,12 +35,6 @@ const StyledButton = styled.button<CSSProps>`
         background-color: ${props.theme.palette[props.palette || 'default'].dark};
       ` : ''}
     }
-    &:visited {
-      color: ${props.theme.palette.transparent.text};
-      ${props.variant == 'filled' ? `
-        color: ${props.theme.palette[props.palette || 'transparent'].text};
-      ` : ''}
-    }
     &:active {
       transform: scale(0.9);
     }
@@ -57,6 +51,7 @@ const StyledHoverEffect = styled.div<CSSProps>`
     bottom: 0;
     left: 0;
     right: 0;
+    
     background-color: #0000;
     &:hover {
       background-color: #0002;

@@ -59,32 +59,13 @@ const StyledLoginButton = styled(Button)<StyledWrapProps>`
     margin: 0 10px 10px 0;
     width: calc(50% - 40px);
     max-width: 120px;
-    ${props.theme.screenSizeMediaQuery.gteTablet} {
-      display: block;
-      width: 100%;
-      max-width: none;
-      margin-top: 10px;
-      margin-left: 0;
-      &:first-of-type {
-        margin-top: 0;
-      }
-    }
   `}
 `;
 
-const StyledLoginButtonLabelSpan = styled(Span)<StyledWrapProps>`
+const StyledIcon = styled(Icon)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
-    display: block;
-    margin-top: 8px;
-    & :first-of-type {
-      margin-top: 0;
-    }
-    ${props.theme.screenSizeMediaQuery.gteTablet} {
-      display: inline-block;
-      margin: 0 0 0 8px;
-      vertical-align: top;
-      line-height: 32px;
-    }
+    height: 32px;
+    width: 32px;
   `}
 `;
 
@@ -113,14 +94,11 @@ const LoginButtonGroup: NextPage<ComponentProps> = ({
                 });
               }}
             >
-              <Icon
+              <StyledIcon
                 src={loginProviderItem.src}
                 type='fontAwesomeIcon'
-                size='large'
               />
-              <StyledLoginButtonLabelSpan>
-                {t(loginProviderItem.label)}
-              </StyledLoginButtonLabelSpan>
+              {t(loginProviderItem.label)}
             </StyledLoginButton>
           })
         }

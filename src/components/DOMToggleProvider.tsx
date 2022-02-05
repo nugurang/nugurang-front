@@ -9,10 +9,10 @@ import styled from '@emotion/styled';
 interface CssProps {
   active: boolean;
   css?: string;
+  className?: string;
 }
 
 interface ComponentProps extends CssProps {
-  className?: string;
   children?: React.ReactNode;
   setCSSActive: (cssActive: boolean) => void;
   transitionTimeout: number;

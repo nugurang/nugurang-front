@@ -3,11 +3,11 @@ import { deviceMediaQuery, screenSizeMediaQuery } from '@/src/styles/mediaQuery'
 
 import type { BorderRadiusObject } from '@/src/styles/borderRadius';
 import type { FontObject } from '@/src/styles/font';
-import type { ScreenSizeObject } from '@/src/styles/size';
+import type { ScreenPixelSizeObject } from '@/src/styles/size';
 import type { ZIndexObject } from '@/src/styles/zIndex';
 import { borderRadius } from '@/src/styles/borderRadius';
 import { font } from '@/src/styles/font';
-import { screenSize } from '@/src/styles/size';
+import { screenPixelSize } from '@/src/styles/size';
 import { zIndex } from '@/src/styles/zIndex';
 
 type BasePaletteRowKeys = 'main'
@@ -59,7 +59,7 @@ export type ThemeObject = {
   deviceMediaQuery: DeviceMediaQueryObject;
   font: FontObject;
   palette: PaletteObject;
-  screenSize: ScreenSizeObject;
+  screenPixelSize: ScreenPixelSizeObject;
   screenSizeMediaQuery: ScreenSizeMediaQueryObject;
   zIndex: ZIndexObject;
 };
@@ -231,7 +231,7 @@ const theme = {
   borderRadius,
   deviceMediaQuery,
   font,
-  screenSize,
+  screenPixelSize,
   screenSizeMediaQuery,
   zIndex
 };

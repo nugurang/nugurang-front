@@ -23,6 +23,7 @@ interface CSSProps extends CommonProps {
 const StyledA = styled.a<CSSProps>`
   ${(props: CSSProps) => `
     ${CommonStyledAttributes(props)}
+    ${props.css}
   `}
 `;
 

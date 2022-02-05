@@ -1,13 +1,12 @@
 import Button from '@/src/components/base/Button';
 import type { NextPage } from 'next'
-import type { ThemeObject } from '@/src/components/BaseComponent';
+import type { ThemeObject } from '@/src/components/base/common';
 import styled from '@emotion/styled';
 
 interface CssProps {
   css?: string;
   onClick?: (() => void) | undefined;
   open: boolean;
-  transitionTimeout: number;
 }
 
 interface ComponentProps extends CssProps {
@@ -20,6 +19,7 @@ interface StyledProps extends CssProps {
 
 const StyledButton = styled(Button)<StyledProps>`
   ${(props: StyledProps) => `
+    display: ${props.open ? 'block' : 'none'};
     position: fixed;
     top: 0;
     left: 0;
@@ -40,14 +40,13 @@ const Modal: NextPage<ComponentProps> = ({
   className,
   open,
   onClick,
-  transitionTimeout
 }) => {
   return (
     <StyledButton
       className={className}
+      variant='transparent'
       open={open}
       onClick={() => {open && onClick && onClick()}}
-      transitionTimeout={transitionTimeout}
     />
   );
 }

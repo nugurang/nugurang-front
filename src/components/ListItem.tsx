@@ -1,4 +1,4 @@
-import Card from '@/src/components/Card';
+import Li from '@/src/components/base/Li';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 
@@ -7,25 +7,27 @@ interface CssProps {
   className?: string;
 }
 
+interface ComponentProps extends CssProps {}
+
 interface StyledWrapProps extends CssProps {}
 
-const StyledCard = styled(Card)<StyledWrapProps>`
+const StyledLi = styled(Li)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     width: 100%;
   `}
 `;
 
-const ListItem: NextPage = ({
+const ListItem: NextPage<ComponentProps> = ({
+  className,
   children,
 }) => {
   return (
-    <li>
-      <StyledCard
-        variant='transparent'
-      >
-        { children }
-      </StyledCard>
-    </li>
+    <StyledLi
+      className={className}
+      variant='transparent'
+    >
+      { children }
+    </StyledLi>
   );
 }
 

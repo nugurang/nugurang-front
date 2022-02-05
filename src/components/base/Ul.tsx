@@ -22,6 +22,7 @@ interface CSSProps extends CommonProps {
 const StyledUl = styled.ul<CSSProps>`
   ${(props: CSSProps) => `
     ${CommonStyledAttributes(props)}
+    ${props.css}
   `}
 `;
 

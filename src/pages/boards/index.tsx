@@ -3,6 +3,7 @@ import * as constants from '@/src/constants';
 import Container from '@/src/components/Container';
 import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
+import Grid from '@/src/components/Grid';
 import Img from '@/src/components/base/Img';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
@@ -72,21 +73,6 @@ const StyledPageOverviewImageWrap = styled(Img)<StyledWrapProps>`
   `}
 `;
 
-const StyledBoardGridDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 8px;
-    margin-top: 16px;
-    ${props.theme.screenSizeMediaQuery.gtePhablet} {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    ${props.theme.screenSizeMediaQuery.gteLaptop} {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  `}
-`;
-
 interface Board {
   id: number;
   name: string;
@@ -124,7 +110,13 @@ const BoardsIndex: NextPage<PageProps> = ({
             Hello
           </>}
         />
-        <StyledBoardGridDiv>
+        <Grid
+          column={{
+            default: 1,
+            gtePhablet: 2,
+            gteLaptop: 3
+          }}
+        >
           {
             boards
             .sort((lhs, rhs) => t(lhs.name) > t(rhs.name) ? 1 : -1)
@@ -140,7 +132,7 @@ const BoardsIndex: NextPage<PageProps> = ({
               />
             })
           }
-        </StyledBoardGridDiv>
+        </Grid>
       </Section>
     </Container>
   );

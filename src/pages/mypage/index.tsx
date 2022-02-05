@@ -3,6 +3,7 @@ import Card from '@/src/components/Card';
 import Container from '@/src/components/Container';
 import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
+import Grid from '@/src/components/Grid';
 import Img from '@/src/components/base/Img';
 import List from '@/src/components/List';
 import ListItem from '@/src/components/ListItem';
@@ -45,23 +46,6 @@ const StyledPageOverviewLoginTextWrap = styled(Div)<StyledProps>`
     font-size: 24px;
     line-height: 28px;
     text-align: center;
-  `}
-`;
-
-const StyledSectionGridDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
-    margin: 0 auto;
-    ${props.theme.screenSizeMediaQuery.gteTablet} {
-      grid-template-columns: repeat(2, 1fr);
-      max-width: ${props.theme.screenSize.tablet};
-    }
-    ${props.theme.screenSizeMediaQuery.gteDesktop} {
-      grid-template-columns: repeat(3, 1fr);
-      max-width: ${props.theme.screenSize.desktop};
-    }
   `}
 `;
 
@@ -112,7 +96,13 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
           )
         }
       </Section>
-      <StyledSectionGridDiv>
+      <Grid
+        column={{
+          default: 1,
+          gteTablet: 2,
+          gteDesktop: 3
+        }}
+      >
         <Section>
           <List>
             <ListItem>
@@ -136,7 +126,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser, callbackUrl }) => {
             </ListItem>
           </List>
         </Section>
-      </StyledSectionGridDiv>
+      </Grid>
     </Container>
   );
 }

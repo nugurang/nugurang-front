@@ -22,6 +22,7 @@ interface CSSProps extends CommonProps {
 const StyledNav = styled.nav<CSSProps>`
   ${(props: CSSProps) => `
     ${CommonStyledAttributes(props)}
+    ${props.css}
   `}
 `;
 

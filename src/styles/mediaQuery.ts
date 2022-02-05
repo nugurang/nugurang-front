@@ -1,4 +1,4 @@
-import { screenSize } from '@/src/styles/size';
+import { screenPixelSize } from '@/src/styles/size';
 
 export type DeviceMediaQueryKeys = 'touchscreen'
                                  | 'digitizer'
@@ -27,16 +27,16 @@ export type ScreenSizeMediaQueryKeys = 'gteWatch'
 export type ScreenSizeMediaQueryObject = {[key in ScreenSizeMediaQueryKeys]: string};
 
 export const screenSizeMediaQuery = {
-  gteWatch:   `@media only screen and (min-width: ${screenSize.watch})`,
-  gteMobile:  `@media only screen and (min-width: ${screenSize.mobile})`,
-  gtePhablet: `@media only screen and (min-width: ${screenSize.phablet})`,
-  gteTablet:  `@media only screen and (min-width: ${screenSize.tablet})`,
-  gteLaptop:  `@media only screen and (min-width: ${screenSize.laptop})`,
-  gteDesktop: `@media only screen and (min-width: ${screenSize.desktop})`,
-  isWatch:    `@media only screen and (min-width: ${screenSize.watch})   and (max-width: ${screenSize.mobile})`,
-  isMobile:   `@media only screen and (min-width: ${screenSize.mobile})  and (max-width: ${screenSize.phablet})`,
-  isPhablet:  `@media only screen and (min-width: ${screenSize.phablet}) and (max-width: ${screenSize.tablet})`,
-  isTablet:   `@media only screen and (min-width: ${screenSize.tablet})  and (max-width: ${screenSize.desktop})`,
-  isLaptop:   `@media only screen and (min-width: ${screenSize.laptop})  and (max-width: ${screenSize.laptop})`,
-  isDesktop:  `@media only screen and (min-width: ${screenSize.desktop})`,
+  gteWatch:   `@media only screen and (min-width: ${screenPixelSize.watch}px)`,
+  gteMobile:  `@media only screen and (min-width: ${screenPixelSize.mobile}px)`,
+  gtePhablet: `@media only screen and (min-width: ${screenPixelSize.phablet}px)`,
+  gteTablet:  `@media only screen and (min-width: ${screenPixelSize.tablet}px)`,
+  gteLaptop:  `@media only screen and (min-width: ${screenPixelSize.laptop}px)`,
+  gteDesktop: `@media only screen and (min-width: ${screenPixelSize.desktop}px)`,
+  isWatch:    `@media only screen and (min-width: ${screenPixelSize.watch}px)   and (max-width: ${screenPixelSize.mobile}px)`,
+  isMobile:   `@media only screen and (min-width: ${screenPixelSize.mobile}px)  and (max-width: ${screenPixelSize.phablet}px)`,
+  isPhablet:  `@media only screen and (min-width: ${screenPixelSize.phablet}px) and (max-width: ${screenPixelSize.tablet}px)`,
+  isTablet:   `@media only screen and (min-width: ${screenPixelSize.tablet}px)  and (max-width: ${screenPixelSize.desktop}px)`,
+  isLaptop:   `@media only screen and (min-width: ${screenPixelSize.laptop}px)  and (max-width: ${screenPixelSize.laptop}px)`,
+  isDesktop:  `@media only screen and (min-width: ${screenPixelSize.desktop}px)`,
 };

@@ -39,15 +39,20 @@ const StyledUl = styled(Ul)<StyledProps>`
 
 const ListItem: NextPage<ComponentProps> = ({
   children,
+  className,
   ordered,
 }) => {
   if (ordered) return (
-    <StyledOl>
+    <StyledOl
+      className={className}
+    >
       { children }
     </StyledOl>
   );
   else return (
-    <StyledUl>
+    <StyledUl
+      className={className}
+    >
       { children }
     </StyledUl>
   );

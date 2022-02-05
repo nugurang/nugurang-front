@@ -21,8 +21,8 @@ const StyledDivWidthLimiter = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     margin: 0 auto;
     height: 100%;
-    min-width: ${props.theme.screenSize.watch};
-    max-width: ${props.maxWidth ?? props.theme.screenSize.desktop};
+    min-width: ${props.theme.screenPixelSize.watch}px;
+    max-width: ${props.maxWidth ?? props.theme.screenPixelSize.desktop}px;
   `}
 `;
 

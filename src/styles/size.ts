@@ -1,16 +1,16 @@
-export type ScreenSizeKeys = 'watch'
-                           | 'mobile'
-                           | 'phablet'
-                           | 'tablet'
-                           | 'laptop'
-                           | 'desktop';
-export type ScreenSizeObject = {[key in ScreenSizeKeys]: string};
+export type ScreenPixelSizeKeys = 'watch'
+                                | 'mobile'
+                                | 'phablet'
+                                | 'tablet'
+                                | 'laptop'
+                                | 'desktop';
+export type ScreenPixelSizeObject = {[key in ScreenPixelSizeKeys]: number};
 
-export const screenSize = {
-  watch: '128px',
-  mobile: '320px',
-  phablet: '480px',
-  tablet: '768px',
-  laptop: '1024px',
-  desktop: '1280px',
+export const screenPixelSize = {
+  watch: 128,
+  mobile: 320,
+  phablet: 480,
+  tablet: 768,
+  laptop: 1024,
+  desktop: 1280,
 };

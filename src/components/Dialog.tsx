@@ -10,13 +10,13 @@ import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
 interface CssProps {
+  className?: string;
   loader?: boolean;
   open?: boolean;
   palette?: PaletteKeys;
 }
 
 interface ComponentProps extends CssProps {
-  className?: string;
   onClickBackdrop: (() => void) | undefined;
   title?: string;
   content?: string;
