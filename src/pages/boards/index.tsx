@@ -4,7 +4,7 @@ import type { CommonProps, ThemeObject } from '@/src/components/base/common';
 
 import { GetServerSideProps } from 'next';
 import Grid from '@/src/components/Grid';
-import Img from '@/src/components/base/Img';
+import Image from '@/src/components/base/Image';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
@@ -63,7 +63,7 @@ interface StyledProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImageWrap = styled(Img)<StyledWrapProps>`
+const StyledPageOverviewImageWrap = styled(Image)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     width: 100%;

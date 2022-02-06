@@ -1,8 +1,6 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import { CommonProps, CommonStyledAttributes } from '@/src/components/base/common';
 
 import type { NextPage } from 'next';
-import Ol from '@/src/components/base/Ol';
-import Ul from '@/src/components/base/Ul';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonProps {
@@ -11,17 +9,21 @@ interface ComponentProps extends CommonProps {
 
 interface StyledProps extends CommonProps {}
 
-const StyledOl = styled(Ol)<StyledProps>`
+const StyledOl = styled.ol<StyledProps>`
   ${(props: StyledProps) => `
+    ${CommonStyledAttributes(props)}
+    ${props.css}
   `}
 `;
 
-const StyledUl = styled(Ul)<StyledProps>`
+const StyledUl = styled.ul<StyledProps>`
   ${(props: StyledProps) => `
+    ${CommonStyledAttributes(props)}
+    ${props.css}
   `}
 `;
 
-const ListItem: NextPage<ComponentProps> = props => {
+const List: NextPage<ComponentProps> = props => {
   if (props.ordered) return (
     <StyledOl
       className={props.className}
@@ -40,4 +42,4 @@ const ListItem: NextPage<ComponentProps> = props => {
   );
 }
 
-export default ListItem;
+export default List;

@@ -34,7 +34,6 @@ const A: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       css={props.css}
       ref={ref}
 
-      acrylic={props.acrylic}
       ellipsis={props.ellipsis}
       enable={props.enable}
       onMouseEnter={props.onMouseEnter}

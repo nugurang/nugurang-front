@@ -5,7 +5,7 @@ import Dialog from '@/src/components/Dialog';
 import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
 import Icon from '@/src/components/Icon';
-import Img from '@/src/components/base/Img';
+import Image from '@/src/components/base/Image';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
@@ -37,7 +37,7 @@ interface StyledWrapProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImgWrap = styled(Img)<StyledWrapProps>`
+const StyledPageOverviewImgWrap = styled(Image)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
     display: block;
     width: 100%;
@@ -127,7 +127,7 @@ const LoginIndex: NextPage<PageProps> = ({ callbackUrl }) => {
       <Dialog
         open={isPendingDialogOpen}
         loader={true}
-        title={t('login')}
+        title={t('_loggingIn')}
       />
     </>
   );

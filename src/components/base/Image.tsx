@@ -13,37 +13,42 @@ export type ThemeObject = ForwardedThemeObject;
 
 interface ComponentProps extends CommonProps {
   children?: React.ReactNode;
+  src?: string;
+  alt?: string;
 }
 
 interface CSSProps extends CommonProps {
   theme: ThemeObject;
 }
 
-const StyledUl = styled.ul<CSSProps>`
+const StyledImage = styled.img<CSSProps>`
   ${(props: CSSProps) => `
     ${CommonStyledAttributes(props)}
-    ${props.css}
+
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    vertical-align: top;
+    
+    ${props.css || ''}
   `}
 `;
 
-const Ul: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
+const Img: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
   return (
-    <StyledUl
+    <StyledImage
       className={props.className}
       css={props.css}
       ref={ref}
 
-      acrylic={props.acrylic}
-      ellipsis={props.ellipsis}
       enable={props.enable}
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
-      palette={props.palette}
-      variant={props.variant}
-    >
-      { props.children }
-    </StyledUl>
+
+      src={props.src}
+      alt={props.alt ? props.alt : ''}
+    />
   );
 });
 
-export default Ul;
+export default Img;

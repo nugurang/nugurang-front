@@ -3,7 +3,7 @@ import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/bas
 import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Img from '@/src/components/base/Img';
+import Image from '@/src/components/base/Image';
 import type { NextPage } from 'next';
 import Span from '@/src/components/base/Span';
 import styled from '@emotion/styled';
@@ -30,7 +30,7 @@ interface StyledProps extends CommonProps {
   edge?: string;
 }
 
-const StyledImg = styled(Img)<StyledProps>`
+const StyledImage = styled(Image)<StyledProps>`
   ${(props: StyledProps) => `
     height: 32px;
     width: 32px;
@@ -67,7 +67,7 @@ const Icon: NextPage<ComponentProps> = props => {
   return (
     <>
       {props.src && ((props.type == 'image') || (props.type === undefined)) &&
-        <StyledImg
+        <StyledImage
           className={props.className}
           css={props.css}
           edge={props.edge}

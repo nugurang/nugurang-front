@@ -6,8 +6,8 @@ import type { CommonProps } from '@/src/components/base/common';
 import Div from '@/src/components/base/Div';
 import Icon from '@/src/components/Icon';
 import type { IconObject } from '@/src/components/Icon';
-import List from '@/src/components/List';
-import ListItem from '@/src/components/ListItem';
+import List from '@/src/components/base/List';
+import ListItem from '@/src/components/base/ListItem';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 

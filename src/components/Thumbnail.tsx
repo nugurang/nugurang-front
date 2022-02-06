@@ -2,7 +2,7 @@ import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/bas
 
 import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
-import Img from '@/src/components/base/Img';
+import Image from '@/src/components/base/Image';
 import type { NextPage } from 'next';
 import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
@@ -33,7 +33,7 @@ const StyledButton = styled(Button)<StyledProps>`
   `}
 `;
 
-const StyledImg = styled(Img)<StyledProps>`
+const StyledImage = styled(Image)<StyledProps>`
   ${(props: StyledProps) => `
     position: absolute;
     top: 0;
@@ -77,7 +77,7 @@ const Thumbnail: NextPage<ComponentProps> = props => {
       onMouseEnter={() => setState((state: any) => ({ ...state, isHover: true }))}
       onMouseLeave={() => setState((state: any) => ({ ...state, isHover: false }))}
     >
-      <StyledImg src={props.imageUrl}/>
+      <StyledImage src={props.imageUrl}/>
       <StyledNameDiv
         palette={props.palette}
         ellipsis={1}

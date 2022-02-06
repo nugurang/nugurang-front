@@ -13,42 +13,36 @@ export type ThemeObject = ForwardedThemeObject;
 
 interface ComponentProps extends CommonProps {
   children?: React.ReactNode;
-  src?: string;
-  alt?: string;
 }
 
 interface CSSProps extends CommonProps {
   theme: ThemeObject;
 }
 
-const StyledImg = styled.img<CSSProps>`
+const StyledInput = styled.input<CSSProps>`
   ${(props: CSSProps) => `
     ${CommonStyledAttributes(props)}
-
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-    vertical-align: top;
-    
-    ${props.css || ''}
+    ${props.css}
   `}
 `;
 
-const Img: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
+const Input: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
   return (
-    <StyledImg
+    <StyledInput
       className={props.className}
       css={props.css}
       ref={ref}
 
+      ellipsis={props.ellipsis}
       enable={props.enable}
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
-
-      src={props.src}
-      alt={props.alt ? props.alt : ''}
-    />
+      palette={props.palette}
+      variant={props.variant}
+    >
+      { props.children }
+    </StyledInput>
   );
 });
 
-export default Img;
+export default Input;

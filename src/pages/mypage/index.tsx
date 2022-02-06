@@ -4,8 +4,8 @@ import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
 import Grid from '@/src/components/Grid';
-import List from '@/src/components/List';
-import ListItem from '@/src/components/ListItem';
+import List from '@/src/components/base/List';
+import ListItem from '@/src/components/base/ListItem';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
@@ -70,7 +70,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
                     src: ['fas', 'book-reader']
                   }}
                   title='보드'
-                  onClick={() => router.push('/settings')}
+                  onClick={() => router.push('/boards')}
                 />
               </ListItem>
             </List>
@@ -125,7 +125,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
         open={isLogoutDialogOpen}
         onClickBackdrop={(isLogoutDialogOpen && isLogoutPending) ? undefined : () => setIsLogoutDialogOpen(false)}
         loader={isLogoutPending}
-        title={isLogoutPending ? t('logout') : t('_areYouSureLogout')}
+        title={isLogoutPending ? t('_loggingOut') : t('_areYouSureLogout')}
         noLabel={t('logout')}
         onNo={(isLogoutDialogOpen && isLogoutPending) ? undefined : () => {
           setIsLogoutPending(true);

@@ -5,7 +5,7 @@ import { mutateToBackend, queryToBackend } from '@/src/utils/backend';
 import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
-import Img from '@/src/components/base/Img';
+import Image from '@/src/components/base/Image';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
@@ -95,7 +95,7 @@ const Console: NextPage<PageProps> = ({
       <Section>
         <PageOverview
           firstChildren={<>
-            <Img
+            <Image
               src='https://image.freepik.com/free-vector/visual-data-concept-illustration_114360-1713.jpg?'
             />
           </>}

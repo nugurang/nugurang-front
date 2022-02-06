@@ -4,8 +4,8 @@ import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
 import Grid from '@/src/components/Grid';
-import List from '@/src/components/List';
-import ListItem from '@/src/components/ListItem';
+import List from '@/src/components/base/List';
+import ListItem from '@/src/components/base/ListItem';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
@@ -34,10 +34,10 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
       name: 'account',
       icon: {
         type: 'fontAwesomeIcon',
-        src: ['fas', 'coffee']
+        src: ['fas', 'key']
       },
-      title: 'Hello',
-      subtitle: 'Hello',
+      title: t('account'),
+      subtitle: t('account'),
       child: <>
         Hello World
       </>
