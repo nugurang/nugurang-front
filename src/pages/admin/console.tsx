@@ -3,13 +3,14 @@ import * as constants from '@/src/constants';
 import { mutateToBackend, queryToBackend } from '@/src/utils/backend';
 
 import Button from '@/src/components/base/Button';
-import Container from '@/src/components/Container';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
 import Img from '@/src/components/base/Img';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
+import WidthLimiter from '@/src/components/WidthLimiter';
+import WithCommonPreferences from '@/src/components/WithCommonPreferences';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
@@ -90,10 +91,7 @@ const Console: NextPage<PageProps> = ({
   };
 
   return (
-    <Container
-      currentUser={currentUser}
-      callbackUrl={callbackUrl}
-    >
+    <WidthLimiter>
       <Section>
         <PageOverview
           firstChildren={<>
@@ -119,8 +117,8 @@ const Console: NextPage<PageProps> = ({
         onYes={dialog.pending ? undefined : () => clearDialog()}
         yesLabel={t('ok')}
       />
-    </Container>
+    </WidthLimiter>
   );
 }
 
-export default Console;
+export default WithCommonPreferences(Console);

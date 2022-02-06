@@ -2,8 +2,6 @@ import * as constants from '@/src/constants';
 
 import type { CommonProps, ThemeObject } from '@/src/components/base/common';
 
-import Container from '@/src/components/Container';
-import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
 import Grid from '@/src/components/Grid';
 import Img from '@/src/components/base/Img';
@@ -11,6 +9,8 @@ import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';
 import Thumbnail from '@/src/components/Thumbnail';
+import WidthLimiter from '@/src/components/WidthLimiter';
+import WithCommonPreferences from '@/src/components/WithCommonPreferences';
 import { queryToBackend } from '@/src/utils/backend';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -96,11 +96,8 @@ const BoardsIndex: NextPage<PageProps> = ({
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
-    <Container
-      currentUser={currentUser}
-      callbackUrl={callbackUrl}
-    >
-      <Section>
+    <WidthLimiter>
+      <Section variant='transparent'>
         <PageOverview
           firstChildren={<>
             <StyledPageOverviewImageWrap
@@ -135,8 +132,8 @@ const BoardsIndex: NextPage<PageProps> = ({
           }
         </Grid>
       </Section>
-    </Container>
+    </WidthLimiter>
   );
 }
 
-export default BoardsIndex;
+export default WithCommonPreferences(BoardsIndex);

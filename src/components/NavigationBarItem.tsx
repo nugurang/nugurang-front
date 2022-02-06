@@ -13,7 +13,7 @@ import { useTranslation } from 'next-i18next';
 export interface ComponentProps extends CommonProps {
   active?: boolean;
   pathname: string;
-  icon?: IconProp;
+  fontAwesomeIcon?: IconProp;
   label: string;
 }
 
@@ -78,9 +78,9 @@ const NavigationBarItem: NextPage<ComponentProps> = props => {
       <StyledDivWrap
         css={props.css}
       >
-        { props.icon && 
+        { props.fontAwesomeIcon && 
           <StyledIcon
-            src={props.icon}
+            src={props.fontAwesomeIcon}
             type='fontAwesomeIcon'
             active={props.active}
           />

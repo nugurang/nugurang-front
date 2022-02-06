@@ -9,7 +9,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
-export const height = '64px';
+const height = 64;
 
 type User = {
   name: string;
@@ -24,10 +24,8 @@ interface ComponentProps extends CommonProps {
 interface StyledProps extends CommonProps {}
 
 // Header가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
-const StyledDivDummy = styled(Div)`
-  ${(props: any) => `
-    height: ${height};
-  `}
+const StyledDummyDiv = styled(Div)`
+  height: ${height}px;
 `;
 
 const StyledHeaderWrap = styled.header<StyledProps>`
@@ -38,7 +36,7 @@ const StyledHeaderWrap = styled.header<StyledProps>`
     top: 0;
     background-color: ${props.theme.palette.primary.main};
     color: ${props.theme.palette.primary.text};
-    height: ${height};
+    height: ${height}px;
     z-index: 20;
     transition-duration: 0.2s;
     transition-property: background-color, color;
@@ -78,37 +76,27 @@ const StyledRightsideWrap = styled(Span)<StyledProps>`
   `}
 `;
 
-const Logo: NextPage = () => {
-  return (
-    <StyledLogoTextWrap>nugurang</StyledLogoTextWrap>
-  );
-};
-
-const Header: NextPage<ComponentProps> = ({ user, callbackUrl }) => {
+const Header: NextPage<ComponentProps> = () => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <>
-      <StyledDivDummy />
+      <StyledDummyDiv />
       <StyledHeaderWrap>
         <WidthLimiter>
           <StyledLeftsideWrap>
-            <Logo />
+            <StyledLogoTextWrap>nugurang</StyledLogoTextWrap>
           </StyledLeftsideWrap>
           <StyledRightsideWrap>
-            {
-              !user && <>
-                <Button
-                  palette='primary'
-                  onClick={() => router.push({
-                    pathname: '/login',
-                    query: { callbackUrl },
-                  })}
-                >
-                  { t('login') }
-                </Button>
-              </>
-            }
+            <Button
+              palette='primary'
+              onClick={() => router.push({
+                pathname: '/session/login',
+                query: { callbackUrl: window.location.pathname },
+              })}
+            >
+              { t('login') }
+            </Button>
           </StyledRightsideWrap>
         </WidthLimiter>
       </StyledHeaderWrap>

@@ -3,7 +3,7 @@ import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/bas
 import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
 import type { NextPage } from 'next';
-import { logoutFromSession } from '@/src/utils/session';
+import { logoutFromNextAuth } from '@/src/utils/next-auth';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
@@ -42,7 +42,7 @@ const LogoutButton: NextPage<ComponentProps> = props => {
         noLabel={t('logout')}
         onNo={(open && pending) ? undefined : () => {
           setPending(true);
-          logoutFromSession({ callbackUrl: props.callbackUrl ?? '/' });
+          logoutFromNextAuth({ callbackUrl: props.callbackUrl ?? '/' });
         }}
         onCancel={(open && pending) ? undefined : () => setOpen(false)}
       />

@@ -1,10 +1,11 @@
 import Button from '@/src/components/base/Button';
-import Container from '@/src/components/Container';
 import Dialog from '@/src/components/Dialog';
 import { GetServerSideProps } from 'next';
 import Loader from '@/src/components/Loader';
 import type { NextPage } from 'next';
 import Section from '@/src/components/Section';
+import WidthLimiter from '@/src/components/WidthLimiter';
+import WithCommonPreferences from '@/src/components/WithCommonPreferences';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
@@ -30,10 +31,7 @@ const Sandbox: NextPage<PageProps> = ({
   const { t } = useTranslation('common');
   const [open, setOpen] = useState(false);
   return (
-    <Container
-      currentUser={currentUser}
-      callbackUrl={callbackUrl}
-    >
+    <WidthLimiter>
       <Section>
         {t('_helloWorld')}
         <Button
@@ -65,8 +63,8 @@ const Sandbox: NextPage<PageProps> = ({
           onNo={() => {}}
         />
       </Section>
-    </Container>
+    </WidthLimiter>
   );
 }
 
-export default Sandbox;
+export default WithCommonPreferences(Sandbox);

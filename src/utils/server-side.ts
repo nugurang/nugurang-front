@@ -4,10 +4,9 @@ import {
 } from '@/src/errors/Errors';
 import {
   getCurrentUserFromBackend,
-  mutateToBackend
+  registerToBackend
 } from '@/src/utils/backend';
 
-import { getSession } from 'next-auth/react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 async function getCommonServerSideProps(context: any) {
@@ -21,45 +20,6 @@ async function getCommonServerSideProps(context: any) {
   };
 }
 
-const registerUser = async (context: any, session: any) => {
-
-  try {
-    let imageId;
-    if (session.user!.image) {
-      const createImageResponse = await mutateToBackend(context, `
-        mutation CreateImage($address: String!) {
-          createImage (address: $address) {
-            id
-            address
-          }
-        }
-      `, {
-        address: session.user!.image
-      });
-      if (createImageResponse.hasOwnProperty('error')) throw new Error('Unknown Error');
-      imageId = createImageResponse.data.createImage.id;
-    }
-    const createCurrentUserResponse = await mutateToBackend(context, `
-      mutation CreateCurrentUser($user: UserInput!) {
-        createCurrentUser (user: $user) {
-          id
-        }
-      }
-    `, {
-      user: {
-        name: session.user!.name,
-        email: session.user!.email,
-        biography: '',
-        image: imageId,
-      }
-    }) as any;
-    if (createCurrentUserResponse.hasOwnProperty('error')) throw new Error('Unknown Error');
-    return createCurrentUserResponse.data.createCurrentUser;
-  } catch {
-    return false;
-  }
-};
-
 type AuthType = 'all'
               | 'session'
               | 'user'
@@ -70,16 +30,10 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
 
     const commonServerSideProps = await getCommonServerSideProps(context);
     let currentUser = await getCurrentUserFromBackend(context);
-    const session = await getSession(context);
-
-    if (session && !currentUser) {
-      await registerUser(context, session);
-      currentUser = await getCurrentUserFromBackend(context);
-    }
 
     try {
 
-      if ((['all'].find(e => e == authType) === undefined) && !session) {
+      if ((['all'].find(e => e == authType) === undefined) && !currentUser) {
         throw new LoginRequiredError();
       }
       if ((['all', 'session'].find(e => e == authType) === undefined) && !currentUser) {
@@ -103,10 +57,10 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
         return {
           redirect: {
             permanent: false,
-            destination: `/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
+            destination: `/session/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
           },
           props: {
-            ...commonServerSideProps,
+            ...commonServerSideProps
           }
         }
       } else if (error instanceof AccessDeniedError) {
@@ -114,7 +68,7 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
         return {
           props: {
             ...commonServerSideProps,
-            errorCode: 401
+            errorCode: 403
           }
         }
       } else {

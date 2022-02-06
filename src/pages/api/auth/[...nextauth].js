@@ -1,8 +1,5 @@
-import { deleteJSessionIdFromCookie, isJSessionIdExistFromCookie } from '@/src/utils/backend';
-
 import GithubProvider from 'next-auth/providers/github';
 import NextAuth from 'next-auth';
-import { logoutFromSession } from '@/src/utils/session';
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -27,6 +24,7 @@ export default NextAuth({
     },
     async session({ session, token }) {
       
+      // 백엔드에 로그인 요청을 보낼 때 필요함
       session.provider = token.provider;
       session.type = token.type;
       session.accessToken = token.accessToken;
@@ -35,12 +33,7 @@ export default NextAuth({
       if(token.iat) session.issued = new Date(token.iat * 1000).toISOString().slice(0,-5)+"Z";
       if(token.exp) session.expires = new Date(token.exp * 1000).toISOString().slice(0,-5)+"Z";
 
-      // session 및 backend 로그인 상태 동기화
-      if ( session && !isJSessionIdExistFromCookie(null)) logoutFromSession();
-      if (!session &&  isJSessionIdExistFromCookie(null)) deleteJSessionIdFromCookie(null);
-      
       return session;
-
     }
   }
 })

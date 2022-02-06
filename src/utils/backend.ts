@@ -4,6 +4,15 @@ import { parseCookies, stringifyCookies } from '@/src/utils/cookie';
 import apolloClient from '@/src/utils/apollo-client';
 import { gql } from '@apollo/client';
 
+export const pingToBackend = async (context: any) => {
+  const pingResponse = await queryToBackend(context, `
+    query Ping {
+      ping
+    }
+  `);
+  return pingResponse?.data?.ping;
+};
+
 export const queryToBackend = async (context: any, query: string, variables?: any) => {
   const cookies = parseCookies(context);
   try {
@@ -43,6 +52,45 @@ export const mutateToBackend = async (context: any, mutation: string, variables?
       data: null,
       error
     };
+  }
+};
+
+export const registerToBackend = async (context: any, session: any) => {
+
+  try {
+    let imageId;
+    if (session.user!.image) {
+      const createImageResponse = await mutateToBackend(context, `
+        mutation CreateImage($address: String!) {
+          createImage (address: $address) {
+            id
+            address
+          }
+        }
+      `, {
+        address: session.user!.image
+      });
+      if (createImageResponse.hasOwnProperty('error')) throw new Error('Unknown Error');
+      imageId = createImageResponse.data.createImage.id;
+    }
+    const createCurrentUserResponse = await mutateToBackend(context, `
+      mutation CreateCurrentUser($user: UserInput!) {
+        createCurrentUser (user: $user) {
+          id
+        }
+      }
+    `, {
+      user: {
+        name: session.user!.name,
+        email: session.user!.email,
+        biography: '',
+        image: imageId,
+      }
+    }) as any;
+    if (createCurrentUserResponse.hasOwnProperty('error')) throw new Error('Unknown Error');
+    return createCurrentUserResponse.data.createCurrentUser;
+  } catch {
+    return false;
   }
 };
 
@@ -111,29 +159,24 @@ export const logoutFromBackend = async (context: any) => {
   });
 };
 
-export const isJSessionIdExistFromCookie = (context: any) => !!parseCookies(context)?.JSESSIONID;
-
-export const deleteJSessionIdFromCookie = (context: any) => logoutFromBackend(context);
-
 export const getCurrentUserFromBackend = async (context: any) => {
-  if (isJSessionIdExistFromCookie(context)) {
-    const currentUserResponse = await queryToBackend(context, `
-      query CurrentUser {
-        currentUser {
+  const currentUserResponse = await queryToBackend(context, `
+    query CurrentUser {
+      currentUser {
+        id
+        oauth2Provider
+        oauth2Id
+        name
+        email
+        image {
           id
-          oauth2Provider
-          oauth2Id
-          name
-          email
-          image {
-            id
-            address
-          }
-          biography
+          address
         }
+        biography
       }
-    `);
-    return currentUserResponse?.data?.currentUser ?? null;
-  };
-  return null;
+    }
+  `);
+  return currentUserResponse?.data?.currentUser ?? null;
 }
+
+export const isJSessionIdExistFromCookie = (context: any) => !!parseCookies(context)?.JSESSIONID;

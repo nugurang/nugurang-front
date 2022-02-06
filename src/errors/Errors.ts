@@ -36,6 +36,6 @@ class AuthorizationError extends Error {
 export class AccessDeniedError extends AuthorizationError {
   constructor() {
     super('Access Denied');
-    this.name = "LogoutFailedError";
+    this.name = "AccessDeniedError";
   }
 }

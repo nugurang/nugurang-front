@@ -14,9 +14,12 @@ export type ThemeObject = ForwardedThemeObject;
 interface ComponentProps extends CommonProps {
   children?: React.ReactNode;
   onClick?: () => void;
+  selected?: boolean;
 }
 
-interface CSSProps extends CommonProps {}
+interface CSSProps extends CommonProps {
+  selected?: boolean;
+}
 
 const StyledButton = styled.button<CSSProps>`
   ${(props: CSSProps) => `
@@ -33,6 +36,10 @@ const StyledButton = styled.button<CSSProps>`
         background-color: ${props.theme.palette[props.palette || 'default'].dark};
       ` : ''}
     }
+    ${props.selected ? `
+      background-color: ${props.theme.palette[props.palette || 'default'].dark};
+    ` : ''}
+
     &:active {
       transform: scale(0.9);
     }
@@ -52,8 +59,13 @@ const StyledHoverEffect = styled.div<CSSProps>`
     
     background-color: #0000;
     &:hover {
-      background-color: #0002;
+      ${props.variant != 'filled' ? `
+        background-color: #0002;
+      ` : ''}
     }
+    ${(props.selected && (props.variant != 'filled')) ? `
+      background-color: #0002;
+    ` : ''}
 
     -webkit-transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
     transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
@@ -72,10 +84,10 @@ const Button: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
       palette={props.palette}
-      variant={props.variant ? props.variant : 'filled'}
+      variant={props.variant ?? 'filled'}
 
       onClick={props.onClick}
-      enablePadding={props.enablePadding ?? true}
+      selected={props.selected}
     >
       { props.children }
       <StyledHoverEffect />

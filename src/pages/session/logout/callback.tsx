@@ -3,8 +3,9 @@ import { GetServerSideProps, NextPage } from 'next';
 import { logoutFromBackend } from '@/src/utils/backend';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+
   const callbackUrl = context.query.callbackUrl;
-  
+
   await logoutFromBackend(context);
 
   return {
@@ -12,12 +13,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       permanent: false,
       destination: callbackUrl,
     },
-    props:{},
+    props: {},
   };
+
 }
 
-const AfterLogin: NextPage = () => {
+const Callback: NextPage = () => {
   return <></>;
 };
 
-export default AfterLogin;
+export default Callback;
