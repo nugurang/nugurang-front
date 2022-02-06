@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 
-export default function useSize() {
+export default function useResize(ref: React.RefObject<any>) {
   const [size, setSize] = useState({});
 
   function handleResize() {
-    const { innerWidth, innerHeight } = window;
-
-    setSize({ width: innerWidth, height: innerHeight });
+    setSize({
+      height: ref.current.offsetHeight,
+      width: ref.current.offsetWidth
+    });
   }
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize, true);
+    document.addEventListener('resize', handleResize, true);
     handleResize();
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+    return () => document.removeEventListener('resize', handleResize);
+  }, [ref]);
   return size;
 }

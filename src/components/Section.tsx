@@ -14,16 +14,18 @@ interface ComponentProps extends CommonProps {
     type?: IconTypeKeys;
     src?: string | IconProp;
   };
+  enableMargin?: boolean;
   enablePadding?: boolean;
 }
 
 interface StyledProps extends CommonProps {
+  enableMargin?: boolean;
   enablePadding?: boolean;
 }
 
 const StyledCard = styled(Card)<StyledProps>`
   ${(props: StyledProps) => `
-    margin: 8px;
+    margin: ${props.enableMargin ? '8px' : '0'};
     padding: ${props.enablePadding ? '8px' : '0'};
   `}
 `;
@@ -56,6 +58,7 @@ const Section: NextPage<ComponentProps> = props => {
     <StyledCard
       variant={props.variant ?? 'outlined'}
       palette={props.palette ?? 'default'}
+      enableMargin={props.enableMargin}
       enablePadding={props.enablePadding ?? true}
     >
       <StyledHeaderDiv>

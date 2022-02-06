@@ -1,7 +1,8 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import { useEffect, useState } from 'react';
 
 import Button from '@/src/components/base/Button';
 import Card from '@/src/components/Card';
+import type { CommonProps } from '@/src/components/base/common';
 import Div from '@/src/components/base/Div';
 import Icon from '@/src/components/Icon';
 import type { IconObject } from '@/src/components/Icon';
@@ -9,25 +10,44 @@ import List from '@/src/components/List';
 import ListItem from '@/src/components/ListItem';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
-interface TabItem {
+export interface TabItem {
+  name: string;
   icon?: IconObject;
   title?: string;
+  subtitle?: string;
+  onClickTitle?: () => void;
   child?: React.ReactNode;
 }
 
 interface ComponentProps extends CommonProps {
   ordered?: boolean;
   tabItems: TabItem[];
+  initialIndex?: number;
+  initialDepth?: number;
 }
 
-interface StyledProps extends CommonProps {}
+interface StyledProps extends CommonProps {
+  depth: number;
+}
 
 const StyledWrapCard = styled(Card)<StyledProps>`
   ${(props: StyledProps) => `
     display: grid;
-    grid-template-columns: repeat(1, 360px 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    & > *:nth-of-type(1) {
+      display: ${props.depth > 0 ? 'none' : 'block'};
+    }
+    & > *:nth-of-type(2) {
+      display: ${props.depth > 0 ? 'block' : 'none'};
+    }
+    ${props.theme.screenSizeMediaQuery.gteTablet} {
+      grid-template-columns: repeat(1, 360px 1fr);
+      & > *:nth-of-type(1),
+      & > *:nth-of-type(2) {
+        display: block;
+      }
+    }
     gap: 16px;
     margin: 0 auto;
   `}
@@ -36,7 +56,9 @@ const StyledWrapCard = styled(Card)<StyledProps>`
 const StyledTitleListWrapCard = styled(Card)<StyledProps>`
   ${(props: StyledProps) => `
     width: 100%;
-    max-width: 360px;
+    ${props.theme.screenSizeMediaQuery.gteTablet}
+      max-width: 360px;
+    }
   `}
 `;
 
@@ -97,6 +119,7 @@ const StyledTitleItemSubtitleDiv = styled(Div)<StyledProps>`
 
 const StyledContentDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
+    display: ${props.depth > 0 ? 'block' : 'none'};
     float: left;
     overflow: hidden;
     padding: 8px;
@@ -104,12 +127,16 @@ const StyledContentDiv = styled(Div)<StyledProps>`
 `;
 
 const VerticalTab: NextPage<ComponentProps> = props => {
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [selectedTab, setSelectedTab] = useState({
+    index: props.initialIndex ?? 0,
+    depth: props.initialDepth ?? 0
+  });
 
   return (
     <StyledWrapCard
       className={props.className}
       css={props.css}
+      depth={selectedTab.depth}
     >
       <StyledTitleListWrapCard>
         <StyledTitleList
@@ -118,33 +145,42 @@ const VerticalTab: NextPage<ComponentProps> = props => {
           {
             props.tabItems
             .map((tabItem: TabItem, index: number) => {
-              return <>
-                <StyledTitleItem key={index}>
-                  <StyledTitleItemButton
-                    variant='transparent'
-                    onClick={() => setSelectedTabIndex(index)}
-                  >
-                    <StyledTitleItemIcon
-                      type={tabItem?.icon?.type}
-                      src={tabItem?.icon?.src}
-                    />
-                    <StyledTitleItemTextDiv>
-                      <StyledTitleItemTitleDiv>
-                        {tabItem.title}
-                      </StyledTitleItemTitleDiv>
-                      <StyledTitleItemSubtitleDiv>
-                        {tabItem.subtitle}
-                      </StyledTitleItemSubtitleDiv>
-                    </StyledTitleItemTextDiv>
-                  </StyledTitleItemButton>
-                </StyledTitleItem>
-              </>
+              return <StyledTitleItem key={index}>
+                <StyledTitleItemButton
+                  variant='transparent'
+                  onClick={() => {
+                    if (!!tabItem.onClickTitle) tabItem.onClickTitle();
+                    else {
+                      setSelectedTab((selectedTab: any) => ({
+                        ...selectedTab,
+                        index,
+                        depth: 1
+                      }));
+                    }
+                  }}
+                >
+                  <StyledTitleItemIcon
+                    type={tabItem?.icon?.type}
+                    src={tabItem?.icon?.src}
+                  />
+                  <StyledTitleItemTextDiv>
+                    <StyledTitleItemTitleDiv>
+                      {tabItem.title}
+                    </StyledTitleItemTitleDiv>
+                    <StyledTitleItemSubtitleDiv>
+                      {tabItem.subtitle}
+                    </StyledTitleItemSubtitleDiv>
+                  </StyledTitleItemTextDiv>
+                </StyledTitleItemButton>
+              </StyledTitleItem>
             })
           }
         </StyledTitleList>
       </StyledTitleListWrapCard>
-      <StyledContentDiv>
-        {props.tabItems.length > 0 && props.tabItems[selectedTabIndex].child}
+      <StyledContentDiv
+        depth={selectedTab.depth}
+      >
+        {props.tabItems.length > 0 && props.tabItems[selectedTab.index].child}
       </StyledContentDiv>
     </StyledWrapCard>
   );
