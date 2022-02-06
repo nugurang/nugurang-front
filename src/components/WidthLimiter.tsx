@@ -5,19 +5,20 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonProps {
-  maxWidth?: string;
+  maxWidth?: number;
 }
 
 interface StyledWrapProps extends CommonProps {
-  maxWidth?: string;
+  maxWidth?: number;
 }
 
 const StyledDivWidthLimiter = styled(Div)<StyledWrapProps>`
   ${(props: StyledWrapProps) => `
+    position: relative;
     margin: 0 auto;
     height: 100%;
     min-width: ${props.theme.screenPixelSize.watch}px;
-    max-width: ${props.maxWidth ?? props.theme.screenPixelSize.desktop}px;
+    max-width: ${props.maxWidth ?? props.theme.screenPixelSize.laptop}px;
   `}
 `;
 

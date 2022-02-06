@@ -39,23 +39,15 @@ const StyledSectionGridDiv = styled(Div)<StyledProps>`
 
     ${props.size.width >= props.theme.screenPixelSize.mobile && `
       grid-template-columns: repeat(${props.column.gteMobile}, 1fr);
-      max-width: ${props.theme.screenPixelSize.mobile};
     `}
     ${props.size.width >= props.theme.screenPixelSize.phablet && `
       grid-template-columns: repeat(${props.column.gtePhablet}, 1fr);
-      max-width: ${props.theme.screenPixelSize.phablet};
     `}
     ${props.size.width >= props.theme.screenPixelSize.tablet && `
       grid-template-columns: repeat(${props.column.gteTablet}, 1fr);
-      max-width: ${props.theme.screenPixelSize.tablet};
     `}
     ${props.size.width >= props.theme.screenPixelSize.laptop && `
       grid-template-columns: repeat(${props.column.gteLaptop}, 1fr);
-      max-width: ${props.theme.screenPixelSize.laptop};
-    `}
-    ${props.size.width >= props.theme.screenPixelSize.desktop && `
-      grid-template-columns: repeat(${props.column.gteDesktop}, 1fr);
-      max-width: ${props.theme.screenPixelSize.desktop};
     `}
   `}
 `;

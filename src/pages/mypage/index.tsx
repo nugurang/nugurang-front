@@ -55,8 +55,8 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
         <Grid
           column={{
             default: 1,
-            gteTablet: 2,
-            gteDesktop: 3
+            gtePhablet: 2,
+            gteLaptop: 3
           }}
         >
           <Section
