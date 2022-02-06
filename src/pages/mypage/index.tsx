@@ -117,6 +117,28 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
                   onClick={() => router.push('/settings')}
                 />
               </ListItem>
+              <ListItem>
+                <BriefCard
+                  icon={{
+                    type: 'fontAwesomeIcon',
+                    src: ['fas', 'code']
+                  }}
+                  title={t('developerOption')}
+                  subtitle={t('developerOption')}
+                  onClick={() => router.push('/settings/developer')}
+                />
+              </ListItem>
+              <ListItem>
+                <BriefCard
+                  icon={{
+                    type: 'fontAwesomeIcon',
+                    src: ['fas', 'flask']
+                  }}
+                  title={t('sandbox')}
+                  subtitle={t('sandbox')}
+                  onClick={() => router.push('/admin/sandbox')}
+                />
+              </ListItem>
             </List>
           </Section>
         </Grid>

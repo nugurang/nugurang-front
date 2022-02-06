@@ -122,7 +122,6 @@ const StyledContentDiv = styled(Div)<StyledProps>`
     display: ${props.depth > 0 ? 'block' : 'none'};
     float: left;
     overflow: hidden;
-    padding: 8px;
   `}
 `;
 

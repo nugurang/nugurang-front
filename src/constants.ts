@@ -13,7 +13,7 @@ export const OAUTH_PROVIDERS = [
 export const DEFAULT_NAVIGATION_BAR_ITEMS = [
   {
     pathname: '/home',
-    fontAwesomeIcon: ['fas', 'coffee'],
+    fontAwesomeIcon: ['fas', 'home'],
     label: 'home',
   },
   {
@@ -22,18 +22,13 @@ export const DEFAULT_NAVIGATION_BAR_ITEMS = [
     label: 'boards',
   },
   {
+    pathname: '/teams',
+    fontAwesomeIcon: ['fas', 'users'],
+    label: 'teams',
+  },
+  {
     pathname: '/mypage',
     fontAwesomeIcon: ['fas', 'user'],
     label: 'myPage',
-  },
-  {
-    pathname: '/admin/sandbox',
-    fontAwesomeIcon: ['fas', 'flask'],
-    label: 'sandbox',
-  },
-  {
-    pathname: '/admin/console',
-    fontAwesomeIcon: ['fas', 'terminal'],
-    label: 'console',
-  },
+  }
 ];

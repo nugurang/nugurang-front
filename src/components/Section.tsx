@@ -26,13 +26,13 @@ interface StyledProps extends CommonProps {
 const StyledCard = styled(Card)<StyledProps>`
   ${(props: StyledProps) => `
     margin: ${props.enableMargin ? '8px' : '0'};
-    padding: ${props.enablePadding ? '8px' : '0'};
   `}
 `;
 
 const StyledHeaderDiv = styled(Div)<StyledProps>`
   ${(props: StyledProps) => `
-    padding: 8px;
+    padding: 16px;
+    border-bottom: 1px solid ${props.theme.palette.default.high};
   `}
 `;
 
@@ -53,19 +53,32 @@ const StyledTitleDiv = styled(Div)<StyledProps>`
   `}
 `;
 
+const StyledChildrenWrapDiv = styled(Div)<StyledProps>`
+  ${(props: StyledProps) => `
+    padding: ${props.enablePadding ? '16px' : '0'};
+  `}
+`;
+
 const Section: NextPage<ComponentProps> = props => {
   return (
     <StyledCard
       variant={props.variant ?? 'outlined'}
       palette={props.palette ?? 'default'}
       enableMargin={props.enableMargin}
-      enablePadding={props.enablePadding ?? true}
     >
-      <StyledHeaderDiv>
-        <StyledIcon type={props?.icon?.type} src={props?.icon?.src} />
-        <StyledTitleDiv>{ props.title }</StyledTitleDiv>
-      </StyledHeaderDiv>
-      { props.children }
+      {
+        (props.icon || props.title) && <>
+          <StyledHeaderDiv>
+            <StyledIcon type={props?.icon?.type} src={props?.icon?.src} />
+            <StyledTitleDiv>{ props.title }</StyledTitleDiv>
+          </StyledHeaderDiv>
+        </>
+      }
+      <StyledChildrenWrapDiv
+        enablePadding={props.enablePadding ?? true}
+      >
+        { props.children }
+      </StyledChildrenWrapDiv>
     </StyledCard>
   );
 }
