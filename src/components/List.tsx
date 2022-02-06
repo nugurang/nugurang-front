@@ -32,6 +32,8 @@ const ListItem: NextPage<ComponentProps> = props => {
   else return (
     <StyledUl
       className={props.className}
+      variant={props.variant}
+      palette={props.palette}
     >
       { props.children }
     </StyledUl>

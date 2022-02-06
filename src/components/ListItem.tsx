@@ -15,7 +15,7 @@ const StyledLi = styled(Li)<StyledWrapProps>`
       content: '';
       display: block;
       border-top: 1px solid ${props.theme.palette.default.high};
-      margin: 4px 0;
+      margin: 8px 0;
     }
   `}
 `;

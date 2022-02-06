@@ -11,6 +11,13 @@ import styled from '@emotion/styled';
 export type IconTypeKeys = 'image'
                          | 'fontAwesomeIcon';
 
+export interface IconObject {
+  type?: IconTypeKeys;
+  edge?: string;
+  src?:  string | IconProp;
+  alt?:  string;
+}
+
 interface ComponentProps extends CommonProps {
   type?: IconTypeKeys;
   edge?: string;

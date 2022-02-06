@@ -2,11 +2,8 @@ import {
   AccessDeniedError,
   LoginRequiredError
 } from '@/src/errors/Errors';
-import {
-  getCurrentUserFromBackend,
-  registerToBackend
-} from '@/src/utils/backend';
 
+import { getCurrentUserFromBackend } from '@/src/utils/backend';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 async function getCommonServerSideProps(context: any) {
