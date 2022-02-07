@@ -1,4 +1,4 @@
-import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
@@ -8,12 +8,12 @@ interface ComponentProps extends CommonProps {
   maxWidth?: number;
 }
 
-interface StyledWrapProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   maxWidth?: number;
 }
 
-const StyledDivWidthLimiter = styled(Div)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledDivWidthLimiter = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     position: relative;
     margin: 0 auto;
     height: 100%;

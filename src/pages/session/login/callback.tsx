@@ -8,12 +8,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const callbackUrl = context.query.callbackUrl;
   const session = await getSession(context);
 
-  await loginToBackend(context, session);
-  const currentUserResponse = await getCurrentUserFromBackend(context);
-  if (!currentUserResponse) {
-    // 백엔드 서버에 사용자 등록
-    await registerToBackend(context, session);
-    await loginToBackend(context, session);
+  await loginToBackend(context, session)
+  const currentUser = await getCurrentUserFromBackend(context);
+  if (!currentUser) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/session/register?callbackUrl=${callbackUrl}`,
+      },
+      props: {},
+    };
   }
 
   return {

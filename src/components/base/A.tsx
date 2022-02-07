@@ -1,27 +1,19 @@
-import { CommonProps, CommonStyledAttributes } from '@/src/components/base/common';
-import type {
-  PaletteKeys as ForwardedPaletteKeys,
-  ThemeObject as ForwardedThemeObject
-} from '@/src/styles/theme';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
+import { CommonStyledAttributes } from '@/src/components/base/common';
 import type { NextPage } from 'next';
 import React from 'react';
 import styled from '@emotion/styled';
-
-export type PaletteKeys = ForwardedPaletteKeys;
-export type ThemeObject = ForwardedThemeObject;
 
 interface ComponentProps extends CommonProps {
   children?: React.ReactNode;
   href: string;
 }
 
-interface CSSProps extends CommonProps {
-  theme: ThemeObject;
-}
+interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledA = styled.a<CSSProps>`
-  ${(props: CSSProps) => `
+const StyledA = styled.a<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     ${CommonStyledAttributes(props)}
     ${props.css}
   `}

@@ -59,12 +59,12 @@ export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('u
   }
 );
 
-interface StyledProps {
+interface StyledComponentProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImageWrap = styled(Image)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledPageOverviewImageWrap = styled(Image)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: block;
     width: 100%;
     max-height: 480px;
@@ -112,7 +112,7 @@ const BoardsIndex: NextPage<PageProps> = ({
           column={{
             default: 1,
             gtePhablet: 2,
-            gteLaptop: 3
+            gteTablet: 3,
           }}
         >
           {

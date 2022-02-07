@@ -1,10 +1,9 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function useResize(ref: React.RefObject<any>) {
   const [size, setSize] = useState({});
 
   const handleResize = useCallback(() => {
-    console.log('asdf');
     if (ref.current) {
       setSize({
         height: ref.current.offsetHeight,
@@ -13,7 +12,7 @@ export default function useResize(ref: React.RefObject<any>) {
     }
   }, [ref]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', handleResize);
     handleResize();
     return () => {

@@ -1,4 +1,4 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import Card from '@/src/components/Card';
@@ -18,18 +18,18 @@ interface ComponentProps extends CommonProps {
   };
 }
 
-interface StyledProps extends CommonProps {}
+interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledButton = styled(Button)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledButton = styled(Button)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: block;
     width: 100%;
     padding: 0;
   `}
 `;
 
-const StyledWrapCard = styled(Card)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledWrapCard = styled(Card)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     padding: 8px;
     &::after {
       clear: both;
@@ -39,8 +39,8 @@ const StyledWrapCard = styled(Card)<StyledProps>`
   `}
 `;
 
-const StyledIcon = styled(Icon)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledIcon = styled(Icon)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     float: left;
     height: 28px;
     width: 28px;
@@ -48,24 +48,24 @@ const StyledIcon = styled(Icon)<StyledProps>`
   `}
 `;
 
-const StyledTextDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTextDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     overflow: hidden;
     margin: 2px 0;
     vertical-align: top;
   `}
 `;
 
-const StyledTitleDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     font-size: 20px;
     font-weight: bold;
     line-height: 24px;
   `}
 `;
 
-const StyledSubtitleDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledSubtitleDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     font-size: 16px;
     line-height: 20px;
     margin-top: 4px;

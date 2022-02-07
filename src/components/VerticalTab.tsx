@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import Card from '@/src/components/Card';
-import type { CommonProps } from '@/src/components/base/common';
 import Div from '@/src/components/base/Div';
 import Icon from '@/src/components/Icon';
 import type { IconObject } from '@/src/components/Icon';
@@ -10,6 +9,7 @@ import List from '@/src/components/base/List';
 import ListItem from '@/src/components/base/ListItem';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
 export interface TabItem {
   name: string;
@@ -27,12 +27,12 @@ interface ComponentProps extends CommonProps {
   initialDepth?: number;
 }
 
-interface StyledProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   depth: number;
 }
 
-const StyledWrapCard = styled(Card)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledWrapCard = styled(Card)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     & > *:nth-of-type(1) {
@@ -53,8 +53,8 @@ const StyledWrapCard = styled(Card)<StyledProps>`
   `}
 `;
 
-const StyledTitleListWrapCard = styled(Card)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleListWrapCard = styled(Card)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     width: 100%;
     ${props.theme.screenSizeMediaQuery.gteTablet}
       max-width: 360px;
@@ -62,21 +62,21 @@ const StyledTitleListWrapCard = styled(Card)<StyledProps>`
   `}
 `;
 
-const StyledTitleList = styled(List)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleList = styled(List)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: block;
     padding: 8px;
   `}
 `;
 
-const StyledTitleItem = styled(ListItem)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleItem = styled(ListItem)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
   
   `}
 `;
 
-const StyledTitleItemButton = styled(Button)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleItemButton = styled(Button)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     clear: both;
     display: block;
     width: 100%;
@@ -84,8 +84,8 @@ const StyledTitleItemButton = styled(Button)<StyledProps>`
   `}
 `;
 
-const StyledTitleItemIcon = styled(Icon)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleItemIcon = styled(Icon)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     float: left;
     height: 28px;
     width: 28px;
@@ -93,32 +93,32 @@ const StyledTitleItemIcon = styled(Icon)<StyledProps>`
   `}
 `;
 
-const StyledTitleItemTextDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleItemTextDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     overflow: hidden;
     margin: 2px 0;
     vertical-align: top;
   `}
 `;
 
-const StyledTitleItemTitleDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleItemTitleDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     font-size: 20px;
     font-weight: bold;
     line-height: 24px;
   `}
 `;
 
-const StyledTitleItemSubtitleDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleItemSubtitleDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     font-size: 16px;
     line-height: 20px;
     margin-top: 4px;
   `}
 `;
 
-const StyledContentDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledContentDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: ${props.depth > 0 ? 'block' : 'none'};
     float: left;
     overflow: hidden;

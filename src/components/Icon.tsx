@@ -1,4 +1,4 @@
-import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,13 +25,13 @@ interface ComponentProps extends CommonProps {
   alt?:  string;
 }
 
-interface StyledProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   type?: IconTypeKeys;
   edge?: string;
 }
 
-const StyledImage = styled(Image)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledImage = styled(Image)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     height: 32px;
     width: 32px;
     border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'circle']};
@@ -40,8 +40,8 @@ const StyledImage = styled(Image)<StyledProps>`
   `}
 `;
 
-const StyledFontAwesomeIcon = styled(FontAwesomeIcon)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     height: 32px;
     width: 32px;
     color: ${props.palette ? props.theme.palette[props.palette].main : props.theme.palette.default.contrast };
@@ -51,8 +51,8 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)<StyledProps>`
   `}
 `;
 
-const StyledAltSpan = styled(Span)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledAltSpan = styled(Span)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     position: absolute;
     top: 50%;
     left: 50%;

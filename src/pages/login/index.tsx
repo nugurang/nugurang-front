@@ -33,12 +33,12 @@ interface PageProps {
   callbackUrl: string,
 }
 
-interface StyledWrapProps {
+interface StyledComponentProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImgWrap = styled(Image)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledPageOverviewImgWrap = styled(Image)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: block;
     width: 100%;
     max-height: 480px;
@@ -48,8 +48,8 @@ const StyledPageOverviewImgWrap = styled(Image)<StyledWrapProps>`
   `}
 `;
 
-const StyledPageOverviewTextWrap = styled(Div)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledPageOverviewTextWrap = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     margin-top: 24px;
     font-size: 24px;
     line-height: 28px;
@@ -57,15 +57,15 @@ const StyledPageOverviewTextWrap = styled(Div)<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginButtonGroup = styled(Div)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledLoginButtonGroup = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     margin: 24px auto 0;
     text-align: center;
   `}
 `;
 
-const StyledLoginButton = styled(Button)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledLoginButton = styled(Button)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: inline-block;
     margin: 0 10px 10px 0;
     width: calc(50% - 40px);
@@ -73,8 +73,8 @@ const StyledLoginButton = styled(Button)<StyledWrapProps>`
   `}
 `;
 
-const StyledLoginButtonIcon = styled(Icon)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledLoginButtonIcon = styled(Icon)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     height: 32px;
     width: 32px;
     color: ${props.theme.palette.default.text};

@@ -1,15 +1,9 @@
-import { CommonProps, CommonStyledAttributes } from '@/src/components/base/common';
-import type {
-  PaletteKeys as ForwardedPaletteKeys,
-  ThemeObject as ForwardedThemeObject
-} from '@/src/styles/theme';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
+import { CommonStyledAttributes } from '@/src/components/base/common';
 import type { NextPage } from 'next';
 import React from 'react';
 import styled from '@emotion/styled';
-
-export type PaletteKeys = ForwardedPaletteKeys;
-export type ThemeObject = ForwardedThemeObject;
 
 interface ComponentProps extends CommonProps {
   children?: React.ReactNode;
@@ -17,12 +11,12 @@ interface ComponentProps extends CommonProps {
   selected?: boolean;
 }
 
-interface CSSProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   selected?: boolean;
 }
 
-const StyledButton = styled.button<CSSProps>`
-  ${(props: CSSProps) => `
+const StyledButton = styled.button<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     ${CommonStyledAttributes(props)}
     
     position: relative;
@@ -48,8 +42,8 @@ const StyledButton = styled.button<CSSProps>`
   `}
 `;
 
-const StyledHoverEffect = styled.div<CSSProps>`
-  ${(props: CSSProps) => `
+const StyledHoverEffect = styled.div<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: ${props.palette ? 'none' : 'block'};
     position: absolute;
     top: 0;
@@ -83,6 +77,8 @@ const Button: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       enable={props.enable}
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
+      onFocus={props.onFocus}
+      onBlur={props.onBlur}
       palette={props.palette}
       variant={props.variant ?? 'filled'}
 

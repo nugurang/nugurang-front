@@ -1,4 +1,4 @@
-import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next';
 interface ComponentProps extends CommonProps {
   loader?: boolean;
   open?: boolean;
-  onClickBackdrop: (() => void) | undefined;
+  onClickBackdrop?: () => void;
   title?: string;
   content?: string;
   yesLabel?: string;
@@ -22,40 +22,41 @@ interface ComponentProps extends CommonProps {
   onNo?: (() => void) | undefined;
   onCancel?: (() => void) | undefined;
 }
+export interface DialogProps extends ComponentProps {}
 
-interface StyledProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   loader?: boolean;
   open?: boolean;
   active?: boolean;
 }
 
-const StyledWidthLimiter = styled(WidthLimiter)<StyledProps>`
+const StyledWidthLimiter = styled(WidthLimiter)<StyledComponentProps>`
   ${(props: any) => `
     padding: 48px 0;
     text-align: center;
   `}
 `;
 
-const StyledInfoDiv = styled(Div)<StyledProps>`
+const StyledInfoDiv = styled(Div)<StyledComponentProps>`
   ${(props: any) => `
     margin-bottom: 32px;
   `}
 `;
 
-const StyledLoader = styled(Loader)<StyledProps>`
+const StyledLoader = styled(Loader)<StyledComponentProps>`
   ${(props: any) => `
     display: ${props.loader ? 'inline-block' : 'none'};
     margin-bottom: 32px;
   `}
 `;
 
-const StyledTextDiv = styled(Div)<StyledProps>`
+const StyledTextDiv = styled(Div)<StyledComponentProps>`
   ${(props: any) => `
     display: block;
   `}
 `;
 
-const StyledTitleDiv = styled(Div)<StyledProps>`
+const StyledTitleDiv = styled(Div)<StyledComponentProps>`
   ${(props: any) => `
     font-size: 24px;
     font-weight: bold;
@@ -64,7 +65,7 @@ const StyledTitleDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const StyledContentDiv = styled(Div)<StyledProps>`
+const StyledContentDiv = styled(Div)<StyledComponentProps>`
   ${(props: any) => `
     font-size: 20px;
     line-height: 24px;
@@ -72,7 +73,7 @@ const StyledContentDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const StyledButtonGroupDiv = styled(Div)<StyledProps>`
+const StyledButtonGroupDiv = styled(Div)<StyledComponentProps>`
   ${(props: any) => `
     & > * {
       margin-left: 8px;
@@ -83,7 +84,7 @@ const StyledButtonGroupDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const StyledButton = styled(Button)<StyledProps>`
+const StyledButton = styled(Button)<StyledComponentProps>`
   ${(props: any) => `
     display: ${ props.active ? 'inline' : 'none' };
   `}

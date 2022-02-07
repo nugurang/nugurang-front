@@ -1,6 +1,5 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
-import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import Span from '@/src/components/base/Span';
@@ -21,15 +20,15 @@ interface ComponentProps extends CommonProps {
   user?: User;
 }
 
-interface StyledProps extends CommonProps {}
+interface StyledComponentProps extends CommonStyledProps {}
 
 // Header가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
 const StyledDummyDiv = styled(Div)`
   height: ${height}px;
 `;
 
-const StyledHeaderWrap = styled.header<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledHeaderWrap = styled.header<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     position: fixed;
     left: 0;
     right: 0;
@@ -43,31 +42,27 @@ const StyledHeaderWrap = styled.header<StyledProps>`
   `}
 `;
 
-const StyledLogoTextWrap = styled(Span)<StyledProps>`
-  ${(props: StyledProps) => `
-    display: inline-block;
-    color: ${props.theme.palette.primary.text};
-    font-size: 24px;
-    margin-left: 8px;
-  `}
-`;
-
-const StyledLeftsideWrap = styled(Span)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledLogoTextWrap = styled(Span)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: flex;
     flex-direction: row;
     align-items: center;
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 10px;
+    color: ${props.theme.palette.primary.text};
+    font-size: 24px;
+    margin-left: 16px;
   `}
 `;
 
-const StyledRightsideWrap = styled(Span)<StyledProps>`
-  ${(props: StyledProps) => `
-    display: flex;
-    flex-direction: row;
+const StyledMenuWrap = styled(Span)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
+    display: none;
+    ${props.theme.screenSizeMediaQuery.gteLaptop} {
+      display: flex;
+      flex-direction: row;
+    }
     align-items: center;
     position: absolute;
     top: 0;
@@ -76,7 +71,7 @@ const StyledRightsideWrap = styled(Span)<StyledProps>`
   `}
 `;
 
-const Header: NextPage<ComponentProps> = () => {
+const Header: NextPage<ComponentProps> = props => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
@@ -84,20 +79,10 @@ const Header: NextPage<ComponentProps> = () => {
       <StyledDummyDiv />
       <StyledHeaderWrap>
         <WidthLimiter>
-          <StyledLeftsideWrap>
-            <StyledLogoTextWrap>nugurang</StyledLogoTextWrap>
-          </StyledLeftsideWrap>
-          <StyledRightsideWrap>
-            <Button
-              palette='primary'
-              onClick={() => router.push({
-                pathname: '/session/login',
-                query: { callbackUrl: window.location.pathname },
-              })}
-            >
-              { t('login') }
-            </Button>
-          </StyledRightsideWrap>
+          <StyledLogoTextWrap>nugurang</StyledLogoTextWrap>
+          <StyledMenuWrap>
+            {props.children}
+          </StyledMenuWrap>
         </WidthLimiter>
       </StyledHeaderWrap>
     </>

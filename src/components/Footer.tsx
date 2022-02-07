@@ -1,11 +1,10 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
-
+import type { CommonStyledProps } from '@/src/components/base/common';
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from '@emotion/styled';
 
-interface StyledProps extends CommonProps {}
+interface StyledComponentProps extends CommonStyledProps {}
 
 // Footer가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
 const StyledDivDummy = styled(Div)`
@@ -14,8 +13,8 @@ const StyledDivDummy = styled(Div)`
   `}
 `;
 
-const StyledFooterWrap = styled.footer<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledFooterWrap = styled.footer<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     position: absolute;
     left: 0;
     right: 0;
@@ -28,12 +27,12 @@ const StyledFooterWrap = styled.footer<StyledProps>`
   `}
 `;
 
-const StyledCopyrightDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledCopyrightDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     font-size: 10px;
     text-align: center;
     color: ${props.theme.palette.background.subtext};
-    margin-top: 26px;
+    padding-top: 26px;
   `}
 `;
 

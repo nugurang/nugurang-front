@@ -96,57 +96,45 @@ export const registerToBackend = async (context: any, session: any) => {
 
 export const loginToBackend = async (context: any, session: any) => {
 
-  try {
+  if(!session) throw new Error('Session not found');
 
-    if(!session) throw new Error('Session not found');
-
-    const getJSessionResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_FRONTEND_URL as string,
+  const getJSessionResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_FRONTEND_URL as string,
+    },
+    body: JSON.stringify({
+      clientRegistrationId: session.provider,
+      refreshToken: {
+        tokenValue: session.accessToken,
+        issuedAt: session.issued,
+        expiresAt: session.expires,
       },
-      body: JSON.stringify({
-        clientRegistrationId: session.provider,
-        refreshToken: {
-          tokenValue: session.accessToken,
-          issuedAt: session.issued,
-          expiresAt: session.expires,
-        },
-        accessToken: {
-          tokenValue: session.accessToken,
-          issuedAt: session.issued,
-          expiresAt: session.expires,
-          scopes: session.scopes,
-        },
-        additionalParameters: {}
-      })
-    });
-  
-    const setCookieRawString = getJSessionResponse.headers.get('set-cookie');
-    if(!setCookieRawString) throw new Error('set-cookie header not found');
+      accessToken: {
+        tokenValue: session.accessToken,
+        issuedAt: session.issued,
+        expiresAt: session.expires,
+        scopes: session.scopes,
+      },
+      additionalParameters: {}
+    })
+  });
 
-    const { JSESSIONID, Path } = parseHeaderSetCookie(setCookieRawString);
-    if(!JSESSIONID || !Path) throw new Error('Cookie is not valid');
+  const setCookieRawString = getJSessionResponse.headers.get('set-cookie');
+  if(!setCookieRawString) throw new Error('set-cookie header not found');
 
-    setCookie(context, {
-      key: 'JSESSIONID', 
-      value: JSESSIONID, 
-      props: {
-        maxAge: parseInt(process.env.COOKIE_MAX_AGE as string),
-        path: Path,
-      }
-    });
+  const { JSESSIONID, Path } = parseHeaderSetCookie(setCookieRawString);
+  if(!JSESSIONID || !Path) throw new Error('Cookie is not valid');
 
-    return {
-      data: true
+  setCookie(context, {
+    key: 'JSESSIONID', 
+    value: JSESSIONID, 
+    props: {
+      maxAge: parseInt(process.env.COOKIE_MAX_AGE as string),
+      path: Path,
     }
-
-  } catch (error) {
-    return {
-      error
-    };
-  }
+  });
 
 };
 
@@ -176,6 +164,7 @@ export const getCurrentUserFromBackend = async (context: any) => {
       }
     }
   `);
+  console.log(currentUserResponse)
   return currentUserResponse?.data?.currentUser ?? null;
 }
 

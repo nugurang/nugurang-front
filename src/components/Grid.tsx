@@ -1,4 +1,4 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
@@ -24,14 +24,14 @@ interface ComponentProps extends CommonProps {
   gap?: number;
 }
 
-interface StyledProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   column: Column;
   gap?: number;
   size: Size;
 }
 
-const StyledSectionGridDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledSectionGridDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: grid;
     grid-template-columns: repeat(${props.column.default}, 1fr);
     gap: ${props.gap ?? '8px'};

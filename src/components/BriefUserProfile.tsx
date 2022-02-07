@@ -1,4 +1,4 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Card from '@/src/components/Card';
 import Div from '@/src/components/base/Div';
@@ -12,31 +12,31 @@ interface ComponentProps extends CommonProps {
   imageUrl?: string;
 }
 
-interface StyledProps extends CommonProps {}
+interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledWrapCard = styled(Card)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledWrapCard = styled(Card)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
   `}
 `;
 
-const StyledIcon = styled(Icon)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledIcon = styled(Icon)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     height: 72px;
     width: 72px;
     margin-right: 16px;
   `}
 `;
 
-const StyledTextDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTextDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: inline-block;
     margin: 4px 0;
     vertical-align: top;
   `}
 `;
 
-const StyledNameDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledNameDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
@@ -44,8 +44,8 @@ const StyledNameDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const StyledEmailDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledEmailDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     font-size: 16px;
     line-height: 20px;
     margin-top: 4px;

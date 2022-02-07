@@ -1,6 +1,6 @@
-import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
 import { useEffect, useState } from 'react';
 
+import type { CommonProps } from '@/src/components/base/common';
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
@@ -11,14 +11,14 @@ interface ComponentProps extends CommonProps {
   transitionTimeout: number;
 }
 
-interface StyledWrapProps extends CommonProps {
+interface StyledComponentProps extends CommonProps {
   active: boolean;
   cssActive: boolean;
   domActive: boolean;
 }
 
-const StyledWrap = styled(Div)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledWrap = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: ${props.domActive ? 'block' : 'none'};
   `}
 `;

@@ -1,4 +1,4 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
@@ -16,13 +16,12 @@ interface ComponentProps extends CommonProps {
   secondChildren?: React.ReactNode;
 }
 
-interface StyledProps extends CommonProps {
-  theme: ThemeObject;
+interface StyledComponentProps extends CommonStyledProps {
   size: Size;
 }
 
-const StyledGridDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledGridDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 10px;
@@ -35,8 +34,8 @@ const StyledGridDiv = styled(Div)<StyledProps>`
   `}
 `;
 
-const StyledGridItemDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledGridItemDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     margin: auto 0;
     max-height: 50vh;
   `}

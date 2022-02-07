@@ -1,4 +1,4 @@
-import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Div from '@/src/components/base/Div';
 import Nav from '@/src/components/base/Nav';
@@ -10,7 +10,12 @@ export const height = 64;
 
 interface ComponentProps extends CommonProps {}
 
-interface StyledWrapProps extends CommonProps {}
+interface StyledComponentProps extends CommonStyledProps {}
+
+const StyledWrapDiv = styled(Div)`
+  ${(props: any) => `
+  `}
+`;
 
 // NavigationBar가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
 const StyledDummyDiv = styled(Div)`
@@ -19,8 +24,8 @@ const StyledDummyDiv = styled(Div)`
   `}
 `;
 
-const StyledNavigationBarWrap = styled(Nav)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledNavigationBarWrap = styled(Nav)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     position: fixed;
     left: 0;
     right: 0;
@@ -47,14 +52,17 @@ const StyledWidthLimiter = styled(WidthLimiter)`
 
 const NavigationBar: NextPage<ComponentProps> = props => {
   return (
-    <>
+    <StyledWrapDiv
+      className={props.className}
+      css={props.css}
+    >
       <StyledDummyDiv />
       <StyledNavigationBarWrap>
         <StyledWidthLimiter>
           { props.children }
         </StyledWidthLimiter>
       </StyledNavigationBarWrap>
-    </>
+    </StyledWrapDiv>
   );
 }
 

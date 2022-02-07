@@ -1,4 +1,4 @@
-import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Backdrop from '@/src/components/Backdrop';
 import Card from '@/src/components/Card';
@@ -16,12 +16,12 @@ interface ComponentProps extends CommonProps {
   onClickBackdrop?: (() => void) | undefined;
 }
 
-interface StyledProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   open: boolean;
   transitionTimeout: number;
 }
 
-const StyledModalCard = styled(Card)<StyledProps>`
+const StyledModalCard = styled(Card)<StyledComponentProps>`
   ${(props: any) => `
     position: fixed;
     top: ${props.open ? '50%' : '100%'};

@@ -1,4 +1,4 @@
-import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Card from '@/src/components/Card';
 import Div from '@/src/components/base/Div';
@@ -18,26 +18,26 @@ interface ComponentProps extends CommonProps {
   enablePadding?: boolean;
 }
 
-interface StyledProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   enableMargin?: boolean;
   enablePadding?: boolean;
 }
 
-const StyledCard = styled(Card)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledCard = styled(Card)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     margin: ${props.enableMargin ? '8px' : '0'};
   `}
 `;
 
-const StyledHeaderDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledHeaderDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     padding: 16px;
     border-bottom: 1px solid ${props.theme.palette.default.high};
   `}
 `;
 
-const StyledIcon = styled(Icon)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledIcon = styled(Icon)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     float: left;
     height: 28px;
     width: 28px;
@@ -45,16 +45,16 @@ const StyledIcon = styled(Icon)<StyledProps>`
   `}
 `;
 
-const StyledTitleDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledTitleDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     font-size: 24px;
     line-height: 28px;
     font-weight: bold;
   `}
 `;
 
-const StyledChildrenWrapDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledChildrenWrapDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     padding: ${props.enablePadding ? '16px' : '0'};
   `}
 `;

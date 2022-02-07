@@ -9,7 +9,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
-// NavigationBar 컴포넌트에서 사용하기 위해 export함
+// Header 컴포넌트에서 사용하기 위해 export함
 export interface ComponentProps extends CommonProps {
   active?: boolean;
   pathname: string;
@@ -43,10 +43,7 @@ const StyledIcon = styled(Icon)<StyledComponentProps>`
   ${(props: StyledComponentProps) => `
     height: 28px;
     width: 28px;
-    color: ${props.active
-      ? props.theme.palette.primary.main
-      : props.theme.palette.background.subtext
-    };
+    color: ${props.theme.palette.primary.text};
   `}
 `;
 
@@ -56,10 +53,7 @@ const StyledDivLabelWrap = styled(Div)<StyledComponentProps>`
     line-height: 12px;
     padding-top: 4px;
 
-    color: ${props.active
-      ? props.theme.palette.primary.main
-      : props.theme.palette.background.subtext
-    };
+    color: ${props.theme.palette.primary.text};
     
     overflow: hidden;
     text-overflow: ellipsis;
@@ -67,7 +61,7 @@ const StyledDivLabelWrap = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const NavigationBarItem: NextPage<ComponentProps> = props => {
+const HeaderItem: NextPage<ComponentProps> = props => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
@@ -95,4 +89,4 @@ const NavigationBarItem: NextPage<ComponentProps> = props => {
   );
 }
 
-export default NavigationBarItem;
+export default HeaderItem;

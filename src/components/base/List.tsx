@@ -1,5 +1,6 @@
-import { CommonProps, CommonStyledAttributes } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
+import { CommonStyledAttributes } from '@/src/components/base/common';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 
@@ -7,17 +8,17 @@ interface ComponentProps extends CommonProps {
   ordered?: boolean;
 }
 
-interface StyledProps extends CommonProps {}
+interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledOl = styled.ol<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledOl = styled.ol<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     ${CommonStyledAttributes(props)}
     ${props.css}
   `}
 `;
 
-const StyledUl = styled.ul<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledUl = styled.ul<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     ${CommonStyledAttributes(props)}
     ${props.css}
   `}

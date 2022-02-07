@@ -1,15 +1,16 @@
-import { CommonProps, CommonStyledAttributes } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
+import { CommonStyledAttributes } from '@/src/components/base/common';
 import type { NextPage } from 'next';
 import React from 'react';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonProps {}
 
-interface StyledWrapProps extends CommonProps {}
+interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledLi = styled.li<StyledWrapProps>`
-  ${(props: StyledWrapProps) => `
+const StyledLi = styled.li<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     ${CommonStyledAttributes(props)}
     width: 100%;
     &:not(:first-of-type)::before {

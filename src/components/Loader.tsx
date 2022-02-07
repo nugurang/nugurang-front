@@ -1,4 +1,4 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps, ThemeObject } from '@/src/components/base/common';
 import { css, jsx, keyframes } from '@emotion/react'
 
 import Div from '@/src/components/base/Div';
@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonProps {}
 
-interface StyledWrapProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   theme: ThemeObject;
 }
 
@@ -16,8 +16,8 @@ const spinKeyframes = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
-const StyledWrap = styled(Div)<StyledWrapProps>`
-  ${(props: StyledWrapProps) => css`
+const StyledWrap = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => css`
     border: 12px solid ${props.theme.palette.background.low};
     border-top: 12px solid ${props.theme.palette.primary.main};
     border-radius: 50%;

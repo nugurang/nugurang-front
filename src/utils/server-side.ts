@@ -18,7 +18,6 @@ async function getCommonServerSideProps(context: any) {
 }
 
 type AuthType = 'all'
-              | 'session'
               | 'user'
               | 'administrator';
 
@@ -27,13 +26,12 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
 
     const commonServerSideProps = await getCommonServerSideProps(context);
     let currentUser = await getCurrentUserFromBackend(context);
-
+  
     try {
-
       if ((['all'].find(e => e == authType) === undefined) && !currentUser) {
         throw new LoginRequiredError();
       }
-      if ((['all', 'session'].find(e => e == authType) === undefined) && !currentUser) {
+      if ((['all', 'user'].find(e => e == authType) === undefined) && !currentUser) {
         throw new AccessDeniedError();
       }
   
@@ -54,10 +52,11 @@ export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?
         return {
           redirect: {
             permanent: false,
-            destination: `/session/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
+            destination: `/login?callbackUrl=${commonServerSideProps.callbackUrl}`,
           },
           props: {
-            ...commonServerSideProps
+            ...commonServerSideProps,
+            errorCode: 401
           }
         }
       } else if (error instanceof AccessDeniedError) {

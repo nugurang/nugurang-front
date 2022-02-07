@@ -1,4 +1,4 @@
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import type { NextPage } from 'next'
@@ -8,12 +8,12 @@ interface ComponentProps extends CommonProps {
   open: boolean;
 }
 
-interface StyledProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   open: boolean;
 }
 
-const StyledButton = styled(Button)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledButton = styled(Button)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     display: ${props.open ? 'block' : 'none'};
     position: fixed;
     top: 0;

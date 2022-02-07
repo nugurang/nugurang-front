@@ -23,7 +23,6 @@ export type VariantKeys = 'transparent'
 export interface CommonProps {
   className?: string;
   css?: string;
-  theme: ThemeObject;
   children?: React.ReactNode;
 
   ellipsis?: number;
@@ -31,11 +30,17 @@ export interface CommonProps {
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   palette?: PaletteKeys;
   variant?: VariantKeys;
 }
 
-export const CommonStyledAttributes = (props: CommonProps) => `
+export interface CommonStyledProps extends CommonProps {
+  theme: ThemeObject;
+}
+
+export const CommonStyledAttributes = (props: CommonStyledProps) => `
   font-family: 'Nanum Gothic', sans-serif;
 
   border: 0px solid #000;

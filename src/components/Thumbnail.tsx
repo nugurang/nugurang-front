@@ -1,4 +1,4 @@
-import type { CommonProps, PaletteKeys, ThemeObject } from '@/src/components/base/common';
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
@@ -13,15 +13,14 @@ interface ComponentProps extends CommonProps {
   title?: string;
 }
 
-interface StyledProps extends CommonProps {
+interface StyledComponentProps extends CommonStyledProps {
   imageUrl?: string;
   title?: string;
   isHover?: boolean;
-  theme: ThemeObject;
 }
 
-const StyledButton = styled(Button)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledButton = styled(Button)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     overflow: hidden;
     height: 128px;
     ${props.theme.screenSizeMediaQuery.gteMobile} {
@@ -33,8 +32,8 @@ const StyledButton = styled(Button)<StyledProps>`
   `}
 `;
 
-const StyledImage = styled(Image)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledImage = styled(Image)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     position: absolute;
     top: 0;
     bottom: 0;
@@ -43,8 +42,8 @@ const StyledImage = styled(Image)<StyledProps>`
   `}
 `;
 
-const StyledNameDiv = styled(Div)<StyledProps>`
-  ${(props: StyledProps) => `
+const StyledNameDiv = styled(Div)<StyledComponentProps>`
+  ${(props: StyledComponentProps) => `
     position: absolute;
     bottom: 0;
     left: 0;
