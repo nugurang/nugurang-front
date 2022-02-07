@@ -82,8 +82,10 @@ const StyledTextarea = styled.textarea<StyledComponentProps>`
   ${(props: StyledComponentProps) => `
     ${CommonStyledTextfield(props)}
     padding: 8px;
-    height: ${((props.rows ?? 5) * 20) + 16}px;
-    width: ${(props.cols ?? 40) * 16}px;
+    height: ${((props.rows ?? 5) * (16 * 1.25)) + 16}px;
+    ${props.cols ? `
+      width: ${(props.cols ?? 40) * 16}px;
+    ` : ''}
     resize: none;
     ${props.css}
   `}
