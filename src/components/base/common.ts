@@ -28,6 +28,8 @@ export interface CommonProps {
   ellipsis?: number;
   enable?: boolean;
   onClick?: () => void;
+  onChange?: () => void;
+  onInput?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onFocus?: () => void;

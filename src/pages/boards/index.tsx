@@ -11,7 +11,7 @@ import Section from '@/src/components/Section';
 import Thumbnail from '@/src/components/Thumbnail';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import WithCommonPreferences from '@/src/components/WithCommonPreferences';
-import { queryToBackend } from '@/src/utils/backend';
+import { getBoardsByNames } from '@/src/backend/dao/board';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -20,14 +20,7 @@ import { withAuthServerSideProps } from '@/src/utils/server-side';
 export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('user',
   async (context: any, props: any) => {
     
-    const getBoardsByNamesResponse = await queryToBackend(context, `
-      query GetBoardsByNames($names: [String]!) {
-        getBoardsByNames(names: $names) {
-          id
-          name
-        }
-      }
-    `, {
+    const getBoardsByNamesResponse = await getBoardsByNames(context, {
       names: constants.COMMON_BOARD_NAMES
     });
 
@@ -40,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('u
       startup: 'https://cdn.pixabay.com/photo/2017/07/31/11/21/people-2557396_960_720.jpg',
       study: 'https://cdn.pixabay.com/photo/2019/03/10/03/36/reading-4045414_960_720.jpg'
     };
-    getBoardsByNamesResponse.data.getBoardsByNames = getBoardsByNamesResponse.data.getBoardsByNames.map((board: any) => {
+    getBoardsByNamesResponse.data = getBoardsByNamesResponse.data.map((board: any) => {
       return {
         ...board,
         image: {
@@ -52,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('u
     return {
       props: {
         ...props,
-        boards: getBoardsByNamesResponse.data.getBoardsByNames
+        boards: getBoardsByNamesResponse.data
       }
     }
 

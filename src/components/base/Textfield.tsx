@@ -19,6 +19,7 @@ export type TextfieldType = 'email'
 interface ComponentProps extends CommonProps {
   children?: React.ReactNode;
   type?: TextfieldType;
+  onInput?: () => void;
   required?: boolean;
   placeholder?: string;
   errorMessage?: string;
@@ -131,6 +132,9 @@ const StyledErrorMessage = styled(Div)<StyledComponentProps>`
 const Textfield: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
   const [state, setState] = useState({})
   
+  const handleInput = () => {
+    if (props.onInput) props.onInput();
+  };
   const handleMouseEnter = () => {
     setState({
       ...state,
@@ -191,6 +195,7 @@ const Textfield: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
     
             ellipsis={props.ellipsis}
             enable={props.enable}
+            onInput={handleInput}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onFocus={handleOnFocus}

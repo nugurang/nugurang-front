@@ -3,7 +3,7 @@ import {
   LoginRequiredError
 } from '@/src/errors/Errors';
 
-import { getCurrentUserFromBackend } from '@/src/utils/backend';
+import { getCurrentUser } from '@/src/backend/dao/user';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 async function getCommonServerSideProps(context: any) {
@@ -23,11 +23,14 @@ type AuthType = 'all'
 
 export function withAuthServerSideProps(authType: AuthType, serverSidePropsFunc?: Function) {
   return async (context: any) => {
-
-    const commonServerSideProps = await getCommonServerSideProps(context);
-    let currentUser = await getCurrentUserFromBackend(context);
   
+    const commonServerSideProps = await getCommonServerSideProps(context);
+    
     try {
+
+      const currentUserResponse = await getCurrentUser(context);
+      let currentUser = currentUserResponse.data;
+
       if ((['all'].find(e => e == authType) === undefined) && !currentUser) {
         throw new LoginRequiredError();
       }

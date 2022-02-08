@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 
-import { logoutFromBackend } from '@/src/utils/backend';
+import { logout as logoutFromBackend } from '@/src/backend/session';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
