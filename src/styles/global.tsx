@@ -91,7 +91,7 @@ const GlobalStyle = css`
     height: 100%;
   }
 
-`
+`;
 
 export const GlobalStyleForStorybook = () => (
   <Global
