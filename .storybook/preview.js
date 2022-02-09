@@ -1,11 +1,11 @@
-import GlobalStyle from '../src/styles/global'
-import { ThemeProvider } from '@emotion/react'
-import { lightTheme } from '../src/styles/theme'
+import { GlobalStyleForStorybook } from '../src/styles/global';
+import { ThemeProvider } from '@emotion/react';
+import { lightTheme } from '../src/styles/theme';
 
 export const decorators = [
   Story => (
     <ThemeProvider theme={lightTheme}>
-      <GlobalStyle />
+      <GlobalStyleForStorybook />
       <Story />
     </ThemeProvider>
   ),

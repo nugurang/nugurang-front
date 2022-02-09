@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import { css, jsx, keyframes } from '@emotion/react'
 
 export type KeyframeKeys = 'shakeHorizontally';

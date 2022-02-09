@@ -1,7 +1,6 @@
 import { Global, css } from "@emotion/react";
 
-const GlobalStyles = css`
-
+const GlobalStyle = css`
   /* http://meyerweb.com/eric/tools/css/reset/ 
     v2.0 | 20110126
     License: none (public domain)
@@ -92,6 +91,12 @@ const GlobalStyles = css`
     height: 100%;
   }
 
-`;
+`
 
-export default GlobalStyles;
+export const GlobalStyleForStorybook = () => (
+  <Global
+    styles={GlobalStyle}
+  />
+);
+
+export default GlobalStyle;
