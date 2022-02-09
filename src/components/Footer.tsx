@@ -13,8 +13,8 @@ const StyledDivDummy = styled(Div)`
   `}
 `;
 
-const StyledFooterWrap = styled.footer<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledFooterWrap = styled.footer`
+  ${(props: any) => `
     position: absolute;
     left: 0;
     right: 0;
@@ -27,8 +27,8 @@ const StyledFooterWrap = styled.footer<StyledComponentProps>`
   `}
 `;
 
-const StyledCopyrightDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledCopyrightDiv = styled(Div)`
+  ${(props: any) => `
     font-size: 10px;
     text-align: center;
     color: ${props.theme.palette.background.subtext};
@@ -36,7 +36,7 @@ const StyledCopyrightDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const Footer: NextPage = () => {
+const Footer: React.FC = () => {
   return (
     <>
       <StyledDivDummy />

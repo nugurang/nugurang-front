@@ -10,18 +10,17 @@ interface ComponentProps extends CommonProps {}
 interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledSpan = styled.span<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledAttributes(props)}
     ${props.css}
   `}
 `;
 
-const Span: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
+const Span: React.FC<ComponentProps> = props => {
   return (
     <StyledSpan
       className={props.className}
       css={props.css}
-      ref={ref}
 
       ellipsis={props.ellipsis}
       enable={props.enable}
@@ -33,6 +32,6 @@ const Span: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       { props.children }
     </StyledSpan>
   );
-});
+};
 
 export default Span;

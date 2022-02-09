@@ -12,10 +12,8 @@ interface ComponentProps extends CommonProps {
   children?: React.ReactNode;
   className?: string;
   open: boolean;
-  transitionTimeout: number;
   onClickBackdrop?: (() => void) | undefined;
 }
-
 interface StyledComponentProps extends CommonStyledProps {
   open: boolean;
   transitionTimeout: number;
@@ -40,7 +38,7 @@ const StyledModalCard = styled(Card)<StyledComponentProps>`
   `}
 `;
 
-const Modal: NextPage<ComponentProps> = props => {
+const Modal: React.FC<ComponentProps> = props => {
   const [cssActive, setCSSActive] = useState(false);
   const transitionTimeout = 0.5;
   return (

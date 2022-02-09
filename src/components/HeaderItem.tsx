@@ -17,12 +17,10 @@ export interface ComponentProps extends CommonProps {
   label: string;
 }
 
-interface StyledComponentProps extends CommonStyledProps {
-  active?: boolean;
-}
+interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledButton = styled(Button)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledButton = styled(Button)`
+  ${(props: any) => `
     display: inline-block;
     height: 100%;
     width: 64px;
@@ -32,7 +30,7 @@ const StyledButton = styled(Button)<StyledComponentProps>`
 `;
 
 const StyledDivWrap = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     display: block;
     padding: 8px 0;
     ${props.css}
@@ -40,7 +38,7 @@ const StyledDivWrap = styled(Div)<StyledComponentProps>`
 `;
 
 const StyledIcon = styled(Icon)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     height: 28px;
     width: 28px;
     color: ${props.theme.palette.primary.text};
@@ -61,7 +59,7 @@ const StyledDivLabelWrap = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const HeaderItem: NextPage<ComponentProps> = props => {
+const HeaderItem: React.FC<ComponentProps> = props => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
@@ -76,12 +74,9 @@ const HeaderItem: NextPage<ComponentProps> = props => {
           <StyledIcon
             src={props.fontAwesomeIcon}
             type='fontAwesomeIcon'
-            active={props.active}
           />
         }
-        <StyledDivLabelWrap
-          active={props.active}
-        >
+        <StyledDivLabelWrap>
           { t(props.label) }
         </StyledDivLabelWrap>
       </StyledDivWrap>

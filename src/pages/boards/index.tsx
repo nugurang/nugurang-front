@@ -56,8 +56,8 @@ interface StyledComponentProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImageWrap = styled(Image)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledPageOverviewImageWrap = styled(Image)`
+  ${(props: any) => `
     display: block;
     width: 100%;
     max-height: 480px;

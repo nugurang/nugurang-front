@@ -41,14 +41,14 @@ interface StyledComponentProps extends CommonStyledProps {
     error: boolean;
   };
 }
-const StyledInputWrapDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledInputWrapDiv = styled(Div)`
+  ${(props: any) => `
     padding: 20px 0;
     position: relative;
   `}
 `;
 
-const CommonStyledTextfield = (props: StyledComponentProps) => `
+const CommonStyledTextfield = (props: any) => `
   ${CommonStyledAttributes(props)}
 
   display: block;
@@ -72,7 +72,7 @@ const CommonStyledTextfield = (props: StyledComponentProps) => `
 `;
 
 const StyledInput = styled.input<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledTextfield(props)}
     height: 32px;
     ${props.css}
@@ -80,7 +80,7 @@ const StyledInput = styled.input<StyledComponentProps>`
 `;
 
 const StyledTextarea = styled.textarea<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledTextfield(props)}
     padding: 8px;
     height: ${((props.rows ?? 5) * (16 * 1.25)) + 16}px;
@@ -93,7 +93,7 @@ const StyledTextarea = styled.textarea<StyledComponentProps>`
 `;
 
 const StyledPlaceholder = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     position: absolute;
     pointer-events: none;
     top: 28px;
@@ -113,7 +113,7 @@ const StyledPlaceholder = styled(Div)<StyledComponentProps>`
 `;
 
 const StyledErrorMessage = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     display: none;
     position: absolute;
     bottom: 4px;
@@ -129,8 +129,12 @@ const StyledErrorMessage = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const Textfield: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
-  const [state, setState] = useState({})
+const Textfield: React.FC<ComponentProps> = props => {
+  const [state, setState] = useState({
+    hover: false,
+    focus: false,
+    error: !!props.errorMessage
+  })
   
   const handleInput = () => {
     if (props.onInput) props.onInput();
@@ -191,7 +195,6 @@ const Textfield: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
           <StyledTextarea
             className={props.className}
             css={props.css}
-            ref={ref}
     
             ellipsis={props.ellipsis}
             enable={props.enable}
@@ -218,7 +221,6 @@ const Textfield: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
           <StyledInput
             className={props.className}
             css={props.css}
-            ref={ref}
     
             ellipsis={props.ellipsis}
             enable={props.enable}
@@ -242,6 +244,6 @@ const Textfield: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       </StyledErrorMessage>
     </StyledInputWrapDiv>
   );
-});
+};
 
 export default Textfield;

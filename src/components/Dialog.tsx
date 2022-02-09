@@ -4,14 +4,13 @@ import Button from '@/src/components/base/Button';
 import Div from '@/src/components/base/Div';
 import Loader from '@/src/components/Loader';
 import Modal from '@/src/components/Modal';
-import type { NextPage } from 'next';
 import WidthLimiter from '@/src/components/WidthLimiter';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
 interface ComponentProps extends CommonProps {
   loader?: boolean;
-  open?: boolean;
+  open: boolean;
   onClickBackdrop?: () => void;
   title?: string;
   content?: string;
@@ -26,18 +25,17 @@ export interface DialogProps extends ComponentProps {}
 
 interface StyledComponentProps extends CommonStyledProps {
   loader?: boolean;
-  open?: boolean;
   active?: boolean;
 }
 
-const StyledWidthLimiter = styled(WidthLimiter)<StyledComponentProps>`
+const StyledWidthLimiter = styled(WidthLimiter)`
   ${(props: any) => `
     padding: 48px 0;
     text-align: center;
   `}
 `;
 
-const StyledInfoDiv = styled(Div)<StyledComponentProps>`
+const StyledInfoDiv = styled(Div)`
   ${(props: any) => `
     margin-bottom: 32px;
   `}
@@ -50,13 +48,13 @@ const StyledLoader = styled(Loader)<StyledComponentProps>`
   `}
 `;
 
-const StyledTextDiv = styled(Div)<StyledComponentProps>`
+const StyledTextDiv = styled(Div)`
   ${(props: any) => `
     display: block;
   `}
 `;
 
-const StyledTitleDiv = styled(Div)<StyledComponentProps>`
+const StyledTitleDiv = styled(Div)`
   ${(props: any) => `
     font-size: 24px;
     font-weight: bold;
@@ -65,7 +63,7 @@ const StyledTitleDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const StyledContentDiv = styled(Div)<StyledComponentProps>`
+const StyledContentDiv = styled(Div)`
   ${(props: any) => `
     font-size: 20px;
     line-height: 24px;
@@ -73,7 +71,7 @@ const StyledContentDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const StyledButtonGroupDiv = styled(Div)<StyledComponentProps>`
+const StyledButtonGroupDiv = styled(Div)`
   ${(props: any) => `
     & > * {
       margin-left: 8px;
@@ -90,7 +88,7 @@ const StyledButton = styled(Button)<StyledComponentProps>`
   `}
 `;
 
-const Dialog: NextPage<ComponentProps> = props => {
+const Dialog: React.FC<ComponentProps> = props => {
   const { t } = useTranslation('common');
   return (
     <Modal
@@ -113,20 +111,20 @@ const Dialog: NextPage<ComponentProps> = props => {
         </StyledInfoDiv>
         <StyledButtonGroupDiv>
           <StyledButton
-            active={props.onYes}
+            active={!!props.onYes}
             onClick={props.onYes}
           >
             {props.yesLabel || t('yes')}
           </StyledButton>
           <StyledButton
             palette='danger'
-            active={props.onNo}
+            active={!!props.onNo}
             onClick={props.onNo}
           >
             {props.noLabel || t('no')}
           </StyledButton>
           <StyledButton
-            active={props.onCancel}
+            active={!!props.onCancel}
             onClick={props.onCancel}
           >
             {props.cancelLabel || t('cancel')}

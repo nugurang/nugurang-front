@@ -4,7 +4,6 @@ import type { BorderRadiusKeys } from '@/src/styles/borderRadius';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Image from '@/src/components/base/Image';
-import type { NextPage } from 'next';
 import Span from '@/src/components/base/Span';
 import styled from '@emotion/styled';
 
@@ -31,7 +30,7 @@ interface StyledComponentProps extends CommonStyledProps {
 }
 
 const StyledImage = styled(Image)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     height: 32px;
     width: 32px;
     border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'circle']};
@@ -41,7 +40,7 @@ const StyledImage = styled(Image)<StyledComponentProps>`
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     height: 32px;
     width: 32px;
     color: ${props.palette ? props.theme.palette[props.palette].main : props.theme.palette.default.contrast };
@@ -51,8 +50,8 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)<StyledComponentProps>`
   `}
 `;
 
-const StyledAltSpan = styled(Span)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledAltSpan = styled(Span)`
+  ${(props: any) => `
     position: absolute;
     top: 50%;
     left: 50%;
@@ -63,7 +62,7 @@ const StyledAltSpan = styled(Span)<StyledComponentProps>`
   `}
 `;
 
-const Icon: NextPage<ComponentProps> = props => {
+const Icon: React.FC<ComponentProps> = props => {
   return (
     <>
       {props.src && ((props.type == 'image') || (props.type === undefined)) &&

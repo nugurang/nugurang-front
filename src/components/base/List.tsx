@@ -11,20 +11,20 @@ interface ComponentProps extends CommonProps {
 interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledOl = styled.ol<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledAttributes(props)}
     ${props.css}
   `}
 `;
 
 const StyledUl = styled.ul<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledAttributes(props)}
     ${props.css}
   `}
 `;
 
-const List: NextPage<ComponentProps> = props => {
+const List: React.FC<ComponentProps> = props => {
   if (props.ordered) return (
     <StyledOl
       className={props.className}

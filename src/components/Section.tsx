@@ -18,26 +18,29 @@ interface ComponentProps extends CommonProps {
   enablePadding?: boolean;
 }
 
-interface StyledComponentProps extends CommonStyledProps {
+interface StyledCardProps extends CommonStyledProps {
   enableMargin?: boolean;
+}
+
+interface StyledChildrenWrapDivProps extends CommonStyledProps {
   enablePadding?: boolean;
 }
 
-const StyledCard = styled(Card)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledCard = styled(Card)<StyledCardProps>`
+  ${(props: any) => `
     margin: ${props.enableMargin ? '8px' : '0'};
   `}
 `;
 
-const StyledHeaderDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledHeaderDiv = styled(Div)`
+  ${(props: any) => `
     padding: 16px;
     border-bottom: 1px solid ${props.theme.palette.default.high};
   `}
 `;
 
-const StyledIcon = styled(Icon)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledIcon = styled(Icon)`
+  ${(props: any) => `
     float: left;
     height: 28px;
     width: 28px;
@@ -45,21 +48,21 @@ const StyledIcon = styled(Icon)<StyledComponentProps>`
   `}
 `;
 
-const StyledTitleDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleDiv = styled(Div)`
+  ${(props: any) => `
     font-size: 24px;
     line-height: 28px;
     font-weight: bold;
   `}
 `;
 
-const StyledChildrenWrapDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledChildrenWrapDiv = styled(Div)<StyledChildrenWrapDivProps>`
+  ${(props: any) => `
     padding: ${props.enablePadding ? '16px' : '0'};
   `}
 `;
 
-const Section: NextPage<ComponentProps> = props => {
+const Section: React.FC<ComponentProps> = props => {
   return (
     <StyledCard
       variant={props.variant ?? 'outlined'}

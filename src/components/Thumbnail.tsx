@@ -20,7 +20,7 @@ interface StyledComponentProps extends CommonStyledProps {
 }
 
 const StyledButton = styled(Button)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     overflow: hidden;
     height: 128px;
     ${props.theme.screenSizeMediaQuery.gteMobile} {
@@ -32,8 +32,8 @@ const StyledButton = styled(Button)<StyledComponentProps>`
   `}
 `;
 
-const StyledImage = styled(Image)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledImage = styled(Image)`
+  ${(props: any) => `
     position: absolute;
     top: 0;
     bottom: 0;
@@ -43,7 +43,7 @@ const StyledImage = styled(Image)<StyledComponentProps>`
 `;
 
 const StyledNameDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     position: absolute;
     bottom: 0;
     left: 0;
@@ -62,7 +62,7 @@ const StyledNameDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const Thumbnail: NextPage<ComponentProps> = props => {
+const Thumbnail: React.FC<ComponentProps> = props => {
   const [state, setState] = useState({
     isHover: false,
   });

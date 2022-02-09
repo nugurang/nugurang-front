@@ -5,6 +5,7 @@ import Dialog from '@/src/components/Dialog';
 import Div from '@/src/components/base/Div';
 import { GetServerSideProps } from 'next';
 import Icon from '@/src/components/Icon';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Image from '@/src/components/base/Image';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
@@ -37,8 +38,8 @@ interface StyledComponentProps {
   theme: ThemeObject;
 }
 
-const StyledPageOverviewImgWrap = styled(Image)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledPageOverviewImgWrap = styled(Image)`
+  ${(props: any) => `
     display: block;
     width: 100%;
     max-height: 480px;
@@ -48,8 +49,8 @@ const StyledPageOverviewImgWrap = styled(Image)<StyledComponentProps>`
   `}
 `;
 
-const StyledPageOverviewTextWrap = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledPageOverviewTextWrap = styled(Div)`
+  ${(props: any) => `
     margin-top: 24px;
     font-size: 24px;
     line-height: 28px;
@@ -57,15 +58,15 @@ const StyledPageOverviewTextWrap = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const StyledLoginButtonGroup = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledLoginButtonGroup = styled(Div)`
+  ${(props: any) => `
     margin: 24px auto 0;
     text-align: center;
   `}
 `;
 
-const StyledLoginButton = styled(Button)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledLoginButton = styled(Button)`
+  ${(props: any) => `
     display: inline-block;
     margin: 0 10px 10px 0;
     width: calc(50% - 40px);
@@ -73,8 +74,8 @@ const StyledLoginButton = styled(Button)<StyledComponentProps>`
   `}
 `;
 
-const StyledLoginButtonIcon = styled(Icon)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledLoginButtonIcon = styled(Icon)`
+  ${(props: any) => `
     height: 32px;
     width: 32px;
     color: ${props.theme.palette.default.text};
@@ -112,7 +113,7 @@ const LoginIndex: NextPage<PageProps> = ({ callbackUrl }) => {
                       }}
                     >
                       <StyledLoginButtonIcon
-                        src={provider.fontAwesomeIcon}
+                        src={provider.fontAwesomeIcon as IconProp}
                         type='fontAwesomeIcon'
                       />
                       {t(provider.name)}

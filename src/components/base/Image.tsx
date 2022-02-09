@@ -14,7 +14,7 @@ interface ComponentProps extends CommonProps {
 interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledImage = styled.img<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledAttributes(props)}
 
     object-fit: cover;
@@ -26,12 +26,11 @@ const StyledImage = styled.img<StyledComponentProps>`
   `}
 `;
 
-const Img: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
+const Img: React.FC<ComponentProps> = props => {
   return (
     <StyledImage
       className={props.className}
       css={props.css}
-      ref={ref}
 
       enable={props.enable}
       onMouseEnter={props.onMouseEnter}
@@ -41,6 +40,6 @@ const Img: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       alt={props.alt ? props.alt : ''}
     />
   );
-});
+};
 
 export default Img;

@@ -13,7 +13,7 @@ interface StyledComponentProps extends CommonStyledProps {
 }
 
 const StyledDivWidthLimiter = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     position: relative;
     margin: 0 auto;
     height: 100%;
@@ -22,7 +22,7 @@ const StyledDivWidthLimiter = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const WidthLimiter: NextPage<ComponentProps> = props => {
+const WidthLimiter: React.FC<ComponentProps> = props => {
   return (
     <StyledDivWidthLimiter
       className={props.className}

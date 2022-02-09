@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 export default function useResize(ref: React.RefObject<any>) {
-  const [size, setSize] = useState({});
+  const [size, setSize] = useState({
+    height: 0,
+    width: 0
+  });
 
   const handleResize = useCallback(() => {
     if (ref.current) {
@@ -18,6 +21,6 @@ export default function useResize(ref: React.RefObject<any>) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  });
   return size;
 }

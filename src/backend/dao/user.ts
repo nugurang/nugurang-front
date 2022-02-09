@@ -10,8 +10,7 @@ export const getCurrentOAuth2User = async (context: any) => {
     }
   }`);
   return {
-    data: response.data?.currentOAuth2User ?? null,
-    error: response.error ?? null
+    data: response.data?.currentOAuth2User ?? null
   };
 };
 
@@ -33,8 +32,7 @@ export const getCurrentUser = async (context: any) => {
     }
   `);
   return {
-    data: response.data?.currentUser ?? null,
-    error: response.error ?? null
+    data: response.data?.currentUser ?? null
   };
 };
 
@@ -53,7 +51,25 @@ export const createCurrentUser = async (context: any, props: CreateCurrentUserPr
     }
   `, { user: props });
   return {
-    data: response.data?.createCurrentUser ?? null,
-    error: response.error ?? null
+    data: response.data?.createCurrentUser ?? null
+  };
+};
+
+export interface UpdateUserProps {
+  name: string;
+  email: string;
+  biography: string;
+  image?: number;
+}
+export const updateCurrentUser = async (context: any, props: UpdateUserProps) => {
+  const response = await mutate(context, `
+    mutation UpdateCurrentUser($user: UserInput!) {
+      updateCurrentUser (user: $user) {
+        id
+      }
+    }
+  `, { user: props });
+  return {
+    data: response.data?.updateCurrentUser ?? null
   };
 };

@@ -1,7 +1,6 @@
 import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import { CommonStyledAttributes } from '@/src/components/base/common';
-import type { NextPage } from 'next';
 import React from 'react';
 import styled from '@emotion/styled';
 
@@ -16,7 +15,7 @@ interface StyledComponentProps extends CommonStyledProps {
 }
 
 const StyledButton = styled.button<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledAttributes(props)}
     
     position: relative;
@@ -43,7 +42,7 @@ const StyledButton = styled.button<StyledComponentProps>`
 `;
 
 const StyledHoverEffect = styled.div<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     display: ${props.palette ? 'none' : 'block'};
     position: absolute;
     top: 0;
@@ -66,12 +65,11 @@ const StyledHoverEffect = styled.div<StyledComponentProps>`
   `}
 `;
 
-const Button: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
+const Button: React.FC<ComponentProps> = props => {
   return (
     <StyledButton
       className={props.className}
       css={props.css}
-      ref={ref}
 
       ellipsis={props.ellipsis}
       enable={props.enable}
@@ -89,6 +87,6 @@ const Button: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       <StyledHoverEffect />
     </StyledButton>
   );
-});
+};
 
 export default Button;

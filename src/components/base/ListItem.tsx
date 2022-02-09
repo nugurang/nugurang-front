@@ -10,7 +10,7 @@ interface ComponentProps extends CommonProps {}
 interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledLi = styled.li<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledAttributes(props)}
     width: 100%;
     &:not(:first-of-type)::before {
@@ -23,12 +23,11 @@ const StyledLi = styled.li<StyledComponentProps>`
   `}
 `;
 
-const ListItem: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
+const ListItem: React.FC<ComponentProps> = props => {
   return (
     <StyledLi
       className={props.className}
       css={props.css}
-      ref={ref}
 
       ellipsis={props.ellipsis}
       enable={props.enable}
@@ -40,6 +39,6 @@ const ListItem: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       { props.children }
     </StyledLi>
   );
-});
+};
 
 export default ListItem;

@@ -1,7 +1,6 @@
 import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import Button from '@/src/components/base/Button';
-import type { NextPage } from 'next'
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonProps {
@@ -13,7 +12,7 @@ interface StyledComponentProps extends CommonStyledProps {
 }
 
 const StyledButton = styled(Button)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     display: ${props.open ? 'block' : 'none'};
     position: fixed;
     top: 0;
@@ -31,7 +30,7 @@ const StyledButton = styled(Button)<StyledComponentProps>`
   `}
 `;
 
-const Modal: NextPage<ComponentProps> = props => {
+const Backdrop: React.FC<ComponentProps> = props => {
   return (
     <StyledButton
       className={props.className}
@@ -42,4 +41,4 @@ const Modal: NextPage<ComponentProps> = props => {
   );
 }
 
-export default Modal;
+export default Backdrop;

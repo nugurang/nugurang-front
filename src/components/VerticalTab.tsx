@@ -7,7 +7,6 @@ import Icon from '@/src/components/Icon';
 import type { IconObject } from '@/src/components/Icon';
 import List from '@/src/components/base/List';
 import ListItem from '@/src/components/base/ListItem';
-import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -32,7 +31,7 @@ interface StyledComponentProps extends CommonStyledProps {
 }
 
 const StyledWrapCard = styled(Card)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     & > *:nth-of-type(1) {
@@ -53,8 +52,8 @@ const StyledWrapCard = styled(Card)<StyledComponentProps>`
   `}
 `;
 
-const StyledTitleListWrapCard = styled(Card)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleListWrapCard = styled(Card)`
+  ${(props: any) => `
     width: 100%;
     ${props.theme.screenSizeMediaQuery.gteTablet}
       max-width: 360px;
@@ -62,21 +61,21 @@ const StyledTitleListWrapCard = styled(Card)<StyledComponentProps>`
   `}
 `;
 
-const StyledTitleList = styled(List)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleList = styled(List)`
+  ${(props: any) => `
     display: block;
     padding: 8px;
   `}
 `;
 
-const StyledTitleItem = styled(ListItem)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleItem = styled(ListItem)`
+  ${(props: any) => `
   
   `}
 `;
 
-const StyledTitleItemButton = styled(Button)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleItemButton = styled(Button)`
+  ${(props: any) => `
     clear: both;
     display: block;
     width: 100%;
@@ -84,8 +83,8 @@ const StyledTitleItemButton = styled(Button)<StyledComponentProps>`
   `}
 `;
 
-const StyledTitleItemIcon = styled(Icon)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleItemIcon = styled(Icon)`
+  ${(props: any) => `
     float: left;
     height: 28px;
     width: 28px;
@@ -93,24 +92,24 @@ const StyledTitleItemIcon = styled(Icon)<StyledComponentProps>`
   `}
 `;
 
-const StyledTitleItemTextDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleItemTextDiv = styled(Div)`
+  ${(props: any) => `
     overflow: hidden;
     margin: 2px 0;
     vertical-align: top;
   `}
 `;
 
-const StyledTitleItemTitleDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleItemTitleDiv = styled(Div)`
+  ${(props: any) => `
     font-size: 20px;
     font-weight: bold;
     line-height: 24px;
   `}
 `;
 
-const StyledTitleItemSubtitleDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleItemSubtitleDiv = styled(Div)`
+  ${(props: any) => `
     font-size: 16px;
     line-height: 20px;
     margin-top: 4px;
@@ -118,14 +117,14 @@ const StyledTitleItemSubtitleDiv = styled(Div)<StyledComponentProps>`
 `;
 
 const StyledContentDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     display: ${props.depth > 0 ? 'block' : 'none'};
     float: left;
     overflow: hidden;
   `}
 `;
 
-const VerticalTab: NextPage<ComponentProps> = props => {
+const VerticalTab: React.FC<ComponentProps> = props => {
   const [selectedTab, setSelectedTab] = useState({
     index: props.initialIndex ?? 0,
     depth: props.initialDepth ?? 0

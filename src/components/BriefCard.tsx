@@ -20,16 +20,16 @@ interface ComponentProps extends CommonProps {
 
 interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledButton = styled(Button)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledButton = styled(Button)`
+  ${(props: any) => `
     display: block;
     width: 100%;
     padding: 0;
   `}
 `;
 
-const StyledWrapCard = styled(Card)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledWrapCard = styled(Card)`
+  ${(props: any) => `
     padding: 8px;
     &::after {
       clear: both;
@@ -39,8 +39,8 @@ const StyledWrapCard = styled(Card)<StyledComponentProps>`
   `}
 `;
 
-const StyledIcon = styled(Icon)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledIcon = styled(Icon)`
+  ${(props: any) => `
     float: left;
     height: 28px;
     width: 28px;
@@ -48,24 +48,24 @@ const StyledIcon = styled(Icon)<StyledComponentProps>`
   `}
 `;
 
-const StyledTextDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTextDiv = styled(Div)`
+  ${(props: any) => `
     overflow: hidden;
     margin: 2px 0;
     vertical-align: top;
   `}
 `;
 
-const StyledTitleDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTitleDiv = styled(Div)`
+  ${(props: any) => `
     font-size: 20px;
     font-weight: bold;
     line-height: 24px;
   `}
 `;
 
-const StyledSubtitleDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledSubtitleDiv = styled(Div)`
+  ${(props: any) => `
     font-size: 16px;
     line-height: 20px;
     margin-top: 4px;
@@ -93,7 +93,7 @@ const BriefCardCore = (props: ComponentProps) => <>
   </StyledWrapCard>
 </>;
 
-const BriefCard: NextPage<ComponentProps> = props => {
+const BriefCard: React.FC<ComponentProps> = props => {
   if (props.onClick) return (
     <StyledButton variant='transparent' onClick={props.onClick}>
       {BriefCardCore(props)}

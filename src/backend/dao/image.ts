@@ -13,7 +13,6 @@ export const createImage = async (context: any, props: CreateImageProps) => {
     }
   `, props);
   return {
-    data: response.data?.createImage ?? null,
-    error: response.error ?? null
+    data: response.data?.createImage ?? null
   };
 };

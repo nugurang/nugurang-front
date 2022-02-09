@@ -1,4 +1,6 @@
 import { GetServerSideProps } from 'next';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { IconTypeKeys } from '@/src/components/Icon';
 import InitializeDatabase from '@/src/fragments/settings/InitializeDatabase';
 import type { NextPage } from 'next';
 import Section from '@/src/components/Section';
@@ -26,8 +28,8 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
     {
       name: 'account',
       icon: {
-        type: 'fontAwesomeIcon',
-        src: ['fas', 'key']
+        type: 'fontAwesomeIcon' as IconTypeKeys,
+        src: ['fas', 'key'] as IconProp
       },
       title: t('account'),
       subtitle: t('account'),
@@ -38,8 +40,8 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
     {
       name: 'developer',
       icon: {
-        type: 'fontAwesomeIcon',
-        src: ['fas', 'code']
+        type: 'fontAwesomeIcon' as IconTypeKeys,
+        src: ['fas', 'code'] as IconProp
       },
       title: t('developerOption'),
       child: <>

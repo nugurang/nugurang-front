@@ -1,5 +1,4 @@
-import { Global, css } from "@emotion/react";
-import { ThemeProvider, jsx } from '@emotion/react';
+import { Global, ThemeProvider, css, jsx } from "@emotion/react";
 import { darkTheme, lightTheme } from '@/src/styles/theme';
 
 import type { AppProps } from 'next/app';

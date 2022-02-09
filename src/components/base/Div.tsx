@@ -10,18 +10,17 @@ interface ComponentProps extends CommonProps {}
 interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledDiv = styled.div<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledAttributes(props)}
     ${props.css}
   `}
 `;
 
-const Div: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
+const Div: React.FC<ComponentProps> = props => {
   return (
     <StyledDiv
       className={props.className}
       css={props.css}
-      ref={ref}
 
       ellipsis={props.ellipsis}
       enable={props.enable}
@@ -33,6 +32,6 @@ const Div: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       { props.children }
     </StyledDiv>
   );
-});
+};
 
 export default Div;

@@ -3,7 +3,6 @@ import type { CommonProps, CommonStyledProps } from '@/src/components/base/commo
 import Card from '@/src/components/Card';
 import Div from '@/src/components/base/Div';
 import Icon from '@/src/components/Icon';
-import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonProps {
@@ -14,29 +13,29 @@ interface ComponentProps extends CommonProps {
 
 interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledWrapCard = styled(Card)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledWrapCard = styled(Card)`
+  ${(props: any) => `
   `}
 `;
 
-const StyledIcon = styled(Icon)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledIcon = styled(Icon)`
+  ${(props: any) => `
     height: 72px;
     width: 72px;
     margin-right: 16px;
   `}
 `;
 
-const StyledTextDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledTextDiv = styled(Div)`
+  ${(props: any) => `
     display: inline-block;
     margin: 4px 0;
     vertical-align: top;
   `}
 `;
 
-const StyledNameDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledNameDiv = styled(Div)`
+  ${(props: any) => `
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
@@ -44,8 +43,8 @@ const StyledNameDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const StyledEmailDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledEmailDiv = styled(Div)`
+  ${(props: any) => `
     font-size: 16px;
     line-height: 20px;
     margin-top: 4px;
@@ -53,7 +52,7 @@ const StyledEmailDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const BriefUserProfile: NextPage<ComponentProps> = props => {
+const BriefUserProfile: React.FC<ComponentProps> = props => {
   return (
     <StyledWrapCard
       className={props.className}

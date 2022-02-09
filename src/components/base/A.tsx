@@ -1,7 +1,6 @@
 import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
 
 import { CommonStyledAttributes } from '@/src/components/base/common';
-import type { NextPage } from 'next';
 import React from 'react';
 import styled from '@emotion/styled';
 
@@ -13,18 +12,17 @@ interface ComponentProps extends CommonProps {
 interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledA = styled.a<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${CommonStyledAttributes(props)}
     ${props.css}
   `}
 `;
 
-const A: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
+const A: React.FC<ComponentProps> = props => {
   return (
     <StyledA
       className={props.className}
       css={props.css}
-      ref={ref}
 
       ellipsis={props.ellipsis}
       enable={props.enable}
@@ -38,6 +36,6 @@ const A: NextPage<ComponentProps> = React.forwardRef((props, ref) => {
       { props.children }
     </StyledA>
   );
-});
+};
 
 export default A;

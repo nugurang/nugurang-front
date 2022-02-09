@@ -8,13 +8,13 @@ interface ComponentProps extends CommonProps {}
 
 interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledWrapDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledWrapDiv = styled(Div)`
+  ${(props: any) => `
     ${props.css || ''}
   `}
 `;
 
-const Card: NextPage<ComponentProps> = props => {
+const Card: React.FC<ComponentProps> = props => {
   return (
     <StyledWrapDiv
       className={props.className}

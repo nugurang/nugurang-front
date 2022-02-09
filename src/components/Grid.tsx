@@ -31,7 +31,7 @@ interface StyledComponentProps extends CommonStyledProps {
 }
 
 const StyledSectionGridDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     display: grid;
     grid-template-columns: repeat(${props.column.default}, 1fr);
     gap: ${props.gap ?? '8px'};
@@ -52,7 +52,7 @@ const StyledSectionGridDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const Grid: NextPage<ComponentProps> = ({
+const Grid: React.FC<ComponentProps> = ({
   className,
   children,
   column
@@ -66,7 +66,6 @@ const Grid: NextPage<ComponentProps> = ({
   column = { ...column, gteDesktop: column.gteDesktop ?? column.gteLaptop  };
   return (
     <StyledSectionGridDiv
-      ref={componentRef}
       className={className}
       column={column}
       size={size}

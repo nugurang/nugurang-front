@@ -7,21 +7,21 @@ import { useRef } from 'react';
 import useResize from '@/src/hooks/useResize';
 
 type Size = {
-  width: number;
+  width?: number;
 }
 
 interface ComponentProps extends CommonProps {
-  children: undefined;
-  firstChildren: React.ReactNode;
+  firstChildren?: React.ReactNode;
   secondChildren?: React.ReactNode;
 }
 
-interface StyledComponentProps extends CommonStyledProps {
+interface StyledGridDivProps extends CommonStyledProps {
+  ref: any;
   size: Size;
 }
 
-const StyledGridDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledGridDiv = styled(Div)<StyledGridDivProps>`
+  ${(props: any) => `
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 10px;
@@ -34,8 +34,8 @@ const StyledGridDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const StyledGridItemDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledGridItemDiv = styled(Div)`
+  ${(props: any) => `
     margin: auto 0;
     max-height: 50vh;
   `}
@@ -43,7 +43,7 @@ const StyledGridItemDiv = styled(Div)<StyledComponentProps>`
 
 const PageOverview: NextPage<ComponentProps> = props => {
   const componentRef = useRef();
-  const size = useResize(componentRef);
+  const size: Size = useResize(componentRef);
   return (
     <StyledGridDiv
       ref={componentRef}

@@ -5,15 +5,9 @@ import type {
 
 import { hexToRGB } from '@/src/utils/color';
 
-// 테마로부터 포워딩
+// 테마 파일로부터 포워딩
 export type PaletteKeys = ForwardedPaletteKeys;
 export type ThemeObject = ForwardedThemeObject;
-
-export type HTMLTagKeys = 'a'
-                        | 'button'
-                        | 'div'
-                        | 'img'
-                        | 'span';
 
 export type VariantKeys = 'transparent'
                         | 'outlined'
@@ -38,11 +32,9 @@ export interface CommonProps {
   variant?: VariantKeys;
 }
 
-export interface CommonStyledProps extends CommonProps {
-  theme: ThemeObject;
-}
+export interface CommonStyledProps extends CommonProps {}
 
-export const CommonStyledAttributes = (props: CommonStyledProps) => `
+export const CommonStyledAttributes = (props: any) => `
   font-family: 'Nanum Gothic', sans-serif;
 
   border: 0px solid #000;
@@ -58,16 +50,16 @@ export const CommonStyledAttributes = (props: CommonStyledProps) => `
     color: ${props.theme.palette[props.palette || 'default'].text};
   ` : ''}
   /*
-  ${props.variant == 'acrylic' ? `
-    background-color: ${hexToRGB(props.theme.palette[props.palette || 'default'].main), 0.9}; // 아크릴 효과 fallback
-    @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-      background-color: ${hexToRGB(props.theme.palette[props.palette || 'default'].main), 0.9};
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-    }
-    color: ${props.theme.palette[props.palette || 'default'].text};
-  ` : ''}
-*/
+    ${props.variant == 'acrylic' ? `
+      background-color: ${hexToRGB(props.theme.palette[props.palette || 'default'].main), 0.9}; // 아크릴 효과 fallback
+      @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        background-color: ${hexToRGB(props.theme.palette[props.palette || 'default'].main), 0.9};
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+      }
+      color: ${props.theme.palette[props.palette || 'default'].text};
+    ` : ''}
+  */
 
   ${props.ellipsis == 1 ? `
     overflow: hidden;

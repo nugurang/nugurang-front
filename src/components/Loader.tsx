@@ -7,17 +7,15 @@ import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonProps {}
 
-interface StyledComponentProps extends CommonStyledProps {
-  theme: ThemeObject;
-}
+interface StyledComponentProps extends CommonStyledProps {}
 
 const spinKeyframes = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 `;
 
-const StyledWrap = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => css`
+const StyledWrap = styled(Div)`
+  ${(props: any) => css`
     border: 12px solid ${props.theme.palette.background.low};
     border-top: 12px solid ${props.theme.palette.primary.main};
     border-radius: 50%;
@@ -28,7 +26,7 @@ const StyledWrap = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const Loader: NextPage<ComponentProps> = props => {
+const Loader: React.FC<ComponentProps> = props => {
   return (
     <StyledWrap
       className={props.className}

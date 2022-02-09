@@ -10,8 +10,8 @@ import Footer from '@/src/components/Footer';
 import Head from 'next/head';
 import Header from '@/src/components/Header';
 import HeaderItem from '@/src/components/HeaderItem';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import NavigationBarItem from '@/src/components/NavigationBarItem';
-import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
@@ -26,7 +26,7 @@ const StyledWrap = styled(Div)`
 `;
 
 const StyledMainDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     position: relative;
     
     background-color: ${props.theme.palette.background.main};
@@ -41,7 +41,7 @@ const StyledMainDiv = styled(Div)<StyledComponentProps>`
 `;
 
 const StyledNavigationBar = styled(NavigationBar)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     ${props.theme.screenSizeMediaQuery.gteLaptop} {
       display: none;
     }
@@ -50,8 +50,8 @@ const StyledNavigationBar = styled(NavigationBar)<StyledComponentProps>`
 
 function WithCommonPreferences<P extends object>(
   ChildComponent: ComponentType<P>
-): NextPage<P & WithCommonPreferencesProps> {
-  return function WihLoadingComponent({ ...props }: WithCommonPreferencesProps) {
+): React.FC<P & WithCommonPreferencesProps> {
+  return function WithLoadingComponent({ ...props }: WithCommonPreferencesProps) {
     const router = useRouter();
     const { data: session, status } = useSession();
 
@@ -76,7 +76,7 @@ function WithCommonPreferences<P extends object>(
                 return <HeaderItem
                   active={navigationBarItem.pathname == router.pathname}
                   pathname={navigationBarItem.pathname}
-                  fontAwesomeIcon={navigationBarItem.fontAwesomeIcon}
+                  fontAwesomeIcon={navigationBarItem.fontAwesomeIcon as IconProp}
                   label={navigationBarItem.label}
                   key={index}
                 />;
@@ -92,7 +92,7 @@ function WithCommonPreferences<P extends object>(
               return <NavigationBarItem
                 active={navigationBarItem.pathname == router.pathname}
                 pathname={navigationBarItem.pathname}
-                fontAwesomeIcon={navigationBarItem.fontAwesomeIcon}
+                fontAwesomeIcon={navigationBarItem.fontAwesomeIcon as IconProp}
                 label={navigationBarItem.label}
                 key={index}
               />;

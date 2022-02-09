@@ -1,12 +1,12 @@
 import * as constants from '@/src/constants';
 
 import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
-import { mutateToBackend, queryToBackend } from '@/src/utils/backend';
 
 import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
 import Div from '@/src/components/base/Div';
 import Section from '@/src/components/Section';
+import { createBoard } from '@/src/backend/dao/board';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -16,29 +16,11 @@ interface FragmentProps {}
 
 interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledWrapDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledWrapDiv = styled(Div)`
+  ${(props: any) => `
   
   `}
 `;
-
-interface CreateBoardProps {
-  name: string;
-}
-const createBoard = async (props: CreateBoardProps) => {
-  await mutateToBackend(null, `
-    mutation CreateBoard($board: BoardInput!) {
-      createBoard(board: $board) {
-        id
-        name
-      }
-    }
-  `, {
-    board: {
-      name: props.name
-    }
-  });
-};
 
 const InitializeDatabase: React.FC<FragmentProps> = props => {
   const router = useRouter();
@@ -65,7 +47,7 @@ const InitializeDatabase: React.FC<FragmentProps> = props => {
         ...dialog,
         content: name
       });
-      await createBoard({
+      await createBoard(null, {
         name
       });
     };

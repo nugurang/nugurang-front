@@ -12,8 +12,8 @@ interface FragmentProps {}
 
 interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledWrapDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledWrapDiv = styled(Div)`
+  ${(props: any) => `
     margin-top: 16px;
   `}
 `;

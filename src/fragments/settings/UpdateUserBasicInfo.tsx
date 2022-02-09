@@ -1,5 +1,4 @@
 import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
-import { mutateToBackend, queryToBackend } from '@/src/utils/backend';
 
 import Button from '@/src/components/base/Button';
 import Dialog from '@/src/components/Dialog';
@@ -7,6 +6,7 @@ import Div from '@/src/components/base/Div';
 import Section from '@/src/components/Section';
 import Textfield from '@/src/components/base/Textfield';
 import styled from '@emotion/styled';
+import { updateCurrentUser } from '@/src/backend/dao/user';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
@@ -15,34 +15,11 @@ interface FragmentProps {}
 
 interface StyledComponentProps extends CommonStyledProps {}
 
-const StyledWrapDiv = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledWrapDiv = styled(Div)`
+  ${(props: any) => `
   
   `}
 `;
-
-interface UpdateUserProps {
-  name: string;
-  email: string;
-  biography: string;
-  image: number;
-}
-const updateUser = async (props: UpdateUserProps) => {
-  await mutateToBackend(null, `
-    mutation UpdateUser($user: UserInput!) {
-      updateCurrentUser (user: $user) {
-        id
-      }
-    }
-  `, {
-    user: {
-      name: props.name,
-      email: props.email,
-      biography: props.biography,
-      image: props.image,
-    }
-  })
-};
 
 const UpdateUserBasicInfo: React.FC<FragmentProps> = props => {
   const router = useRouter();
@@ -64,12 +41,14 @@ const UpdateUserBasicInfo: React.FC<FragmentProps> = props => {
       pending: true,
       title: 'Creating boards...'
     });
-    await updateUser({
+/*
+    await updateCurrentUser(null, {
       name,
       email,
       biography,
       image: null
     });
+*/
     setDialog({
       ...dialog,
       open: true,

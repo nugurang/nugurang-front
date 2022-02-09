@@ -13,17 +13,16 @@ interface ComponentProps extends CommonProps {
 
 interface StyledComponentProps extends CommonProps {
   active: boolean;
-  cssActive: boolean;
   domActive: boolean;
 }
 
 const StyledWrap = styled(Div)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+  ${(props: any) => `
     display: ${props.domActive ? 'block' : 'none'};
   `}
 `;
 
-const DOMToggleProvider: NextPage<ComponentProps> = props => {
+const DOMToggleProvider: React.FC<ComponentProps> = props => {
   const [domActive, setDOMActive] = useState(props.active);
 
   useEffect(

@@ -24,8 +24,8 @@ const StyledDummyDiv = styled(Div)`
   `}
 `;
 
-const StyledNavigationBarWrap = styled(Nav)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledNavigationBarWrap = styled(Nav)`
+  ${(props: any) => `
     position: fixed;
     left: 0;
     right: 0;
@@ -50,7 +50,7 @@ const StyledWidthLimiter = styled(WidthLimiter)`
   `}
 `;
 
-const NavigationBar: NextPage<ComponentProps> = props => {
+const NavigationBar: React.FC<ComponentProps> = props => {
   return (
     <StyledWrapDiv
       className={props.className}

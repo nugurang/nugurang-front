@@ -27,8 +27,8 @@ const StyledDummyDiv = styled(Div)`
   height: ${height}px;
 `;
 
-const StyledHeaderWrap = styled.header<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledHeaderWrap = styled.header`
+  ${(props: any) => `
     position: fixed;
     left: 0;
     right: 0;
@@ -42,8 +42,8 @@ const StyledHeaderWrap = styled.header<StyledComponentProps>`
   `}
 `;
 
-const StyledLogoTextWrap = styled(Span)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledLogoTextWrap = styled(Span)`
+  ${(props: any) => `
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -56,8 +56,8 @@ const StyledLogoTextWrap = styled(Span)<StyledComponentProps>`
   `}
 `;
 
-const StyledMenuWrap = styled(Span)<StyledComponentProps>`
-  ${(props: StyledComponentProps) => `
+const StyledMenuWrap = styled(Span)`
+  ${(props: any) => `
     display: none;
     ${props.theme.screenSizeMediaQuery.gteLaptop} {
       display: flex;
@@ -71,7 +71,7 @@ const StyledMenuWrap = styled(Span)<StyledComponentProps>`
   `}
 `;
 
-const Header: NextPage<ComponentProps> = props => {
+const Header: React.FC<ComponentProps> = props => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
