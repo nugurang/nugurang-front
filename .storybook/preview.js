@@ -1,3 +1,4 @@
+import { Global } from "@emotion/react";
 import GlobalStyle from '../src/styles/global';
 import { ThemeProvider } from '@emotion/react';
 import { lightTheme } from '../src/styles/theme';

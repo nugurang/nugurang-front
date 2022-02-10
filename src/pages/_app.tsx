@@ -12,7 +12,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { library as fontawesomeLibrary } from '@fortawesome/fontawesome-svg-core';
 import { useState } from 'react';
 
-fontawesomeLibrary.add(fab, far, fas);
+fontawesomeLibrary.add(fab as any, far as any, fas as any);
 
 function RootApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [isDark, setIsDark] = useState<boolean>(false);
