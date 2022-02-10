@@ -1,32 +1,92 @@
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+
+import Div from '@/src/components/base/Div';
 import type { NextPage } from 'next';
-import React from 'react';
-import styled from 'styled-components';
+import Span from '@/src/components/base/Span';
+import WidthLimiter from '@/src/components/WidthLimiter';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+
+const height = 64;
+
+type User = {
+  name: string;
+  imageUrl?: string;
+}
+
+interface ComponentProps extends CommonProps {
+  callbackUrl?: string;
+  user?: User;
+}
+
+interface StyledComponentProps extends CommonStyledProps {}
+
+// Header가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
+const StyledDummyDiv = styled(Div)`
+  height: ${height}px;
+`;
 
 const StyledHeaderWrap = styled.header`
   ${(props: any) => `
-    background-color: ${props.theme.palette.background.main};
-    color: ${props.theme.palette.text.main};
-    height: 64px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: ${props.theme.palette.primary.main};
+    color: ${props.theme.palette.primary.text};
+    height: ${height}px;
+    z-index: 20;
+    transition-duration: 0.2s;
+    transition-property: background-color, color;
   `}
 `;
 
-const StyledDivInnerWrap = styled.div`
+const StyledLogoTextWrap = styled(Span)`
   ${(props: any) => `
-    margin: 0 auto;
-    ${props.theme.mediaQuery.gtLaptop} {
-      max-width: ${props.theme.screenSize.minLaptop};
-    }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    color: ${props.theme.palette.primary.text};
+    font-size: 24px;
+    margin-left: 16px;
   `}
 `;
 
-const Header: NextPage = () => {
+const StyledMenuWrap = styled(Span)`
+  ${(props: any) => `
+    display: none;
+    ${props.theme.screenSizeMediaQuery.gteLaptop} {
+      display: flex;
+      flex-direction: row;
+    }
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px;
+  `}
+`;
+
+const Header: React.FC<ComponentProps> = props => {
+  const router = useRouter();
+  const { t } = useTranslation('common');
   return (
-    <StyledHeaderWrap>
-      <StyledDivInnerWrap>
-        Header
-      </StyledDivInnerWrap>
-    </StyledHeaderWrap>
+    <>
+      <StyledDummyDiv />
+      <StyledHeaderWrap>
+        <WidthLimiter>
+          <StyledLogoTextWrap>nugurang</StyledLogoTextWrap>
+          <StyledMenuWrap>
+            {props.children}
+          </StyledMenuWrap>
+        </WidthLimiter>
+      </StyledHeaderWrap>
+    </>
   );
-}
+};
 
 export default Header;

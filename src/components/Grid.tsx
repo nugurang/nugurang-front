@@ -1,0 +1,78 @@
+import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+
+import Div from '@/src/components/base/Div';
+import type { NextPage } from 'next';
+import styled from '@emotion/styled';
+import { useRef } from 'react';
+import useResize from '@/src/hooks/useResize';
+
+type Column = {
+  default: number;
+  gteMobile?: number;
+  gtePhablet?: number;
+  gteTablet?: number;
+  gteLaptop?: number;
+  gteDesktop?: number;
+}
+
+type Size = {
+  width: number;
+}
+
+interface ComponentProps extends CommonProps {
+  column: Column;
+  gap?: number;
+}
+
+interface StyledComponentProps extends CommonStyledProps {
+  column: Column;
+  gap?: number;
+  size: Size;
+}
+
+const StyledSectionGridDiv = styled(Div)<StyledComponentProps>`
+  ${(props: any) => `
+    display: grid;
+    grid-template-columns: repeat(${props.column.default}, 1fr);
+    gap: ${props.gap ?? '8px'};
+    margin: 0 auto;
+
+    ${props.size.width >= props.theme.screenPixelSize.mobile && `
+      grid-template-columns: repeat(${props.column.gteMobile}, 1fr);
+    `}
+    ${props.size.width >= props.theme.screenPixelSize.phablet && `
+      grid-template-columns: repeat(${props.column.gtePhablet}, 1fr);
+    `}
+    ${props.size.width >= props.theme.screenPixelSize.tablet && `
+      grid-template-columns: repeat(${props.column.gteTablet}, 1fr);
+    `}
+    ${props.size.width >= props.theme.screenPixelSize.laptop && `
+      grid-template-columns: repeat(${props.column.gteLaptop}, 1fr);
+    `}
+  `}
+`;
+
+const Grid: React.FC<ComponentProps> = ({
+  className,
+  children,
+  column
+}) => {
+  const componentRef = useRef();
+  const size = useResize(componentRef);
+  column = { ...column, gteMobile:  column.gteMobile  ?? column.default    };
+  column = { ...column, gtePhablet: column.gtePhablet ?? column.gteMobile  };
+  column = { ...column, gteTablet:  column.gteTablet  ?? column.gtePhablet };
+  column = { ...column, gteLaptop:  column.gteLaptop  ?? column.gteTablet  };
+  column = { ...column, gteDesktop: column.gteDesktop ?? column.gteLaptop  };
+  return (
+    <StyledSectionGridDiv
+      className={className}
+      column={column}
+      size={size}
+    >
+      {children}
+    </StyledSectionGridDiv>
+  );
+}
+
+export default Grid;

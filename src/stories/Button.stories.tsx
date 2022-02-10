@@ -1,30 +1,26 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Button from '@/src/components/Button';
-import React from 'react';
+import Button from '../components/base/Button';
 
 export default {
   title: 'Example/Button',
   component: Button,
   argTypes: {
-    label: { control: 'text' },
-    paletteType: {
+    palette: {
       options: ['primary', 'default'],
       control: { type: 'radio' },
     },
   },
 } as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args}>Button</Button>;
 
 export const Default = Template.bind({});
 Default.args = {
-  label: 'Button',
-  paletteType: 'default',
+  palette: 'default',
 };
 
 export const Primary = Template.bind({});
 Primary.args = {
-  label: 'Button',
-  paletteType: 'primary',
+  palette: 'primary',
 };

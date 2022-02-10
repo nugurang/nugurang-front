@@ -1,4 +1,4 @@
-import { ApolloClient, DefaultOptions, HttpLink, InMemoryCache, createHttpLink, from } from '@apollo/client';
+import { ApolloClient, DefaultOptions, InMemoryCache, createHttpLink, from } from '@apollo/client';
 
 import { onError } from "@apollo/client/link/error";
 
@@ -6,14 +6,14 @@ const link = from([
   onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
       graphQLErrors.map(({ message, locations, path }) =>
-        console.log(
+        console.error(
           `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
         ),
       );
-    if (networkError) console.log(`[Network error]: ${networkError}`);
+    if (networkError) console.error(`[Network error]: ${networkError}`);
   }),
   createHttpLink({
-    uri: `${process.env.NEXT_PUBLIC_BACKEND_URI}/graphql`,
+    uri: `${process.env.NEXT_PUBLIC_BACKEND_URL}/graphql`,
     credentials: 'include'
   }),
 ]);
