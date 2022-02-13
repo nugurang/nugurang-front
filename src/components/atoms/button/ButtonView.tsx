@@ -61,9 +61,15 @@ const StyledHoverEffect = styled.div<ViewProps>`
 `;
 
 const ButtonView: React.FC<ViewProps> = props => {
+
+  const viewProps = {
+    ...props,
+    variant: props.variant ?? 'filled'
+  }
+
   return (
     <StyledButton
-      {...props}
+      {...viewProps}
     >
       { props.children }
       <StyledHoverEffect />
