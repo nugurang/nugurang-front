@@ -12,6 +12,7 @@ const Card: React.FC<ComponentProps> = props => {
   return (
     <CardView {...viewProps}/>
   );
+  
 }
 
 export default Card;

@@ -1,9 +1,9 @@
 import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/Dialog';
+import Dialog from '@/src/components/molecules/dialog/Dialog';
 import { GetServerSideProps } from 'next';
 import Loader from '@/src/components/atoms/loader/Loader';
 import type { NextPage } from 'next';
-import Section from '@/src/components/Section';
+import Section from '@/src/components/molecules/section/Section';
 import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import WithCommonPreferences from '@/src/components/WithCommonPreferences';
 import { useRouter } from 'next/router';

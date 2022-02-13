@@ -1,15 +1,13 @@
 import * as constants from '@/src/constants';
 
-import type { CommonComponentProps, ThemeObject } from '@/src/components/common';
-
 import { GetServerSideProps } from 'next';
-import Grid from '@/src/components/Grid';
+import Grid from '@/src/components/atoms/grid/Grid';
 import Image from '@/src/components/atoms/image/Image';
 import type { NextPage } from 'next';
-import PageOverview from '@/src/components/PageOverview';
-import Section from '@/src/components/Section';
-import Thumbnail from '@/src/components/Thumbnail';
-import WidthLimiter from '@/src/components/WidthLimiter';
+import PageOverview from '@/src/components/molecules/pageOverview/PageOverview';
+import Section from '@/src/components/molecules/section/Section';
+import Thumbnail from '@/src/components/molecules/thumbnail/Thumbnail';
+import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import WithCommonPreferences from '@/src/components/WithCommonPreferences';
 import { getBoardsByNames } from '@/src/backend/dao/board';
 import styled from '@emotion/styled';
@@ -51,10 +49,6 @@ export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('u
 
   }
 );
-
-interface StyledComponentProps {
-  theme: ThemeObject;
-}
 
 const StyledPageOverviewImageWrap = styled(Image)`
   ${(props: any) => `

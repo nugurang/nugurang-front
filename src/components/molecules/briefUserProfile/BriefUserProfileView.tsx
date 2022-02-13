@@ -1,17 +1,14 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
-
-import Card from '@/src/components/Card';
+import Card from '@/src/components/atoms/card/Card';
+import type { CommonComponentProps } from '@/src/components/common';
 import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/atoms/icon/Icon';
+import Icon from '@/src/components/molecules/icon/Icon';
 import styled from '@emotion/styled';
 
-interface ComponentProps extends CommonComponentProps {
+interface ViewProps extends CommonComponentProps {
   name: string;
   email: string;
   imageUrl?: string;
 }
-
-interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledWrapCard = styled(Card)`
   ${(props: any) => `
@@ -28,7 +25,6 @@ const StyledIcon = styled(Icon)`
 
 const StyledTextDiv = styled(Div)`
   ${(props: any) => `
-    display: inline-block;
     margin: 4px 0;
     vertical-align: top;
   `}
@@ -39,7 +35,7 @@ const StyledNameDiv = styled(Div)`
     font-size: 24px;
     font-weight: bold;
     line-height: 32px;
-    
+    word-break: break-all;
   `}
 `;
 
@@ -48,11 +44,11 @@ const StyledEmailDiv = styled(Div)`
     font-size: 16px;
     line-height: 20px;
     margin-top: 4px;
-    
+    word-break: break-all;
   `}
 `;
 
-const BriefUserProfile: React.FC<ComponentProps> = props => {
+const BriefUserProfileView: React.FC<ViewProps> = props => {
   return (
     <StyledWrapCard
       className={props.className}
@@ -73,4 +69,4 @@ const BriefUserProfile: React.FC<ComponentProps> = props => {
   );
 }
 
-export default BriefUserProfile;
+export default BriefUserProfileView;

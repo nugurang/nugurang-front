@@ -1,24 +1,15 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
-
 import Button from '@/src/components/atoms/button/Button';
-import Card from '@/src/components/Card';
+import Card from '@/src/components/atoms/card/Card';
+import type { CommonComponentProps } from '@/src/components/common';
 import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/atoms/icon/Icon';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import type { IconTypeKeys } from '@/src/components/atoms/icon/Icon';
-import type { NextPage } from 'next';
+import Icon from '@/src/components/molecules/icon/Icon';
 import styled from '@emotion/styled';
 
-interface ComponentProps extends CommonComponentProps {
+interface ViewProps extends CommonComponentProps {
   title?: string;
   subtitle?: string;
-  icon?: {
-    type?: IconTypeKeys;
-    src?: string | IconProp;
-  };
+  icon?: IconObject;
 }
-
-interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledButton = styled(Button)`
   ${(props: any) => `
@@ -72,7 +63,7 @@ const StyledSubtitleDiv = styled(Div)`
   `}
 `;
 
-const BriefCardCore = (props: ComponentProps) => <>
+const BriefCardCore = (props: ViewProps) => <>
   <StyledWrapCard
     className={props.className}
     css={props.css}
@@ -93,13 +84,16 @@ const BriefCardCore = (props: ComponentProps) => <>
   </StyledWrapCard>
 </>;
 
-const BriefCard: React.FC<ComponentProps> = props => {
+const BriefCardView: React.FC<ViewProps> = props => {
   if (props.onClick) return (
-    <StyledButton variant='transparent' onClick={props.onClick}>
+    <StyledButton
+      variant='transparent'
+      onClick={props.onClick}
+    >
       {BriefCardCore(props)}
     </StyledButton>
   );
   else return BriefCardCore(props);
 }
 
-export default BriefCard;
+export default BriefCardView;

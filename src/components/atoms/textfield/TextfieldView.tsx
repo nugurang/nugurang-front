@@ -8,6 +8,7 @@ interface ViewProps extends CommonComponentProps {
   children?: React.ReactNode;
   type?: TextfieldTypeKeys;
   onInput?: () => void;
+  state: TextfieldStateObject;
   required?: boolean;
   placeholder?: string;
   errorMessage?: string;
@@ -74,13 +75,13 @@ const StyledPlaceholder = styled(Div)<ViewProps>`
     left: 8px;
     font-size: 16px;
     color: ${props.theme.palette.default.subtext};
-    ${(props.state.focus) ? `
+    ${(props.state.isFocus) ? `
       top: 2px;
       left: 6px;
       font-size: 12px;
       color: ${props.theme.palette[props.palette || 'primary'].main};
     `: ''}
-    ${props.state.error ? `
+    ${props.state.isError ? `
       color: ${props.theme.palette.danger.main};
     ` : ''};
   `}
@@ -94,7 +95,7 @@ const StyledErrorMessage = styled(Div)<ViewProps>`
     left: 8px;
     font-size: 16px;
     color: ${props.theme.palette.danger.main};
-    ${(props.state.error) ? `
+    ${(props.state.isError) ? `
       display: block;
       bottom: 4px;
       left: 6px;

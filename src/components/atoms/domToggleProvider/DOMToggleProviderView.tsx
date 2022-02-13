@@ -14,9 +14,7 @@ const StyledWrap = styled(Div)<ViewProps>`
 
 const DOMToggleProviderView: React.FC<ViewProps> = props => {
   return (
-    <StyledWrap
-      {...props}
-    >
+    <StyledWrap {...props} >
       { props.children }
     </StyledWrap>
   );

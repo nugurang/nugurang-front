@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export default function useResize(ref: React.RefObject<any>) {
+export interface UseComponentSizeObject {
+  height: number;
+  width: number;
+}
+
+export default function useComponentSize(ref: React.RefObject<any>) {
   const [size, setSize] = useState({
     height: 0,
     width: 0
@@ -22,5 +27,6 @@ export default function useResize(ref: React.RefObject<any>) {
       window.removeEventListener('resize', handleResize);
     };
   }, [handleResize]);
+  
   return size;
 }

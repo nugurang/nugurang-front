@@ -2,23 +2,22 @@ import type { CommonComponentProps, CommonStyledProps } from '@/src/components/c
 
 import Button from '@/src/components/atoms/button/Button';
 import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/atoms/icon/Icon';
+import Icon from '@/src/components/molecules/icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
 // NavigationBar 컴포넌트에서 사용하기 위해 export함
 export interface ComponentProps extends CommonComponentProps {
-  active?: boolean;
+  selected?: boolean;
   pathname: string;
   fontAwesomeIcon?: IconProp;
   label: string;
 }
 
 interface StyledComponentProps extends CommonStyledProps {
-  active?: boolean;
+  selected?: boolean;
 }
 
 const StyledButton = styled(Button)`
@@ -43,7 +42,7 @@ const StyledIcon = styled(Icon)<StyledComponentProps>`
   ${(props: any) => `
     height: 28px;
     width: 28px;
-    color: ${props.active
+    color: ${props.selected
       ? props.theme.palette.primary.main
       : props.theme.palette.background.subtext
     };
@@ -56,7 +55,7 @@ const StyledDivLabelWrap = styled(Div)<StyledComponentProps>`
     line-height: 12px;
     padding-top: 4px;
 
-    color: ${props.active
+    color: ${props.selected
       ? props.theme.palette.primary.main
       : props.theme.palette.background.subtext
     };
@@ -82,11 +81,11 @@ const NavigationBarItem: React.FC<ComponentProps> = props => {
           <StyledIcon
             src={props.fontAwesomeIcon}
             type='fontAwesomeIcon'
-            active={props.active}
+            selected={props.selected}
           />
         }
         <StyledDivLabelWrap
-          active={props.active}
+          selected={props.selected}
         >
           { t(props.label) }
         </StyledDivLabelWrap>

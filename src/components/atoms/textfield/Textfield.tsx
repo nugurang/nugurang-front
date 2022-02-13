@@ -17,9 +17,9 @@ interface ComponentProps extends CommonComponentProps {
 
 const Textfield: React.FC<ComponentProps> = props => {
   const [state, setState] = useState({
-    hover: false,
-    focus: false,
-    error: !!props.errorMessage
+    isHover: false,
+    isFocus: false,
+    isError: !!props.errorMessage
   })
   
   const handleInput = () => {
@@ -28,41 +28,41 @@ const Textfield: React.FC<ComponentProps> = props => {
   const handleMouseEnter = () => {
     setState({
       ...state,
-      hover: true
+      isHover: true
     });
     if (props.onMouseEnter) props.onMouseEnter();
   };
   const handleMouseLeave = () => {
     setState({
       ...state,
-      hover: false
+      isHover: false
     });
     if (props.onMouseLeave) props.onMouseLeave();
   };
   const handleOnFocus = () => {
     setState({
       ...state,
-      focus: true
+      isFocus: true
     });
     if (props.onFocus) props.onFocus();
   };
   const handleOnBlur = () => {
     setState({
       ...state,
-      focus: false
+      isFocus: false
     });
     if (props.onBlur) props.onBlur();
   };
   const handleOnError = () => {
     setState({
       ...state,
-      error: true
+      isError: true
     });
   };
   const handleOnErrorResolved = () => {
     setState({
       ...state,
-      error: false
+      isError: false
     });
   };
 
@@ -74,6 +74,7 @@ const Textfield: React.FC<ComponentProps> = props => {
   const viewProps = {
     ...props,
     type: props.type ?? 'text',
+    state,
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     onFocus: handleOnFocus,

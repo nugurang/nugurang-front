@@ -1,17 +1,17 @@
 import * as constants from '@/src/constants';
 
 import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/Dialog';
+import Dialog from '@/src/components/molecules/dialog/Dialog';
 import Div from '@/src/components/quarks/div/Div';
 import { GetServerSideProps } from 'next';
-import Icon from '@/src/components/atoms/icon/Icon';
+import Icon from '@/src/components/molecules/icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Image from '@/src/components/atoms/image/Image';
 import type { NextPage } from 'next';
-import PageOverview from '@/src/components/PageOverview';
-import Section from '@/src/components/Section';
+import PageOverview from '@/src/components/molecules/pageOverview/PageOverview';
+import Section from '@/src/components/molecules/section/Section';
 import type { ThemeObject } from '@/src/styles/theme';
-import WidthLimiter from '@/src/components/WidthLimiter';
+import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import WithCommonPreferences from '@/src/components/WithCommonPreferences';
 import { loginToNextAuth } from '@/src/utils/next-auth';
 import styled from '@emotion/styled';

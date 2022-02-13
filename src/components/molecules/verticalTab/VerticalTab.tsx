@@ -1,27 +1,18 @@
 import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
 import Button from '@/src/components/atoms/button/Button';
-import Card from '@/src/components/Card';
+import Card from '@/src/components/atoms/card/Card';
 import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/atoms/icon/Icon';
-import type { IconObject } from '@/src/components/atoms/icon/Icon';
+import Icon from '@/src/components/molecules/icon/Icon';
 import List from '@/src/components/atoms/list/List';
 import ListItem from '@/src/components/atoms/listItem/ListItem';
+import VerticalTabView from '@/src/components/molecules/verticalTab/VerticalTabView';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-export interface TabItem {
-  name: string;
-  icon?: IconObject;
-  title?: string;
-  subtitle?: string;
-  onClickTitle?: () => void;
-  child?: React.ReactNode;
-}
-
 interface ComponentProps extends CommonComponentProps {
   ordered?: boolean;
-  tabItems: TabItem[];
+  items: VerticalTabItemObject[];
   initialIndex?: number;
   initialDepth?: number;
 }
@@ -130,57 +121,14 @@ const VerticalTab: React.FC<ComponentProps> = props => {
     depth: props.initialDepth ?? 0
   });
 
+  let viewProps = {
+    ...props,
+    selectedTab,
+    setSelectedTab
+  };
+
   return (
-    <StyledWrapCard
-      className={props.className}
-      css={props.css}
-      depth={selectedTab.depth}
-    >
-      <StyledTitleListWrapCard>
-        <StyledTitleList
-          variant='outlined'
-        >
-          {
-            props.tabItems
-            .map((tabItem: TabItem, index: number) => {
-              return <StyledTitleItem key={index}>
-                <StyledTitleItemButton
-                  variant='transparent'
-                  onClick={() => {
-                    if (!!tabItem.onClickTitle) tabItem.onClickTitle();
-                    else {
-                      setSelectedTab((selectedTab: any) => ({
-                        ...selectedTab,
-                        index,
-                        depth: 1
-                      }));
-                    }
-                  }}
-                >
-                  <StyledTitleItemIcon
-                    type={tabItem?.icon?.type}
-                    src={tabItem?.icon?.src}
-                  />
-                  <StyledTitleItemTextDiv>
-                    <StyledTitleItemTitleDiv>
-                      {tabItem.title}
-                    </StyledTitleItemTitleDiv>
-                    <StyledTitleItemSubtitleDiv>
-                      {tabItem.subtitle}
-                    </StyledTitleItemSubtitleDiv>
-                  </StyledTitleItemTextDiv>
-                </StyledTitleItemButton>
-              </StyledTitleItem>
-            })
-          }
-        </StyledTitleList>
-      </StyledTitleListWrapCard>
-      <StyledContentDiv
-        depth={selectedTab.depth}
-      >
-        {props.tabItems.length > 0 && props.tabItems[selectedTab.index].child}
-      </StyledContentDiv>
-    </StyledWrapCard>
+    <VerticalTabView {...viewProps} />
   );
 }
 

@@ -1,27 +1,21 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
-
 import Card from '@/src/components/atoms/card/Card';
+import type { CommonComponentProps } from '@/src/components/common';
 import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/atoms/icon/Icon';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import type { IconTypeKeys } from '@/src/components/atoms/icon/Icon';
+import Icon from '@/src/components/molecules/icon/Icon';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonComponentProps {
   title?: string;
-  icon?: {
-    type?: IconTypeKeys;
-    src?: string | IconProp;
-  };
+  icon?: IconObject;
   enableMargin?: boolean;
   enablePadding?: boolean;
 }
 
-interface StyledCardProps extends CommonStyledProps {
+interface StyledCardProps extends CommonComponentProps {
   enableMargin?: boolean;
 }
 
-interface StyledChildrenWrapDivProps extends CommonStyledProps {
+interface StyledChildrenWrapDivProps extends CommonComponentProps {
   enablePadding?: boolean;
 }
 
@@ -61,7 +55,7 @@ const StyledChildrenWrapDiv = styled(Div)<StyledChildrenWrapDivProps>`
   `}
 `;
 
-const Section: React.FC<ComponentProps> = props => {
+const SectionView: React.FC<ComponentProps> = props => {
   return (
     <StyledCard
       variant={props.variant ?? 'outlined'}
@@ -85,4 +79,4 @@ const Section: React.FC<ComponentProps> = props => {
   );
 }
 
-export default Section;
+export default SectionView;

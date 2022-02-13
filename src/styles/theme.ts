@@ -107,9 +107,9 @@ const createPaletteRow = (
 }
 
 const defaultBasePaletteRow = {
-  main:    stringifyRGB(color.mediumGray[600]),
-  light:   stringifyRGB(color.mediumGray[400]),
-  dark:    stringifyRGB(color.mediumGray[800]),
+  main:    stringifyRGB(color.mediumGray[400]),
+  light:   stringifyRGB(color.mediumGray[200]),
+  dark:    stringifyRGB(color.mediumGray[600]),
   text:    stringifyRGB(color.mediumGray[0]),
   subtext: stringifyRGB(color.mediumGray[500]),
 };

@@ -1,17 +1,16 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
-
 import Button from '@/src/components/atoms/button/Button';
+import type { CommonComponentProps } from '@/src/components/common';
 import Div from '@/src/components/quarks/div/Div';
 import Loader from '@/src/components/atoms/loader/Loader';
-import Modal from '@/src/components/Modal';
+import Modal from '@/src/components/molecules/modal/Modal';
 import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
-interface ComponentProps extends CommonComponentProps {
+interface ViewProps extends CommonComponentProps {
   loader?: boolean;
   open: boolean;
-  onClickBackdrop?: () => void;
+  onClickBackdrop?: (() => void) | undefined;
   title?: string;
   content?: string;
   yesLabel?: string;
@@ -21,11 +20,13 @@ interface ComponentProps extends CommonComponentProps {
   onNo?: (() => void) | undefined;
   onCancel?: (() => void) | undefined;
 }
-export interface DialogProps extends ComponentProps {}
 
-interface StyledComponentProps extends CommonStyledProps {
+interface DialogProps {
   loader?: boolean;
-  active?: boolean;
+}
+
+interface ButtonProps {
+  enable?: boolean;
 }
 
 const StyledWidthLimiter = styled(WidthLimiter)`
@@ -41,7 +42,7 @@ const StyledInfoDiv = styled(Div)`
   `}
 `;
 
-const StyledLoader = styled(Loader)<StyledComponentProps>`
+const StyledLoader = styled(Loader)<DialogProps>`
   ${(props: any) => `
     display: ${props.loader ? 'inline-block' : 'none'};
     margin-bottom: 32px;
@@ -82,13 +83,13 @@ const StyledButtonGroupDiv = styled(Div)`
   `}
 `;
 
-const StyledButton = styled(Button)<StyledComponentProps>`
+const StyledButton = styled(Button)<ButtonProps>`
   ${(props: any) => `
-    display: ${ props.active ? 'inline' : 'none' };
+    display: ${ props.enable ? 'inline' : 'none' };
   `}
 `;
 
-const Dialog: React.FC<ComponentProps> = props => {
+const DialogView: React.FC<ViewProps> = props => {
   const { t } = useTranslation('common');
   return (
     <Modal
@@ -111,20 +112,20 @@ const Dialog: React.FC<ComponentProps> = props => {
         </StyledInfoDiv>
         <StyledButtonGroupDiv>
           <StyledButton
-            active={!!props.onYes}
+            enable={!!props.onYes}
             onClick={props.onYes}
           >
             {props.yesLabel || t('yes')}
           </StyledButton>
           <StyledButton
             palette='danger'
-            active={!!props.onNo}
+            enable={!!props.onNo}
             onClick={props.onNo}
           >
             {props.noLabel || t('no')}
           </StyledButton>
           <StyledButton
-            active={!!props.onCancel}
+            enable={!!props.onCancel}
             onClick={props.onCancel}
           >
             {props.cancelLabel || t('cancel')}
@@ -135,4 +136,4 @@ const Dialog: React.FC<ComponentProps> = props => {
   );
 }
 
-export default Dialog;
+export default DialogView;

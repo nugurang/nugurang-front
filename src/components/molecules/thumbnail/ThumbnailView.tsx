@@ -3,23 +3,22 @@ import type { CommonComponentProps, CommonStyledProps } from '@/src/components/c
 import Button from '@/src/components/atoms/button/Button';
 import Div from '@/src/components/quarks/div/Div';
 import Image from '@/src/components/atoms/image/Image';
-import type { NextPage } from 'next';
 import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
-interface ComponentProps extends CommonComponentProps {
+interface ViewProps extends CommonComponentProps {
   imageUrl?: string;
   title?: string;
+  state: ThumbnailStateObject;
 }
 
-interface StyledComponentProps extends CommonStyledProps {
-  imageUrl?: string;
-  title?: string;
-  isHover?: boolean;
+interface ButtonProps extends CommonComponentProps {
+  state: ThumbnailStateObject;
 }
 
-const StyledButton = styled(Button)<StyledComponentProps>`
+interface NameDivProps extends CommonComponentProps {}
+
+const StyledButton = styled(Button)<ButtonProps>`
   ${(props: any) => `
     overflow: hidden;
     height: 128px;
@@ -42,7 +41,7 @@ const StyledImage = styled(Image)`
   `}
 `;
 
-const StyledNameDiv = styled(Div)<StyledComponentProps>`
+const StyledNameDiv = styled(Div)<NameDivProps>`
   ${(props: any) => `
     position: absolute;
     bottom: 0;
@@ -62,19 +61,14 @@ const StyledNameDiv = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const Thumbnail: React.FC<ComponentProps> = props => {
-  const [state, setState] = useState({
-    isHover: false,
-  });
+const ThumbnailView: React.FC<ViewProps> = props => {
   return (
     <StyledButton
       className={props.className}
       css={props.css}
       variant='transparent'
       onClick={props.onClick}
-      isHover={state.isHover}
-      onMouseEnter={() => setState((state: any) => ({ ...state, isHover: true }))}
-      onMouseLeave={() => setState((state: any) => ({ ...state, isHover: false }))}
+      state={props.state}
     >
       <StyledImage src={props.imageUrl}/>
       <StyledNameDiv
@@ -87,4 +81,4 @@ const Thumbnail: React.FC<ComponentProps> = props => {
   );
 }
 
-export default Thumbnail;
+export default ThumbnailView;

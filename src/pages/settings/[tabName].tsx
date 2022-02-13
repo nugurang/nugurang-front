@@ -1,13 +1,12 @@
 import { GetServerSideProps } from 'next';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { IconTypeKeys } from '@/src/components/atoms/icon/Icon';
-import InitializeDatabase from '@/src/fragments/settings/InitializeDatabase';
+import InitializeDatabase from '@/src/components/organisms/settings/InitializeDatabase';
 import type { NextPage } from 'next';
-import Section from '@/src/components/Section';
-import TestComponents from '@/src/fragments/settings/TestComponents';
-import UpdateUserBasicInfo from '@/src/fragments/settings/UpdateUserBasicInfo';
-import VerticalTab from '@/src/components/VerticalTab';
-import WidthLimiter from '@/src/components/WidthLimiter';
+import Section from '@/src/components/molecules/section/Section';
+import TestComponents from '@/src/components/organisms/settings/TestComponents';
+import UpdateUserBasicInfo from '@/src/components/organisms/settings/UpdateUserBasicInfo';
+import VerticalTab from '@/src/components/molecules/verticalTab/VerticalTab';
+import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import WithCommonPreferences from '@/src/components/WithCommonPreferences';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -24,7 +23,7 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
   const { tabName: selectedTabName } = router.query;
   const { t } = useTranslation('common');
 
-  const tabItems = [
+  const items = [
     {
       name: 'account',
       icon: {
@@ -61,8 +60,8 @@ const MyPageIndex: NextPage<PageProps> = ({ currentUser }) => {
       >
         <VerticalTab
           key={new Date().toISOString()} // 유일한 키를 부여하여 DOM을 리렌더링함
-          tabItems={tabItems}
-          initialIndex={selectedTabName ? tabItems.findIndex(item => item.name == selectedTabName) : 0}
+          items={items}
+          initialIndex={selectedTabName ? items.findIndex(item => item.name == selectedTabName) : 0}
           initialDepth={selectedTabName ? 1 : 0}
         />
       </Section>

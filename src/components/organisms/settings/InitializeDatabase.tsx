@@ -3,9 +3,9 @@ import * as constants from '@/src/constants';
 import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
 import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/Dialog';
+import Dialog from '@/src/components/molecules/dialog/Dialog';
 import Div from '@/src/components/quarks/div/Div';
-import Section from '@/src/components/Section';
+import Section from '@/src/components/molecules/section/Section';
 import { createBoard } from '@/src/backend/dao/board';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';

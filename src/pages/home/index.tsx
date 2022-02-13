@@ -1,8 +1,8 @@
-import Card from '@/src/components/Card';
+import Card from '@/src/components/atoms/card/Card';
 import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
-import Section from '@/src/components/Section';
-import WidthLimiter from '@/src/components/WidthLimiter';
+import Section from '@/src/components/molecules/section/Section';
+import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import WithCommonPreferences from '@/src/components/WithCommonPreferences';
 import { useTranslation } from 'next-i18next';
 import { withAuthServerSideProps } from '@/src/utils/server-side';

@@ -6,3 +6,9 @@ declare type TextfieldTypeKeys = 'email'
                                | 'text'
                                | 'textarea'
                                | 'url';
+
+declare interface TextfieldStateObject {
+  isHover: boolean;
+  isFocus: boolean;
+  isError: boolean;
+}

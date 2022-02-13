@@ -2,7 +2,7 @@ import type { CommonComponentProps, CommonStyledProps } from '@/src/components/c
 
 import Button from '@/src/components/atoms/button/Button';
 import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/atoms/icon/Icon';
+import Icon from '@/src/components/molecules/icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';

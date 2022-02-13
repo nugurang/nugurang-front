@@ -1,17 +1,17 @@
 import * as constants from '@/src/constants';
 
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
-import NavigationBar, { height as navigationBarHeight } from '@/src/components/NavigationBar';
+import NavigationBar, { height as navigationBarHeight } from '@/src/components/organisms/common/NavigationBar';
 import { signOut, useSession } from 'next-auth/react';
 
+import type { CommonStyledProps } from '@/src/components/common';
 import { ComponentType } from 'react';
 import Div from '@/src/components/quarks/div/Div';
-import Footer from '@/src/components/Footer';
+import Footer from '@/src/components/organisms/common/Footer';
 import Head from 'next/head';
-import Header from '@/src/components/Header';
-import HeaderItem from '@/src/components/HeaderItem';
+import Header from '@/src/components/organisms/common/Header';
+import HeaderItem from '@/src/components/organisms/common/HeaderItem';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import NavigationBarItem from '@/src/components/NavigationBarItem';
+import NavigationBarItem from '@/src/components/organisms/common/NavigationBarItem';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
@@ -90,7 +90,7 @@ function WithCommonPreferences<P extends object>(
           <StyledNavigationBar>
             {constants.DEFAULT_NAVIGATION_BAR_ITEMS.map((navigationBarItem, index) => {
               return <NavigationBarItem
-                active={navigationBarItem.pathname == router.pathname}
+              selected={navigationBarItem.pathname == router.pathname}
                 pathname={navigationBarItem.pathname}
                 fontAwesomeIcon={navigationBarItem.fontAwesomeIcon as IconProp}
                 label={navigationBarItem.label}
