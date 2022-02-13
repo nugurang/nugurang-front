@@ -1,10 +1,10 @@
 import * as constants from '@/src/constants';
 
-import type { CommonProps, ThemeObject } from '@/src/components/base/common';
+import type { CommonComponentProps, ThemeObject } from '@/src/components/common';
 
 import { GetServerSideProps } from 'next';
 import Grid from '@/src/components/Grid';
-import Image from '@/src/components/base/Image';
+import Image from '@/src/components/atoms/image/Image';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';

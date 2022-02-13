@@ -1,12 +1,12 @@
 import * as constants from '@/src/constants';
 
-import Button from '@/src/components/base/Button';
+import Button from '@/src/components/atoms/button/Button';
 import Dialog from '@/src/components/Dialog';
-import Div from '@/src/components/base/Div';
+import Div from '@/src/components/quarks/div/Div';
 import { GetServerSideProps } from 'next';
-import Icon from '@/src/components/Icon';
+import Icon from '@/src/components/atoms/icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Image from '@/src/components/base/Image';
+import Image from '@/src/components/atoms/image/Image';
 import type { NextPage } from 'next';
 import PageOverview from '@/src/components/PageOverview';
 import Section from '@/src/components/Section';

@@ -1,11 +1,11 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
 import Card from '@/src/components/Card';
-import Div from '@/src/components/base/Div';
-import Icon from '@/src/components/Icon';
+import Div from '@/src/components/quarks/div/Div';
+import Icon from '@/src/components/atoms/icon/Icon';
 import styled from '@emotion/styled';
 
-interface ComponentProps extends CommonProps {
+interface ComponentProps extends CommonComponentProps {
   name: string;
   email: string;
   imageUrl?: string;

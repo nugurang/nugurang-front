@@ -1,16 +1,17 @@
-import type { DeviceMediaQueryObject, ScreenSizeMediaQueryObject } from '@/src/styles/mediaQuery';
-import { deviceMediaQuery, screenSizeMediaQuery } from '@/src/styles/mediaQuery';
+import type { DeviceMediaQueryObject, ScreenSizeMediaQueryObject } from '@/src/styles/props/mediaQuery';
+import { color, stringifyRGB } from '@/src/styles/props/color';
+import { deviceMediaQuery, screenSizeMediaQuery } from '@/src/styles/props/mediaQuery';
 
-import type { BorderRadiusObject } from '@/src/styles/borderRadius';
-import type { FontObject } from '@/src/styles/font';
-import type { KeyframeObject } from '@/src/styles/keyframe';
-import type { ScreenPixelSizeObject } from '@/src/styles/size';
-import type { ZIndexObject } from '@/src/styles/zIndex';
-import { borderRadius } from '@/src/styles/borderRadius';
-import { font } from '@/src/styles/font';
-import { keyframe } from '@/src/styles/keyframe';
-import { screenPixelSize } from '@/src/styles/size';
-import { zIndex } from '@/src/styles/zIndex';
+import type { BorderRadiusObject } from '@/src/styles/props/borderRadius';
+import type { FontObject } from '@/src/styles/props/font';
+import type { KeyframeObject } from '@/src/styles/props/keyframe';
+import type { ScreenPixelSizeObject } from '@/src/styles/props/size';
+import type { ZIndexObject } from '@/src/styles/props/zIndex';
+import { borderRadius } from '@/src/styles/props/borderRadius';
+import { font } from '@/src/styles/props/font';
+import { keyframe } from '@/src/styles/props/keyframe';
+import { screenPixelSize } from '@/src/styles/props/size';
+import { zIndex } from '@/src/styles/props/zIndex';
 
 type BasePaletteRowKeys = 'main'
                         | 'light'
@@ -65,14 +66,14 @@ export type PaletteObject = {
 export type ThemeKeys = 'light'
                       | 'dark';
 export type ThemeObject = {
-  borderRadius: BorderRadiusObject;
-  deviceMediaQuery: DeviceMediaQueryObject;
-  font: FontObject;
-  keyframe: KeyframeObject;
-  palette: PaletteObject;
-  screenPixelSize: ScreenPixelSizeObject;
+  borderRadius:         BorderRadiusObject;
+  deviceMediaQuery:     DeviceMediaQueryObject;
+  font:                 FontObject;
+  keyframe:             KeyframeObject;
+  palette:              PaletteObject;
+  screenPixelSize:      ScreenPixelSizeObject;
   screenSizeMediaQuery: ScreenSizeMediaQueryObject;
-  zIndex: ZIndexObject;
+  zIndex:               ZIndexObject;
 };
 
 const createPaletteRow = (
@@ -89,7 +90,7 @@ const createPaletteRow = (
         low:     basePaletteRowObject.dark,
         text:    basePaletteRowObject.text,
         subtext: basePaletteRowObject.subtext,
-        contrast: '#000'
+        contrast: stringifyRGB(color.mediumGray[1000]),
       }
     case 'dark':
       return {
@@ -100,118 +101,118 @@ const createPaletteRow = (
         low:     basePaletteRowObject.light,
         text:    basePaletteRowObject.text,
         subtext: basePaletteRowObject.subtext,
-        contrast: '#fff'
+        contrast: stringifyRGB(color.mediumGray[0]),
       }
     }
 }
 
 const defaultBasePaletteRow = {
-  main:    '#BEBEBE', // Medium Gray - https://en.wikipedia.org/wiki/Shades_of_gray
-  light:   '#F1F1F1',
-  dark:    '#8B8B8B',
-  text:    '#fff',
-  subtext: '#888',
+  main:    stringifyRGB(color.mediumGray[600]),
+  light:   stringifyRGB(color.mediumGray[400]),
+  dark:    stringifyRGB(color.mediumGray[800]),
+  text:    stringifyRGB(color.mediumGray[0]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const defaultLightPaletteRow = createPaletteRow(defaultBasePaletteRow, 'light');
 const defaultDarkPaletteRow = createPaletteRow(defaultBasePaletteRow, 'dark');
 
 const primaryBasePaletteRow = {
-  main: '#9A4EAE', // Purpureus - https://en.wikipedia.org/wiki/Shades_of_violet
-  light: '#CD81E1',
-  dark: '#671B7B',
-  text: '#fff',
-  subtext: '#888',
+  main:    stringifyRGB(color.purpureus[600]),
+  light:   stringifyRGB(color.purpureus[400]),
+  dark:    stringifyRGB(color.purpureus[800]),
+  text:    stringifyRGB(color.mediumGray[0]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const primaryLightPaletteRow = createPaletteRow(primaryBasePaletteRow, 'light');
 const primaryDarkPaletteRow = createPaletteRow(primaryBasePaletteRow, 'dark');
 
 const secondaryBasePaletteRow = {
-  main: '#6495ED', // Cornflower blue - https://en.wikipedia.org/wiki/Shades_of_azure
-  light: '#97C8FF',
-  dark: '#3162BA',
-  text: '#fff',
-  subtext: '#888',
+  main:    stringifyRGB(color.cornflowerBlue[600]),
+  light:   stringifyRGB(color.cornflowerBlue[400]),
+  dark:    stringifyRGB(color.cornflowerBlue[800]),
+  text:    stringifyRGB(color.mediumGray[0]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const secondaryLightPaletteRow = createPaletteRow(secondaryBasePaletteRow, 'light');
 const secondaryDarkPaletteRow = createPaletteRow(secondaryBasePaletteRow, 'dark');
 
 const successBasePaletteRow = {
-  main: '#32CD32', // Lime green https://en.wikipedia.org/wiki/Shades_of_green
-  light: '#65FF65',
-  dark: '#009A00',
-  text: '#fff',
-  subtext: '#888',
+  main:    stringifyRGB(color.limeGreen[600]),
+  light:   stringifyRGB(color.limeGreen[400]),
+  dark:    stringifyRGB(color.limeGreen[800]),
+  text:    stringifyRGB(color.mediumGray[0]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const successLightPaletteRow = createPaletteRow(successBasePaletteRow, 'light');
 const successDarkPaletteRow = createPaletteRow(successBasePaletteRow, 'dark');
 
 const infoBasePaletteRow = {
-  main: '#73C2FB', // Maya blue - https://en.wikipedia.org/wiki/Shades_of_azure
-  light: '#A6F5FF',
-  dark: '#408FC8',
-  text: '#fff',
-  subtext: '#888',
+  main:    stringifyRGB(color.mayaBlue[600]),
+  light:   stringifyRGB(color.mayaBlue[400]),
+  dark:    stringifyRGB(color.mayaBlue[800]),
+  text:    stringifyRGB(color.mediumGray[0]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const infoLightPaletteRow = createPaletteRow(infoBasePaletteRow, 'light');
 const infoDarkPaletteRow = createPaletteRow(infoBasePaletteRow, 'dark');
 
 const warningBasePaletteRow = {
-  main: '#ED9121', // Carrot orange - https://en.wikipedia.org/wiki/Shades_of_orange
-  light: '#FFC454',
-  dark: '#BA5E00',
-  text: '#000',
-  subtext: '#888',
+  main:    stringifyRGB(color.carrotOrange[600]),
+  light:   stringifyRGB(color.carrotOrange[400]),
+  dark:    stringifyRGB(color.carrotOrange[800]),
+  text:    stringifyRGB(color.mediumGray[1000]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const warningLightPaletteRow = createPaletteRow(warningBasePaletteRow, 'light');
 const warningDarkPaletteRow = createPaletteRow(warningBasePaletteRow, 'dark');
 
 const dangerBasePaletteRow = {
-  main: '#E03C31', // Chili red - https://en.wikipedia.org/wiki/Shades_of_red
-  light: '#FF6F64',
-  dark: '#AD0900',
-  text: '#fff',
-  subtext: '#888',
+  main:    stringifyRGB(color.chiliRed[600]),
+  light:   stringifyRGB(color.chiliRed[400]),
+  dark:    stringifyRGB(color.chiliRed[800]),
+  text:    stringifyRGB(color.mediumGray[0]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const dangerLightPaletteRow = createPaletteRow(dangerBasePaletteRow, 'light');
 const dangerDarkPaletteRow = createPaletteRow(dangerBasePaletteRow, 'dark');
 
 const backgroundLightBasePaletteRow = {
-  main: '#fff',
-  light: '#fff',
-  dark: '#eee',
-  text: '#000',
-  subtext: '#888',
+  main:    stringifyRGB(color.mediumGray[0]),
+  light:   stringifyRGB(color.mediumGray[0]),
+  dark:    stringifyRGB(color.mediumGray[100]),
+  text:    stringifyRGB(color.mediumGray[1000]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const backgroundDarkPBasePaletteRow = {
-  main: '#000',
-  light: '#111',
-  dark: '#000',
-  text: '#fff',
-  subtext: '#888',
+  main:    stringifyRGB(color.mediumGray[1000]),
+  light:   stringifyRGB(color.mediumGray[900]),
+  dark:    stringifyRGB(color.mediumGray[1000]),
+  text:    stringifyRGB(color.mediumGray[0]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const backgroundLightPaletteRow = createPaletteRow(backgroundLightBasePaletteRow, 'light');
 const backgroundDarkPaletteRow = createPaletteRow(backgroundDarkPBasePaletteRow, 'dark');
 
 const transparentLightBasePaletteRow = {
-  main: '#ffffff01',
-  light: '#ffffff01',
-  dark: '#ffffff01',
-  text: '#000',
-  subtext: '#888',
+  main:    '#ffffff01',
+  light:   '#ffffff01',
+  dark:    '#ffffff01',
+  text:    stringifyRGB(color.mediumGray[1000]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const transparentDarkBasePaletteRow = {
-  main: '#00000001',
-  light: '#00000001',
-  dark: '#00000001',
-  text: '#fff',
-  subtext: '#888',
+  main:    '#00000001',
+  light:   '#00000001',
+  dark:    '#00000001',
+  text:    stringifyRGB(color.mediumGray[0]),
+  subtext: stringifyRGB(color.mediumGray[500]),
 };
 const transparentLightPaletteRow = createPaletteRow(transparentLightBasePaletteRow, 'light');
 const transparentDarkPaletteRow = createPaletteRow(transparentDarkBasePaletteRow, 'dark');
 
 const constantPaletteRow = {
-  white: '#fff',
-  black: '#000',
+  white: stringifyRGB(color.mediumGray[0]),
+  black: stringifyRGB(color.mediumGray[1000]),
 };
 
 export const lightPalette = {
@@ -242,6 +243,7 @@ export const darkPalette = {
 
 const theme = {
   borderRadius,
+  color,
   deviceMediaQuery,
   font,
   keyframe,

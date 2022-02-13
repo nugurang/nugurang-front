@@ -1,14 +1,14 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Button from '@/src/components/base/Button';
-import Div from '@/src/components/base/Div';
-import Image from '@/src/components/base/Image';
+import Button from '@/src/components/atoms/button/Button';
+import Div from '@/src/components/quarks/div/Div';
+import Image from '@/src/components/atoms/image/Image';
 import type { NextPage } from 'next';
 import { hexToRGB } from '@/src/utils/color';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-interface ComponentProps extends CommonProps {
+interface ComponentProps extends CommonComponentProps {
   imageUrl?: string;
   title?: string;
 }

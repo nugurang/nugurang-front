@@ -1,7 +1,6 @@
-import type { CommonStyledProps } from '@/src/components/base/common';
-import Div from '@/src/components/base/Div';
-import type { NextPage } from 'next';
-import WidthLimiter from '@/src/components/WidthLimiter';
+import type { CommonStyledProps } from '@/src/components/common';
+import Div from '@/src/components/quarks/div/Div';
+import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 
 interface StyledComponentProps extends CommonStyledProps {}

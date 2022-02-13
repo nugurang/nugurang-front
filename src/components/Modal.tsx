@@ -1,14 +1,13 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
 import Backdrop from '@/src/components/Backdrop';
-import Card from '@/src/components/Card';
-import DOMToggleProvider from '@/src/components/DOMToggleProvider';
-import type { NextPage } from 'next';
+import Card from '@/src/components/atoms/card/Card';
+import DOMToggleProvider from '@/src/components/atoms/domToggleProvider/DOMToggleProvider';
 import React from 'react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-interface ComponentProps extends CommonProps {
+interface ComponentProps extends CommonComponentProps {
   children?: React.ReactNode;
   className?: string;
   open: boolean;

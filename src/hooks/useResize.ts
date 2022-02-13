@@ -21,6 +21,6 @@ export default function useResize(ref: React.RefObject<any>) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  });
+  }, [handleResize]);
   return size;
 }

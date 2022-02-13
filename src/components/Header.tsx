@@ -1,9 +1,8 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Div from '@/src/components/base/Div';
-import type { NextPage } from 'next';
-import Span from '@/src/components/base/Span';
-import WidthLimiter from '@/src/components/WidthLimiter';
+import Div from '@/src/components/quarks/div/Div';
+import Span from '@/src/components/quarks/span/Span';
+import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -15,7 +14,7 @@ type User = {
   imageUrl?: string;
 }
 
-interface ComponentProps extends CommonProps {
+interface ComponentProps extends CommonComponentProps {
   callbackUrl?: string;
   user?: User;
 }

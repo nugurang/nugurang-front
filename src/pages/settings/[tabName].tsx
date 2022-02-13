@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { IconTypeKeys } from '@/src/components/Icon';
+import { IconTypeKeys } from '@/src/components/atoms/icon/Icon';
 import InitializeDatabase from '@/src/fragments/settings/InitializeDatabase';
 import type { NextPage } from 'next';
 import Section from '@/src/components/Section';

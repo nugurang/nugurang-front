@@ -3938,6 +3938,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:^17.0.11":
+  version: 17.0.11
+  resolution: "@types/react-dom@npm:17.0.11"
+  dependencies:
+    "@types/react": "*"
+  checksum: 4d5730dffbef86c887cecad7e3cecda424ce6a64d0b5441c63b5b015d48219868660a2bb1aa15e897e565ad8867fa6b885d4358b04e1c4e589ba4c07c3fda55c
+  languageName: node
+  linkType: hard
+
 "@types/react-syntax-highlighter@npm:11.0.5":
   version: 11.0.5
   resolution: "@types/react-syntax-highlighter@npm:11.0.5"
@@ -11063,6 +11072,7 @@ __metadata:
     "@types/babel__core": ^7
     "@types/node": 17.0.17
     "@types/react": ^17.0.39
+    "@types/react-dom": ^17.0.11
     babel-preset-react-app: ^10.0.1
     cross-env: ^7.0.3
     eslint: 8.8.0

@@ -1,9 +1,9 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Button from '@/src/components/base/Button';
+import Button from '@/src/components/atoms/button/Button';
 import styled from '@emotion/styled';
 
-interface ComponentProps extends CommonProps {
+interface ComponentProps extends CommonComponentProps {
   open: boolean;
 }
 

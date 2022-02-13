@@ -1,7 +1,6 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Div from '@/src/components/base/Div';
-import type { NextPage } from 'next';
+import Div from '@/src/components/quarks/div/Div';
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 import useResize from '@/src/hooks/useResize';
@@ -19,12 +18,13 @@ type Size = {
   width: number;
 }
 
-interface ComponentProps extends CommonProps {
+interface ComponentProps extends CommonComponentProps {
   column: Column;
   gap?: number;
 }
 
 interface StyledComponentProps extends CommonStyledProps {
+  ref: HTMLDivElement;
   column: Column;
   gap?: number;
   size: Size;
@@ -57,8 +57,8 @@ const Grid: React.FC<ComponentProps> = ({
   children,
   column
 }) => {
-  const componentRef = useRef();
-  const size = useResize(componentRef);
+  const ref = useRef();
+  const size = useResize(ref);
   column = { ...column, gteMobile:  column.gteMobile  ?? column.default    };
   column = { ...column, gtePhablet: column.gtePhablet ?? column.gteMobile  };
   column = { ...column, gteTablet:  column.gteTablet  ?? column.gtePhablet };
@@ -67,6 +67,7 @@ const Grid: React.FC<ComponentProps> = ({
   return (
     <StyledSectionGridDiv
       className={className}
+      ref={ref}
       column={column}
       size={size}
     >

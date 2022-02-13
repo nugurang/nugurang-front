@@ -1,14 +1,14 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Button from '@/src/components/base/Button';
-import Div from '@/src/components/base/Div';
-import Loader from '@/src/components/Loader';
+import Button from '@/src/components/atoms/button/Button';
+import Div from '@/src/components/quarks/div/Div';
+import Loader from '@/src/components/atoms/loader/Loader';
 import Modal from '@/src/components/Modal';
-import WidthLimiter from '@/src/components/WidthLimiter';
+import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
-interface ComponentProps extends CommonProps {
+interface ComponentProps extends CommonComponentProps {
   loader?: boolean;
   open: boolean;
   onClickBackdrop?: () => void;

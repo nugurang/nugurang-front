@@ -1,10 +1,10 @@
 import * as constants from '@/src/constants';
 
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Button from '@/src/components/base/Button';
+import Button from '@/src/components/atoms/button/Button';
 import Dialog from '@/src/components/Dialog';
-import Div from '@/src/components/base/Div';
+import Div from '@/src/components/quarks/div/Div';
 import Section from '@/src/components/Section';
 import { createBoard } from '@/src/backend/dao/board';
 import styled from '@emotion/styled';

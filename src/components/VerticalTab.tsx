@@ -1,12 +1,12 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Button from '@/src/components/base/Button';
+import Button from '@/src/components/atoms/button/Button';
 import Card from '@/src/components/Card';
-import Div from '@/src/components/base/Div';
-import Icon from '@/src/components/Icon';
-import type { IconObject } from '@/src/components/Icon';
-import List from '@/src/components/base/List';
-import ListItem from '@/src/components/base/ListItem';
+import Div from '@/src/components/quarks/div/Div';
+import Icon from '@/src/components/atoms/icon/Icon';
+import type { IconObject } from '@/src/components/atoms/icon/Icon';
+import List from '@/src/components/atoms/list/List';
+import ListItem from '@/src/components/atoms/listItem/ListItem';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -19,7 +19,7 @@ export interface TabItem {
   child?: React.ReactNode;
 }
 
-interface ComponentProps extends CommonProps {
+interface ComponentProps extends CommonComponentProps {
   ordered?: boolean;
   tabItems: TabItem[];
   initialIndex?: number;

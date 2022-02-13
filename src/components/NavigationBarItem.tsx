@@ -1,8 +1,8 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Button from '@/src/components/base/Button';
-import Div from '@/src/components/base/Div';
-import Icon from '@/src/components/Icon';
+import Button from '@/src/components/atoms/button/Button';
+import Div from '@/src/components/quarks/div/Div';
+import Icon from '@/src/components/atoms/icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { NextPage } from 'next';
 import styled from '@emotion/styled';
@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
 // NavigationBar 컴포넌트에서 사용하기 위해 export함
-export interface ComponentProps extends CommonProps {
+export interface ComponentProps extends CommonComponentProps {
   active?: boolean;
   pathname: string;
   fontAwesomeIcon?: IconProp;

@@ -1,11 +1,11 @@
 import * as constants from '@/src/constants';
 
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 import NavigationBar, { height as navigationBarHeight } from '@/src/components/NavigationBar';
 import { signOut, useSession } from 'next-auth/react';
 
 import { ComponentType } from 'react';
-import Div from '@/src/components/base/Div';
+import Div from '@/src/components/quarks/div/Div';
 import Footer from '@/src/components/Footer';
 import Head from 'next/head';
 import Header from '@/src/components/Header';

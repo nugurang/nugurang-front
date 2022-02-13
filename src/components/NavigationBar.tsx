@@ -1,14 +1,12 @@
-import type { CommonProps, CommonStyledProps } from '@/src/components/base/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
 
-import Div from '@/src/components/base/Div';
-import Nav from '@/src/components/base/Nav';
-import type { NextPage } from 'next';
-import WidthLimiter from '@/src/components/WidthLimiter';
+import Div from '@/src/components/quarks/div/Div';
+import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 
 export const height = 64;
 
-interface ComponentProps extends CommonProps {}
+interface ComponentProps extends CommonComponentProps {}
 
 interface StyledComponentProps extends CommonStyledProps {}
 
@@ -24,7 +22,7 @@ const StyledDummyDiv = styled(Div)`
   `}
 `;
 
-const StyledNavigationBarWrap = styled(Nav)`
+const StyledNavigationBarWrap = styled.nav`
   ${(props: any) => `
     position: fixed;
     left: 0;
