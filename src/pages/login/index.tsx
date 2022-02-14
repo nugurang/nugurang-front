@@ -113,8 +113,8 @@ const LoginIndex: NextPage<PageProps> = ({ callbackUrl }) => {
                       }}
                     >
                       <StyledLoginButtonIcon
-                        src={provider.fontAwesomeIcon as IconProp}
-                        type='fontAwesomeIcon'
+                        src={provider.icon.src as IconProp}
+                        type={provider.icon.type}
                       />
                       {t(provider.name)}
                     </StyledLoginButton>

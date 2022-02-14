@@ -1,17 +1,18 @@
 import * as constants from '@/src/constants';
 
-import NavigationBar, { height as navigationBarHeight } from '@/src/components/organisms/common/NavigationBar';
 import { signOut, useSession } from 'next-auth/react';
 
 import type { CommonStyledProps } from '@/src/components/common';
 import { ComponentType } from 'react';
 import Div from '@/src/components/quarks/div/Div';
-import Footer from '@/src/components/organisms/common/Footer';
+import Footer from '@/src/components/organisms/common/footer/Footer';
 import Head from 'next/head';
-import Header from '@/src/components/organisms/common/Header';
-import HeaderItem from '@/src/components/organisms/common/HeaderItem';
+import Header from '@/src/components/organisms/common/header/Header';
+import HeaderItem from '@/src/components/organisms/common/header/HeaderItem';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import NavigationBarItem from '@/src/components/organisms/common/NavigationBarItem';
+import NavigationBar from '@/src/components/organisms/common/navigationBar/NavigationBar';
+import NavigationBarItem from '@/src/components/organisms/common/navigationBar/NavigationBarItem';
+import{ height as navigationBarHeight } from '@/src/components/organisms/common/navigationBar/NavigationBarView';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
@@ -57,7 +58,7 @@ function WithCommonPreferences<P extends object>(
 
     if (session) signOut(); // next-auth의 세션 정보는 불필요하므로 바로 로그아웃함
 
-    const isFrameActive = constants.DEFAULT_NAVIGATION_BAR_ITEMS
+    const isFrameActive = constants.DEFAULT_TOOLBAR_SHORTCUT_ITEMS
                           .map((e: any) => e.pathname)
                           .find((e: string) => e == router.pathname);
 
@@ -72,12 +73,12 @@ function WithCommonPreferences<P extends object>(
         <StyledMainDiv isFrameActive={isFrameActive}>
           {isFrameActive && <>
             <Header>
-              {constants.DEFAULT_NAVIGATION_BAR_ITEMS.map((navigationBarItem, index) => {
+              {constants.DEFAULT_TOOLBAR_SHORTCUT_ITEMS
+              .map((e: HeaderItemObject) => ({ ...e, icon: e.icon as IconObject }))
+              .map((headerItem, index) => {
                 return <HeaderItem
-                  active={navigationBarItem.pathname == router.pathname}
-                  pathname={navigationBarItem.pathname}
-                  fontAwesomeIcon={navigationBarItem.fontAwesomeIcon as IconProp}
-                  label={navigationBarItem.label}
+                  headerItem={headerItem}
+                  active={headerItem.pathname == router.pathname}
                   key={index}
                 />;
               })}
@@ -88,12 +89,12 @@ function WithCommonPreferences<P extends object>(
         </StyledMainDiv>
         {isFrameActive && <>
           <StyledNavigationBar>
-            {constants.DEFAULT_NAVIGATION_BAR_ITEMS.map((navigationBarItem, index) => {
+            {constants.DEFAULT_TOOLBAR_SHORTCUT_ITEMS
+            .map((e: HeaderItemObject) => ({ ...e, icon: e.icon as IconObject }))
+            .map((navigationBarItem, index) => {
               return <NavigationBarItem
-              selected={navigationBarItem.pathname == router.pathname}
-                pathname={navigationBarItem.pathname}
-                fontAwesomeIcon={navigationBarItem.fontAwesomeIcon as IconProp}
-                label={navigationBarItem.label}
+                navigationBarItem={navigationBarItem}
+                selected={navigationBarItem.pathname == router.pathname}
                 key={index}
               />;
             })}

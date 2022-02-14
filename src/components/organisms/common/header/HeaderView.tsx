@@ -1,11 +1,8 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
-
+import type { CommonComponentProps } from '@/src/components/common';
 import Div from '@/src/components/quarks/div/Div';
 import Span from '@/src/components/quarks/span/Span';
 import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
 
 const height = 64;
 
@@ -18,8 +15,6 @@ interface ComponentProps extends CommonComponentProps {
   callbackUrl?: string;
   user?: User;
 }
-
-interface StyledComponentProps extends CommonStyledProps {}
 
 // Header가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
 const StyledDummyDiv = styled(Div)`
@@ -70,9 +65,7 @@ const StyledMenuWrap = styled(Span)`
   `}
 `;
 
-const Header: React.FC<ComponentProps> = props => {
-  const router = useRouter();
-  const { t } = useTranslation('common');
+const HeaderView: React.FC<ComponentProps> = props => {
   return (
     <>
       <StyledDummyDiv />
@@ -88,4 +81,4 @@ const Header: React.FC<ComponentProps> = props => {
   );
 };
 
-export default Header;
+export default HeaderView;

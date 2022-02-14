@@ -1,5 +1,4 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
-
+import type { CommonComponentProps } from '@/src/components/common';
 import Div from '@/src/components/quarks/div/Div';
 import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
@@ -7,8 +6,6 @@ import styled from '@emotion/styled';
 export const height = 64;
 
 interface ComponentProps extends CommonComponentProps {}
-
-interface StyledComponentProps extends CommonStyledProps {}
 
 const StyledWrapDiv = styled(Div)`
   ${(props: any) => `
@@ -48,7 +45,7 @@ const StyledWidthLimiter = styled(WidthLimiter)`
   `}
 `;
 
-const NavigationBar: React.FC<ComponentProps> = props => {
+const NavigationBarView: React.FC<ComponentProps> = props => {
   return (
     <StyledWrapDiv
       className={props.className}
@@ -64,4 +61,4 @@ const NavigationBar: React.FC<ComponentProps> = props => {
   );
 }
 
-export default NavigationBar;
+export default NavigationBarView;

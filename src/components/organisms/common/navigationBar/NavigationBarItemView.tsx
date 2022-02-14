@@ -3,7 +3,6 @@ import type { CommonComponentProps, CommonStyledProps } from '@/src/components/c
 import Button from '@/src/components/atoms/button/Button';
 import Div from '@/src/components/quarks/div/Div';
 import Icon from '@/src/components/molecules/icon/Icon';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -11,9 +10,7 @@ import { useTranslation } from 'next-i18next';
 // NavigationBar 컴포넌트에서 사용하기 위해 export함
 export interface ComponentProps extends CommonComponentProps {
   selected?: boolean;
-  pathname: string;
-  fontAwesomeIcon?: IconProp;
-  label: string;
+  navigationBarItem: NavigationBarItemObject;
 }
 
 interface StyledComponentProps extends CommonStyledProps {
@@ -66,32 +63,32 @@ const StyledDivLabelWrap = styled(Div)<StyledComponentProps>`
   `}
 `;
 
-const NavigationBarItem: React.FC<ComponentProps> = props => {
+const NavigationBarItemView: React.FC<ComponentProps> = props => {
   const router = useRouter();
   const { t } = useTranslation('common');
   return (
     <StyledButton
       variant='transparent'
-      onClick={() => router.push(props.pathname)}
+      onClick={() => router.push(props.navigationBarItem.pathname)}
     >
       <StyledDivWrap
         css={props.css}
       >
-        { props.fontAwesomeIcon && 
+        { props.navigationBarItem.icon && 
           <StyledIcon
-            src={props.fontAwesomeIcon}
-            type='fontAwesomeIcon'
+            src={props.navigationBarItem.icon.src}
+            type={props.navigationBarItem.icon.type}
             selected={props.selected}
           />
         }
         <StyledDivLabelWrap
           selected={props.selected}
         >
-          { t(props.label) }
+          { t(props.navigationBarItem.label) }
         </StyledDivLabelWrap>
       </StyledDivWrap>
     </StyledButton>
   );
 }
 
-export default NavigationBarItem;
+export default NavigationBarItemView;

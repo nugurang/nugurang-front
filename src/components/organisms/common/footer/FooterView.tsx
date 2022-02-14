@@ -1,9 +1,6 @@
-import type { CommonStyledProps } from '@/src/components/common';
 import Div from '@/src/components/quarks/div/Div';
 import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
-
-interface StyledComponentProps extends CommonStyledProps {}
 
 // Footer가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소
 const StyledDivDummy = styled(Div)`
@@ -35,7 +32,7 @@ const StyledCopyrightDiv = styled(Div)`
   `}
 `;
 
-const Footer: React.FC = () => {
+const FooterView: React.FC = () => {
   return (
     <>
       <StyledDivDummy />
@@ -50,4 +47,4 @@ const Footer: React.FC = () => {
   );
 }
 
-export default Footer;
+export default FooterView;
