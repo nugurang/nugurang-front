@@ -17,7 +17,8 @@ const TabName: NextPage<PageProps> = ({ currentUser }) => {
 
   return (
     <TabNameView
-    selectedTabName={selectedTabName}
+      currentUser={currentUser}
+      selectedTabName={selectedTabName as string}
     />
   );
 }
