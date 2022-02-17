@@ -3,32 +3,50 @@ export const EVENT_BOARD_NAMES = ['study_event', 'hobby_event', 'circle_event', 
 export const OAUTH_PROVIDERS = [
   {
     name: 'github',
-    fontAwesomeIcon: ['fab', 'github'],
+    icon: {
+      type: 'fontAwesomeIcon' as IconTypeKeys,
+      src: ['fab', 'github']
+    },
   },
   {
     name: 'google',
-    fontAwesomeIcon: ['fab', 'google'],
+    icon: {
+      type: 'fontAwesomeIcon' as IconTypeKeys,
+      src: ['fab', 'google']
+    },
   },
 ];
-export const DEFAULT_NAVIGATION_BAR_ITEMS = [
+export const DEFAULT_TOOLBAR_SHORTCUT_ITEMS = [
   {
     pathname: '/home',
-    fontAwesomeIcon: ['fas', 'home'],
+    icon: {
+      type: 'fontAwesomeIcon' as IconTypeKeys,
+      src: ['fas', 'home']
+    },
     label: 'home',
   },
   {
     pathname: '/boards',
-    fontAwesomeIcon: ['fas', 'book-reader'],
+    icon: {
+      type: 'fontAwesomeIcon' as IconTypeKeys,
+      src: ['fas', 'book-reader']
+    },
     label: 'boards',
   },
   {
     pathname: '/teams',
-    fontAwesomeIcon: ['fas', 'users'],
+    icon: {
+      type: 'fontAwesomeIcon' as IconTypeKeys,
+      src: ['fas', 'users']
+    },
     label: 'teams',
   },
   {
     pathname: '/mypage',
-    fontAwesomeIcon: ['fas', 'user'],
+    icon: {
+      type: 'fontAwesomeIcon' as IconTypeKeys,
+      src: ['fas', 'user']
+    },
     label: 'myPage',
   }
 ];

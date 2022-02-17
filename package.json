@@ -8,12 +8,12 @@
   "license": "MIT",
   "scripts": {
     "test": "echo no tests yet",
-    "dev": "cross-env NODE_OPTIONS='--inspect' yarn next dev",
-    "build": "cross-env NODE_OPTIONS='--inspect' yarn eslint . && next build",
-    "start": "cross-env NODE_OPTIONS='--inspect' yarn next start",
-    "lint": "cross-env NODE_OPTIONS='--inspect' yarn next lint",
-    "storybook": "cross-env NODE_OPTIONS='--inspect' yarn start-storybook -p 6006",
-    "build-storybook": "cross-env NODE_OPTIONS='--inspect' yarn build-storybook"
+    "dev": "yarn cross-env NODE_OPTIONS='--inspect' yarn next dev",
+    "build": "yarn cross-env NODE_OPTIONS='--inspect' yarn eslint . && next build",
+    "start": "yarn cross-env NODE_OPTIONS='--inspect' yarn next start",
+    "lint": "yarn cross-env NODE_OPTIONS='--inspect' yarn next lint",
+    "storybook": "yarn cross-env NODE_OPTIONS='--inspect' yarn start-storybook -p 6006",
+    "build-storybook": "yarn cross-env NODE_OPTIONS='--inspect' yarn build-storybook"
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
@@ -27,6 +27,7 @@
     "@fortawesome/react-fontawesome": "^0.1.17",
     "@mdx-js/react": "^2.0.0",
     "@storybook/addon-docs": "^6.4.18",
+    "@types/react-dom": "^17.0.11",
     "graphql": "^16.3.0",
     "next": "^12.0.10",
     "next-auth": "^4.2.1",
