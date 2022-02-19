@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "jest": "yarn cross-env jest --watch",
-    "cypress": "start-server-and-test 'yarn run dev' http://localhost:3000 'cypress open'",
+    "cypress": "yarn cross-env start-server-and-test 'yarn run dev' http://localhost:3000 'cypress open'",
     "dev": "yarn cross-env NODE_OPTIONS='--inspect' yarn next dev",
     "build": "yarn cross-env NODE_OPTIONS='--inspect' yarn eslint . && next build",
     "start": "yarn cross-env NODE_OPTIONS='--inspect' yarn next start",
