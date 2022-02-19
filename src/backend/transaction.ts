@@ -1,6 +1,6 @@
-import { parseCookies, stringifyCookies } from '@/src/utils/cookie';
+import { parseCookies, stringifyCookies } from '@/utils/cookie';
 
-import apolloClient from '@/src/utils/apollo-client';
+import apolloClient from '@/utils/apollo-client';
 import { gql } from '@apollo/client';
 
 export const ping = async (context: any) => {

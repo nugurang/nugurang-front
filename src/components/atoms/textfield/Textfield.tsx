@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import type { CommonComponentProps } from '@/src/components/common';
+import type { CommonComponentProps } from '@/components/common';
 import React from 'react';
-import TextfieldView from '@/src/components/atoms/textfield/TextfieldView';
+import TextfieldView from '@/components/atoms/textfield/TextfieldView';
 
 interface ComponentProps extends CommonComponentProps {
   children?: React.ReactNode;

@@ -1,5 +1,5 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import HeaderView from '@/src/components/organisms/common/header/HeaderView';
+import type { CommonComponentProps } from '@/components/common';
+import HeaderView from '@/components/organisms/common/header/HeaderView';
 
 type User = {
   name: string;

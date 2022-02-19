@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import type { CommonComponentProps } from '@/src/components/common';
-import DOMToggleProviderView from '@/src/components/atoms/domToggleProvider/DOMToggleProviderView';
+import type { CommonComponentProps } from '@/components/common';
+import DOMToggleProviderView from '@/components/atoms/domToggleProvider/DOMToggleProviderView';
 
 interface ComponentProps extends CommonComponentProps {
   setCSSActive: (cssActive: boolean) => void;

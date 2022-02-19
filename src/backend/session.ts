@@ -1,8 +1,8 @@
-import { destroyCookie, parseHeaderSetCookie, setCookie } from '@/src/utils/cookie';
+import { destroyCookie, parseHeaderSetCookie, setCookie } from '@/utils/cookie';
 
-import { createCurrentUser } from '@/src/backend/dao/user';
-import { createImage } from '@/src/backend/dao/image';
-import { parseCookies } from '@/src/utils/cookie';
+import { createCurrentUser } from '@/backend/dao/user';
+import { createImage } from '@/backend/dao/image';
+import { parseCookies } from '@/utils/cookie';
 
 export const register = async (context: any, session: any) => {
   let imageId = null;

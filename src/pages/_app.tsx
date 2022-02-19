@@ -1,9 +1,9 @@
 import { Global, ThemeProvider, css, jsx } from "@emotion/react";
-import { darkTheme, lightTheme } from '@/src/styles/theme';
+import { darkTheme, lightTheme } from '@/styles/theme';
 
 import type { AppProps } from 'next/app';
 import Error from 'next/error';
-import GlobalStyles from '@/src/styles/global';
+import GlobalStyles from '@/styles/global';
 import { SessionProvider } from 'next-auth/react';
 import { appWithTranslation } from 'next-i18next';
 import { fab } from '@fortawesome/free-brands-svg-icons';

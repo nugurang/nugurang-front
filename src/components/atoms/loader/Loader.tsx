@@ -1,5 +1,5 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import LoaderView from '@/src/components/atoms/loader/LoaderView';
+import type { CommonComponentProps } from '@/components/common';
+import LoaderView from '@/components/atoms/loader/LoaderView';
 
 interface ComponentProps extends CommonComponentProps {}
 

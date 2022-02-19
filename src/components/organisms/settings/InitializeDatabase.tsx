@@ -1,12 +1,12 @@
-import * as constants from '@/src/constants';
+import * as constants from '@/constants';
 
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/molecules/dialog/Dialog';
-import Div from '@/src/components/quarks/div/Div';
-import Section from '@/src/components/molecules/section/Section';
-import { createBoard } from '@/src/backend/dao/board';
+import Button from '@/components/atoms/button/Button';
+import Dialog from '@/components/molecules/dialog/Dialog';
+import Div from '@/components/quarks/div/Div';
+import Section from '@/components/molecules/section/Section';
+import { createBoard } from '@/backend/dao/board';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState } from 'react';

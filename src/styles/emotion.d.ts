@@ -1,4 +1,4 @@
-import type { ThemeObject } from '@/src/styles/theme';
+import type { ThemeObject } from '@/styles/theme';
 
 import '@emotion/react';
 

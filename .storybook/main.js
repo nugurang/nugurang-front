@@ -3,18 +3,18 @@ const fs = require("fs");
 const { merge } = require("webpack-merge");
 
 function getPackageDir(filepath) {
-  let currDir = path.dirname(require.resolve(filepath));
+  let currentDir = path.dirname(require.resolve(filepath));
   while (true) {
-    if (fs.existsSync(path.join(currDir, "package.json"))) {
-      return currDir;
+    if (fs.existsSync(path.join(currentDir, "package.json"))) {
+      return currentDir;
     }
-    const { dir, root } = path.parse(currDir);
+    const { dir, root } = path.parse(currentDir);
     if (dir === root) {
       throw new Error(
         `Could not find package.json in the parent directories starting from ${filepath}.`
       );
     }
-    currDir = dir;
+    currentDir = dir;
   }
 }
 
@@ -33,7 +33,7 @@ module.exports = {
       resolve: {
         alias: {
           ...config.resolve.alias,
-          "@/src": path.resolve(__dirname, "../src"),
+          "@": path.resolve(__dirname, "../src"),
           "@emotion/core": getPackageDir("@emotion/react"),
           "@emotion/styled": getPackageDir("@emotion/styled"),
           "emotion-theming": getPackageDir("@emotion/react")

@@ -1,6 +1,6 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import ThumbnailView from '@/src/components/molecules/thumbnail/ThumbnailView';
+import ThumbnailView from '@/components/molecules/thumbnail/ThumbnailView';
 import { useState } from 'react';
 
 interface ComponentProps extends CommonComponentProps {

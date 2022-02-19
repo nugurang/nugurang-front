@@ -1,4 +1,4 @@
-import { mutate, query } from '@/src/backend/transaction';
+import { mutate, query } from '@/backend/transaction';
 
 export interface GetBoardsByNamesProps {
   names: string[];

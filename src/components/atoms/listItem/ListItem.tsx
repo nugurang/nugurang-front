@@ -1,5 +1,5 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import ListItemView from '@/src/components/atoms/listItem/ListItemView';
+import type { CommonComponentProps } from '@/components/common';
+import ListItemView from '@/components/atoms/listItem/ListItemView';
 import React from 'react';
 
 interface ComponentProps extends CommonComponentProps {}

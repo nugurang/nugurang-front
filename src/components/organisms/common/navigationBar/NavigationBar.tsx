@@ -1,5 +1,5 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import NavigationBarView from '@/src/components/organisms/common/navigationBar/NavigationBarView';
+import type { CommonComponentProps } from '@/components/common';
+import NavigationBarView from '@/components/organisms/common/navigationBar/NavigationBarView';
 
 interface ComponentProps extends CommonComponentProps {}
 

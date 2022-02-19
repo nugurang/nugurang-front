@@ -1,7 +1,7 @@
-import Button from '@/src/components/atoms/button/Button';
-import type { CommonComponentProps } from '@/src/components/common';
-import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/molecules/icon/Icon';
+import Button from '@/components/atoms/button/Button';
+import type { CommonComponentProps } from '@/components/common';
+import Div from '@/components/quarks/div/Div';
+import Icon from '@/components/molecules/icon/Icon';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';

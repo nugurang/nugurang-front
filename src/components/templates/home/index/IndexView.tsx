@@ -1,5 +1,5 @@
-import Section from '@/src/components/molecules/section/Section';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
+import Section from '@/components/molecules/section/Section';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
 import { useTranslation } from 'next-i18next';
 
 interface ViewProps {}

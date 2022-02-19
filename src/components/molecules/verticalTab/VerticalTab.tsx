@@ -1,12 +1,12 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import Button from '@/src/components/atoms/button/Button';
-import Card from '@/src/components/atoms/card/Card';
-import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/molecules/icon/Icon';
-import List from '@/src/components/atoms/list/List';
-import ListItem from '@/src/components/atoms/listItem/ListItem';
-import VerticalTabView from '@/src/components/molecules/verticalTab/VerticalTabView';
+import Button from '@/components/atoms/button/Button';
+import Card from '@/components/atoms/card/Card';
+import Div from '@/components/quarks/div/Div';
+import Icon from '@/components/molecules/icon/Icon';
+import List from '@/components/atoms/list/List';
+import ListItem from '@/components/atoms/listItem/ListItem';
+import VerticalTabView from '@/components/molecules/verticalTab/VerticalTabView';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 

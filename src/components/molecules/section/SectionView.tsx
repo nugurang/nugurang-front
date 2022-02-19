@@ -1,7 +1,7 @@
-import Card from '@/src/components/atoms/card/Card';
-import type { CommonComponentProps } from '@/src/components/common';
-import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/molecules/icon/Icon';
+import Card from '@/components/atoms/card/Card';
+import type { CommonComponentProps } from '@/components/common';
+import Div from '@/components/quarks/div/Div';
+import Icon from '@/components/molecules/icon/Icon';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonComponentProps {

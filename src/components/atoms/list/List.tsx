@@ -1,5 +1,5 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import ListView from '@/src/components/atoms/list/ListView';
+import type { CommonComponentProps } from '@/components/common';
+import ListView from '@/components/atoms/list/ListView';
 
 interface ComponentProps extends CommonComponentProps {
   ordered?: boolean;

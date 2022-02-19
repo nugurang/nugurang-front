@@ -1,9 +1,9 @@
-import Button from '@/src/components/atoms/button/Button';
-import type { CommonComponentProps } from '@/src/components/common';
-import Div from '@/src/components/quarks/div/Div';
-import Loader from '@/src/components/atoms/loader/Loader';
-import Modal from '@/src/components/molecules/modal/Modal';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
+import Button from '@/components/atoms/button/Button';
+import type { CommonComponentProps } from '@/components/common';
+import Div from '@/components/quarks/div/Div';
+import Loader from '@/components/atoms/loader/Loader';
+import Modal from '@/components/molecules/modal/Modal';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 

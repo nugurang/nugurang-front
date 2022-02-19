@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
 
 import { getSession } from 'next-auth/react';
-import { login as loginToBackend } from '@/src/backend/session';
+import { login as loginToBackend } from '@/backend/session';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 

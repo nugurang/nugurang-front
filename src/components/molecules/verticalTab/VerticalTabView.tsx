@@ -1,10 +1,10 @@
-import Button from '@/src/components/atoms/button/Button';
-import Card from '@/src/components/atoms/card/Card';
-import type { CommonComponentProps } from '@/src/components/common';
-import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/molecules/icon/Icon';
-import List from '@/src/components/atoms/list/List';
-import ListItem from '@/src/components/atoms/listItem/ListItem';
+import Button from '@/components/atoms/button/Button';
+import Card from '@/components/atoms/card/Card';
+import type { CommonComponentProps } from '@/components/common';
+import Div from '@/components/quarks/div/Div';
+import Icon from '@/components/molecules/icon/Icon';
+import List from '@/components/atoms/list/List';
+import ListItem from '@/components/atoms/listItem/ListItem';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 

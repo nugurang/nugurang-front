@@ -1,5 +1,5 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import WidthLimiterView from '@/src/components/atoms/widthLimiter/WidthLimiterView';
+import type { CommonComponentProps } from '@/components/common';
+import WidthLimiterView from '@/components/atoms/widthLimiter/WidthLimiterView';
 
 interface ComponentProps extends CommonComponentProps {
   maxWidth?: number;

@@ -1,9 +1,9 @@
-import Grid from '@/src/components/atoms/grid/Grid';
-import Image from '@/src/components/atoms/image/Image';
-import PageOverview from '@/src/components/molecules/pageOverview/PageOverview';
-import Section from '@/src/components/molecules/section/Section';
-import Thumbnail from '@/src/components/molecules/thumbnail/Thumbnail';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
+import Grid from '@/components/atoms/grid/Grid';
+import Image from '@/components/atoms/image/Image';
+import PageOverview from '@/components/molecules/pageOverview/PageOverview';
+import Section from '@/components/molecules/section/Section';
+import Thumbnail from '@/components/molecules/thumbnail/Thumbnail';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';

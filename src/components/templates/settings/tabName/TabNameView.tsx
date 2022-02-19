@@ -1,10 +1,9 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import InitializeDatabase from '@/src/components/organisms/settings/InitializeDatabase';
-import Section from '@/src/components/molecules/section/Section';
-import TestComponents from '@/src/components/organisms/settings/TestComponents';
-import UpdateUserBasicInfo from '@/src/components/organisms/settings/UpdateUserBasicInfo';
-import VerticalTab from '@/src/components/molecules/verticalTab/VerticalTab';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
+import InitializeDatabase from '@/components/organisms/settings/InitializeDatabase';
+import Section from '@/components/molecules/section/Section';
+import TestComponents from '@/components/organisms/settings/TestComponents';
+import UpdateUserBasicInfo from '@/components/organisms/settings/UpdateUserBasicInfo';
+import VerticalTab from '@/components/molecules/verticalTab/VerticalTab';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
@@ -23,7 +22,7 @@ const TabNameView: React.FC<ViewProps> = props => {
       name: 'account',
       icon: {
         type: 'fontAwesomeIcon' as IconTypeKeys,
-        src: ['fas', 'key'] as IconProp
+        src: ['fas', 'key']
       },
       title: t('account'),
       subtitle: t('account'),
@@ -35,7 +34,7 @@ const TabNameView: React.FC<ViewProps> = props => {
       name: 'developer',
       icon: {
         type: 'fontAwesomeIcon' as IconTypeKeys,
-        src: ['fas', 'code'] as IconProp
+        src: ['fas', 'code']
       },
       title: t('developerOption'),
       child: <>

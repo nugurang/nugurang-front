@@ -1,6 +1,6 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import { CommonStyledAttributes } from '@/src/components/common';
+import { CommonStyledAttributes } from '@/components/common';
 import React from 'react';
 import styled from '@emotion/styled';
 

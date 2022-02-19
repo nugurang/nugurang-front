@@ -1,6 +1,6 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import Div from '@/src/components/quarks/div/Div';
+import Div from '@/components/quarks/div/Div';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonComponentProps {

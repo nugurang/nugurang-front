@@ -1,9 +1,9 @@
-import type { BorderRadiusKeys } from '@/src/styles/props/borderRadius';
-import type { CommonComponentProps } from '@/src/components/common';
+import type { BorderRadiusKeys } from '@/styles/props/borderRadius';
+import type { CommonComponentProps } from '@/components/common';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Image from '@/src/components/atoms/image/Image';
-import Span from '@/src/components/quarks/span/Span';
+import Image from '@/components/atoms/image/Image';
+import Span from '@/components/quarks/span/Span';
 import styled from '@emotion/styled';
 
 interface ViewProps extends CommonComponentProps {

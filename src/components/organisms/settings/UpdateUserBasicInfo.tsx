@@ -1,12 +1,12 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/molecules/dialog/Dialog';
-import Div from '@/src/components/quarks/div/Div';
-import Section from '@/src/components/molecules/section/Section';
-import Textfield from '@/src/components/atoms/textfield/Textfield';
+import Button from '@/components/atoms/button/Button';
+import Dialog from '@/components/molecules/dialog/Dialog';
+import Div from '@/components/quarks/div/Div';
+import Section from '@/components/molecules/section/Section';
+import Textfield from '@/components/atoms/textfield/Textfield';
 import styled from '@emotion/styled';
-import { updateCurrentUser } from '@/src/backend/dao/user';
+import { updateCurrentUser } from '@/backend/dao/user';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';

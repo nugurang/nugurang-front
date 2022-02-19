@@ -1,9 +1,9 @@
 import {
   AccessDeniedError,
   LoginRequiredError
-} from '@/src/errors/Errors';
+} from '@/errors/Errors';
 
-import { getCurrentUser } from '@/src/backend/dao/user';
+import { getCurrentUser } from '@/backend/dao/user';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 async function getCommonServerSideProps(context: any) {

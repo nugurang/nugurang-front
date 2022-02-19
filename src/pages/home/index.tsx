@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next';
-import HomeIndexView from '@/src/components/templates/home/index/IndexView';
+import HomeIndexView from '@/components/templates/home/index/IndexView';
 import type { NextPage } from 'next';
-import WithCommonPreferences from '@/src/components/WithCommonPreferences';
-import { withAuthServerSideProps } from '@/src/utils/server-side';
+import WithCommonPreferences from '@/components/WithCommonPreferences';
+import { withAuthServerSideProps } from '@/utils/server-side';
 
 export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');
 

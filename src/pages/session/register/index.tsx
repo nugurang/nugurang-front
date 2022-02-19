@@ -2,7 +2,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import {
   login as loginToBackend,
   register as registerToBackend
-} from '@/src/backend/session';
+} from '@/backend/session';
 
 import { getSession } from 'next-auth/react';
 

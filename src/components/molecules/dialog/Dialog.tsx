@@ -1,5 +1,5 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import DialogView from '@/src/components/molecules/dialog/DialogView';
+import type { CommonComponentProps } from '@/components/common';
+import DialogView from '@/components/molecules/dialog/DialogView';
 import { useTranslation } from 'next-i18next';
 
 interface ComponentProps extends CommonComponentProps {

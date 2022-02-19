@@ -1,7 +1,7 @@
 import ForwardedPage from './[tabName]';
 import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
-import { withAuthServerSideProps } from '@/src/utils/server-side';
+import { withAuthServerSideProps } from '@/utils/server-side';
 
 export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('user');
 
