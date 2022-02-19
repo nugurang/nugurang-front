@@ -1,18 +1,17 @@
-import * as constants from '@/src/constants';
+import * as constants from '@/constants';
 
 import { signOut, useSession } from 'next-auth/react';
 
-import type { CommonStyledProps } from '@/src/components/common';
+import type { CommonStyledProps } from '@/components/common';
 import { ComponentType } from 'react';
-import Div from '@/src/components/quarks/div/Div';
-import Footer from '@/src/components/organisms/common/footer/Footer';
+import Div from '@/components/quarks/div/Div';
+import Footer from '@/components/organisms/common/footer/Footer';
 import Head from 'next/head';
-import Header from '@/src/components/organisms/common/header/Header';
-import HeaderItem from '@/src/components/organisms/common/header/HeaderItem';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import NavigationBar from '@/src/components/organisms/common/navigationBar/NavigationBar';
-import NavigationBarItem from '@/src/components/organisms/common/navigationBar/NavigationBarItem';
-import{ height as navigationBarHeight } from '@/src/components/organisms/common/navigationBar/NavigationBarView';
+import Header from '@/components/organisms/common/header/Header';
+import HeaderItem from '@/components/organisms/common/header/HeaderItem';
+import NavigationBar from '@/components/organisms/common/navigationBar/NavigationBar';
+import NavigationBarItem from '@/components/organisms/common/navigationBar/NavigationBarItem';
+import{ height as navigationBarHeight } from '@/components/organisms/common/navigationBar/NavigationBarView';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 

@@ -1,5 +1,5 @@
-import Div from '@/src/components/quarks/div/Div';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
+import Div from '@/components/quarks/div/Div';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 
 // Footer가 document 내부에서 자리할 공간을 확보하기 위한 더미 요소

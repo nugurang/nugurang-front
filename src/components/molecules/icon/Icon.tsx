@@ -1,6 +1,6 @@
-import type { CommonComponentProps } from '@/src/components/common';
+import type { CommonComponentProps } from '@/components/common';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import IconView from '@/src/components/molecules/icon/IconView';
+import IconView from '@/components/molecules/icon/IconView';
 
 interface ComponentProps extends CommonComponentProps {
   type?: IconTypeKeys;

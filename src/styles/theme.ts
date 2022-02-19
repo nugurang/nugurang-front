@@ -1,17 +1,17 @@
-import type { DeviceMediaQueryObject, ScreenSizeMediaQueryObject } from '@/src/styles/props/mediaQuery';
-import { color, stringifyRGB } from '@/src/styles/props/color';
-import { deviceMediaQuery, screenSizeMediaQuery } from '@/src/styles/props/mediaQuery';
+import type { DeviceMediaQueryObject, ScreenSizeMediaQueryObject } from '@/styles/props/mediaQuery';
+import { color, stringifyRGB } from '@/styles/props/color';
+import { deviceMediaQuery, screenSizeMediaQuery } from '@/styles/props/mediaQuery';
 
-import type { BorderRadiusObject } from '@/src/styles/props/borderRadius';
-import type { FontObject } from '@/src/styles/props/font';
-import type { KeyframeObject } from '@/src/styles/props/keyframe';
-import type { ScreenPixelSizeObject } from '@/src/styles/props/size';
-import type { ZIndexObject } from '@/src/styles/props/zIndex';
-import { borderRadius } from '@/src/styles/props/borderRadius';
-import { font } from '@/src/styles/props/font';
-import { keyframe } from '@/src/styles/props/keyframe';
-import { screenPixelSize } from '@/src/styles/props/size';
-import { zIndex } from '@/src/styles/props/zIndex';
+import type { BorderRadiusObject } from '@/styles/props/borderRadius';
+import type { FontObject } from '@/styles/props/font';
+import type { KeyframeObject } from '@/styles/props/keyframe';
+import type { ScreenPixelSizeObject } from '@/styles/props/size';
+import type { ZIndexObject } from '@/styles/props/zIndex';
+import { borderRadius } from '@/styles/props/borderRadius';
+import { font } from '@/styles/props/font';
+import { keyframe } from '@/styles/props/keyframe';
+import { screenPixelSize } from '@/styles/props/size';
+import { zIndex } from '@/styles/props/zIndex';
 
 type BasePaletteRowKeys = 'main'
                         | 'light'

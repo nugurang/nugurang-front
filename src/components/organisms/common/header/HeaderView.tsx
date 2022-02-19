@@ -1,7 +1,7 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import Div from '@/src/components/quarks/div/Div';
-import Span from '@/src/components/quarks/span/Span';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
+import type { CommonComponentProps } from '@/components/common';
+import Div from '@/components/quarks/div/Div';
+import Span from '@/components/quarks/span/Span';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
 import styled from '@emotion/styled';
 
 const height = 64;

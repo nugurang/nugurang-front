@@ -1,5 +1,5 @@
-import CardView from '@/src/components/atoms/card/CardView';
-import type { CommonComponentProps } from '@/src/components/common';
+import CardView from '@/components/atoms/card/CardView';
+import type { CommonComponentProps } from '@/components/common';
 
 interface ComponentProps extends CommonComponentProps {}
 

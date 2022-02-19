@@ -1,10 +1,11 @@
-import * as constants from '@/src/constants';
+import * as constants from '@/constants';
 
-import BoardsIndexView from '@/src/components/templates/boards/index/IndexView';
+import BoardsIndexView from '@/components/templates/boards/index/IndexView';
 import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
-import { getBoardsByNames } from '@/src/backend/dao/board';
-import { withAuthServerSideProps } from '@/src/utils/server-side';
+import WithCommonPreferences from '@/components/WithCommonPreferences';
+import { getBoardsByNames } from '@/backend/dao/board';
+import { withAuthServerSideProps } from '@/utils/server-side';
 
 export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('user',
   async (context: any, props: any) => {
@@ -61,4 +62,4 @@ const BoardsIndex: NextPage<PageProps> = props => {
   );
 }
 
-export default BoardsIndex;
+export default WithCommonPreferences(BoardsIndex);

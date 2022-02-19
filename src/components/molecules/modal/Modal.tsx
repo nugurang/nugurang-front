@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import type { CommonComponentProps } from '@/src/components/common';
-import ModalView from '@/src/components/molecules/modal/ModalView';
+import type { CommonComponentProps } from '@/components/common';
+import ModalView from '@/components/molecules/modal/ModalView';
 import React from 'react';
 
 interface ComponentProps extends CommonComponentProps {

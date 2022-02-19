@@ -1,9 +1,9 @@
 import type {
   PaletteKeys as ForwardedPaletteKeys,
   ThemeObject as ForwardedThemeObject
-} from '@/src/styles/theme';
+} from '@/styles/theme';
 
-import { hexToRGB } from '@/src/utils/color';
+import { hexToRGB } from '@/utils/color';
 
 // 테마 파일로부터 포워딩
 export type PaletteKeys = ForwardedPaletteKeys;

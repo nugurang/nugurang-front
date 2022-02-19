@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
-import TabNameView from '@/src/components/templates/settings/tabName/TabNameView';
-import WithCommonPreferences from '@/src/components/WithCommonPreferences';
+import TabNameView from '@/components/templates/settings/tabName/TabNameView';
+import WithCommonPreferences from '@/components/WithCommonPreferences';
 import { useRouter } from 'next/router';
-import { withAuthServerSideProps } from '@/src/utils/server-side';
+import { withAuthServerSideProps } from '@/utils/server-side';
 
 export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('user');
 

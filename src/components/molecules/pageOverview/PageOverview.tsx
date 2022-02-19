@@ -1,8 +1,8 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import PageOverviewView from '@/src/components/molecules/pageOverview/PageOverviewView';
+import type { CommonComponentProps } from '@/components/common';
+import PageOverviewView from '@/components/molecules/pageOverview/PageOverviewView';
 import React from 'react';
-import type { UseComponentSizeObject } from '@/src/hooks/useComponentSize';
-import useComponentSize from '@/src/hooks/useComponentSize';
+import type { UseComponentSizeObject } from '@/hooks/useComponentSize';
+import useComponentSize from '@/hooks/useComponentSize';
 import { useRef } from 'react';
 
 interface ComponentProps extends CommonComponentProps {

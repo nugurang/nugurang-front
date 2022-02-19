@@ -1,8 +1,8 @@
-import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/molecules/dialog/Dialog';
-import Loader from '@/src/components/atoms/loader/Loader';
-import Section from '@/src/components/molecules/section/Section';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
+import Button from '@/components/atoms/button/Button';
+import Dialog from '@/components/molecules/dialog/Dialog';
+import Loader from '@/components/atoms/loader/Loader';
+import Section from '@/components/molecules/section/Section';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';

@@ -1,8 +1,8 @@
-import type { CommonComponentProps, VariantKeys } from '@/src/components/common';
+import type { CommonComponentProps, VariantKeys } from '@/components/common';
 
-import Button from '@/src/components/atoms/button/Button';
-import Card from '@/src/components/atoms/card/Card';
-import DOMToggleProvider from '@/src/components/atoms/domToggleProvider/DOMToggleProvider';
+import Button from '@/components/atoms/button/Button';
+import Card from '@/components/atoms/card/Card';
+import DOMToggleProvider from '@/components/atoms/domToggleProvider/DOMToggleProvider';
 import React from 'react';
 import styled from '@emotion/styled';
 

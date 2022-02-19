@@ -1,4 +1,4 @@
-import { screenPixelSize } from '@/src/styles/props/size';
+import { screenPixelSize } from '@/styles/props/size';
 
 export type DeviceMediaQueryKeys = 'touchscreen'
                                  | 'digitizer'

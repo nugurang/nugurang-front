@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
-import SandboxIndexView from '@/src/components/templates/sandbox/index/IndexView';
-import WithCommonPreferences from '@/src/components/WithCommonPreferences';
-import { withAuthServerSideProps } from '@/src/utils/server-side';
+import SandboxIndexView from '@/components/templates/sandbox/index/IndexView';
+import WithCommonPreferences from '@/components/WithCommonPreferences';
+import { withAuthServerSideProps } from '@/utils/server-side';
 
 export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all');
 

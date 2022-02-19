@@ -1,6 +1,6 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import BriefUserProfileView from '@/src/components/molecules/briefUserProfile/BriefUserProfileView';
+import BriefUserProfileView from '@/components/molecules/briefUserProfile/BriefUserProfileView';
 
 interface ComponentProps extends CommonComponentProps {
   name: string;

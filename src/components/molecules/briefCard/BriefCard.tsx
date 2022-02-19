@@ -1,6 +1,6 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import BriefCardView from '@/src/components/molecules/briefCard/BriefCardView';
+import BriefCardView from '@/components/molecules/briefCard/BriefCardView';
 
 interface ComponentProps extends CommonComponentProps {
   title?: string;

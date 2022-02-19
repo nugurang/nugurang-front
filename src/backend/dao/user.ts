@@ -1,4 +1,4 @@
-import { mutate, query } from '@/src/backend/transaction';
+import { mutate, query } from '@/backend/transaction';
 
 export const getCurrentOAuth2User = async (context: any) => {
   const response = await query(context, `

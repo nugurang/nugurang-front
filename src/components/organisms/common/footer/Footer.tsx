@@ -1,4 +1,4 @@
-import FooterView from '@/src/components/organisms/common/footer/FooterView';
+import FooterView from '@/components/organisms/common/footer/FooterView';
 
 const Footer: React.FC = props => {
 

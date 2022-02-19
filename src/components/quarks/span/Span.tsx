@@ -1,6 +1,6 @@
-import type { CommonComponentProps } from '@/src/components/common';
+import type { CommonComponentProps } from '@/components/common';
 import React from 'react';
-import SpanView from '@/src/components/quarks/span/SpanView';
+import SpanView from '@/components/quarks/span/SpanView';
 
 interface ComponentProps extends CommonComponentProps {}
 

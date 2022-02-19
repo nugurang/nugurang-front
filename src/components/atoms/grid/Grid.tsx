@@ -1,6 +1,6 @@
-import type { CommonComponentProps } from '@/src/components/common';
-import GridView from '@/src/components/atoms/grid/GridView';
-import useComponentSize from '@/src/hooks/useComponentSize';
+import type { CommonComponentProps } from '@/components/common';
+import GridView from '@/components/atoms/grid/GridView';
+import useComponentSize from '@/hooks/useComponentSize';
 import { useRef } from 'react';
 
 interface ComponentProps extends CommonComponentProps {

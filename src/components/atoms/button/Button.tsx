@@ -1,5 +1,5 @@
-import ButtonView from '@/src/components/atoms/button/ButtonView';
-import type { CommonComponentProps } from '@/src/components/common';
+import ButtonView from '@/components/atoms/button/ButtonView';
+import type { CommonComponentProps } from '@/components/common';
 import React from 'react';
 
 interface ComponentProps extends CommonComponentProps {

@@ -1,15 +1,15 @@
-import * as constants from '@/src/constants';
+import * as constants from '@/constants';
 
-import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/molecules/dialog/Dialog';
-import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/molecules/icon/Icon';
+import Button from '@/components/atoms/button/Button';
+import Dialog from '@/components/molecules/dialog/Dialog';
+import Div from '@/components/quarks/div/Div';
+import Icon from '@/components/molecules/icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Image from '@/src/components/atoms/image/Image';
-import PageOverview from '@/src/components/molecules/pageOverview/PageOverview';
-import Section from '@/src/components/molecules/section/Section';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
-import { loginToNextAuth } from '@/src/utils/next-auth';
+import Image from '@/components/atoms/image/Image';
+import PageOverview from '@/components/molecules/pageOverview/PageOverview';
+import Section from '@/components/molecules/section/Section';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
+import { loginToNextAuth } from '@/utils/next-auth';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 

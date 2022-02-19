@@ -1,9 +1,9 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import Card from '@/src/components/atoms/card/Card';
-import Div from '@/src/components/quarks/div/Div';
-import Icon from '@/src/components/molecules/icon/Icon';
-import SectionView from '@/src/components/molecules/section/SectionView';
+import Card from '@/components/atoms/card/Card';
+import Div from '@/components/quarks/div/Div';
+import Icon from '@/components/molecules/icon/Icon';
+import SectionView from '@/components/molecules/section/SectionView';
 import styled from '@emotion/styled';
 
 interface ComponentProps extends CommonComponentProps {

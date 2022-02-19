@@ -1,9 +1,9 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/src/components/common';
+import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
 
-import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/molecules/dialog/Dialog';
-import Div from '@/src/components/quarks/div/Div';
-import Section from '@/src/components/molecules/section/Section';
+import Button from '@/components/atoms/button/Button';
+import Dialog from '@/components/molecules/dialog/Dialog';
+import Div from '@/components/quarks/div/Div';
+import Section from '@/components/molecules/section/Section';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';

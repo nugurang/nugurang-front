@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next';
-import LoginIndexView from '@/src/components/templates/login/index/IndexView';
+import LoginIndexView from '@/components/templates/login/index/IndexView';
 import type { NextPage } from 'next';
-import WithCommonPreferences from '@/src/components/WithCommonPreferences';
+import WithCommonPreferences from '@/components/WithCommonPreferences';
 import { useState } from 'react';
-import { withAuthServerSideProps } from '@/src/utils/server-side';
+import { withAuthServerSideProps } from '@/utils/server-side';
 
 export const getServerSideProps: GetServerSideProps = withAuthServerSideProps('all', (context: any, props: any) => {
   const callbackUrl = context.query.callbackUrl;

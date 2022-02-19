@@ -1,14 +1,14 @@
-import BriefCard from '@/src/components/molecules/briefCard/BriefCard';
-import BriefUserProfile from '@/src/components/molecules/briefUserProfile/BriefUserProfile';
-import Button from '@/src/components/atoms/button/Button';
-import Dialog from '@/src/components/molecules/dialog/Dialog';
-import Grid from '@/src/components/atoms/grid/Grid';
-import List from '@/src/components/atoms/list/List';
-import ListItem from '@/src/components/atoms/listItem/ListItem';
-import PageOverview from '@/src/components/molecules/pageOverview/PageOverview';
-import Section from '@/src/components/molecules/section/Section';
-import WidthLimiter from '@/src/components/atoms/widthLimiter/WidthLimiter';
-import { logoutFromNextAuth } from '@/src/utils/next-auth';
+import BriefCard from '@/components/molecules/briefCard/BriefCard';
+import BriefUserProfile from '@/components/molecules/briefUserProfile/BriefUserProfile';
+import Button from '@/components/atoms/button/Button';
+import Dialog from '@/components/molecules/dialog/Dialog';
+import Grid from '@/components/atoms/grid/Grid';
+import List from '@/components/atoms/list/List';
+import ListItem from '@/components/atoms/listItem/ListItem';
+import PageOverview from '@/components/molecules/pageOverview/PageOverview';
+import Section from '@/components/molecules/section/Section';
+import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
+import { logoutFromNextAuth } from '@/utils/next-auth';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
