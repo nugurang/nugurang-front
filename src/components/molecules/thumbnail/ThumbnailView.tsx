@@ -1,4 +1,4 @@
-import type { CommonComponentProps, CommonStyledProps } from '@/components/common';
+import type { CommonComponentProps } from '@/components/common';
 
 import Button from '@/components/atoms/button/Button';
 import Div from '@/components/quarks/div/Div';
@@ -54,7 +54,7 @@ const StyledNameDiv = styled(Div)<NameDivProps>`
 
     color: #fff;
     border-radius: 0;
-    background-color: ${hexToRGB(props.theme.palette.primary.light, 0.9)};
+    background-color: ${hexToRGB(props.theme.palette.primary.main, 0.9)};
     @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
       -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
@@ -70,6 +70,7 @@ const ThumbnailView: React.FC<ViewProps> = props => {
       variant='transparent'
       onClick={props.onClick}
       state={props.state}
+      corner={props.corner}
     >
       <StyledImage src={props.imageUrl}/>
       <StyledNameDiv

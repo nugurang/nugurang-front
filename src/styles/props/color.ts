@@ -157,4 +157,4 @@ export const color = {
   chiliRed,
 };
 
-export const stringifyRGB = (rgb: RGB) => `rgb(${rgb.red}, ${rgb.green}, ${rgb.blue})`;
+export const stringifyRGB = (rgb: RGB) => `#${rgb.red.toString(16)}${rgb.green.toString(16)}${rgb.blue.toString(16)}`;
