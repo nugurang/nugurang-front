@@ -1,4 +1,4 @@
-import type { BorderRadiusKeys } from '@/styles/props/borderRadius';
+import type { CornerKeys } from '@/styles/props/corner';
 import type { CommonComponentProps } from '@/components/common';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -17,7 +17,7 @@ const StyledImage = styled(Image)<ViewProps>`
   ${(props: any) => `
     height: 32px;
     width: 32px;
-    border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'circle']};
+    border-radius: ${props.theme.corner[props.edge as CornerKeys || 'circle']};
     overflow: hidden;
     ${props.css || ''}
   `}
@@ -28,7 +28,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)<ViewProps>`
     height: 32px;
     width: 32px;
     color: ${props.palette ? props.theme.palette[props.palette].main : props.theme.palette.default.contrast };
-    border-radius: ${props.theme.borderRadius[props.edge as BorderRadiusKeys || 'square']};
+    border-radius: ${props.theme.corner[props.edge as CornerKeys || 'square']};
     overflow: hidden;
     ${props.css || ''}
   `}

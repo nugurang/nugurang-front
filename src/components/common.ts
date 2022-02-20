@@ -39,7 +39,7 @@ export const CommonStyledAttributes = (props: any) => `
   font-family: ${props.theme.font.default};
 
   border: 0px solid #000;
-  border-radius: ${props.theme.borderRadius.round};
+  border-radius: ${props.theme.corner.round};
 
   background-color: ${props.theme.palette.transparent.main};
   color: ${props.theme.palette.transparent.text};

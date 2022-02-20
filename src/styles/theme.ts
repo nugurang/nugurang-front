@@ -2,12 +2,12 @@ import type { DeviceMediaQueryObject, ScreenSizeMediaQueryObject } from '@/style
 import { color, stringifyRGB } from '@/styles/props/color';
 import { deviceMediaQuery, screenSizeMediaQuery } from '@/styles/props/mediaQuery';
 
-import type { BorderRadiusObject } from '@/styles/props/borderRadius';
+import type { CornerObject } from '@/styles/props/corner';
 import type { FontObject } from '@/styles/props/font';
 import type { KeyframeObject } from '@/styles/props/keyframe';
 import type { ScreenPixelSizeObject } from '@/styles/props/size';
 import type { ZIndexObject } from '@/styles/props/zIndex';
-import { borderRadius } from '@/styles/props/borderRadius';
+import { corner } from '@/styles/props/corner';
 import { font } from '@/styles/props/font';
 import { keyframe } from '@/styles/props/keyframe';
 import { screenPixelSize } from '@/styles/props/size';
@@ -66,7 +66,7 @@ export type PaletteObject = {
 export type ThemeKeys = 'light'
                       | 'dark';
 export type ThemeObject = {
-  borderRadius:         BorderRadiusObject;
+  corner:               CornerObject;
   deviceMediaQuery:     DeviceMediaQueryObject;
   font:                 FontObject;
   keyframe:             KeyframeObject;
@@ -242,8 +242,8 @@ export const darkPalette = {
 };
 
 const theme = {
-  borderRadius,
   color,
+  corner,
   deviceMediaQuery,
   font,
   keyframe,
