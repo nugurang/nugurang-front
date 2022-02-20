@@ -25,6 +25,7 @@ const StyledButton = styled(Button)<ButtonProps>`
     ${props.theme.screenSizeMediaQuery.gteMobile} {
       height: 192px;
     }
+    width: 100%;
     &:active {
       transform: scale(0.95);
     }

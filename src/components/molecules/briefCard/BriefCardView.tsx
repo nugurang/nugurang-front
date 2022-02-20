@@ -87,7 +87,7 @@ const BriefCardCore = (props: ViewProps) => <>
 const BriefCardView: React.FC<ViewProps> = props => {
   if (props.onClick) return (
     <StyledButton
-      variant='transparent'
+      variant={props.variant ?? 'transparent'}
       onClick={props.onClick}
     >
       {BriefCardCore(props)}

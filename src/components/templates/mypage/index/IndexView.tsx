@@ -4,7 +4,6 @@ import Button from '@/components/atoms/button/Button';
 import Dialog from '@/components/molecules/dialog/Dialog';
 import Grid from '@/components/atoms/grid/Grid';
 import List from '@/components/atoms/list/List';
-import ListItem from '@/components/atoms/listItem/ListItem';
 import PageOverview from '@/components/molecules/pageOverview/PageOverview';
 import Section from '@/components/molecules/section/Section';
 import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
@@ -58,82 +57,70 @@ const MyPageIndexView: React.FC<ViewProps> = props => {
             title='보드'
           >
             <List>
-              <ListItem>
-                <BriefCard
-                  icon={{
-                    type: 'fontAwesomeIcon',
-                    src: ['fas', 'book-reader']
-                  }}
-                  title='보드'
-                  onClick={() => router.push('/boards')}
-                />
-              </ListItem>
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'book-reader']
+                }}
+                title='보드'
+                onClick={() => router.push('/boards')}
+              />
             </List>
           </Section>
           <Section
             title='팀'
           >
             <List>
-              <ListItem>
-                <BriefCard
-                  icon={{
-                    type: 'fontAwesomeIcon',
-                    src: ['fas', 'users']
-                  }}
-                  title='팀'
-                  onClick={() => router.push('/settings')}
-                />
-              </ListItem>
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'users']
+                }}
+                title='팀'
+                onClick={() => router.push('/settings')}
+              />
             </List>
           </Section>
           <Section
             title='일반'
           >
             <List>
-              <ListItem>
-                <BriefCard
-                  icon={{
-                    type: 'fontAwesomeIcon',
-                    src: ['fas', 'cog']
-                  }}
-                  title='설정'
-                  subtitle='알림, 테마, 내게 필요한 옵션'
-                  onClick={() => router.push('/settings')}
-                />
-              </ListItem>
-              <ListItem>
-                <BriefCard
-                  icon={{
-                    type: 'fontAwesomeIcon',
-                    src: ['fas', 'info-circle']
-                  }}
-                  title='정보'
-                  subtitle='웹 앱 정보'
-                  onClick={() => router.push('/settings')}
-                />
-              </ListItem>
-              <ListItem>
-                <BriefCard
-                  icon={{
-                    type: 'fontAwesomeIcon',
-                    src: ['fas', 'code']
-                  }}
-                  title={t('developerOption')}
-                  subtitle={t('developerOption')}
-                  onClick={() => router.push('/settings/developer')}
-                />
-              </ListItem>
-              <ListItem>
-                <BriefCard
-                  icon={{
-                    type: 'fontAwesomeIcon',
-                    src: ['fas', 'flask']
-                  }}
-                  title={t('sandbox')}
-                  subtitle={t('sandbox')}
-                  onClick={() => router.push('/sandbox')}
-                />
-              </ListItem>
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'cog']
+                }}
+                title='설정'
+                subtitle='알림, 테마, 내게 필요한 옵션'
+                onClick={() => router.push('/settings')}
+              />
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'info-circle']
+                }}
+                title='정보'
+                subtitle='웹 앱 정보'
+                onClick={() => router.push('/settings')}
+              />
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'code']
+                }}
+                title={t('developerOption')}
+                subtitle={t('developerOption')}
+                onClick={() => router.push('/settings/developer')}
+              />
+              <BriefCard
+                icon={{
+                  type: 'fontAwesomeIcon',
+                  src: ['fas', 'flask']
+                }}
+                title={t('sandbox')}
+                subtitle={t('sandbox')}
+                onClick={() => router.push('/sandbox')}
+              />
             </List>
           </Section>
         </Grid>
