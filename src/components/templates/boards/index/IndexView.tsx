@@ -4,6 +4,8 @@ import PageOverview from '@/components/molecules/pageOverview/PageOverview';
 import Section from '@/components/molecules/section/Section';
 import Thumbnail from '@/components/molecules/thumbnail/Thumbnail';
 import WidthLimiter from '@/components/atoms/widthLimiter/WidthLimiter';
+import HorizontalSwiper from '@/components/atoms/horizontalSwiper/HorizontalSwiper';
+import BriefCard from '@/components/molecules/briefCard/BriefCard';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -47,6 +49,23 @@ const BoardsIndexView: React.FC<ViewProps> = props => {
             Hello
           </>}
         />
+        <HorizontalSwiper>
+          {
+            props.boards
+            .sort((lhs, rhs) => t(lhs.name) > t(rhs.name) ? 1 : -1)
+            .map((board: Board, index: number) => {
+              return <Thumbnail
+                key={index}
+                imageUrl={board.image.address}
+                title={t(board.name)}
+                onClick={() => router.push({
+                  pathname: '/boards/[id]',
+                  query: { id: board.id },
+                })}
+              />
+            })
+          }
+        </HorizontalSwiper>
         <Grid
           column={{
             default: 1,
@@ -58,9 +77,9 @@ const BoardsIndexView: React.FC<ViewProps> = props => {
             props.boards
             .sort((lhs, rhs) => t(lhs.name) > t(rhs.name) ? 1 : -1)
             .map((board: Board, index: number) => {
-              return <Thumbnail
+              return <BriefCard
                 key={index}
-                imageUrl={board.image.address}
+                variant='outlined'
                 title={t(board.name)}
                 onClick={() => router.push({
                   pathname: '/boards/[id]',

@@ -4,7 +4,6 @@ import type { CommonComponentProps } from '@/components/common';
 import Div from '@/components/quarks/div/Div';
 import Icon from '@/components/molecules/icon/Icon';
 import List from '@/components/atoms/list/List';
-import ListItem from '@/components/atoms/listItem/ListItem';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -63,7 +62,7 @@ const StyledTitleList = styled(List)`
   `}
 `;
 
-const StyledTitleItem = styled(ListItem)`
+const StyledTitleItem = styled(Div)`
   ${(props: any) => `
   
   `}

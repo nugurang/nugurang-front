@@ -1,6 +1,7 @@
 import type { CommonComponentProps } from '@/components/common';
 import { CommonStyledAttributes } from '@/components/common';
 import styled from '@emotion/styled';
+import React from 'react';
 
 interface ViewProps extends CommonComponentProps {
   ordered?: boolean;
@@ -20,15 +21,37 @@ const StyledUl = styled.ul<ViewProps>`
   `}
 `;
 
+const StyledLi = styled.li<ViewProps>`
+  ${(props: any) => `
+    ${CommonStyledAttributes(props)}
+    width: 100%;
+    &:not(:first-of-type)::before {
+      content: '';
+      display: block;
+      border-top: 1px solid ${props.theme.palette.default.high};
+      margin: 8px 0;
+    }
+    ${props.css}
+  `}
+`;
+
 const ListView: React.FC<ViewProps> = props => {
   if (props.ordered) return (
     <StyledOl {...props} >
-      { props.children }
+      {React.Children.map(props.children, child => 
+        <StyledLi {...props}>
+          {child}
+        </StyledLi>
+      )}
     </StyledOl>
   );
   else return (
     <StyledUl {...props} >
-      { props.children }
+      {React.Children.map(props.children, child => 
+        <StyledLi {...props}>
+          {child}
+        </StyledLi>
+      )}
     </StyledUl>
   );
 }
