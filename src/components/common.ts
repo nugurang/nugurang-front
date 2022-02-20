@@ -1,4 +1,5 @@
 import type {
+  CornerKeys as ForwardedCorderKeys,
   PaletteKeys as ForwardedPaletteKeys,
   ThemeObject as ForwardedThemeObject
 } from '@/styles/theme';
@@ -6,6 +7,7 @@ import type {
 import { hexToRGB } from '@/utils/color';
 
 // 테마 파일로부터 포워딩
+export type CornerKeys = ForwardedCorderKeys;
 export type PaletteKeys = ForwardedPaletteKeys;
 export type ThemeObject = ForwardedThemeObject;
 
@@ -23,6 +25,7 @@ export interface CommonComponentProps {
   enable?: boolean;
   palette?: PaletteKeys;
   variant?: VariantKeys;
+  corner?: CornerKeys;
   
   onClick?: () => void;
   onChange?: () => void;
@@ -37,12 +40,10 @@ export interface CommonStyledProps extends CommonComponentProps {}
 
 export const CommonStyledAttributes = (props: any) => `
   font-family: ${props.theme.font.default};
-
-  border: 0px solid #000;
-  border-radius: ${props.theme.corner.round};
-
   background-color: ${props.theme.palette.transparent.main};
   color: ${props.theme.palette.transparent.text};
+
+  border: 0px solid #000;
   ${props.variant == 'outlined' ? `
     border: 1px solid ${props.theme.palette[props.palette || 'default'].light};
   ` : ''}
@@ -61,6 +62,17 @@ export const CommonStyledAttributes = (props: any) => `
       color: ${props.theme.palette[props.palette || 'default'].text};
     ` : ''}
   */
+ 
+  border-radius: 0px;
+  ${props.corner == 'square' ? `
+    border-radius: ${props.theme.corner.square};
+  ` : ''}
+  ${props.corner == 'round' ? `
+    border-radius: ${props.theme.corner.round};
+  ` : ''}
+  ${props.corner == 'circle' ? `
+    border-radius: ${props.theme.corner.circle};
+  ` : ''}
 
   ${props.ellipsis === 1 ? `
     overflow: hidden;

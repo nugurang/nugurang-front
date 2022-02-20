@@ -2,16 +2,42 @@ import type { DeviceMediaQueryObject, ScreenSizeMediaQueryObject } from '@/style
 import { color, stringifyRGB } from '@/styles/props/color';
 import { deviceMediaQuery, screenSizeMediaQuery } from '@/styles/props/mediaQuery';
 
-import type { CornerObject } from '@/styles/props/corner';
-import type { FontObject } from '@/styles/props/font';
-import type { KeyframeObject } from '@/styles/props/keyframe';
-import type { ScreenPixelSizeObject } from '@/styles/props/size';
-import type { ZIndexObject } from '@/styles/props/zIndex';
+import type {
+  CornerKeys as ForwardedCornerKeys,
+  CornerObject as ForwardedCornerObject
+} from '@/styles/props/corner';
+import type {
+  FontKeys as ForwardedFontKeys,
+  FontObject as ForwardedFontObject
+} from '@/styles/props/font';
+import type {
+  KeyframeKeys as ForwardedKeyframeKeys,
+  KeyframeObject as ForwardedKeyframeObject
+} from '@/styles/props/keyframe';
+import type {
+  ScreenPixelSizeKeys as ForwardedScreenPixelSizeKeys,
+  ScreenPixelSizeObject as ForwardedScreenPixelSizeObject
+} from '@/styles/props/size';
+import type {
+  ZIndexKeys as ForwardedZIndexKeys,
+  ZIndexObject as ForwardedZIndexObject
+} from '@/styles/props/zIndex';
 import { corner } from '@/styles/props/corner';
 import { font } from '@/styles/props/font';
 import { keyframe } from '@/styles/props/keyframe';
 import { screenPixelSize } from '@/styles/props/size';
 import { zIndex } from '@/styles/props/zIndex';
+
+export type CornerKeys = ForwardedCornerKeys;
+export type CornerObject = ForwardedCornerObject;
+export type FontKeys = ForwardedFontKeys;
+export type FontObject = ForwardedFontObject;
+export type KeyframeKeys = ForwardedKeyframeKeys;
+export type KeyframeObject = ForwardedKeyframeObject;
+export type ScreenPixelSizeKeys = ForwardedScreenPixelSizeKeys;
+export type ScreenPixelSizeObject = ForwardedScreenPixelSizeObject;
+export type ZIndexKeys = ForwardedZIndexKeys;
+export type ZIndexObject = ForwardedZIndexObject;
 
 type BasePaletteRowKeys = 'main'
                         | 'light'

@@ -58,6 +58,7 @@ const BoardsIndexView: React.FC<ViewProps> = props => {
                 key={index}
                 imageUrl={board.image.address}
                 title={t(board.name)}
+                corner='square'
                 onClick={() => router.push({
                   pathname: '/boards/[id]',
                   query: { id: board.id },
