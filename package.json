@@ -1,0 +1,26 @@
+{
+  "name": "nugurang-front",
+  "version": "0.3.0",
+  "main": "index.js",
+  "repository": "https://github.com/nugurang/nugurang-front.git",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^12.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@types/node": "^18.6.2",
+    "@types/react": "^18.0.15",
+    "husky": "^8.0.1",
+    "typescript": "^4.7.4"
+  }
+}
