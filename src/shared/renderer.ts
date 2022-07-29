@@ -1,7 +1,7 @@
 import createEmotionServer from "@emotion/server/create-instance";
 import { cache } from "@emotion/css";
 
-const renderStatic = async (html) => {
+const renderStatic = async (html: string) => {
   if (html === undefined) {
     throw new Error("did you forget to return html from renderToString?");
   }

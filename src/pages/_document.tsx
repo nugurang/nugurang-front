@@ -1,12 +1,18 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+} from "next/document";
 import * as React from "react";
 import renderStatic from "../shared/renderer";
 export default class AppDocument extends Document {
   // https://emotion.sh/docs/ssr#nextjs
-  static async getInitialProps(ctx) {
-    const page = await ctx.renderPage();
+  static async getInitialProps(context: DocumentContext) {
+    const page = await context.renderPage();
     const { css, ids } = await renderStatic(page.html);
-    const initialProps = await Document.getInitialProps(ctx);
+    const initialProps = await Document.getInitialProps(context);
     return {
       ...initialProps,
       styles: (

@@ -2,7 +2,7 @@ import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
 import { baseCss } from "../base";
 
-const buttonCss = ({ theme }) =>
+const containerCss = ({ theme }) =>
   cx(
     baseCss,
     css`
@@ -21,9 +21,9 @@ const buttonCss = ({ theme }) =>
     `,
   );
 
-const Button = ({ children }) => {
+const Container = ({ children }) => {
   const theme = useTheme();
-  return <button className={buttonCss({ theme })}>{children}</button>;
+  return <div className={containerCss({ theme })}>{children}</div>;
 };
 
-export default Button;
+export default Container;
