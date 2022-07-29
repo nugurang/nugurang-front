@@ -1,7 +1,7 @@
 const theme = {
   colors: {
-    primary: "hotpink"
-  }
-}
+    primary: "hotpink",
+  },
+};
 
-export default theme
+export default theme;

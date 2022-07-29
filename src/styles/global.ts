@@ -1,13 +1,13 @@
-import { css } from "@emotion/react"
+import { css } from "@emotion/react";
 
-  const global = css`
+const global = css`
   * {
     box-sizing: border-box;
   }
   body {
-    background: #DFCFBE;
+    background: #dfcfbe;
     font-family: Helvetica, sans-serif;
   }
 `;
 
-export default global
+export default global;

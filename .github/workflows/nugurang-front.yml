@@ -5,28 +5,24 @@ name: nugurang-front
 
 on:
   push:
-    branches: [ master, dev ]
+    branches: [main, develop]
   pull_request:
-    branches: [ master, dev ]
+    branches: [main, develop]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x, 16.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-      working-directory: nugurang-front
-    - run: npm run build --if-present
-      working-directory: nugurang-front
-    - run: npm test
-      working-directory: nugurang-front
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install --immutable --immutable-cache --check-cache
+      - run: yarn build --if-present
+      - run: yarn test
