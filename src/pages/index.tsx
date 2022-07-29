@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { Button } from "@/components/Button";
+import { Textfield } from "@/components/Textfield";
+import { Container } from "@/components/Container";
 
 const Home = () => {
   return (
@@ -7,9 +9,12 @@ const Home = () => {
       <Head>
         <title>Emotion using the vanilla version supporting SSR</title>
       </Head>
-      <div>
-        <Button>Emotion Vanilla example</Button>
-      </div>
+      <Container determinate>
+        <Button colorVariant="primary" fillingVariant="contained">
+          Emotion Vanilla example
+        </Button>
+        <Textfield colorVariant="primary" />
+      </Container>
     </>
   );
 };

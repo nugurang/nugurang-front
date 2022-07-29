@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 // https://meyerweb.com/eric/tools/css/reset/
-const global = css`
+const globalCss = css`
   @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap");
 
   html,
@@ -91,6 +91,7 @@ const global = css`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    box-sizing: border-box;
   }
   /* HTML5 display-role reset for older browsers */
   article,
@@ -130,7 +131,8 @@ const global = css`
   }
 
   html,
-  body {
+  body,
+  #__next {
     height: 100%;
   }
   body {
@@ -139,4 +141,4 @@ const global = css`
   }
 `;
 
-export default global;
+export default globalCss;

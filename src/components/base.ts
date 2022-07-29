@@ -2,7 +2,14 @@ import { css, keyframes } from "@emotion/css";
 
 export const baseCss = css`
   font-family: "Noto Sans KR", Helvetica, sans-serif;
-  transition: all 0.1s linear;
+  border-radius: 8px;
+  transition: all 0.1s ease-in-out;
+`;
+
+export const onClickCss = css`
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 
 const bounce = keyframes`
