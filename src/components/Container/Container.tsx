@@ -5,11 +5,11 @@ import { WindowSizeContext } from "@/contexts/WindowSizeContext";
 import { useContext } from "react";
 import { Margin, Padding } from "@/styles/CssType";
 
-const wrapCss = ({ determinate, margin, windowSize }) =>
+const wrapCss = ({ fixedWidth, margin, windowSize }) =>
   cx(
     baseCss,
     css`
-      width: ${determinate ? "360px" : windowSize.width};
+      width: ${fixedWidth ? "360px" : windowSize.width};
       margin: 0 auto;
       padding: ${margin
         ? `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
@@ -31,21 +31,21 @@ const containerCss = ({ backgroundColor, padding, theme }) =>
 interface ComponentProps {
   backgroundColor?: string;
   children?: React.ReactNode;
-  determinate?: boolean;
+  fixedWidth?: boolean;
   margin?: Margin;
   padding?: Padding;
 }
 const Container = ({
   backgroundColor,
   children,
-  determinate = false,
+  fixedWidth = false,
   margin,
   padding,
 }: ComponentProps) => {
   const theme = useTheme();
   const windowSize = useContext(WindowSizeContext);
   return (
-    <div className={wrapCss({ determinate, margin, windowSize })}>
+    <div className={wrapCss({ fixedWidth, margin, windowSize })}>
       <div
         className={containerCss({
           backgroundColor,

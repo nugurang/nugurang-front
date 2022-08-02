@@ -21,7 +21,7 @@ export const getServerSideProps = withAuthServerSideProps(
 
 const Test = () => {
   return (
-    <Container determinate>
+    <Container fixedWidth>
       <Link href="/home">GO HOME</Link>
       <LoginForm />
     </Container>

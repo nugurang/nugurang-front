@@ -1,4 +1,4 @@
-export type ColorVariant = "primary" | "greyscale" | "highContrast";
+export type ColorVariant = "primary" | "error" | "greyscale" | "highContrast";
 export const defaultColorVariant = "greyscale";
 
 export type FillingVariant =

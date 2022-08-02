@@ -8,17 +8,17 @@ const LoginForm = () => {
     <Card css={{ height: "120px" }}>
       <Textfield />
       <Button
+        label="Login"
         colorVariant="primary"
         fillingVariant="contained"
-        onClick={() => oAuthLogin("github")}>
-        Login
-      </Button>
+        onClick={() => oAuthLogin("github")}
+      />
       <Button
+        label="Logout"
         colorVariant="primary"
         fillingVariant="contained"
-        onClick={() => logout()}>
-        Logout
-      </Button>
+        onClick={() => logout()}
+      />
     </Card>
   );
 };

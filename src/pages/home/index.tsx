@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Home = () => {
   return (
-    <Container determinate>
+    <Container fixedWidth>
       <Link href="/home/test">GO TO TEST</Link>
       <LoginForm />
     </Container>

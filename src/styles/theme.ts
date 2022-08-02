@@ -7,6 +7,13 @@ export const lightTheme = {
       high: "#e599ff",
       low: "#4c0066",
     },
+    error: {
+      main: "#e03c31",
+      light: "#fa8072",
+      dark: "#960018",
+      high: "#fa8072",
+      low: "#960018",
+    },
     greyscale: {
       main: "#888",
       light: "#666",
@@ -32,6 +39,13 @@ export const darkTheme = {
       dark: "#4c0066",
       high: "#4c0066",
       low: "#e599ff",
+    },
+    error: {
+      main: "#e03c31",
+      light: "#fa8072",
+      dark: "#960018",
+      high: "#960018",
+      low: "#fa8072",
     },
     greyscale: {
       main: "#888",

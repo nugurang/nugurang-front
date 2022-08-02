@@ -15,6 +15,7 @@ const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
     onClickCss,
     css`
       padding: 8px 16px;
+      cursor: pointer;
 
       color: ${theme.colors[colorVariant].main};
       background-color: ${theme.colors[colorVariant].main};
@@ -54,23 +55,33 @@ const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
   );
 
 interface ComponentProps {
-  children?: React.ReactNode;
   colorVariant?: ColorVariant;
   fillingVariant?: FillingVariant;
+  label?: string;
+  preventDefault?: boolean;
+  stopPropagation?: boolean;
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 const Button = ({
-  children,
   colorVariant = defaultColorVariant,
   fillingVariant = defaultFillingVariant,
-  onClick,
+  label = "",
+  preventDefault = true,
+  stopPropagation = false,
+  onClick: _onClick,
 }: ComponentProps) => {
   const theme = useTheme();
+  const onClick = (event: React.MouseEvent<HTMLElement>) => {
+    preventDefault && event.preventDefault();
+    stopPropagation && event.stopPropagation();
+    _onClick && _onClick(event);
+  };
   return (
     <button
       className={buttonCss({ theme, colorVariant, fillingVariant })}
-      onClick={onClick}>
-      {children}
+      onClick={onClick}
+      type="button">
+      {label}
     </button>
   );
 };
