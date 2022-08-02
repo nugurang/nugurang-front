@@ -7,13 +7,14 @@ import {
   defaultColorVariant,
   defaultFillingVariant,
 } from "@/styles/CssType";
+import React from "react";
 
 const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
   cx(
     baseCss,
     onClickCss,
     css`
-      padding: 8px;
+      padding: 8px 16px;
 
       color: ${theme.colors[colorVariant].main};
       background-color: ${theme.colors[colorVariant].main};
@@ -56,15 +57,19 @@ interface ComponentProps {
   children?: React.ReactNode;
   colorVariant?: ColorVariant;
   fillingVariant?: FillingVariant;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 const Button = ({
   children,
   colorVariant = defaultColorVariant,
   fillingVariant = defaultFillingVariant,
+  onClick,
 }: ComponentProps) => {
   const theme = useTheme();
   return (
-    <button className={buttonCss({ theme, colorVariant, fillingVariant })}>
+    <button
+      className={buttonCss({ theme, colorVariant, fillingVariant })}
+      onClick={onClick}>
       {children}
     </button>
   );
