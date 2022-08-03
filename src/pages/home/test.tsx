@@ -1,4 +1,4 @@
-import { Container } from "@/components/Container";
+import { Container } from "@/compositions/Container";
 import { LoginForm } from "@/compositions/LoginForm";
 import Link from "next/link";
 import withAuthServerSideProps from "@/compositions/withAuthServerSideProps";

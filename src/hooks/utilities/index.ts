@@ -1,5 +1,5 @@
 import useElementSize from "./useElementSize";
 import useInterval from "./useInterval";
-import useWindowSize from "./useWindowSize";
+import useWindowSize, { type WindowSize } from "./useWindowSize";
 
-export { useElementSize, useInterval, useWindowSize };
+export { useElementSize, useInterval, useWindowSize, type WindowSize };

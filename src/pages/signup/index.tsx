@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import produce from "immer";
-import { Container } from "@/components/Container";
+import { Container } from "@/compositions/Container";
 import { InputForm } from "@/compositions/InputForm";
 import { mutate } from "@/services/backend";
 import {
@@ -10,16 +10,17 @@ import {
   InputFormItemDTOProps,
 } from "@/compositions/InputForm";
 
+const initialInputFormItems = [
+  {
+    id: "id",
+    type: "textfield" as InputFormItemTypeProps,
+    value: "",
+    label: "ID",
+    required: true,
+  },
+];
+
 const Home = () => {
-  const initialInputFormItems = [
-    {
-      id: "id",
-      type: "textfield" as InputFormItemTypeProps,
-      value: "",
-      label: "ID",
-      required: true,
-    },
-  ];
   const [inputFormItems, setInputFormItems] = useState<InputFormItemProps[]>(
     initialInputFormItems,
   );
@@ -58,7 +59,7 @@ const Home = () => {
   };
 */
   return (
-    <Container>
+    <Container fixedWidth={true}>
       <InputForm formItems={inputFormItems} onChange={updateImputFormItems} />
     </Container>
   );

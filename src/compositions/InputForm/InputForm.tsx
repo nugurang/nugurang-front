@@ -116,6 +116,7 @@ const InputForm = ({
     [elementSize.width],
   );
   const theme = useTheme();
+
   return (
     <form className={wrapCss({ theme })} ref={wrapRef}>
       {formItems.map((formItem) => {
