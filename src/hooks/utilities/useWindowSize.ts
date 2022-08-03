@@ -1,26 +1,23 @@
 // https://usehooks.com/useWindowSize
 
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
-export interface WindowSize {
+export interface Size {
   height: number;
   width: number;
 }
 export const useWindowSize = () => {
-  const [size, setSize] = useState<WindowSize>({
+  const [size, setSize] = useState<Size>({
     width: 0,
     height: 0,
   });
 
-  const handleResize = useCallback(() => {
+  const handleResize = () => {
     setSize({
       width: window?.innerWidth || 0,
       height: window?.innerHeight || 0,
     });
-  }, [window?.innerWidth, window?.innerHeight]);
+  };
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -28,10 +25,6 @@ export const useWindowSize = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useIsomorphicLayoutEffect(() => {
-    handleResize();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window?.innerWidth, window?.innerHeight]);
   return size;
 };
 

@@ -1,9 +1,10 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
 import { Textfield } from "@/components/Textfield";
 import { useElementSize } from "@/hooks/utilities";
 import { baseCss } from "@/components/css";
+import useIsomorphicLayoutEffect from "@/hooks/utilities/useIsomorphicLayoutEffect";
 
 const wrapCss = ({ theme }) =>
   cx(
@@ -111,9 +112,21 @@ const InputForm = ({
 }: CompositionProps) => {
   const wrapRef = useRef<HTMLFormElement | undefined>(undefined);
   const elementSize = useElementSize(wrapRef);
+  const [elementSizeCache, setElementSizeCache] = useState({
+    height: 0,
+    width: 0,
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    setElementSizeCache((prev) => {
+      if (elementSize.height === 0 || elementSize.width === 0) return prev;
+      else return elementSize;
+    });
+  }, [elementSize]);
+
   const smallWidthMode = useMemo(
-    () => elementSize.width < smallWidthModeThreshold,
-    [elementSize.width],
+    () => elementSizeCache.width < smallWidthModeThreshold,
+    [elementSizeCache.width, smallWidthModeThreshold],
   );
   const theme = useTheme();
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
 import produce from "immer";
 import { Container } from "@/compositions/Container";
@@ -20,11 +20,11 @@ const initialInputFormItems = [
   },
 ];
 
-const Home = () => {
+const Signup = () => {
   const [inputFormItems, setInputFormItems] = useState<InputFormItemProps[]>(
     initialInputFormItems,
   );
-  const updateImputFormItems = (newInputFormItem: InputFormItemDTOProps) => {
+  const updateInputFormItems = (newInputFormItem: InputFormItemDTOProps) => {
     setInputFormItems((prevList) =>
       produce(prevList, (list) => {
         const index = list.findIndex(
@@ -60,9 +60,9 @@ const Home = () => {
 */
   return (
     <Container fixedWidth={true}>
-      <InputForm formItems={inputFormItems} onChange={updateImputFormItems} />
+      <InputForm formItems={inputFormItems} onChange={updateInputFormItems} />
     </Container>
   );
 };
 
-export default Home;
+export default Signup;

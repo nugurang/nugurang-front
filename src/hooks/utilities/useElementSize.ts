@@ -19,14 +19,14 @@ function useElementSize<T extends HTMLElement = HTMLDivElement>(
     height: 0,
   });
 
-  const handleResize = useCallback(() => {
+  const handleResize = () => {
     setSize({
       width: element?.offsetWidth || 0,
       height: element?.offsetHeight || 0,
     });
-  }, [element?.offsetHeight, element?.offsetWidth]);
+  };
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => {
