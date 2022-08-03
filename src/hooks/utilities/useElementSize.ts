@@ -5,16 +5,16 @@ import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-interface Size {
+export interface ElementSize {
   width: number;
   height: number;
 }
 
 function useElementSize<T extends HTMLElement = HTMLDivElement>(
   ref: React.RefObject<T>,
-): Size {
+): ElementSize {
   const element = ref.current;
-  const [size, setSize] = useState<Size>({
+  const [size, setSize] = useState<ElementSize>({
     width: 0,
     height: 0,
   });

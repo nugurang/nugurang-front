@@ -2,13 +2,16 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import produce from "immer";
 import { Container } from "@/compositions/Container";
+import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
 import { InputForm } from "@/compositions/InputForm";
+import { Section, SectionBody, SectionHead } from "@/compositions/Section";
 import { mutate } from "@/services/backend";
 import {
   InputFormItemTypeProps,
   InputFormItemProps,
   InputFormItemDTOProps,
 } from "@/compositions/InputForm";
+import { Button, ButtonGroup } from "@/components/Button";
 
 const initialInputFormItems = [
   {
@@ -59,9 +62,33 @@ const Signup = () => {
   };
 */
   return (
-    <Container fixedWidth={true}>
-      <InputForm formItems={inputFormItems} onChange={updateInputFormItems} />
-    </Container>
+    <>
+      <Container fixedWidth={true}>
+        <Section>
+          <SectionHead title="회원가입"></SectionHead>
+          <SectionBody>
+            <InputForm
+              formItems={inputFormItems}
+              onChange={updateInputFormItems}
+            />
+          </SectionBody>
+        </Section>
+      </Container>
+      <FloatingBottomBar margin={{ bottom: 8 }}>
+        <ButtonGroup>
+          <Button
+            label="초기화"
+            colorVariant="error"
+            fillingVariant="contained"
+          />
+          <Button
+            label="제출"
+            colorVariant="primary"
+            fillingVariant="contained"
+          />
+        </ButtonGroup>
+      </FloatingBottomBar>
+    </>
   );
 };
 

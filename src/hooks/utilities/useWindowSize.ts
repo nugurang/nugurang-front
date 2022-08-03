@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-export interface Size {
+export interface WindowSize {
   height: number;
   width: number;
 }
 export const useWindowSize = () => {
-  const [size, setSize] = useState<Size>({
+  const [size, setSize] = useState<WindowSize>({
     width: 0,
     height: 0,
   });

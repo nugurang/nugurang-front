@@ -1,3 +1,13 @@
+import { ColorShade, ColorVariant } from "./type";
+
+export interface Theme {
+  colors: {
+    [key in ColorVariant]: {
+      [key in ColorShade]: string;
+    };
+  };
+}
+
 export const lightTheme = {
   colors: {
     primary: {

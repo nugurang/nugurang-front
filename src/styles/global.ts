@@ -88,7 +88,7 @@ const globalCss = css`
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
+    font-size: 16px;
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
@@ -138,6 +138,7 @@ const globalCss = css`
   body {
     background: #fae6fa;
     font-family: Helvetica, sans-serif;
+    position: relative;
   }
 `;
 

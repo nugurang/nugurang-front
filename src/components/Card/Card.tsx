@@ -2,7 +2,7 @@ import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
 import { baseCss } from "../css";
 import { CSSProperties } from "react";
-import { Margin, Padding } from "@/components/type";
+import { makePadding, Margin, Padding } from "@/components/type";
 
 const wrapCss = ({ margin }) =>
   cx(
@@ -10,18 +10,20 @@ const wrapCss = ({ margin }) =>
     css`
       margin: 0 auto;
       padding: ${margin
-        ? `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
+        ? `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`
         : "0"};
     `,
   );
 
-const containerCss = ({ backgroundColor, padding, theme }) =>
+const cardCss = ({ backgroundColor, height, padding, theme, width }) =>
   cx(
     baseCss,
     css`
+      ${height ? `height: ${height}px;` : ""}
+      ${width ? `width: ${width}px;` : ""}
       padding: ${padding
-        ? `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`
-        : "8px"};
+        ? `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`
+        : "0"};
       background-color: ${backgroundColor || theme.colors.highContrast.high};
     `,
   );
@@ -29,25 +31,31 @@ const containerCss = ({ backgroundColor, padding, theme }) =>
 interface ComponentProps {
   backgroundColor?: string;
   children?: React.ReactNode;
+  css?: CSSProperties;
+  height?: number;
   margin?: Margin;
   padding?: Padding;
-  css?: CSSProperties;
+  width?: number;
 }
-const Container = ({
+const Card = ({
   backgroundColor,
   children,
+  css,
+  height,
   margin,
   padding,
-  css,
+  width,
 }: ComponentProps) => {
   const theme = useTheme();
   return (
     <div className={wrapCss({ margin })}>
       <div
-        className={containerCss({
+        className={cardCss({
           backgroundColor,
-          padding,
+          height,
+          padding: makePadding(padding),
           theme,
+          width,
         })}
         style={css}>
         {children}
@@ -56,4 +64,4 @@ const Container = ({
   );
 };
 
-export default Container;
+export default Card;
