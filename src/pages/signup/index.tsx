@@ -1,9 +1,41 @@
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import produce from "immer";
 import { Container } from "@/components/Container";
 import { InputForm } from "@/compositions/InputForm";
 import { mutate } from "@/services/backend";
-import Link from "next/link";
+import {
+  InputFormItemTypeProps,
+  InputFormItemProps,
+  InputFormItemDTOProps,
+} from "@/compositions/InputForm";
 
 const Home = () => {
+  const initialInputFormItems = [
+    {
+      id: "id",
+      type: "textfield" as InputFormItemTypeProps,
+      value: "",
+      label: "ID",
+      required: true,
+    },
+  ];
+  const [inputFormItems, setInputFormItems] = useState<InputFormItemProps[]>(
+    initialInputFormItems,
+  );
+  const updateImputFormItems = (newInputFormItem: InputFormItemDTOProps) => {
+    setInputFormItems((prevList) =>
+      produce(prevList, (list) => {
+        const index = list.findIndex(
+          (element) => element.id === newInputFormItem.id,
+        );
+        if (index !== -1) list[index].value = newInputFormItem.value;
+      }),
+    );
+  };
+
+  useEffect(() => console.log(inputFormItems));
+
   /*
   const createUser = async () => {
     let image;
@@ -28,8 +60,8 @@ const Home = () => {
   };
 */
   return (
-    <Container fixedWidth>
-      <InputForm />
+    <Container>
+      <InputForm formItems={inputFormItems} onChange={updateImputFormItems} />
     </Container>
   );
 };

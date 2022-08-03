@@ -7,12 +7,16 @@ import {
   defaultColorVariant,
   defaultFillingVariant,
 } from "@/styles/CssType";
+import { ChangeEvent } from "react";
 
-const textfieldCss = ({ colorVariant, fillingVariant, theme }) =>
+const textfieldCss = ({ colorVariant, fillingVariant, theme, width }) =>
   cx(
     baseCss,
     css`
+      display: block;
+      width: ${Number.isInteger(width) ? `${width}px` : "100%"};
       padding: 8px;
+      box-sizing: border-box;
 
       color: ${theme.colors[colorVariant].main};
       background-color: ${theme.colors[colorVariant].main};
@@ -22,7 +26,7 @@ const textfieldCss = ({ colorVariant, fillingVariant, theme }) =>
       &:focus {
         background-color: ${theme.colors[colorVariant].high};
         border: 2px solid ${theme.colors[colorVariant].high};
-        outline-color: ${theme.colors[colorVariant].high};
+        outline-color: ${theme.colors.primary.high};
       }
 
       ${fillingVariant === "contained" &&
@@ -55,24 +59,29 @@ const textfieldCss = ({ colorVariant, fillingVariant, theme }) =>
   );
 
 interface ComponentProps {
-  onChange?: (value: string) => void;
+  value: string;
   colorVariant?: ColorVariant;
   fillingVariant?: FillingVariant;
+  width?: number;
+  onChange?: (value: string) => void;
 }
 const Textfield = ({
+  value,
   colorVariant = defaultColorVariant,
   fillingVariant = defaultFillingVariant,
+  width,
   onChange,
 }: ComponentProps) => {
   const theme = useTheme();
-  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange && onChange(event.currentTarget.value);
+  const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange && onChange(event.target.value);
   };
 
   return (
     <input
-      className={textfieldCss({ colorVariant, fillingVariant, theme })}
+      className={textfieldCss({ colorVariant, fillingVariant, theme, width })}
       type="text"
+      value={value}
       onChange={onChangeInput}></input>
   );
 };
