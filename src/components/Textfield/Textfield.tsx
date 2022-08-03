@@ -1,12 +1,12 @@
 import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
-import { baseCss } from "../base";
+import { baseCss } from "../css";
 import {
   ColorVariant,
   FillingVariant,
   defaultColorVariant,
   defaultFillingVariant,
-} from "@/styles/CssType";
+} from "@/components/type";
 import { ChangeEvent } from "react";
 
 const textfieldCss = ({ colorVariant, fillingVariant, theme, width }) =>

@@ -3,7 +3,7 @@ import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
 import { Textfield } from "@/components/Textfield";
 import { useElementSize } from "@/hooks/utilities";
-import { baseCss } from "@/components/base";
+import { baseCss } from "@/components/css";
 
 const wrapCss = ({ theme }) =>
   cx(

@@ -1,12 +1,12 @@
 import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
-import { baseCss, onClickCss } from "../base";
+import { baseCss, onClickCss } from "../css";
 import {
   ColorVariant,
   FillingVariant,
   defaultColorVariant,
   defaultFillingVariant,
-} from "@/styles/CssType";
+} from "@/components/type";
 import React from "react";
 
 const buttonCss = ({ theme, colorVariant, fillingVariant }) =>

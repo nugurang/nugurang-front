@@ -6,7 +6,7 @@ import { Global, ThemeProvider } from "@emotion/react";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import globalCss from "@/styles/global";
-import { lightTheme, darkTheme } from "@/styles/theme";
+import { lightTheme, darkTheme } from "@/components/theme";
 import { WindowSizeProvider } from "@/contexts/WindowSizeContext";
 import { setCookie } from "@/utilities/cookie";
 import { isAuthUrl } from "@/services/oAuth";

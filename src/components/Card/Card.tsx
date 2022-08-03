@@ -1,8 +1,8 @@
 import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
-import { baseCss } from "../base";
+import { baseCss } from "../css";
 import { CSSProperties } from "react";
-import { Margin, Padding } from "@/styles/CssType";
+import { Margin, Padding } from "@/components/type";
 
 const wrapCss = ({ margin }) =>
   cx(

@@ -34,8 +34,6 @@ const Home = () => {
     );
   };
 
-  useEffect(() => console.log(inputFormItems));
-
   /*
   const createUser = async () => {
     let image;

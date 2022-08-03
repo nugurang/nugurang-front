@@ -80,7 +80,6 @@ export const logout = async () => {
     },
   };
   const response = await fetch(`${backendRootUrl}/logout`, options);
-  console.log(response);
   window.location.assign(`${frontendRootUrl}/oauth/logout/callback`);
   return;
 };
