@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import produce from "immer";
 import { Container } from "@/compositions/Container";
@@ -37,6 +38,7 @@ const initialInputFormItems = [
 ];
 
 const Signup = () => {
+  const router = useRouter();
   const [inputFormItems, setInputFormItems] = useState<InputFormItemProps[]>(
     initialInputFormItems,
   );
@@ -49,6 +51,9 @@ const Signup = () => {
         if (index !== -1) list[index].value = newInputFormItem.value;
       }),
     );
+  };
+  const handleClickBackButton = () => {
+    router.back();
   };
 
   /*
@@ -95,6 +100,16 @@ const Signup = () => {
       <Container backgroundColor="transparent" fixedWidth={true}>
         <FloatingBottomBar float={true} margin={{ bottom: 8 }}>
           <ButtonGroup>
+            <Button
+              label=""
+              colorVariant="error"
+              leftIcon={{
+                prefix: "fas",
+                name: "arrow-left",
+              }}
+              fillingVariant="contained"
+              onClick={handleClickBackButton}
+            />
             <Button
               label="초기화"
               colorVariant="error"

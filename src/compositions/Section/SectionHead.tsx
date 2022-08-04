@@ -1,19 +1,25 @@
 import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
-import { baseCss } from "@/components/css";
-import { Card } from "@/components/Card";
+import { baseCss, onClickCss } from "@/components/css";
 import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
   isFontAwesomeIconProps,
 } from "@/components/Icon";
+import { makeMargin, makePadding } from "@/components/type";
 
-const titleCss = ({ theme }) =>
+const wrapCss = ({ margin, padding, theme }) =>
   cx(
     baseCss,
     css`
-      font-size: 20px;
-      font-weight: 700;
+      display: flex;
+      align-items: center;
+      ${margin
+        ? `margin: ${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px;`
+        : ""}
+      ${padding
+        ? `padding: ${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px;`
+        : ""}
     `,
   );
 
@@ -26,24 +32,88 @@ const iconWrapCss = ({ theme }) =>
     `,
   );
 
+const iconButtonCss = ({ theme }) =>
+  cx(
+    baseCss,
+    onClickCss,
+    css`
+      border: 0px solid #000;
+      border-radius: 50%;
+      padding: 4px;
+
+      background-color: ${theme.colors.translucent.light};
+      border: 2px solid transparent;
+      &:hover {
+        background-color: ${theme.colors.translucent.main};
+        border: 2px solid transparent;
+      }
+    `,
+  );
+
+const titleCss = ({ theme }) =>
+  cx(
+    baseCss,
+    css`
+      display: block;
+      font-size: 20px;
+      font-weight: 700;
+    `,
+  );
+
+const IconBody = ({ icon }) => (
+  <>
+    <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
+  </>
+);
+
 interface ComponentProps {
   children?: React.ReactNode;
   icon?: FontAwesomeIconProps;
   title?: string;
+  onClickIcon?: () => void;
 }
-const SectionHead = ({ children, icon, title }: ComponentProps) => {
+const SectionHead = ({
+  children,
+  icon,
+  title,
+  onClickIcon,
+}: ComponentProps) => {
   const theme = useTheme();
+  const margin = {
+    x: 16,
+  };
+  const padding = {
+    y: 16,
+  };
 
   return (
-    <Card padding={{ all: 16 }}>
+    <div
+      className={wrapCss({
+        margin: makeMargin(margin),
+        padding: makePadding(padding),
+        theme,
+      })}>
       {isFontAwesomeIconProps(icon) && (
         <span className={iconWrapCss({ theme })}>
-          <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
+          {onClickIcon && (
+            <>
+              <button
+                className={iconButtonCss({ theme })}
+                onClick={onClickIcon}>
+                <IconBody icon={icon} />
+              </button>
+            </>
+          )}
+          {!onClickIcon && (
+            <>
+              <IconBody icon={icon} />
+            </>
+          )}
         </span>
       )}
       <span className={titleCss({ theme })}>{title}</span>
       {children}
-    </Card>
+    </div>
   );
 };
 

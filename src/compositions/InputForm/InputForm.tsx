@@ -6,13 +6,7 @@ import { useElementSize } from "@/hooks/utilities";
 import { baseCss } from "@/components/css";
 import useIsomorphicLayoutEffect from "@/hooks/utilities/useIsomorphicLayoutEffect";
 
-const wrapCss = ({ theme }) =>
-  cx(
-    baseCss,
-    css`
-      padding: 16px;
-    `,
-  );
+const wrapCss = ({ theme }) => cx(baseCss, css``);
 
 const formItemWrapCss = ({ smallWidthMode, theme }) =>
   cx(

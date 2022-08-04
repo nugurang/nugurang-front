@@ -14,12 +14,14 @@ import {
   isFontAwesomeIconProps,
 } from "../Icon";
 
-const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
+const iconButtonCss = ({ theme, colorVariant, fillingVariant }) =>
   cx(
     baseCss,
     onClickCss,
     css`
-      padding: 8px 16px;
+      border: 0px solid #000;
+      border-radius: 50%;
+      padding: 4px;
 
       color: ${theme.colors[colorVariant].main};
       background-color: ${theme.colors[colorVariant].main};
@@ -58,37 +60,19 @@ const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
     `,
   );
 
-const leftIconWrapCss = ({ label, theme }) =>
-  cx(
-    baseCss,
-    css`
-      margin-right: ${label ? "4px" : "0"};
-    `,
-  );
-const rightIconWrapCss = ({ label, theme }) =>
-  cx(
-    baseCss,
-    css`
-      margin-left: ${label ? "4px" : "0"};
-    `,
-  );
-
 interface ComponentProps {
   colorVariant?: ColorVariant;
   fillingVariant?: FillingVariant;
-  leftIcon?: FontAwesomeIconProps;
-  rightIcon?: FontAwesomeIconProps;
+  icon?: FontAwesomeIconProps;
   label?: string;
   preventDefault?: boolean;
   stopPropagation?: boolean;
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
-const Button = ({
+const IconButton = ({
   colorVariant = defaultColorVariant,
   fillingVariant = defaultFillingVariant,
-  leftIcon,
-  rightIcon,
-  label = "",
+  icon,
   preventDefault = true,
   stopPropagation = false,
   onClick: _onClick,
@@ -101,22 +85,14 @@ const Button = ({
   };
   return (
     <button
-      className={buttonCss({ theme, colorVariant, fillingVariant })}
+      className={iconButtonCss({ theme, colorVariant, fillingVariant })}
       onClick={onClick}
       type="button">
-      {isFontAwesomeIconProps(leftIcon) && (
-        <span className={leftIconWrapCss({ label, theme })}>
-          <FontAwesomeIcon prefix={leftIcon.prefix} name={leftIcon.name} />
-        </span>
-      )}
-      {label}
-      {isFontAwesomeIconProps(rightIcon) && (
-        <span className={rightIconWrapCss({ label, theme })}>
-          <FontAwesomeIcon prefix={rightIcon.prefix} name={rightIcon.name} />
-        </span>
+      {isFontAwesomeIconProps(icon) && (
+        <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
       )}
     </button>
   );
 };
 
-export default Button;
+export default IconButton;

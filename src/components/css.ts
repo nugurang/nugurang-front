@@ -7,6 +7,7 @@ export const baseCss = css`
 `;
 
 export const onClickCss = css`
+  cursor: pointer;
   &:active {
     transform: scale(0.9);
   }

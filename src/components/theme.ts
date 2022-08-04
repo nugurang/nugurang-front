@@ -38,6 +38,13 @@ export const lightTheme = {
       high: "#fff",
       low: "#ddd",
     },
+    translucent: {
+      main: "#0002",
+      light: "#0000",
+      dark: "#0004",
+      high: "#0000",
+      low: "#0004",
+    },
   },
 };
 
@@ -70,6 +77,13 @@ export const darkTheme = {
       dark: "#000",
       high: "#000",
       low: "#222",
+    },
+    translucent: {
+      main: "#0002",
+      light: "#0000",
+      dark: "#0004",
+      high: "#0004",
+      low: "#0000",
     },
   },
 };

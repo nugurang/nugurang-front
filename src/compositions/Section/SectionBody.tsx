@@ -1,11 +1,15 @@
 import { Card } from "@/components/Card";
-import { defaultPadding } from "@/components/type";
 
 interface ComponentProps {
   children?: React.ReactNode;
 }
 const SectionBody = ({ children }: ComponentProps) => {
-  return <Card padding={defaultPadding}>{children}</Card>;
+  const padding = {
+    top: 0,
+    bottom: 16,
+    x: 16,
+  };
+  return <Card padding={padding}>{children}</Card>;
 };
 
 export default SectionBody;

@@ -9,7 +9,12 @@ export const windowMinWidth = {
 };
 
 export type ColorShade = "main" | "light" | "dark" | "high" | "low";
-export type ColorVariant = "primary" | "error" | "greyscale" | "highContrast";
+export type ColorVariant =
+  | "primary"
+  | "error"
+  | "greyscale"
+  | "highContrast"
+  | "translucent";
 export const defaultColorVariant = "greyscale";
 
 export type FillingVariant =

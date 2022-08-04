@@ -4,6 +4,12 @@ import { baseCss } from "../css";
 import { CSSProperties } from "react";
 import { IconPrefix, IconName } from "@fortawesome/fontawesome-common-types";
 
+export const isFontAwesomeIconProps = (
+  object: any,
+): object is FontAwesomeIconProps => {
+  return !!object && "prefix" in object && "name" in object;
+};
+
 const iconCss = ({ height, width }) =>
   cx(
     baseCss,
@@ -22,25 +28,25 @@ interface ComponentProps extends FontAwesomeIconProps {
   css?: CSSProperties;
   height?: number;
   width?: number;
+  onClick?: () => void;
 }
-
-export const isFontAwesomeIconProps = (
-  object: any,
-): object is FontAwesomeIconProps => {
-  return !!object && "prefix" in object && "name" in object;
-};
 const FontAwesomeIcon = ({
   css,
   height,
   prefix,
   name,
   width,
+  onClick: _onClick,
 }: ComponentProps) => {
+  const onClick = () => {
+    _onClick && _onClick();
+  };
   return (
     <_FontAwesomeIcon
       className={iconCss({ height, width })}
       style={css}
       icon={[prefix, name]}
+      onClick={onClick}
     />
   );
 };
