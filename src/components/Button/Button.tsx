@@ -8,6 +8,11 @@ import {
   defaultFillingVariant,
 } from "@/components/type";
 import React from "react";
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps,
+  isFontAwesomeIconProps,
+} from "../Icon";
 
 const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
   cx(
@@ -54,9 +59,26 @@ const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
     `,
   );
 
+const leftIconWrapCss = ({ theme }) =>
+  cx(
+    baseCss,
+    css`
+      margin-right: 4px;
+    `,
+  );
+const rightIconWrapCss = ({ theme }) =>
+  cx(
+    baseCss,
+    css`
+      margin-left: 4px;
+    `,
+  );
+
 interface ComponentProps {
   colorVariant?: ColorVariant;
   fillingVariant?: FillingVariant;
+  leftIcon?: FontAwesomeIconProps;
+  rightIcon?: FontAwesomeIconProps;
   label?: string;
   preventDefault?: boolean;
   stopPropagation?: boolean;
@@ -65,6 +87,8 @@ interface ComponentProps {
 const Button = ({
   colorVariant = defaultColorVariant,
   fillingVariant = defaultFillingVariant,
+  leftIcon,
+  rightIcon,
   label = "",
   preventDefault = true,
   stopPropagation = false,
@@ -81,7 +105,17 @@ const Button = ({
       className={buttonCss({ theme, colorVariant, fillingVariant })}
       onClick={onClick}
       type="button">
+      {isFontAwesomeIconProps(leftIcon) && (
+        <span className={leftIconWrapCss({ theme })}>
+          <FontAwesomeIcon prefix={leftIcon.prefix} name={leftIcon.name} />
+        </span>
+      )}
       {label}
+      {isFontAwesomeIconProps(rightIcon) && (
+        <span className={rightIconWrapCss({ theme })}>
+          <FontAwesomeIcon prefix={rightIcon.prefix} name={rightIcon.name} />
+        </span>
+      )}
     </button>
   );
 };

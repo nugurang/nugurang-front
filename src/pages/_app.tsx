@@ -3,6 +3,9 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Global, ThemeProvider } from "@emotion/react";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import globalCss from "@/styles/global";
@@ -10,6 +13,9 @@ import { lightTheme, darkTheme } from "@/components/theme";
 import { WindowSizeProvider } from "@/contexts/WindowSizeContext";
 import { setCookie } from "@/utilities/cookie";
 import { isAuthUrl } from "@/services/oAuth";
+
+library.add(fab);
+library.add(fas);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();

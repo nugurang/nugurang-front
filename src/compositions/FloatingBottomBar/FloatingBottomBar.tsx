@@ -60,8 +60,7 @@ const FloatingBottomBar = ({ children, height, margin }: ComponentProps) => {
           height: height || elementSizeCache.height,
           margin: makeMargin(margin),
           theme,
-        })}
-      />
+        })}></div>
       <div
         className={wrapCss({
           height: height || elementSizeCache.height,

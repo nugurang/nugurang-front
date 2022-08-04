@@ -21,6 +21,19 @@ const initialInputFormItems = [
     label: "ID",
     required: true,
   },
+  {
+    id: "email",
+    type: "textfield" as InputFormItemTypeProps,
+    value: "",
+    label: "Email",
+    required: true,
+  },
+  {
+    id: "biography",
+    type: "textfield" as InputFormItemTypeProps,
+    value: "",
+    label: "Bio",
+  },
 ];
 
 const Signup = () => {
@@ -65,7 +78,12 @@ const Signup = () => {
     <>
       <Container fixedWidth={true}>
         <Section>
-          <SectionHead title="회원가입"></SectionHead>
+          <SectionHead
+            title="회원가입"
+            icon={{
+              prefix: "fas",
+              name: "user-plus",
+            }}></SectionHead>
           <SectionBody>
             <InputForm
               formItems={inputFormItems}
@@ -79,11 +97,19 @@ const Signup = () => {
           <Button
             label="초기화"
             colorVariant="error"
+            leftIcon={{
+              prefix: "fas",
+              name: "arrow-rotate-left",
+            }}
             fillingVariant="contained"
           />
           <Button
             label="제출"
             colorVariant="primary"
+            leftIcon={{
+              prefix: "fas",
+              name: "paper-plane",
+            }}
             fillingVariant="contained"
           />
         </ButtonGroup>

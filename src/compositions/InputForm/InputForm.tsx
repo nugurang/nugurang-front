@@ -10,7 +10,7 @@ const wrapCss = ({ theme }) =>
   cx(
     baseCss,
     css`
-      padding: 8px;
+      padding: 16px;
     `,
   );
 
@@ -19,6 +19,9 @@ const formItemWrapCss = ({ smallWidthMode, theme }) =>
     baseCss,
     css`
       ${smallWidthMode ? "display: block;" : "display: flex;"}
+      &:not(:first-of-type) {
+        margin-top: 16px;
+      }
     `,
   );
 
@@ -52,12 +55,12 @@ const formItemLabelCss = ({ required, theme }) =>
     css`
       ${required &&
       `
-        &::after {
+        &::before {
           display: inline-block;
           content: "";
           height: 4px;
           width: 4px;
-          margin-left: 2px;
+          margin-right: 2px;
           vertical-align: top;
           background-color: #ff0000;
           border-radius: 50%;

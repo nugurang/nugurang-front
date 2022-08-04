@@ -7,6 +7,7 @@ const buttonGroupCss = ({ direction }) =>
     baseCss,
     css`
       display: inline-block;
+      white-space: nowrap;
       ${direction === "horizontal" &&
       `
         &>button:not(:first-of-type) {
