@@ -15,7 +15,7 @@ const spacerCss = ({ height, margin, theme }) =>
     `,
   );
 
-const wrapCss = ({ height, margin, theme }) =>
+const floatWrapCss = ({ height, margin, theme }) =>
   cx(
     baseCss,
     css`
@@ -31,13 +31,28 @@ const wrapCss = ({ height, margin, theme }) =>
     `,
   );
 
+const nonFloatWrapCss = ({ theme }) =>
+  cx(
+    baseCss,
+    css`
+      width: fit-content;
+      margin: 0 auto;
+    `,
+  );
+
 interface ComponentProps {
   children?: React.ReactNode;
+  float?: boolean;
   height?: number;
   margin?: Margin;
   padding?: number;
 }
-const FloatingBottomBar = ({ children, height, margin }: ComponentProps) => {
+const FloatingBottomBar = ({
+  children,
+  float = true,
+  height,
+  margin,
+}: ComponentProps) => {
   const theme = useTheme();
   const innerWrapRef = useRef<HTMLDivElement | undefined>(undefined);
   const elementSize = useElementSize(innerWrapRef);
@@ -55,20 +70,32 @@ const FloatingBottomBar = ({ children, height, margin }: ComponentProps) => {
 
   return (
     <>
-      <div
-        className={spacerCss({
-          height: height || elementSizeCache.height,
-          margin: makeMargin(margin),
-          theme,
-        })}></div>
-      <div
-        className={wrapCss({
-          height: height || elementSizeCache.height,
-          margin: makeMargin(margin),
-          theme,
-        })}>
-        <div ref={innerWrapRef}>{children}</div>
-      </div>
+      {float && (
+        <>
+          <div
+            className={spacerCss({
+              height: height || elementSizeCache.height,
+              margin: makeMargin(margin),
+              theme,
+            })}></div>
+          <div
+            className={floatWrapCss({
+              height: height || elementSizeCache.height,
+              margin: makeMargin(margin),
+              theme,
+            })}>
+            <div ref={innerWrapRef}>{children}</div>
+          </div>
+        </>
+      )}
+      {!float && (
+        <div
+          className={nonFloatWrapCss({
+            theme,
+          })}>
+          {children}
+        </div>
+      )}
     </>
   );
 };

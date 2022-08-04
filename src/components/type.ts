@@ -1,3 +1,13 @@
+export const windowMinWidth = {
+  none: 0,
+  watch: 256,
+  mobile: 480,
+  tablet: 640,
+  phablet: 800,
+  laptop: 1024,
+  desktop: 1280,
+};
+
 export type ColorShade = "main" | "light" | "dark" | "high" | "low";
 export type ColorVariant = "primary" | "error" | "greyscale" | "highContrast";
 export const defaultColorVariant = "greyscale";

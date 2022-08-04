@@ -92,28 +92,30 @@ const Signup = () => {
           </SectionBody>
         </Section>
       </Container>
-      <FloatingBottomBar margin={{ bottom: 8 }}>
-        <ButtonGroup>
-          <Button
-            label="초기화"
-            colorVariant="error"
-            leftIcon={{
-              prefix: "fas",
-              name: "arrow-rotate-left",
-            }}
-            fillingVariant="contained"
-          />
-          <Button
-            label="제출"
-            colorVariant="primary"
-            leftIcon={{
-              prefix: "fas",
-              name: "paper-plane",
-            }}
-            fillingVariant="contained"
-          />
-        </ButtonGroup>
-      </FloatingBottomBar>
+      <Container backgroundColor="transparent" fixedWidth={true}>
+        <FloatingBottomBar float={true} margin={{ bottom: 8 }}>
+          <ButtonGroup>
+            <Button
+              label="초기화"
+              colorVariant="error"
+              leftIcon={{
+                prefix: "fas",
+                name: "arrow-rotate-left",
+              }}
+              fillingVariant="contained"
+            />
+            <Button
+              label="제출"
+              colorVariant="primary"
+              leftIcon={{
+                prefix: "fas",
+                name: "paper-plane",
+              }}
+              fillingVariant="contained"
+            />
+          </ButtonGroup>
+        </FloatingBottomBar>
+      </Container>
     </>
   );
 };

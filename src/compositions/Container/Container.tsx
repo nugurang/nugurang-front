@@ -3,7 +3,7 @@ import { useTheme } from "@emotion/react";
 import { Card } from "@/components/Card";
 import { baseCss } from "@/components/css";
 import { useContext, useMemo } from "react";
-import { Margin, Padding } from "@/components/type";
+import { Margin, Padding, windowMinWidth } from "@/components/type";
 import { getMaxEqualOrSmallerFromArray } from "@/utilities/math";
 import { WindowSizeContext } from "@/contexts/WindowSizeContext";
 import { WindowSize } from "@/hooks/utilities";
@@ -42,7 +42,7 @@ const Container = ({
   backgroundColor,
   children,
   fixedWidth = false,
-  fixedWidthThresholds = [280, 480, 768, 1024, 1280],
+  fixedWidthThresholds = Object.values(windowMinWidth),
   margin,
   maxWidth,
   minWidth,
