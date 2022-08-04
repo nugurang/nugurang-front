@@ -6,10 +6,13 @@ const buttonGroupCss = ({ direction }) =>
   cx(
     baseCss,
     css`
-      display: inline-block;
-      white-space: nowrap;
+      display: flex;
       ${direction === "horizontal" &&
       `
+        align-items: stretch;
+        &>button {
+          flex-grow: 1;
+        }
         &>button:not(:first-of-type) {
           border-left: 0 solid #000;
           border-top-left-radius: 0;
@@ -22,10 +25,7 @@ const buttonGroupCss = ({ direction }) =>
       `};
       ${direction === "vertical" &&
       `
-        &>button {
-          display: block;
-          width: 100%;
-        }
+        flex-direction: column;
         &>button:not(:first-of-type) {
           border-top: 0 solid #000;
           border-top-left-radius: 0;

@@ -13,6 +13,23 @@ export const onClickCss = css`
   }
 `;
 
+export const singleLineEllipsisCss = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: keep-all;
+`;
+
+export const doubleLineEllipsisCss = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.25em;
+  max-height: 2.5em;
+`;
+
 const bounce = keyframes`
   from, 20%, 53%, 80%, to {
     transform: translate3d(0,0,0);

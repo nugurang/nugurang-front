@@ -1,6 +1,6 @@
 import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
-import { baseCss, onClickCss } from "../css";
+import { baseCss, onClickCss, doubleLineEllipsisCss } from "../css";
 import {
   ColorVariant,
   FillingVariant,
@@ -14,12 +14,15 @@ import {
   isFontAwesomeIconProps,
 } from "../Icon";
 
-const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
+const buttonCss = ({ colorVariant, fillingVariant, height, theme, width }) =>
   cx(
     baseCss,
     onClickCss,
     css`
+      position: relative;
       padding: 8px 16px;
+      ${height ? `height: ${height}px;` : ""}
+      ${width ? `width: ${width}px;` : ""}
 
       color: ${theme.colors[colorVariant].main};
       background-color: ${theme.colors[colorVariant].main};
@@ -58,39 +61,47 @@ const buttonCss = ({ theme, colorVariant, fillingVariant }) =>
     `,
   );
 
-const leftIconWrapCss = ({ label, theme }) =>
+const labelWrapCss = ({ theme }) =>
+  cx(
+    baseCss,
+    doubleLineEllipsisCss,
+    css`
+      display: block;
+      white-space: pre-wrap;
+    `,
+  );
+
+const iconWrapCss = ({ label, theme }) =>
   cx(
     baseCss,
     css`
       margin-right: ${label ? "4px" : "0"};
     `,
   );
-const rightIconWrapCss = ({ label, theme }) =>
-  cx(
-    baseCss,
-    css`
-      margin-left: ${label ? "4px" : "0"};
-    `,
-  );
 
+export type IconPosition = "top" | "right" | "bottom" | "left";
 interface ComponentProps {
   colorVariant?: ColorVariant;
   fillingVariant?: FillingVariant;
-  leftIcon?: FontAwesomeIconProps;
-  rightIcon?: FontAwesomeIconProps;
+  height?: number;
+  icon?: FontAwesomeIconProps;
+  iconPosition?: IconPosition;
   label?: string;
   preventDefault?: boolean;
   stopPropagation?: boolean;
+  width?: number;
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 const Button = ({
   colorVariant = defaultColorVariant,
   fillingVariant = defaultFillingVariant,
-  leftIcon,
-  rightIcon,
+  height,
+  icon,
+  iconPosition = "left",
   label = "",
   preventDefault = true,
   stopPropagation = false,
+  width,
   onClick: _onClick,
 }: ComponentProps) => {
   const theme = useTheme();
@@ -101,19 +112,35 @@ const Button = ({
   };
   return (
     <button
-      className={buttonCss({ theme, colorVariant, fillingVariant })}
+      className={buttonCss({
+        colorVariant,
+        fillingVariant,
+        height,
+        theme,
+        width,
+      })}
       onClick={onClick}
       type="button">
-      {isFontAwesomeIconProps(leftIcon) && (
-        <span className={leftIconWrapCss({ label, theme })}>
-          <FontAwesomeIcon prefix={leftIcon.prefix} name={leftIcon.name} />
+      {isFontAwesomeIconProps(icon) && iconPosition === "top" && (
+        <div className={iconWrapCss({ label, theme })}>
+          <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
+        </div>
+      )}
+      {isFontAwesomeIconProps(icon) && iconPosition === "left" && (
+        <span className={iconWrapCss({ label, theme })}>
+          <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
         </span>
       )}
-      {label}
-      {isFontAwesomeIconProps(rightIcon) && (
-        <span className={rightIconWrapCss({ label, theme })}>
-          <FontAwesomeIcon prefix={rightIcon.prefix} name={rightIcon.name} />
+      <span className={labelWrapCss({ theme })}>{label}</span>
+      {isFontAwesomeIconProps(icon) && iconPosition === "right" && (
+        <span className={iconWrapCss({ label, theme })}>
+          <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
         </span>
+      )}
+      {isFontAwesomeIconProps(icon) && iconPosition === "bottom" && (
+        <div className={iconWrapCss({ label, theme })}>
+          <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
+        </div>
       )}
     </button>
   );

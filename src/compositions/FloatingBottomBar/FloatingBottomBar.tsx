@@ -15,19 +15,19 @@ const spacerCss = ({ height, margin, theme }) =>
     `,
   );
 
-const floatWrapCss = ({ height, margin, theme }) =>
+const floatWrapCss = ({ height, margin, theme, width }) =>
   cx(
     baseCss,
     css`
       position: fixed;
+      box-sizing: border-box;
       bottom: 0;
       height: ${margin ? height + margin.top + margin.bottom : height}px;
       padding: ${margin
         ? `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`
         : "0"};
-      box-sizing: border-box;
       left: 50%;
-      transform: translateX(-50%);
+      margin-left: -${width / 2}px;
     `,
   );
 
@@ -81,6 +81,7 @@ const FloatingBottomBar = ({
           <div
             className={floatWrapCss({
               height: height || elementSizeCache.height,
+              width: elementSizeCache.width,
               margin: makeMargin(margin),
               theme,
             })}>

@@ -103,7 +103,7 @@ const Signup = () => {
             <Button
               label=""
               colorVariant="error"
-              leftIcon={{
+              icon={{
                 prefix: "fas",
                 name: "arrow-left",
               }}
@@ -113,7 +113,7 @@ const Signup = () => {
             <Button
               label="초기화"
               colorVariant="error"
-              leftIcon={{
+              icon={{
                 prefix: "fas",
                 name: "arrow-rotate-left",
               }}
@@ -122,7 +122,7 @@ const Signup = () => {
             <Button
               label="제출"
               colorVariant="primary"
-              leftIcon={{
+              icon={{
                 prefix: "fas",
                 name: "paper-plane",
               }}
