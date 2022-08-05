@@ -1,6 +1,6 @@
 import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
-import { baseCss, onClickCss, doubleLineEllipsisCss } from "../css";
+import { baseCss, onClickCss, singleLineEllipsisCss } from "../css";
 import {
   ColorVariant,
   FillingVariant,
@@ -61,27 +61,30 @@ const buttonCss = ({ colorVariant, fillingVariant, height, theme, width }) =>
     `,
   );
 
-const labelWrapCss = ({ theme }) =>
+const iconWrapCss = ({ iconPosition, label, theme }) =>
   cx(
     baseCss,
-    doubleLineEllipsisCss,
     css`
-      display: block;
-      white-space: pre-wrap;
+      ${iconPosition === "left" ? "margin-right: 4px;" : ""}
+      ${iconPosition === "right" ? "margin-left: 4px;" : ""}
     `,
   );
 
-const iconWrapCss = ({ label, theme }) =>
+const labelWrapCss = ({ theme }) =>
   cx(
     baseCss,
     css`
-      margin-right: ${label ? "4px" : "0"};
+      display: inline-block;
     `,
   );
+
+const labelDoubleLineEllipsisCss = ({ theme }) =>
+  cx(baseCss, singleLineEllipsisCss, css``);
 
 export type IconPosition = "top" | "right" | "bottom" | "left";
 interface ComponentProps {
   colorVariant?: ColorVariant;
+  compact?: boolean;
   fillingVariant?: FillingVariant;
   height?: number;
   icon?: FontAwesomeIconProps;
@@ -94,6 +97,7 @@ interface ComponentProps {
 }
 const Button = ({
   colorVariant = defaultColorVariant,
+  compact = false,
   fillingVariant = defaultFillingVariant,
   height,
   icon,
@@ -122,23 +126,27 @@ const Button = ({
       onClick={onClick}
       type="button">
       {isFontAwesomeIconProps(icon) && iconPosition === "top" && (
-        <div className={iconWrapCss({ label, theme })}>
+        <div className={iconWrapCss({ iconPosition, label, theme })}>
           <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
         </div>
       )}
       {isFontAwesomeIconProps(icon) && iconPosition === "left" && (
-        <span className={iconWrapCss({ label, theme })}>
+        <span className={iconWrapCss({ iconPosition, label, theme })}>
           <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
         </span>
       )}
-      <span className={labelWrapCss({ theme })}>{label}</span>
+      {!(compact && isFontAwesomeIconProps(icon)) && (
+        <span className={labelWrapCss({ theme })}>
+          <span className={labelDoubleLineEllipsisCss({ theme })}>{label}</span>
+        </span>
+      )}
       {isFontAwesomeIconProps(icon) && iconPosition === "right" && (
-        <span className={iconWrapCss({ label, theme })}>
+        <span className={iconWrapCss({ iconPosition, label, theme })}>
           <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
         </span>
       )}
       {isFontAwesomeIconProps(icon) && iconPosition === "bottom" && (
-        <div className={iconWrapCss({ label, theme })}>
+        <div className={iconWrapCss({ iconPosition, label, theme })}>
           <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
         </div>
       )}

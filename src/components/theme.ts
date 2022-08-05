@@ -26,10 +26,10 @@ export const lightTheme = {
     },
     greyscale: {
       main: "#888",
-      light: "#666",
-      dark: "#aaa",
-      high: "#666",
-      low: "#aaa",
+      light: "#aaa",
+      dark: "#666",
+      high: "#aaa",
+      low: "#666",
     },
     highContrast: {
       main: "#eee",
@@ -66,10 +66,10 @@ export const darkTheme = {
     },
     greyscale: {
       main: "#888",
-      light: "#666",
-      dark: "#aaa",
-      high: "#aaa",
-      low: "#666",
+      light: "#aaa",
+      dark: "#666",
+      high: "#666",
+      low: "#aaa",
     },
     highContrast: {
       main: "#111",

@@ -1,12 +1,4 @@
-export const windowMinWidth = {
-  none: 0,
-  watch: 256,
-  mobile: 480,
-  tablet: 640,
-  phablet: 800,
-  laptop: 1024,
-  desktop: 1280,
-};
+import { DefaultMargin, DefaultPadding } from "./constants";
 
 export type ColorShade = "main" | "light" | "dark" | "high" | "low";
 export type ColorVariant =
@@ -35,17 +27,11 @@ export interface Margin extends BaseMargin {
   y?: number;
   all?: number;
 }
-export const defaultMargin = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-};
 export const makeMargin = (margin?: Margin) => ({
-  top: margin?.top || margin?.y || margin?.all || defaultMargin.top,
-  right: margin?.right || margin?.x || margin?.all || defaultMargin.right,
-  bottom: margin?.bottom || margin?.y || margin?.all || defaultMargin.bottom,
-  left: margin?.left || margin?.x || margin?.all || defaultMargin.left,
+  top: margin?.top || margin?.y || margin?.all || DefaultMargin.top,
+  right: margin?.right || margin?.x || margin?.all || DefaultMargin.right,
+  bottom: margin?.bottom || margin?.y || margin?.all || DefaultMargin.bottom,
+  left: margin?.left || margin?.x || margin?.all || DefaultMargin.left,
 });
 
 interface BasePadding {
@@ -59,25 +45,15 @@ export interface Padding extends BasePadding {
   y?: number;
   all?: number;
 }
-export const defaultPadding = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-};
 export const makePadding = (padding?: Padding) => ({
-  top: padding?.top || padding?.y || padding?.all || defaultPadding.top,
-  right: padding?.right || padding?.x || padding?.all || defaultPadding.right,
+  top: padding?.top || padding?.y || padding?.all || DefaultPadding.top,
+  right: padding?.right || padding?.x || padding?.all || DefaultPadding.right,
   bottom:
-    padding?.bottom || padding?.y || padding?.all || defaultPadding.bottom,
-  left: padding?.left || padding?.x || padding?.all || defaultPadding.left,
+    padding?.bottom || padding?.y || padding?.all || DefaultPadding.bottom,
+  left: padding?.left || padding?.x || padding?.all || DefaultPadding.left,
 });
 
 export interface WindowSize {
   height: number;
   width: number;
 }
-export const defaultWindowSize = {
-  height: 0,
-  width: 0,
-};

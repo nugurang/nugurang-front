@@ -13,12 +13,14 @@ import { lightTheme, darkTheme } from "@/components/theme";
 import { WindowSizeProvider } from "@/contexts/WindowSizeContext";
 import { setCookie } from "@/utilities/cookie";
 import { isAuthUrl } from "@/services/oAuth";
+import { useWindowSize } from "@/hooks/utilities/useWindowSize";
 
 library.add(fab);
 library.add(fas);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     if (!isAuthUrl(router.asPath))

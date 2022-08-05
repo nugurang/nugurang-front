@@ -15,19 +15,28 @@ const spacerCss = ({ height, margin, theme }) =>
     `,
   );
 
-const floatWrapCss = ({ height, margin, theme, width }) =>
+const floatWrapCss = ({ height, margin, theme }) =>
   cx(
     baseCss,
     css`
       position: fixed;
       box-sizing: border-box;
       bottom: 0;
+      left: 0;
+      right: 0;
       height: ${margin ? height + margin.top + margin.bottom : height}px;
       padding: ${margin
         ? `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`
         : "0"};
-      left: 50%;
-      margin-left: -${width / 2}px;
+    `,
+  );
+
+const floatInnerWrapCss = () =>
+  cx(
+    baseCss,
+    css`
+      width: fit-content;
+      margin: 0 auto;
     `,
   );
 
@@ -35,7 +44,6 @@ const nonFloatWrapCss = ({ theme }) =>
   cx(
     baseCss,
     css`
-      width: fit-content;
       margin: 0 auto;
     `,
   );
@@ -54,8 +62,8 @@ const FloatingBottomBar = ({
   margin,
 }: ComponentProps) => {
   const theme = useTheme();
-  const innerWrapRef = useRef<HTMLDivElement | undefined>(undefined);
-  const elementSize = useElementSize(innerWrapRef);
+  const childrenWrapRef = useRef<HTMLDivElement | undefined>(undefined);
+  const elementSize = useElementSize(childrenWrapRef);
   const [elementSizeCache, setElementSizeCache] = useState({
     height: 0,
     width: 0,
@@ -81,11 +89,12 @@ const FloatingBottomBar = ({
           <div
             className={floatWrapCss({
               height: height || elementSizeCache.height,
-              width: elementSizeCache.width,
               margin: makeMargin(margin),
               theme,
             })}>
-            <div ref={innerWrapRef}>{children}</div>
+            <div ref={childrenWrapRef} className={floatInnerWrapCss()}>
+              {children}
+            </div>
           </div>
         </>
       )}

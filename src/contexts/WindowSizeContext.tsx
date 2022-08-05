@@ -1,9 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-import { useWindowSize } from "@/hooks/utilities";
+import { useWindowSize, WindowSize } from "@/hooks/utilities";
+import { DefaultWindowSize } from "@/components/constants";
 
 // https://usehooks.com/useWindowSize/
 
-const WindowSizeContext = createContext({});
+const WindowSizeContext = createContext<WindowSize>(DefaultWindowSize);
 
 const WindowSizeProvider = ({ children }) => {
   const windowSize = useWindowSize();

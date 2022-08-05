@@ -3,8 +3,16 @@ import { Container } from "@/compositions/Container";
 import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
 import { Section, SectionHead, SectionBody } from "@/compositions/Section";
 import Link from "next/link";
+import { WindowSizeContext } from "@/contexts/WindowSizeContext";
+import { useContext, useMemo } from "react";
+import { WindowMinWidth } from "@/components/constants";
 
 const Home = () => {
+  const windowSize = useContext(WindowSizeContext);
+  const needsCompactButton = useMemo(
+    () => windowSize.width <= WindowMinWidth.mobile,
+    [windowSize.width, WindowMinWidth.mobile],
+  );
   return (
     <>
       <Container fixedWidth={true}>
@@ -15,10 +23,11 @@ const Home = () => {
       </Container>
       <Container backgroundColor="transparent" fixedWidth={true}>
         <FloatingBottomBar float={true} margin={{ bottom: 8 }}>
-          <ButtonGroup>
+          <ButtonGroup direction="horizontal">
             <Button
               label="보드"
               colorVariant="primary"
+              compact={needsCompactButton}
               icon={{
                 prefix: "fas",
                 name: "chalkboard-user",
@@ -29,6 +38,7 @@ const Home = () => {
             <Button
               label="팀"
               colorVariant="primary"
+              compact={needsCompactButton}
               icon={{
                 prefix: "fas",
                 name: "users",
@@ -39,6 +49,7 @@ const Home = () => {
             <Button
               label="빠른 매칭"
               colorVariant="primary"
+              compact={needsCompactButton}
               icon={{
                 prefix: "fas",
                 name: "fire-flame-curved",
@@ -49,6 +60,7 @@ const Home = () => {
             <Button
               label={`coming\nsoon`}
               colorVariant="greyscale"
+              compact={needsCompactButton}
               icon={{
                 prefix: "fas",
                 name: "screwdriver-wrench",
@@ -59,6 +71,7 @@ const Home = () => {
             <Button
               label="메뉴"
               colorVariant="primary"
+              compact={needsCompactButton}
               icon={{
                 prefix: "fas",
                 name: "bars",
