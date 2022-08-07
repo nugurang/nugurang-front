@@ -61,12 +61,16 @@ const buttonCss = ({ colorVariant, fillingVariant, height, theme, width }) =>
     `,
   );
 
-const iconWrapCss = ({ iconPosition, label, theme }) =>
+const iconWrapCss = ({ compact, iconPosition, label, theme }) =>
   cx(
     baseCss,
     css`
-      ${iconPosition === "left" ? "margin-right: 4px;" : ""}
-      ${iconPosition === "right" ? "margin-left: 4px;" : ""}
+      ${!compact && label && iconPosition === "left"
+        ? "margin-right: 8px;"
+        : ""}
+      ${!compact && label && iconPosition === "right"
+        ? "margin-left: 8px;"
+        : ""}
     `,
   );
 
@@ -124,31 +128,27 @@ const Button = ({
       })}
       onClick={onClick}
       type="button">
-      {isFontAwesomeIconProps(icon) && iconPosition === "top" && (
-        <div className={iconWrapCss({ iconPosition, label, theme })}>
-          <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
-        </div>
-      )}
-      {isFontAwesomeIconProps(icon) && iconPosition === "left" && (
-        <span className={iconWrapCss({ iconPosition, label, theme })}>
+      {isFontAwesomeIconProps(icon) && ["top", "left"].includes(iconPosition) && (
+        <span className={iconWrapCss({ compact, iconPosition, label, theme })}>
           <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
         </span>
       )}
+      {isFontAwesomeIconProps(icon) && ["top"].includes(iconPosition) && <br />}
       {!(compact && isFontAwesomeIconProps(icon)) && (
         <span className={labelWrapCss({ theme })}>
           <span className={labelCss({ theme })}>{label}</span>
         </span>
       )}
-      {isFontAwesomeIconProps(icon) && iconPosition === "right" && (
-        <span className={iconWrapCss({ iconPosition, label, theme })}>
-          <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
-        </span>
+      {isFontAwesomeIconProps(icon) && ["bottom"].includes(iconPosition) && (
+        <br />
       )}
-      {isFontAwesomeIconProps(icon) && iconPosition === "bottom" && (
-        <div className={iconWrapCss({ iconPosition, label, theme })}>
-          <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
-        </div>
-      )}
+      {isFontAwesomeIconProps(icon) &&
+        ["bottom", "right"].includes(iconPosition) && (
+          <span
+            className={iconWrapCss({ compact, iconPosition, label, theme })}>
+            <FontAwesomeIcon prefix={icon.prefix} name={icon.name} />
+          </span>
+        )}
     </button>
   );
 };

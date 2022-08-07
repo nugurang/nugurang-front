@@ -59,7 +59,7 @@ const FloatingBottomBar = ({
   children,
   float = true,
   height,
-  margin,
+  margin = { bottom: 8 },
 }: ComponentProps) => {
   const theme = useTheme();
   const childrenWrapRef = useRef();

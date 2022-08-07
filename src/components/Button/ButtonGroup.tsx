@@ -8,6 +8,7 @@ const horizontalButtonGroupCss = () =>
     css`
       display: flex;
       align-items: stretch;
+      justify-content: center;
       & > button:not(:first-of-type) {
         border-left: 0 solid #000;
         border-top-left-radius: 0;
@@ -27,6 +28,7 @@ const verticalButtonGroupCss = () =>
       display: flex;
       flex-direction: column;
       width: fit-content;
+      margin: 0 auto;
       & > button:not(:first-of-type) {
         border-top: 0 solid #000;
         border-top-left-radius: 0;
@@ -43,6 +45,7 @@ type ButtonGroupDirection = "horizontal" | "vertical";
 interface ComponentProps {
   children?: React.ReactNode;
   direction?: ButtonGroupDirection;
+  fullWidth?: boolean;
 }
 const ButtonGroup = ({
   children,
