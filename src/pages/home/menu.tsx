@@ -6,7 +6,7 @@ import { Section, SectionHead, SectionBody } from "@/compositions/Section";
 const Menu = () => {
   return (
     <>
-      <Container fixedWidth={true}>
+      <Container>
         <Section>
           <SectionHead title="메뉴"></SectionHead>
           <SectionBody>Hello World!</SectionBody>

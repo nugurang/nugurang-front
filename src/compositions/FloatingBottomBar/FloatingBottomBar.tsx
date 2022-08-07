@@ -12,6 +12,9 @@ const spacerCss = ({ height, margin, theme }) =>
     css`
       box-sizing: border-box;
       height: ${margin ? height + margin.top + margin.bottom : height}px;
+      padding: ${margin
+        ? `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`
+        : "0"};
     `,
   );
 
@@ -58,7 +61,7 @@ const FloatingBottomBar = ({
   children,
   float = true,
   height,
-  margin = { bottom: 8 },
+  margin = { bottom: 16 },
 }: ComponentProps) => {
   const theme = useTheme();
   const childrenWrapRef = useRef();

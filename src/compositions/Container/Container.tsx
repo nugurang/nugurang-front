@@ -72,7 +72,7 @@ const Container = ({
           _width || windowSize.width,
         )
       : _width || windowSize.width;
-  }, [_width, windowSize.width]);
+  }, [_width, windowSize.width, fixedWidth]);
 
   return (
     <div

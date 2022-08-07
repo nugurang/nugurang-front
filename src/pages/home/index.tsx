@@ -21,7 +21,7 @@ const Home = () => {
 
   return (
     <>
-      <Container fixedWidth={true}>
+      <Container>
         <Section>
           <SectionHead title="홈"></SectionHead>
           <SectionBody>Hello World!</SectionBody>
