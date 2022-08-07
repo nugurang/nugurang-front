@@ -78,8 +78,7 @@ const labelWrapCss = ({ theme }) =>
     `,
   );
 
-const labelDoubleLineEllipsisCss = ({ theme }) =>
-  cx(baseCss, singleLineEllipsisCss, css``);
+const labelCss = ({ theme }) => cx(baseCss, singleLineEllipsisCss, css``);
 
 export type IconPosition = "top" | "right" | "bottom" | "left";
 interface ComponentProps {
@@ -137,7 +136,7 @@ const Button = ({
       )}
       {!(compact && isFontAwesomeIconProps(icon)) && (
         <span className={labelWrapCss({ theme })}>
-          <span className={labelDoubleLineEllipsisCss({ theme })}>{label}</span>
+          <span className={labelCss({ theme })}>{label}</span>
         </span>
       )}
       {isFontAwesomeIconProps(icon) && iconPosition === "right" && (

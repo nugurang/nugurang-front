@@ -1,4 +1,4 @@
-// https://usehooks-ts.com/react-hook/use-element-size
+// https://github.com/rehooks/component-size/blob/master/index.js
 
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 
@@ -6,40 +6,68 @@ const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export interface ElementSize {
-  width: number;
   height: number;
+  width: number;
 }
 
-function useElementSize<T extends HTMLElement = HTMLDivElement>(
-  ref: React.RefObject<T>,
-): ElementSize {
-  const element = ref.current;
-  const [size, setSize] = useState<ElementSize>({
-    width: 0,
-    height: 0,
-  });
-
-  const handleResize = () => {
-    setSize({
-      width: element?.offsetWidth || 0,
-      height: element?.offsetHeight || 0,
-    });
-  };
-
-  useIsomorphicLayoutEffect(() => {
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => {
-      window.removeEventListener("resize", handleResize);
+function getSize<T extends HTMLElement = HTMLDivElement>(element: T) {
+  if (!element) {
+    return {
+      width: 0,
+      height: 0,
     };
-  }, []);
+  }
 
-  useIsomorphicLayoutEffect(() => {
-    handleResize();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [element?.offsetHeight, element?.offsetWidth]);
+  return {
+    width: element.offsetWidth,
+    height: element.offsetHeight,
+  };
+}
 
-  return size;
+function useElementSize(ref) {
+  var _useState = useState(getSize(ref ? ref.current : {}));
+  var ElementSize = _useState[0];
+  var setElementSize = _useState[1];
+
+  var handleResize = useCallback(
+    function handleResize() {
+      if (ref.current) {
+        setElementSize(getSize(ref.current));
+      }
+    },
+    [ref],
+  );
+
+  useIsomorphicLayoutEffect(
+    function () {
+      if (!ref.current) {
+        return;
+      }
+
+      handleResize();
+
+      if (typeof ResizeObserver === "function") {
+        var resizeObserver = new ResizeObserver(function () {
+          handleResize();
+        });
+        resizeObserver.observe(ref.current);
+
+        return function () {
+          resizeObserver.disconnect();
+          resizeObserver = null;
+        };
+      } else {
+        window.addEventListener("resize", handleResize);
+
+        return function () {
+          window.removeEventListener("resize", handleResize);
+        };
+      }
+    },
+    [ref.current],
+  );
+
+  return ElementSize;
 }
 
 export default useElementSize;

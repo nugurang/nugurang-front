@@ -2,7 +2,7 @@ import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
 import { baseCss } from "@/components/css";
 import { useElementSize } from "@/hooks/utilities";
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "@/hooks/utilities";
 import { makeMargin, Margin } from "@/components/type";
 
@@ -10,12 +10,13 @@ const spacerCss = ({ height, margin, theme }) =>
   cx(
     baseCss,
     css`
-      height: ${margin ? height + margin.top + margin.bottom : height}px;
       box-sizing: border-box;
+      height: ${margin ? height + margin.top + margin.bottom : height}px;
+      background-color: #f00;
     `,
   );
 
-const floatWrapCss = ({ height, margin, theme }) =>
+const floatWrapCss = ({ margin, theme }) =>
   cx(
     baseCss,
     css`
@@ -24,7 +25,6 @@ const floatWrapCss = ({ height, margin, theme }) =>
       bottom: 0;
       left: 0;
       right: 0;
-      height: ${margin ? height + margin.top + margin.bottom : height}px;
       padding: ${margin
         ? `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`
         : "0"};
@@ -62,7 +62,7 @@ const FloatingBottomBar = ({
   margin,
 }: ComponentProps) => {
   const theme = useTheme();
-  const childrenWrapRef = useRef<HTMLDivElement | undefined>(undefined);
+  const childrenWrapRef = useRef();
   const elementSize = useElementSize(childrenWrapRef);
   const [elementSizeCache, setElementSizeCache] = useState({
     height: 0,
@@ -88,7 +88,6 @@ const FloatingBottomBar = ({
             })}></div>
           <div
             className={floatWrapCss({
-              height: height || elementSizeCache.height,
               margin: makeMargin(margin),
               theme,
             })}>
