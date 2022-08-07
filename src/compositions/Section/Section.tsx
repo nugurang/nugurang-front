@@ -1,26 +1,46 @@
+import { useTheme } from "@emotion/react";
+import { css, cx } from "@emotion/css";
+import { baseCss } from "@/components/css";
 import { Card } from "@/components/Card";
-import { Margin, Padding } from "@/components/type";
+import { Theme } from "@/components/theme";
+import { FillingVariant, Margin, Padding } from "@/components/type";
+
+const innerWrapCss = () =>
+  cx(
+    baseCss,
+    css`
+      padding: 16px 0;
+      & > * {
+        margin-top: 16px;
+      }
+      & > *:first-child {
+        margin-top: 0;
+      }
+    `,
+  );
 
 interface ComponentProps {
   backgroundColor?: string;
   children?: React.ReactNode;
-  fixedWidth?: boolean;
-  fixedWidthThresholds?: number[];
+  fillingVariant?: FillingVariant;
   margin?: Margin;
-  maxWidth?: number;
-  minWidth?: number;
   padding?: Padding;
-  width?: number;
 }
 const Section = ({
   backgroundColor,
   children,
+  fillingVariant,
   margin,
   padding,
 }: ComponentProps) => {
+  const theme = useTheme() as Theme;
   return (
-    <Card backgroundColor={backgroundColor} margin={margin} padding={padding}>
-      {children}
+    <Card
+      backgroundColor={backgroundColor || theme.colors.highContrast.high}
+      fillingVariant={fillingVariant}
+      margin={margin}
+      padding={padding}>
+      <div className={innerWrapCss()}>{children}</div>
     </Card>
   );
 };

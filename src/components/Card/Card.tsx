@@ -2,7 +2,12 @@ import { css, cx } from "@emotion/css";
 import { useTheme } from "@emotion/react";
 import { baseCss } from "../css";
 import { CSSProperties } from "react";
-import { makePadding, Margin, Padding } from "@/components/type";
+import {
+  FillingVariant,
+  makePadding,
+  Margin,
+  Padding,
+} from "@/components/type";
 
 const wrapCss = ({ margin }) =>
   cx(
@@ -15,7 +20,14 @@ const wrapCss = ({ margin }) =>
     `,
   );
 
-const cardCss = ({ backgroundColor, height, padding, theme, width }) =>
+const cardCss = ({
+  backgroundColor,
+  fillingVariant,
+  height,
+  padding,
+  theme,
+  width,
+}) =>
   cx(
     baseCss,
     css`
@@ -25,6 +37,21 @@ const cardCss = ({ backgroundColor, height, padding, theme, width }) =>
         ? `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`
         : "0"};
       background-color: ${backgroundColor || theme.colors.highContrast.high};
+
+      ${fillingVariant === "contained" &&
+      `
+        color: ${theme.colors.highContrast.main};
+        border: 2px solid transparent;
+      `}
+      ${fillingVariant === "outlined" &&
+      `
+        background-color: transparent;
+      `}
+      ${fillingVariant === "transparent" &&
+      `
+        background-color: transparent;
+        border: 2px solid transparent;
+      `}
     `,
   );
 
@@ -32,6 +59,7 @@ interface ComponentProps {
   backgroundColor?: string;
   children?: React.ReactNode;
   css?: CSSProperties;
+  fillingVariant?: FillingVariant;
   height?: number;
   margin?: Margin;
   padding?: Padding;
@@ -41,6 +69,7 @@ const Card = ({
   backgroundColor,
   children,
   css,
+  fillingVariant,
   height,
   margin,
   padding,
@@ -52,6 +81,7 @@ const Card = ({
       <div
         className={cardCss({
           backgroundColor,
+          fillingVariant,
           height,
           padding: makePadding(padding),
           theme,

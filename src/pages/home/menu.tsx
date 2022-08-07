@@ -11,21 +11,17 @@ const Menu = () => {
           <SectionHead title="메뉴"></SectionHead>
           <SectionBody>Hello World!</SectionBody>
         </Section>
-        <Section>
-          <SectionBody>
-            <ButtonGroup>
-              <Button
-                label="로그아웃"
-                colorVariant="error"
-                icon={{
-                  prefix: "fas",
-                  name: "key",
-                }}
-                fillingVariant="contained"
-              />
-            </ButtonGroup>
-          </SectionBody>
-        </Section>
+        <ButtonGroup>
+          <Button
+            label="로그아웃"
+            colorVariant="error"
+            icon={{
+              prefix: "fas",
+              name: "key",
+            }}
+            fillingVariant="contained"
+          />
+        </ButtonGroup>
       </Container>
       <FloatingBottomBar float={true}>
         <ButtonGroup>

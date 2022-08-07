@@ -8,7 +8,7 @@ import {
 } from "@/components/Icon";
 import { makeMargin, makePadding } from "@/components/type";
 
-const wrapCss = ({ margin, padding, theme }) =>
+const wrapCss = ({ margin, theme }) =>
   cx(
     baseCss,
     css`
@@ -16,9 +16,6 @@ const wrapCss = ({ margin, padding, theme }) =>
       align-items: center;
       ${margin
         ? `margin: ${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px;`
-        : ""}
-      ${padding
-        ? `padding: ${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px;`
         : ""}
     `,
   );
@@ -82,15 +79,11 @@ const SectionHead = ({
   const margin = {
     x: 16,
   };
-  const padding = {
-    y: 16,
-  };
 
   return (
     <div
       className={wrapCss({
         margin: makeMargin(margin),
-        padding: makePadding(padding),
         theme,
       })}>
       {isFontAwesomeIconProps(icon) && (

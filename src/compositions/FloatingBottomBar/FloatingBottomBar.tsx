@@ -12,7 +12,6 @@ const spacerCss = ({ height, margin, theme }) =>
     css`
       box-sizing: border-box;
       height: ${margin ? height + margin.top + margin.bottom : height}px;
-      background-color: #f00;
     `,
   );
 

@@ -4,11 +4,11 @@ import { Card } from "@/components/Card";
 import { baseCss } from "@/components/css";
 import { useContext, useMemo } from "react";
 import { Margin, Padding } from "@/components/type";
+import { Theme } from "@/components/theme";
 import { WindowMinWidth } from "@/components/constants";
 import { getMaxEqualOrSmallerFromArray } from "@/utilities/math";
 import { WindowSizeContext } from "@/contexts/WindowSizeContext";
 import { WindowSize } from "@/hooks/utilities";
-import { Theme } from "@/components/theme";
 
 const wrapCss = ({ fixedWidthThresholds, margin, maxWidth, minWidth, width }) =>
   cx(
@@ -24,7 +24,20 @@ const wrapCss = ({ fixedWidthThresholds, margin, maxWidth, minWidth, width }) =>
       margin: 0 auto;
       padding: ${margin
         ? `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
-        : "8px"};
+        : "16px 8px"};
+    `,
+  );
+
+const innerWrapCss = () =>
+  cx(
+    baseCss,
+    css`
+      & > * {
+        margin-top: 16px;
+      }
+      & > *:first-child {
+        margin-top: 0;
+      }
     `,
   );
 
@@ -71,9 +84,9 @@ const Container = ({
         width,
       })}>
       <Card
-        backgroundColor={backgroundColor || theme.colors.highContrast.high}
+        backgroundColor={backgroundColor || theme.colors.translucent.high}
         padding={padding}>
-        {children}
+        <div className={innerWrapCss()}>{children}</div>
       </Card>
     </div>
   );
