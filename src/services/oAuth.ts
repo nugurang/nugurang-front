@@ -1,5 +1,5 @@
 import { type OAuthProvider, OAuthProviderConstant } from "@/constants/oAuth";
-import { backendRootUrl, frontendRootUrl } from "@/constants/base";
+import { frontendRootUrl } from "@/constants/url";
 import { getCookies } from "@/utilities/cookie";
 
 export const isAuthUrl = (url: string) => {
@@ -35,13 +35,9 @@ export const getAuthorizationCodeAndRedirect = async (
 };
 
 export const getAccessToken = async (
-  _oAuthProvider?: OAuthProvider,
-  _oAuthAuthorizationCode?: string,
+  oAuthProvider: OAuthProvider,
+  oAuthAuthorizationCode: string,
 ) => {
-  const oAuthProvider: OAuthProvider =
-    _oAuthProvider || (getCookies(null).oAuthProvider as OAuthProvider);
-  const oAuthAuthorizationCode =
-    _oAuthAuthorizationCode || getCookies(null).oAuthAuthorizationCode;
   switch (oAuthProvider) {
     case "github": {
       const options = {

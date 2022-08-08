@@ -1,7 +1,8 @@
 import { gql } from "@apollo/client";
 import { query } from "@/services/backend";
+import { frontendRootUrl } from "@/constants/url";
 
-export default function withAuthServerSideProps(getServerSidePropsFunction) {
+export default function WithAuthServerSideProps(getServerSidePropsFunction?) {
   return async (context) => {
     const currentOAuth2UserResult = await query({
       context,
@@ -15,13 +16,14 @@ export default function withAuthServerSideProps(getServerSidePropsFunction) {
         }
       `,
     });
+    console.log(currentOAuth2UserResult);
     if (
       !currentOAuth2UserResult.data ||
       currentOAuth2UserResult.data.currentOAuth2User === null
     ) {
       return {
         redirect: {
-          destination: "/signin/",
+          destination: "/signin",
           permanent: false,
         },
       };
@@ -49,7 +51,7 @@ export default function withAuthServerSideProps(getServerSidePropsFunction) {
     if (currentUserResult.data.currentUser === null) {
       return {
         redirect: {
-          destination: "/signup/",
+          destination: "/signup",
           permanent: false,
         },
       };

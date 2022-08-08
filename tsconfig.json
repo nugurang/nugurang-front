@@ -20,6 +20,7 @@
       "@/compositions/*": ["compositions/*"],
       "@/constants/*": ["constants/*"],
       "@/contexts/*": ["contexts/*"],
+      "@/hocs/*": ["hocs/*"],
       "@/hooks/*": ["hooks/*"],
       "@/pages/*": ["pages/*"],
       "@/services/*": ["services/*"],
