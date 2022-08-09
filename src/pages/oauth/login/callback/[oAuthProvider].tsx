@@ -20,9 +20,10 @@ export async function getServerSideProps(context) {
       case "github":
         {
           const { code, state, provider } = context.query; // The temporary code will expire after 10 minutes. Visit https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps
+          const { jSessionId } = await login("github", code);
           setCookie(context, "oAuthProvider", "github");
           setCookie(context, "oAuthAuthorizationCode", code);
-          const response = await login("github", code);
+          setCookie(context, "JSESSIONID", jSessionId);
         }
         return {
           redirect: {

@@ -6,6 +6,7 @@ export async function getServerSideProps(context) {
   try {
     destroyCookie(context, "oAuthProvider");
     destroyCookie(context, "oAuthAuthorizationCode");
+    destroyCookie(context, "JSESSIONID");
     return {
       redirect: {
         permanent: false,

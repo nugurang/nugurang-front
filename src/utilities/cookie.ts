@@ -29,3 +29,14 @@ export function destroyCookie(context, name, params = undefined) {
     return nookies.destroy(context, name, paramsWithDefaultValues);
   return destroyCookieFromNookies(null, name, paramsWithDefaultValues);
 }
+
+export const getValueFromCookieString = (cookieString, key) => {
+  let matches = cookieString.match(
+    new RegExp(
+      "(?:^|; )" +
+        key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)",
+    ),
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+};

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { ApolloProvider } from "@apollo/client";
 import { Global, ThemeProvider } from "@emotion/react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -13,14 +14,13 @@ import { lightTheme, darkTheme } from "@/components/theme";
 import { WindowSizeProvider } from "@/contexts/WindowSizeContext";
 import { setCookie } from "@/utilities/cookie";
 import { isAuthUrl } from "@/services/oAuth";
-import { useWindowSize } from "@/hooks/utilities/useWindowSize";
+import graphQlClient from "@/utilities/graphQlClient";
 
 library.add(fab);
 library.add(fas);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const windowSize = useWindowSize();
 
   useEffect(() => {
     if (!isAuthUrl(router.asPath))
@@ -52,12 +52,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Emotion using the vanilla version supporting SSR</title>
       </Head>
-      <ThemeProvider theme={lightTheme}>
-        <WindowSizeProvider>
-          <Global styles={globalCss} />
-          <Component {...pageProps} />
-        </WindowSizeProvider>
-      </ThemeProvider>
+      <ApolloProvider client={graphQlClient}>
+        <ThemeProvider theme={lightTheme}>
+          <WindowSizeProvider>
+            <Global styles={globalCss} />
+            <Component {...pageProps} />
+          </WindowSizeProvider>
+        </ThemeProvider>
+      </ApolloProvider>
     </>
   );
 }

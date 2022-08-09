@@ -1,6 +1,6 @@
 import { type OAuthProvider, OAuthProviderConstant } from "@/constants/oAuth";
 import { backendRootUrl, frontendRootUrl } from "@/constants/url";
-import { getCookies } from "@/utilities/cookie";
+import { getCookies, getValueFromCookieString } from "@/utilities/cookie";
 import {
   getAccessToken,
   getAuthorizationCodeAndRedirect,
@@ -48,8 +48,15 @@ export const login = async (
           }),
         };
         const response = await fetch(`${backendRootUrl}/login`, options);
+        const setCookieString = response.headers.get("set-cookie");
+        const jSessionId = getValueFromCookieString(
+          setCookieString,
+          "JSESSIONID",
+        );
         const responseJson = await response.json();
-        if (responseJson.errors && responseJson.errors.length > 0) {
+        if (!jSessionId) {
+          console.error(responseJson.errors);
+        } else if (responseJson.errors && responseJson.errors.length > 0) {
           console.error(responseJson.errors);
         } else {
           const userDataAttributes = responseJson.data.principal.attributes;
@@ -64,7 +71,12 @@ export const login = async (
             if (userDataAttributes[attributeKey])
               query[key] = userDataAttributes[attributeKey];
           });
-          return query;
+          console.log(jSessionId);
+          console.log(query);
+
+          return {
+            jSessionId,
+          };
         }
       }
       break;
