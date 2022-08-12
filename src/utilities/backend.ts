@@ -1,10 +1,13 @@
 import { type OAuthProvider, OAuthProviderConstant } from "@/constants/oAuth";
 import { backendRootUrl, frontendRootUrl } from "@/constants/url";
-import { getCookies, getValueFromCookieString } from "@/utilities/cookie";
+import {
+  getCookies,
+  getValueFromCookieString,
+} from "@/utilities/common/cookie";
 import {
   getAccessToken,
   getAuthorizationCodeAndRedirect,
-} from "@/services/oAuth";
+} from "@/utilities/oAuth";
 
 import graphQlClient from "@/utilities/graphQlClient";
 

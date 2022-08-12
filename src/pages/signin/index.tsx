@@ -2,7 +2,7 @@ import { Button, ButtonGroup } from "@/components/Button";
 import { Container } from "@/compositions/Container";
 import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
 import { Section, SectionHead, SectionBody } from "@/compositions/Section";
-import { oAuthLogin, login, logout } from "@/services/backend";
+import { oAuthLogin, login, logout } from "@/utilities/backend";
 import { WithAuthServerSideProps } from "@/hocs/WithAuthServerSideProps";
 
 const Signin = () => {

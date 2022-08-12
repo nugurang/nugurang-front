@@ -12,8 +12,8 @@ import "nprogress/nprogress.css";
 import globalCss from "@/styles/global";
 import { lightTheme, darkTheme } from "@/components/theme";
 import { WindowSizeProvider } from "@/contexts/WindowSizeContext";
-import { setCookie } from "@/utilities/cookie";
-import { isAuthUrl } from "@/services/oAuth";
+import { setCookie } from "@/utilities/common/cookie";
+import { isAuthUrl } from "@/utilities/oAuth";
 import graphQlClient from "@/utilities/graphQlClient";
 
 library.add(fab);

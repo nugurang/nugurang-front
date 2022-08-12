@@ -1,6 +1,6 @@
 import { type OAuthProvider, OAuthProviderConstant } from "@/constants/oAuth";
 import { frontendRootUrl } from "@/constants/url";
-import { getCookies } from "@/utilities/cookie";
+import { getCookies } from "@/utilities/common/cookie";
 
 export const isAuthUrl = (url: string) => {
   return ["auth", "oauth"].some((keyString: string) =>

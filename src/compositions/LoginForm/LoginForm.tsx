@@ -1,6 +1,6 @@
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
-import { oAuthLogin, logout } from "@/services/backend";
+import { oAuthLogin, logout } from "@/utilities/backend";
 
 const LoginForm = () => {
   return (

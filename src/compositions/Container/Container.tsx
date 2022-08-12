@@ -6,7 +6,7 @@ import { useContext, useMemo } from "react";
 import { Margin, Padding } from "@/components/type";
 import { Theme } from "@/components/theme";
 import { WindowMinWidth } from "@/components/constants";
-import { getMaxEqualOrSmallerFromArray } from "@/utilities/math";
+import { getMaxEqualOrSmallerFromArray } from "@/utilities/common/math";
 import { WindowSizeContext } from "@/contexts/WindowSizeContext";
 import { WindowSize } from "@/hooks/utilities";
 

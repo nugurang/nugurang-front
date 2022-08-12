@@ -1,47 +1,61 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import produce from "immer";
 import { Container } from "@/compositions/Container";
 import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
 import { InputForm } from "@/compositions/InputForm";
 import { Section, SectionBody, SectionHead } from "@/compositions/Section";
-import { mutate } from "@/services/backend";
 import {
   InputFormItemTypeProps,
   InputFormItemProps,
   InputFormItemDTOProps,
 } from "@/compositions/InputForm";
 import { Button, ButtonGroup } from "@/components/Button";
+import { getCurrentOAuthUser } from "@/services/oAuthUser";
+import { createUser } from "@/services/user";
 
-const initialInputFormItems = [
-  {
-    id: "id",
-    type: "textfield" as InputFormItemTypeProps,
-    value: "",
-    label: "ID",
-    required: true,
-  },
-  {
-    id: "email",
-    type: "textfield" as InputFormItemTypeProps,
-    value: "",
-    label: "Email",
-    required: true,
-  },
-  {
-    id: "biography",
-    type: "textfield" as InputFormItemTypeProps,
-    value: "",
-    label: "Bio",
-  },
-];
+export const getServerSideProps = async (context) => {
+  const currentOAuthUserResponse = await getCurrentOAuthUser(context);
+  if (currentOAuthUserResponse.data === undefined) {
+    return {
+      redirect: {
+        destination: "/signin/",
+        permanent: false,
+      },
+    };
+  }
 
-const Signup = () => {
+  return {
+    props: {
+      currentOAuthUser: currentOAuthUserResponse.data,
+    },
+  };
+};
+
+const Signup = ({ currentOAuthUser }) => {
   const router = useRouter();
-  const [inputFormItems, setInputFormItems] = useState<InputFormItemProps[]>(
-    initialInputFormItems,
-  );
+  const [inputFormItems, setInputFormItems] = useState<InputFormItemProps[]>([
+    {
+      id: "name",
+      type: "textfield" as InputFormItemTypeProps,
+      value: currentOAuthUser.name || "",
+      label: "Name",
+      required: true,
+    },
+    {
+      id: "email",
+      type: "textfield" as InputFormItemTypeProps,
+      value: currentOAuthUser.email || "",
+      label: "Email",
+      required: true,
+    },
+    {
+      id: "biography",
+      type: "textfield" as InputFormItemTypeProps,
+      value: "",
+      label: "Bio",
+    },
+  ]);
   const updateInputFormItems = (newInputFormItem: InputFormItemDTOProps) => {
     setInputFormItems((prevList) =>
       produce(prevList, (list) => {
@@ -52,8 +66,17 @@ const Signup = () => {
       }),
     );
   };
+
   const handleClickBackButton = () => {
     router.back();
+  };
+  const handleClickSubmitButton = async () => {
+    const response = await createUser(undefined, {
+      name: inputFormItems.find((item) => item.id === "name").value,
+      email: inputFormItems.find((item) => item.id === "email").value,
+      biography: inputFormItems.find((item) => item.id === "biography").value,
+    });
+    console.log(response);
   };
 
   /*
@@ -127,6 +150,7 @@ const Signup = () => {
                 name: "paper-plane",
               }}
               fillingVariant="contained"
+              onClick={handleClickSubmitButton}
             />
           </ButtonGroup>
         </FloatingBottomBar>

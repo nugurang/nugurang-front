@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { query } from "@/services/backend";
+import { query } from "@/utilities/backend";
 
 export default function WithAuthServerSideProps(getServerSidePropsFunction?) {
   return async (context) => {

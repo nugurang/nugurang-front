@@ -2,18 +2,37 @@ import { Button, ButtonGroup } from "@/components/Button";
 import { Container } from "@/compositions/Container";
 import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
 import { Section, SectionHead, SectionBody } from "@/compositions/Section";
-import { oAuthLogin, login, logout } from "@/services/backend";
+import { oAuthLogin, login, logout } from "@/utilities/backend";
 import { WithAuthServerSideProps } from "@/hocs/WithAuthServerSideProps";
+import { getCurrentUser } from "@/services/user";
 
-export const getServerSideProps = WithAuthServerSideProps();
+export const getServerSideProps = WithAuthServerSideProps(
+  async ({ context }) => {
+    const getCurrentUserResult = await getCurrentUser(context);
+    if (getCurrentUserResult.data === undefined) {
+      return {
+        redirect: {
+          destination: "/signin/",
+          permanent: false,
+        },
+      };
+    }
 
-const Menu = () => {
+    return {
+      props: {
+        currentUser: getCurrentUserResult.data,
+      },
+    };
+  },
+);
+
+const Menu = ({ currentUser }) => {
   return (
     <>
       <Container>
         <Section>
           <SectionHead title="메뉴"></SectionHead>
-          <SectionBody>Hello World!</SectionBody>
+          <SectionBody>Hello, {currentUser.name}!</SectionBody>
         </Section>
         <ButtonGroup>
           <Button

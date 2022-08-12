@@ -1,5 +1,5 @@
-import { setCookie } from "@/utilities/cookie";
-import { login } from "@/services/backend";
+import { setCookie } from "@/utilities/common/cookie";
+import { login } from "@/utilities/backend";
 import { getLastUrlBeforeAuthPage } from "@/utilities/route";
 
 export async function getServerSideProps(context) {

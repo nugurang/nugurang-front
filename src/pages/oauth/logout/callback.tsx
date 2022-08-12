@@ -1,4 +1,4 @@
-import { destroyCookie } from "@/utilities/cookie";
+import { destroyCookie } from "@/utilities/common/cookie";
 import { getLastUrlBeforeAuthPage } from "@/utilities/route";
 
 export async function getServerSideProps(context) {
