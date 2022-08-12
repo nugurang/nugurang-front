@@ -36,24 +36,6 @@ const Menu = ({ currentUser }) => {
         </Section>
         <ButtonGroup>
           <Button
-            label="oAuthLogin"
-            icon={{
-              prefix: "fas",
-              name: "key",
-            }}
-            fillingVariant="contained"
-            onClick={() => oAuthLogin("github")}
-          />
-          <Button
-            label="로그인"
-            icon={{
-              prefix: "fas",
-              name: "key",
-            }}
-            fillingVariant="contained"
-            onClick={() => login("github")}
-          />
-          <Button
             label="로그아웃"
             colorVariant="error"
             icon={{

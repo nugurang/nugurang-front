@@ -13,7 +13,7 @@ import globalCss from "@/styles/global";
 import { lightTheme, darkTheme } from "@/components/theme";
 import { WindowSizeProvider } from "@/contexts/WindowSizeContext";
 import { setCookie } from "@/utilities/common/cookie";
-import { isAuthUrl } from "@/utilities/oAuth";
+import { isValidLastUrl } from "@/utilities/common/url";
 import graphQlClient from "@/utilities/graphQlClient";
 
 library.add(fab);
@@ -23,12 +23,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthUrl(router.asPath))
+    if (isValidLastUrl(router.asPath))
       setCookie(null, "lastUrlBeforeAuthPage", router.asPath);
   }, []);
   useEffect(() => {
     const handleStart = (url: string) => {
-      if (!isAuthUrl(router.asPath))
+      if (isValidLastUrl(router.asPath))
         setCookie(null, "lastUrlBeforeAuthPage", url);
       NProgress.start();
     };

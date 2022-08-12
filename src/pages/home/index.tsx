@@ -6,6 +6,9 @@ import { WindowSizeContext } from "@/contexts/WindowSizeContext";
 import { useCallback, useContext, useMemo } from "react";
 import { WindowMinWidth } from "@/components/constants";
 import { useRouter } from "next/router";
+import { WithAuthServerSideProps } from "@/hocs/WithAuthServerSideProps";
+
+export const getServerSideProps = WithAuthServerSideProps();
 
 const Home = () => {
   const router = useRouter();

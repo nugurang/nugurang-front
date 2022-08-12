@@ -62,21 +62,6 @@ export const login = async (
         } else if (responseJson.errors && responseJson.errors.length > 0) {
           console.error(responseJson.errors);
         } else {
-          const userDataAttributes = responseJson.data.principal.attributes;
-          const query = {};
-          [
-            { key: "name", attributeKey: "name" },
-            { key: "nickname", attributeKey: "login" },
-            { key: "email", attributeKey: "email" },
-            { key: "avatarUrl", attributeKey: "avatar_url" },
-            { key: "bio", attributeKey: "bio" },
-          ].forEach(({ key, attributeKey }) => {
-            if (userDataAttributes[attributeKey])
-              query[key] = userDataAttributes[attributeKey];
-          });
-          console.log(jSessionId);
-          console.log(query);
-
           return {
             jSessionId,
           };

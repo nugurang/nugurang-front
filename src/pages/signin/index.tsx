@@ -2,8 +2,7 @@ import { Button, ButtonGroup } from "@/components/Button";
 import { Container } from "@/compositions/Container";
 import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
 import { Section, SectionHead, SectionBody } from "@/compositions/Section";
-import { oAuthLogin, login, logout } from "@/utilities/backend";
-import { WithAuthServerSideProps } from "@/hocs/WithAuthServerSideProps";
+import { oAuthLogin } from "@/utilities/backend";
 
 const Signin = () => {
   return (
@@ -15,32 +14,13 @@ const Signin = () => {
         </Section>
         <ButtonGroup>
           <Button
-            label="oAuthLogin"
+            label="GitHub 계정으로 로그인"
             icon={{
               prefix: "fas",
               name: "key",
             }}
             fillingVariant="contained"
             onClick={() => oAuthLogin("github")}
-          />
-          <Button
-            label="로그인"
-            icon={{
-              prefix: "fas",
-              name: "key",
-            }}
-            fillingVariant="contained"
-            onClick={() => login("github")}
-          />
-          <Button
-            label="로그아웃"
-            colorVariant="error"
-            icon={{
-              prefix: "fas",
-              name: "key",
-            }}
-            fillingVariant="contained"
-            onClick={() => logout()}
           />
         </ButtonGroup>
       </Container>
