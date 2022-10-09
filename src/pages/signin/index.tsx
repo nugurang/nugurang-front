@@ -1,42 +1,21 @@
-import { Button, ButtonGroup } from "@/components/Button";
-import { Container } from "@/compositions/Container";
-import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
-import { Section, SectionHead, SectionBody } from "@/compositions/Section";
-import { oAuthLogin } from "@/utilities/backend";
+import { useRouter } from 'next/router';
+import { Button } from 'grommet';
+import { oAuthLogin } from '@/utilities/backend';
 
-const Signin = () => {
+const Signin = ({ currentUser }) => {
+  const router = useRouter();
+
+  const handleClickBackButton = () => {
+    router.back();
+  };
+
   return (
     <>
-      <Container>
-        <Section>
-          <SectionHead title="로그인"></SectionHead>
-          <SectionBody>로그인해주세요.</SectionBody>
-        </Section>
-        <ButtonGroup>
-          <Button
-            label="GitHub 계정으로 로그인"
-            icon={{
-              prefix: "fas",
-              name: "key",
-            }}
-            fillingVariant="contained"
-            onClick={() => oAuthLogin("github")}
-          />
-        </ButtonGroup>
-      </Container>
-      <FloatingBottomBar float={true}>
-        <ButtonGroup>
-          <Button
-            label=""
-            colorVariant="error"
-            icon={{
-              prefix: "fas",
-              name: "arrow-left",
-            }}
-            fillingVariant="contained"
-          />
-        </ButtonGroup>
-      </FloatingBottomBar>
+      {currentUser && <div>{currentUser.name}</div>}
+      <>
+        <Button label="뒤로가기" onClick={() => handleClickBackButton()} />
+        <Button label="GitHub 로그인" onClick={() => oAuthLogin('github')} />
+      </>
     </>
   );
 };

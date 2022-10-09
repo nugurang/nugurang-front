@@ -1,5 +1,5 @@
-import { gql } from "@apollo/client";
-import { query, mutate } from "@/utilities/backend";
+import { gql } from '@apollo/client';
+import { query, mutate } from '@/utilities/backend';
 
 export const getCurrentUser = async (context) => {
   const response = await query({
@@ -8,6 +8,7 @@ export const getCurrentUser = async (context) => {
         currentUser {
           id
           oauth2Provider
+          oauth2Id
           name
           email
           image {
@@ -21,12 +22,19 @@ export const getCurrentUser = async (context) => {
     context,
   });
   if (response?.data?.currentUser) {
+    const result = response.data.currentUser ?? {};
+
+    if (result.oauth2Provider) {
+      result.oAuth2Provider = result.oauth2Provider;
+      delete result.oauth2Provider;
+    }
+    if (result.oauth2Id) {
+      result.oAuth2Id = result.oauth2Id;
+      delete result.oauth2Id;
+    }
+
     return {
-      data: {
-        ...response.data.currentUser,
-        oauth2Provider: null,
-        oAuthProvider: response.data.currentUser.oauth2Provider || null,
-      },
+      data: result,
     };
   } else {
     return {

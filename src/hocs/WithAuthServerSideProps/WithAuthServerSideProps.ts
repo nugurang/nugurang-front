@@ -1,56 +1,28 @@
-import { gql } from "@apollo/client";
-import { query } from "@/utilities/backend";
+import type { GetServerSidePropsContext } from 'next';
+import { getCurrentOAuthUser } from '@/services/oAuthUser';
+import { getCurrentUser } from '@/services/user';
 
-export default function WithAuthServerSideProps(getServerSidePropsFunction?) {
-  return async (context) => {
-    const currentOAuth2UserResult = await query({
-      context,
-      query: gql`
-        query CurrentOAuth2User {
-          currentOAuth2User {
-            id
-            name
-            email
-          }
-        }
-      `,
-    });
+export default function WithAuthServerSideProps(
+  getServerSidePropsFunction?: Function,
+) {
+  return async (context: GetServerSidePropsContext) => {
+    const currentOAuth2UserResult = await getCurrentOAuthUser(context);
     console.log(currentOAuth2UserResult);
-    if (
-      !currentOAuth2UserResult.data ||
-      currentOAuth2UserResult.data.currentOAuth2User === null
-    ) {
+    if (!currentOAuth2UserResult.data) {
       return {
         redirect: {
-          destination: "/signin",
+          destination: '/signin',
           permanent: false,
         },
       };
     }
 
-    const currentUserResult = await query({
-      context,
-      query: gql`
-        query CurrentUser {
-          currentUser {
-            id
-            oauth2Provider
-            oauth2Id
-            name
-            email
-            image {
-              id
-              address
-            }
-            biography
-          }
-        }
-      `,
-    });
-    if (currentUserResult.data.currentUser === null) {
+    const currentUserResult = await getCurrentUser(context);
+
+    if (!currentUserResult?.data) {
       return {
         redirect: {
-          destination: "/signup",
+          destination: '/signup',
           permanent: false,
         },
       };
@@ -59,12 +31,12 @@ export default function WithAuthServerSideProps(getServerSidePropsFunction?) {
     if (getServerSidePropsFunction) {
       return await getServerSidePropsFunction({
         context,
-        currentUser: currentUserResult.data.currentUser,
+        currentUser: currentUserResult.data,
       });
     }
     return {
       props: {
-        currentUser: currentUserResult.data.currentUser,
+        currentUser: currentUserResult.data,
       },
     };
   };

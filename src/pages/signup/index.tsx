@@ -1,25 +1,17 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import produce from "immer";
-import { Container } from "@/compositions/Container";
-import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
-import { InputForm } from "@/compositions/InputForm";
-import { Section, SectionBody, SectionHead } from "@/compositions/Section";
-import {
-  InputFormItemTypeProps,
-  InputFormItemProps,
-  InputFormItemDTOProps,
-} from "@/compositions/InputForm";
-import { Button, ButtonGroup } from "@/components/Button";
-import { getCurrentOAuthUser } from "@/services/oAuthUser";
-import { createUser } from "@/services/user";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { Button, TextInput } from 'grommet';
+import produce from 'immer';
+import { getCurrentOAuthUser } from '@/services/oAuthUser';
+import { createUser } from '@/services/user';
+import { oAuthLogin } from '@/utilities/backend';
 
 export const getServerSideProps = async (context) => {
   const currentOAuthUserResponse = await getCurrentOAuthUser(context);
   if (currentOAuthUserResponse.data === undefined) {
     return {
       redirect: {
-        destination: "/signin/",
+        destination: '/signin/',
         permanent: false,
       },
     };
@@ -34,36 +26,17 @@ export const getServerSideProps = async (context) => {
 
 const Signup = ({ currentOAuthUser }) => {
   const router = useRouter();
-  const [inputFormItems, setInputFormItems] = useState<InputFormItemProps[]>([
-    {
-      id: "name",
-      type: "textfield" as InputFormItemTypeProps,
-      value: currentOAuthUser.name || "",
-      label: "Name",
-      required: true,
-    },
-    {
-      id: "email",
-      type: "textfield" as InputFormItemTypeProps,
-      value: currentOAuthUser.email || "",
-      label: "Email",
-      required: true,
-    },
-    {
-      id: "biography",
-      type: "textfield" as InputFormItemTypeProps,
-      value: "",
-      label: "Bio",
-    },
-  ]);
-  const updateInputFormItems = (newInputFormItem: InputFormItemDTOProps) => {
-    setInputFormItems((prevList) =>
-      produce(prevList, (list) => {
-        const index = list.findIndex(
-          (element) => element.id === newInputFormItem.id,
-        );
-        if (index !== -1) list[index].value = newInputFormItem.value;
-      }),
+  const [formState, setFormState] = useState({
+    name: currentOAuthUser.name || '',
+    email: currentOAuthUser.email || '',
+    biography: currentOAuthUser.biography || '',
+  });
+  const updateFormState = (patchObject) => {
+    setFormState((baseObject) =>
+      produce(baseObject, (draftObject) => ({
+        ...draftObject,
+        ...patchObject,
+      })),
     );
   };
 
@@ -71,90 +44,42 @@ const Signup = ({ currentOAuthUser }) => {
     router.back();
   };
   const handleClickSubmitButton = async () => {
-    const response = await createUser(undefined, {
-      name: inputFormItems.find((item) => item.id === "name").value,
-      email: inputFormItems.find((item) => item.id === "email").value,
-      biography: inputFormItems.find((item) => item.id === "biography").value,
+    const response = await createUser(null, {
+      name: formState.name,
+      email: formState.email,
+      biography: formState.biography,
     });
     console.log(response);
+    if (response.data.id) {
+      console.log(currentOAuthUser);
+      await oAuthLogin(currentOAuthUser.oAuth2Provider);
+    }
   };
 
-  /*
-  const createUser = async () => {
-    let image;
-    if (newImageAddress.current.value) {
-      const res = await mutate({
-        mutation: new CreateImageMutationBuilder().build(),
-        variables: { address: newImageAddress.current.value },
-      });
-      image = res.data.createImage.id;
-    }
-    await mutate({
-      mutation: new CreateUserMutationBuilder().build(),
-      variables: {
-        user: {
-          name: newName.current.value,
-          email: newEmail.current.value,
-          biography: "",
-          image,
-        },
-      },
-    });
-  };
-*/
   return (
     <>
-      <Container fixedWidth={true}>
-        <Section>
-          <SectionHead
-            title="회원가입"
-            icon={{
-              prefix: "fas",
-              name: "user-plus",
-            }}></SectionHead>
-          <SectionBody>
-            <InputForm
-              formItems={inputFormItems}
-              onChange={updateInputFormItems}
-            />
-          </SectionBody>
-        </Section>
-      </Container>
-      <Container backgroundColor="transparent" fixedWidth={true}>
-        <FloatingBottomBar float={true} margin={{ bottom: 8 }}>
-          <ButtonGroup>
-            <Button
-              label=""
-              colorVariant="error"
-              icon={{
-                prefix: "fas",
-                name: "arrow-left",
-              }}
-              fillingVariant="contained"
-              onClick={handleClickBackButton}
-            />
-            <Button
-              label="초기화"
-              colorVariant="error"
-              icon={{
-                prefix: "fas",
-                name: "arrow-rotate-left",
-              }}
-              fillingVariant="contained"
-            />
-            <Button
-              label="제출"
-              colorVariant="primary"
-              icon={{
-                prefix: "fas",
-                name: "paper-plane",
-              }}
-              fillingVariant="contained"
-              onClick={handleClickSubmitButton}
-            />
-          </ButtonGroup>
-        </FloatingBottomBar>
-      </Container>
+      <TextInput
+        placeholder="name"
+        value={formState.name}
+        onChange={(event) => updateFormState({ name: event.target.value })}
+      />
+      <TextInput
+        placeholder="email"
+        value={formState.email}
+        onChange={(event) => updateFormState({ email: event.target.value })}
+      />
+      <TextInput
+        placeholder="biography"
+        value={formState.biography}
+        onChange={(event) => updateFormState({ biography: event.target.value })}
+      />
+      <>
+        <Button label="뒤로가기" onClick={() => handleClickBackButton()} />
+        <Button
+          label="제출"
+          onClick={async () => await handleClickSubmitButton()}
+        />
+      </>
     </>
   );
 };

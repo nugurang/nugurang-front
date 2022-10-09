@@ -1,95 +1,25 @@
-import { Button, ButtonGroup } from "@/components/Button";
-import { Container } from "@/compositions/Container";
-import { FloatingBottomBar } from "@/compositions/FloatingBottomBar";
-import { Section, SectionHead, SectionBody } from "@/compositions/Section";
-import { WindowSizeContext } from "@/contexts/WindowSizeContext";
-import { useCallback, useContext, useMemo } from "react";
-import { WindowMinWidth } from "@/components/constants";
-import { useRouter } from "next/router";
-import { WithAuthServerSideProps } from "@/hocs/WithAuthServerSideProps";
+import { WindowSizeContext } from '@/contexts/WindowSizeContext';
+import { useContext } from 'react';
+import { useRouter } from 'next/router';
+import { Button } from 'grommet';
+import { WithAuthServerSideProps } from '@/hocs/WithAuthServerSideProps';
+import { oAuthLogin, login, logout } from '@/utilities/backend';
 
 export const getServerSideProps = WithAuthServerSideProps();
 
-const Home = () => {
+const Home = ({ currentUser }) => {
   const router = useRouter();
   const windowSize = useContext(WindowSizeContext);
 
-  const needsCompactButton = useMemo(
-    () => windowSize.width <= WindowMinWidth.mobile,
-    [windowSize.width, WindowMinWidth.mobile],
-  );
-  const handleMenuButton = useCallback(() => {
-    router.push("/home/menu");
-  }, []);
-
   return (
     <>
-      <Container>
-        <Section>
-          <SectionHead title="홈"></SectionHead>
-          <SectionBody>Hello World!</SectionBody>
-        </Section>
-      </Container>
-      <FloatingBottomBar float={true}>
-        <ButtonGroup direction="horizontal">
-          <Button
-            label="보드"
-            colorVariant="primary"
-            compact={needsCompactButton}
-            icon={{
-              prefix: "fas",
-              name: "chalkboard-user",
-            }}
-            iconPosition="top"
-            fillingVariant="contained"
-          />
-          <Button
-            label="팀"
-            colorVariant="primary"
-            compact={needsCompactButton}
-            icon={{
-              prefix: "fas",
-              name: "users",
-            }}
-            iconPosition="top"
-            fillingVariant="contained"
-          />
-          <Button
-            label="빠른 매칭"
-            colorVariant="primary"
-            compact={needsCompactButton}
-            icon={{
-              prefix: "fas",
-              name: "fire-flame-curved",
-            }}
-            iconPosition="top"
-            fillingVariant="contained"
-          />
-          <Button
-            label={`coming\nsoon`}
-            colorVariant="greyscale"
-            compact={needsCompactButton}
-            icon={{
-              prefix: "fas",
-              name: "screwdriver-wrench",
-            }}
-            iconPosition="top"
-            fillingVariant="contained"
-          />
-          <Button
-            label="메뉴"
-            colorVariant="primary"
-            compact={needsCompactButton}
-            icon={{
-              prefix: "fas",
-              name: "bars",
-            }}
-            iconPosition="top"
-            fillingVariant="contained"
-            onClick={handleMenuButton}
-          />
-        </ButtonGroup>
-      </FloatingBottomBar>
+      {currentUser && <div>{currentUser.name}</div>}
+      <>
+        <Button label="로그인" onClick={() => oAuthLogin('github')} />
+      </>
+      <>
+        <Button label="로그아웃" onClick={() => logout()} />
+      </>
     </>
   );
 };
