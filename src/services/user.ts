@@ -1,8 +1,11 @@
-import { gql } from '@apollo/client';
+import { ApolloQueryResult, FetchResult, gql } from '@apollo/client';
 import { query, mutate } from '@/utilities/backend';
+import { GetServerSidePropsContext } from 'next/types';
 
-export const getCurrentUser = async (context) => {
-  const response = await query({
+export const getCurrentUser = async (
+  context: GetServerSidePropsContext = null,
+) => {
+  const result: ApolloQueryResult<any> = await query(context, {
     query: gql`
       query CurrentUser {
         currentUser {
@@ -19,32 +22,29 @@ export const getCurrentUser = async (context) => {
         }
       }
     `,
-    context,
+    dataPropertyName: 'currentUser',
   });
-  if (response?.data?.currentUser) {
-    const result = response.data.currentUser ?? {};
-
-    if (result.oauth2Provider) {
-      result.oAuth2Provider = result.oauth2Provider;
-      delete result.oauth2Provider;
-    }
-    if (result.oauth2Id) {
-      result.oAuth2Id = result.oauth2Id;
-      delete result.oauth2Id;
-    }
-
-    return {
-      data: result,
-    };
-  } else {
-    return {
-      error: response.error,
-    };
+  if (result.data.oauth2Provider) {
+    result.data.oAuth2Provider = result.data.oauth2Provider;
+    delete result.data.oauth2Provider;
   }
+  if (result.data.oauth2Id) {
+    result.data.oAuth2Id = result.data.oauth2Id;
+    delete result.data.oauth2Id;
+  }
+  return result;
 };
 
-export const createUser = async (context, variables) => {
-  const response = await mutate({
+interface CreateUserMutationProps {
+  name: string;
+  email: string;
+  biography?: string;
+}
+export const createUser = async (
+  context: GetServerSidePropsContext = null,
+  variables: CreateUserMutationProps,
+) => {
+  const result: FetchResult<any> = await mutate(context, {
     mutation: gql`
       mutation CreateUser($user: UserInput!) {
         createCurrentUser(user: $user) {
@@ -55,15 +55,7 @@ export const createUser = async (context, variables) => {
     variables: {
       user: variables,
     },
-    context,
+    dataPropertyName: 'createCurrentUser',
   });
-  if (response?.data?.createCurrentUser) {
-    return {
-      data: response.data.createCurrentUser,
-    };
-  } else {
-    return {
-      error: response.error,
-    };
-  }
+  return result;
 };

@@ -1,8 +1,11 @@
-import { gql } from '@apollo/client';
+import { ApolloQueryResult, gql } from '@apollo/client';
 import { query } from '@/utilities/backend';
+import { GetServerSidePropsContext } from 'next/types';
 
-export const getCurrentOAuthUser = async (context) => {
-  const response = await query({
+export const getCurrentOAuth2User = async (
+  context: GetServerSidePropsContext = null,
+) => {
+  const result: ApolloQueryResult<any> = await query(context, {
     query: gql`
       query CurrentOAuth2User {
         currentOAuth2User {
@@ -12,21 +15,11 @@ export const getCurrentOAuthUser = async (context) => {
         }
       }
     `,
-    context,
+    dataPropertyName: 'currentOAuth2User',
   });
-  if (response?.data?.currentOAuth2User) {
-    const result = response.data.currentOAuth2User ?? {};
-    if (result.id) {
-      result.oAuth2Provider = result.id;
-      delete result.id;
-    }
-
-    return {
-      data: result,
-    };
-  } else {
-    return {
-      error: response.error,
-    };
+  if (result.data.id) {
+    result.data.oAuth2Provider = result.data.id;
+    delete result.data.id;
   }
+  return result;
 };

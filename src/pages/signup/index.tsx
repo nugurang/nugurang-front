@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, TextInput } from 'grommet';
 import produce from 'immer';
-import { getCurrentOAuthUser } from '@/services/oAuthUser';
+import { getCurrentOAuth2User } from '@/services/oAuthUser';
 import { createUser } from '@/services/user';
 import { oAuthLogin } from '@/utilities/backend';
 
 export const getServerSideProps = async (context) => {
-  const currentOAuthUserResponse = await getCurrentOAuthUser(context);
-  if (currentOAuthUserResponse.data === undefined) {
+  const currentOAuth2UserResponse = await getCurrentOAuth2User(context);
+  console.error(currentOAuth2UserResponse);
+  if (currentOAuth2UserResponse.data === undefined) {
     return {
       redirect: {
         destination: '/signin/',
@@ -19,17 +20,17 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      currentOAuthUser: currentOAuthUserResponse.data,
+      currentOAuth2User: currentOAuth2UserResponse.data,
     },
   };
 };
 
-const Signup = ({ currentOAuthUser }) => {
+const Signup = ({ currentOAuth2User }) => {
   const router = useRouter();
   const [formState, setFormState] = useState({
-    name: currentOAuthUser.name || '',
-    email: currentOAuthUser.email || '',
-    biography: currentOAuthUser.biography || '',
+    name: currentOAuth2User.name || '',
+    email: currentOAuth2User.email || '',
+    biography: currentOAuth2User.biography || '',
   });
   const updateFormState = (patchObject) => {
     setFormState((baseObject) =>
@@ -51,8 +52,8 @@ const Signup = ({ currentOAuthUser }) => {
     });
     console.log(response);
     if (response.data.id) {
-      console.log(currentOAuthUser);
-      await oAuthLogin(currentOAuthUser.oAuth2Provider);
+      console.log(currentOAuth2User);
+      await oAuthLogin(currentOAuth2User.oAuth2Provider);
     }
   };
 

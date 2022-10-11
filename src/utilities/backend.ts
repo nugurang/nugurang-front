@@ -1,15 +1,17 @@
-import { type OAuthProvider, OAuthProviderConstant } from "@/constants/oAuth";
-import { backendRootUrl, frontendRootUrl } from "@/constants/url";
+import { type OAuthProvider, OAuthProviderConstant } from '@/constants/oAuth';
+import { backendRootUrl, frontendRootUrl } from '@/constants/url';
 import {
   getCookies,
   getValueFromCookieString,
-} from "@/utilities/common/cookie";
+} from '@/utilities/common/cookie';
 import {
   getAccessToken,
   getAuthorizationCodeAndRedirect,
-} from "@/utilities/oAuth";
+} from '@/utilities/oAuth';
 
-import graphQlClient from "@/utilities/graphQlClient";
+import graphQlClient from '@/utilities/graphQlClient';
+import { ApolloQueryResult, DocumentNode, FetchResult } from '@apollo/client';
+import { GetServerSidePropsContext } from 'next/types';
 
 export const oAuthLogin = getAuthorizationCodeAndRedirect;
 
@@ -26,21 +28,21 @@ export const login = async (
     oAuthAuthorizationCode,
   );
   switch (oAuthProvider) {
-    case "github":
+    case 'github':
       {
         const options = {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
           },
           body: JSON.stringify({
-            clientRegistrationId: "github",
+            clientRegistrationId: 'github',
             accessToken: {
               tokenValue: accessToken,
               issuedAt: String(Math.floor(new Date().getTime() / 1000)),
               expiresAt: String(new Date(8640000000000).getTime() / 1000),
-              scopes: OAuthProviderConstant["github"].scope,
+              scopes: OAuthProviderConstant['github'].scope,
             },
             refreshToken: {
               tokenValue: accessToken,
@@ -51,10 +53,10 @@ export const login = async (
           }),
         };
         const response = await fetch(`${backendRootUrl}/login`, options);
-        const setCookieString = response.headers.get("set-cookie");
+        const setCookieString = response.headers.get('set-cookie');
         const jSessionId = getValueFromCookieString(
           setCookieString,
-          "JSESSIONID",
+          'JSESSIONID',
         );
         const responseJson = await response.json();
         if (!jSessionId) {
@@ -75,49 +77,82 @@ export const login = async (
 
 export const logout = async () => {
   const options = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
   };
-  const response = await fetch(`${backendRootUrl}/logout`, options);
+  await fetch(`${backendRootUrl}/logout`, options);
   window.location.assign(`${frontendRootUrl}/oauth/logout/callback`);
   return;
 };
 
-export async function query({ context = null, query, variables = {} }) {
-  return await graphQlClient
-    .query({
-      query,
-      variables,
-      context: {
-        headers: {
-          Cookie: context ? context.req.headers.cookie : null,
-        },
-      },
-    })
-    .catch((error) => {
-      return {
-        error,
-      };
-    });
-}
+export const flatApolloQueryResult = (
+  result: ApolloQueryResult<any>,
+  dataPropertyName: string,
+) => ({
+  ...result,
+  data: dataPropertyName ? result.data[dataPropertyName] : result.data,
+});
 
-export async function mutate({ context = null, mutation, variables = {} }) {
-  return await graphQlClient
-    .mutate({
-      mutation,
-      variables,
-      context: {
-        headers: {
-          Cookie: context ? context.req.headers.cookie : null,
-        },
-      },
-    })
-    .catch((error) => {
-      return {
-        error,
-      };
-    });
+export const flatApolloMutationResult = (
+  result: FetchResult<any>,
+  dataPropertyName: string,
+) => ({
+  ...result,
+  data: dataPropertyName ? result.data[dataPropertyName] : result.data,
+});
+
+interface QueryProps {
+  query: DocumentNode;
+  variables?: object;
+  dataPropertyName?: string;
 }
+export const query = async (
+  context: GetServerSidePropsContext = null,
+  props: QueryProps,
+) => {
+  const { query, variables = {}, dataPropertyName } = props;
+  const result = await graphQlClient.query({
+    query,
+    variables,
+    context: {
+      headers: {
+        Cookie: context ? context.req.headers.cookie : null,
+      },
+    },
+  });
+  if (result.error) {
+    throw { networkError: result.error };
+  } else if (result.errors) {
+    throw { serverErrors: result.errors[0] };
+  }
+  return dataPropertyName
+    ? flatApolloQueryResult(result, dataPropertyName)
+    : result;
+};
+
+interface MutationProps {
+  mutation: DocumentNode;
+  variables?: object;
+  dataPropertyName?: string;
+}
+export const mutate = async (
+  context: GetServerSidePropsContext = null,
+  props: MutationProps,
+) => {
+  const { mutation, variables = {}, dataPropertyName } = props;
+  const result = await graphQlClient.mutate({
+    mutation,
+    variables,
+    context: {
+      headers: {
+        Cookie: context ? context.req.headers.cookie : null,
+      },
+    },
+  });
+  return dataPropertyName
+    ? flatApolloMutationResult(result, dataPropertyName)
+    : result;
+};
