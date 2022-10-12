@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { grommet, Grommet } from 'grommet';
+import { appWithTranslation } from 'next-i18next';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { WindowSizeProvider } from '@/contexts/WindowSizeContext';
@@ -53,4 +54,4 @@ function BaseApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default BaseApp;
+export default appWithTranslation(BaseApp);

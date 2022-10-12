@@ -1,11 +1,14 @@
 import type { GetServerSidePropsContext } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getCurrentOAuth2User } from '@/services/oAuthUser';
 import { getCurrentUser } from '@/services/user';
 
-export default function WithAuthServerSideProps(
-  getServerSidePropsFunction?: Function,
-) {
+export function WithAuthServerSideProps(getServerSidePropsFunction?: Function) {
   return async (context: GetServerSidePropsContext) => {
+    const serverSideTranslationsResult = await serverSideTranslations(
+      context.locale,
+      ['common'],
+    );
     try {
       await getCurrentOAuth2User(context);
     } catch (error) {
@@ -32,11 +35,13 @@ export default function WithAuthServerSideProps(
         return await getServerSidePropsFunction({
           context,
           currentUser: currentUserResult.data,
+          ...serverSideTranslationsResult,
         });
       } else
         return {
           props: {
             currentUser: currentUserResult.data,
+            ...serverSideTranslationsResult,
           },
         };
     } catch (error) {
@@ -56,6 +61,38 @@ export default function WithAuthServerSideProps(
           },
         };
       }
+    }
+  };
+}
+
+export function WithDefaultServerSideProps(
+  getServerSidePropsFunction?: Function,
+) {
+  return async (context: GetServerSidePropsContext) => {
+    const serverSideTranslationsResult = await serverSideTranslations(
+      context.locale,
+      ['common'],
+    );
+    try {
+      if (getServerSidePropsFunction) {
+        return await getServerSidePropsFunction({
+          context,
+          ...serverSideTranslationsResult,
+        });
+      } else
+        return {
+          props: {
+            ...serverSideTranslationsResult,
+          },
+        };
+    } catch (error) {
+      console.error(error);
+      return {
+        redirect: {
+          destination: '/500',
+          permanent: false,
+        },
+      };
     }
   };
 }

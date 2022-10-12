@@ -2,7 +2,7 @@ import { WindowSizeContext } from '@/contexts/WindowSizeContext';
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from 'grommet';
-import { WithAuthServerSideProps } from '@/hocs/WithAuthServerSideProps';
+import { WithAuthServerSideProps } from '@/hocs/WithServerSideProps';
 import { oAuthLogin, login, logout } from '@/utilities/backend';
 
 export const getServerSideProps = WithAuthServerSideProps();
