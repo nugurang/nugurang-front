@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button, TextInput } from 'grommet';
 import produce from 'immer';
+import { Box } from '@/components/Box';
+import { Button } from '@/components/Button';
+import {
+  Container,
+  ContainerSection,
+  ContainerSectionHeader,
+  ContainerSubsection,
+} from '@/components/Container';
+import { PlainTextInput } from '@/components/Input';
 import { getCurrentOAuth2User } from '@/services/oAuthUser';
 import { createUser } from '@/services/user';
 import { oAuthLogin } from '@/utilities/backend';
@@ -58,30 +66,47 @@ const Signup = ({ currentOAuth2User }) => {
   };
 
   return (
-    <>
-      <TextInput
-        placeholder="name"
-        value={formState.name}
-        onChange={(event) => updateFormState({ name: event.target.value })}
-      />
-      <TextInput
-        placeholder="email"
-        value={formState.email}
-        onChange={(event) => updateFormState({ email: event.target.value })}
-      />
-      <TextInput
-        placeholder="biography"
-        value={formState.biography}
-        onChange={(event) => updateFormState({ biography: event.target.value })}
-      />
-      <>
-        <Button label="뒤로가기" onClick={() => handleClickBackButton()} />
-        <Button
-          label="제출"
-          onClick={async () => await handleClickSubmitButton()}
+    <Container>
+      <ContainerSection>
+        <ContainerSectionHeader
+          title="회원가입"
+          subtitle="처음이시군요! 회원가입을 진행합니다."
+          actions={
+            <Box>
+              <Button
+                label="뒤로가기"
+                onClick={() => handleClickBackButton()}
+              />
+            </Box>
+          }
         />
-      </>
-    </>
+        <ContainerSubsection>
+          <PlainTextInput
+            placeholder="name"
+            value={formState.name}
+            onChange={(event) => updateFormState({ name: event.target.value })}
+          />
+          <PlainTextInput
+            placeholder="email"
+            value={formState.email}
+            onChange={(event) => updateFormState({ email: event.target.value })}
+          />
+          <PlainTextInput
+            placeholder="biography"
+            value={formState.biography}
+            onChange={(event) =>
+              updateFormState({ biography: event.target.value })
+            }
+          />
+        </ContainerSubsection>
+        <ContainerSubsection align="center">
+          <Button
+            label="제출"
+            onClick={async () => await handleClickSubmitButton()}
+          />
+        </ContainerSubsection>
+      </ContainerSection>
+    </Container>
   );
 };
 

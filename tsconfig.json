@@ -17,7 +17,7 @@
     "baseUrl": "./src",
     "paths": {
       "@/components/*": ["components/*"],
-      "@/compositions/*": ["compositions/*"],
+      "@/compounds/*": ["compounds/*"],
       "@/constants/*": ["constants/*"],
       "@/contexts/*": ["contexts/*"],
       "@/hocs/*": ["hocs/*"],
