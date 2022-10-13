@@ -6,12 +6,15 @@ import { ApolloProvider } from '@apollo/client';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { grommet, Grommet } from 'grommet';
+import { Grommet } from 'grommet';
 import { appWithTranslation } from 'next-i18next';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { WindowSizeProvider } from '@/contexts/WindowSizeContext';
+import { theme } from '@/styles/grommet';
 import graphQlClient from '@/utilities/graphQlClient';
+
+import '@/styles/styles.css';
 
 library.add(fab);
 library.add(fas);
@@ -41,11 +44,11 @@ function BaseApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Emotion using the vanilla version supporting SSR</title>
+        <title>Nugurang</title>
       </Head>
       <ApolloProvider client={graphQlClient}>
         <WindowSizeProvider>
-          <Grommet theme={grommet}>
+          <Grommet theme={theme}>
             <Component {...pageProps} />
           </Grommet>
         </WindowSizeProvider>
