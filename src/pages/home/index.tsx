@@ -6,6 +6,7 @@ import {
   ContainerSectionHeader,
   ContainerSubsection,
 } from '@/components/Container';
+import { Text } from '@/components/Text';
 import { WithAuthServerSideProps } from '@/hocs/WithServerSideProps';
 import { oAuthLogin, login, logout } from '@/utilities/backend';
 
@@ -19,7 +20,7 @@ const Home = ({ currentUser }) => {
       <ContainerSection>
         <ContainerSectionHeader title="홈" />
         <ContainerSubsection>
-          <div>{t('hello_world')}</div>
+          <Text>{t('hello_world')}</Text>
           {currentUser && <div>{currentUser.name}</div>}
         </ContainerSubsection>
         <ContainerSubsection align="center">

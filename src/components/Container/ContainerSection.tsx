@@ -7,8 +7,7 @@ const ContainerSection: React.FunctionComponent<ContainerSectionProps> = (
 ) => {
   return (
     <PageContent
-      background="#fff"
-      elevation="medium"
+      background="subbackground"
       pad="medium"
       round
       {...props}></PageContent>

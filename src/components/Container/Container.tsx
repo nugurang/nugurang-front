@@ -5,7 +5,7 @@ interface ContainerProps extends PageExtendedProps {}
 const Container: React.FunctionComponent<ContainerProps> = (
   props: ContainerProps,
 ) => {
-  return <Page kind="narrow" {...props}></Page>;
+  return <Page kind="narrow" pad="medium" {...props}></Page>;
 };
 
 export default Container;

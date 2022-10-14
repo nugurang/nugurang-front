@@ -11,7 +11,7 @@ import { appWithTranslation } from 'next-i18next';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { WindowSizeProvider } from '@/contexts/WindowSizeContext';
-import { theme } from '@/styles/grommet';
+import { lightTheme, darkTheme } from '@/styles/grommet';
 import graphQlClient from '@/utilities/graphQlClient';
 
 import '@/styles/styles.css';
@@ -48,7 +48,7 @@ function BaseApp({ Component, pageProps }: AppProps) {
       </Head>
       <ApolloProvider client={graphQlClient}>
         <WindowSizeProvider>
-          <Grommet theme={theme}>
+          <Grommet theme={darkTheme} full={true}>
             <Component {...pageProps} />
           </Grommet>
         </WindowSizeProvider>

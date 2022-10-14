@@ -132,15 +132,3 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-/* Custom CSS */
-html,
-body,
-#__next {
-  height: 100%;
-}
-body {
-  background: #fae6fa;
-  /* font-family: 'KOMACON', Helvetica, sans-serif; */
-  position: relative;
-}
