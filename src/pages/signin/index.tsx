@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { WithDefaultServerSideProps } from '@/hocs/WithServerSideProps';
 import { oAuthLogin } from '@/utilities/backend';
-import { useTranslation } from 'next-i18next';
 import { Box } from '@/components/Box';
 import { Button } from '@/components/Button';
 import {
