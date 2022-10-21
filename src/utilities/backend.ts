@@ -42,7 +42,7 @@ export const login = async (
               tokenValue: accessToken,
               issuedAt: String(Math.floor(new Date().getTime() / 1000)),
               expiresAt: String(new Date(8640000000000).getTime() / 1000),
-              scopes: OAuthProviderConstant['github'].scope,
+              scopes: OAuthProviderConstant.github.scope,
             },
             refreshToken: {
               tokenValue: accessToken,
@@ -73,6 +73,9 @@ export const login = async (
     default:
       break;
   }
+  return {
+    jSessionId: undefined,
+  };
 };
 
 export const logout = async () => {
@@ -85,7 +88,6 @@ export const logout = async () => {
   };
   await fetch(`${backendRootUrl}/logout`, options);
   window.location.assign(`${frontendRootUrl}/oauth/logout/callback`);
-  return;
 };
 
 export const flatApolloQueryResult = (
@@ -110,12 +112,12 @@ interface QueryProps {
   dataPropertyName?: string;
 }
 export const query = async (
-  context: GetServerSidePropsContext = null,
+  context: GetServerSidePropsContext,
   props: QueryProps,
 ) => {
-  const { query, variables = {}, dataPropertyName } = props;
+  const { query: _query, variables = {}, dataPropertyName } = props;
   const result = await graphQlClient.query({
-    query,
+    query: _query,
     variables,
     context: {
       headers: {
@@ -124,9 +126,27 @@ export const query = async (
     },
   });
   if (result.error) {
-    throw { networkError: result.error };
-  } else if (result.errors) {
-    throw { serverErrors: result.errors[0] };
+    return {
+      data: undefined,
+      loading: undefined,
+      networkStatus: undefined,
+      error: {
+        message: undefined,
+        graphQLErrors: undefined,
+        clientErrors: undefined,
+        extraInfo: undefined,
+        name: undefined,
+        networkError: result.error,
+      },
+    } as ApolloQueryResult<object>;
+  }
+  if (result.errors) {
+    return {
+      data: undefined,
+      loading: undefined,
+      networkStatus: undefined,
+      serverErrors: result.errors[0],
+    } as ApolloQueryResult<object>;
   }
   return dataPropertyName
     ? flatApolloQueryResult(result, dataPropertyName)
@@ -139,7 +159,7 @@ interface MutationProps {
   dataPropertyName?: string;
 }
 export const mutate = async (
-  context: GetServerSidePropsContext = null,
+  context: GetServerSidePropsContext,
   props: MutationProps,
 ) => {
   const { mutation, variables = {}, dataPropertyName } = props;

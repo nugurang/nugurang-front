@@ -1,27 +1,33 @@
-import { type OAuthProvider, OAuthProviderConstant } from "@/constants/oAuth";
-import { frontendRootUrl } from "@/constants/url";
+import {
+  type OAuthProvider,
+  OAuthProviderConstant,
+} from '@/constants/oAuth.js';
+import { frontendRootUrl } from '@/constants/url.js';
 
 export const getAuthorizationCodeAndRedirect = async (
   oAuthProvider: OAuthProvider,
 ) => {
-  if (typeof window === "undefined") return;
+  if (typeof window === 'undefined') return;
   switch (oAuthProvider) {
-    case "github": {
-      const params = {
-        client_id: OAuthProviderConstant[oAuthProvider].id,
-        redirect_uri: `${frontendRootUrl}/oauth/login/callback/${oAuthProvider}`,
-        scope: OAuthProviderConstant[oAuthProvider].scope.join(","),
-        state: "nugurang", // TODO: insert state here
-      };
-      const query = Object.keys(params)
-        .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
-        .join("&");
-      window.location.assign(
-        OAuthProviderConstant[oAuthProvider].getCodeUrl +
-          (query ? `?${query}` : ""),
-      );
-      return;
-    }
+    case 'github':
+      {
+        const params = {
+          client_id: OAuthProviderConstant[oAuthProvider].id,
+          redirect_uri: `${frontendRootUrl}/oauth/login/callback/${oAuthProvider}`,
+          scope: OAuthProviderConstant[oAuthProvider].scope.join(','),
+          state: 'nugurang', // TODO: insert state here
+        };
+        const query = Object.keys(params)
+          .map(
+            (k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`,
+          )
+          .join('&');
+        window.location.assign(
+          OAuthProviderConstant[oAuthProvider].getCodeUrl +
+            (query ? `?${query}` : ''),
+        );
+      }
+      break;
     default:
       break;
   }
@@ -32,12 +38,12 @@ export const getAccessToken = async (
   oAuthAuthorizationCode: string,
 ) => {
   switch (oAuthProvider) {
-    case "github": {
+    case 'github': {
       const options = {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify({
           client_id: OAuthProviderConstant[oAuthProvider].id,
@@ -50,20 +56,16 @@ export const getAccessToken = async (
         OAuthProviderConstant[oAuthProvider].getAccessTokenUrl,
         options,
       );
-      const {
-        error,
-        access_token: accessToken,
-        token_type: tokenType,
-        scope,
-      } = await response.json();
+      const { error, access_token: accessToken } = await response.json();
       if (error) {
         console.error(error);
-        return;
       } else {
         return accessToken;
       }
+      break;
     }
     default:
       break;
   }
+  return false;
 };

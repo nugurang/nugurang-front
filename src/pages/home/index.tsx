@@ -12,7 +12,7 @@ import { oAuthLogin, login, logout } from '@/utilities/backend';
 
 export const getServerSideProps = WithAuthServerSideProps();
 
-const Home = ({ currentUser }) => {
+function Home({ currentUser }) {
   const { t } = useTranslation('common');
 
   return (
@@ -32,6 +32,6 @@ const Home = ({ currentUser }) => {
       </ContainerSection>
     </Container>
   );
-};
+}
 
 export default Home;

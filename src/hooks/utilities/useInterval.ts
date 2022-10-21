@@ -1,9 +1,9 @@
 // https://usehooks-ts.com/react-hook/use-interval
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from 'react';
 
 const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 function useInterval(callback: () => void, delay: number | null) {
   const savedCallback = useRef(callback);
@@ -23,6 +23,7 @@ function useInterval(callback: () => void, delay: number | null) {
 
     const id = setInterval(() => savedCallback.current(), delay);
 
+    // eslint-disable-next-line consistent-return
     return () => clearInterval(id);
   }, [delay]);
 }

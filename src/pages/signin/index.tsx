@@ -13,7 +13,7 @@ import {
 
 export const getServerSideProps = WithDefaultServerSideProps();
 
-const Signin = ({ currentUser }) => {
+function Signin({ currentUser }) {
   const router = useRouter();
   const { t } = useTranslation('common');
 
@@ -50,6 +50,6 @@ const Signin = ({ currentUser }) => {
       </ContainerSection>
     </Container>
   );
-};
+}
 
 export default Signin;

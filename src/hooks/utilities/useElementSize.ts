@@ -1,9 +1,9 @@
 // https://github.com/rehooks/component-size/blob/master/index.js
 
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
 const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export interface ElementSize {
   height: number;
@@ -25,49 +25,47 @@ function getSize<T extends HTMLElement = HTMLDivElement>(element: T) {
 }
 
 function useElementSize(ref) {
-  var _useState = useState(getSize(ref ? ref.current : {}));
-  var ElementSize = _useState[0];
-  var setElementSize = _useState[1];
+  const _useState = useState(getSize(ref ? ref.current : {}));
+  const elementSize = _useState[0];
+  const setElementSize = _useState[1];
 
-  var handleResize = useCallback(
+  const handleResize = useCallback(
     function handleResize() {
       if (ref.current) {
         setElementSize(getSize(ref.current));
       }
     },
-    [ref],
+    [ref, setElementSize],
   );
 
-  useIsomorphicLayoutEffect(
-    function () {
-      if (!ref.current) {
-        return;
-      }
+  useIsomorphicLayoutEffect(() => {
+    if (!ref.current) {
+      return;
+    }
 
-      handleResize();
+    handleResize();
 
-      if (typeof ResizeObserver === "function") {
-        var resizeObserver = new ResizeObserver(function () {
-          handleResize();
-        });
-        resizeObserver.observe(ref.current);
+    if (typeof ResizeObserver === 'function') {
+      let resizeObserver = new ResizeObserver(() => {
+        handleResize();
+      });
+      resizeObserver.observe(ref.current);
 
-        return function () {
-          resizeObserver.disconnect();
-          resizeObserver = null;
-        };
-      } else {
-        window.addEventListener("resize", handleResize);
+      // eslint-disable-next-line consistent-return
+      return () => {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      };
+    }
+    window.addEventListener('resize', handleResize);
 
-        return function () {
-          window.removeEventListener("resize", handleResize);
-        };
-      }
-    },
-    [ref.current],
-  );
+    // eslint-disable-next-line consistent-return
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [ref.current]);
 
-  return ElementSize;
+  return elementSize;
 }
 
 export default useElementSize;

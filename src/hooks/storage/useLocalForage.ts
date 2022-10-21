@@ -27,9 +27,9 @@ export default function useLocalForage(
   }, [key]);
 
   const updateValue = useCallback(
-    async (value: any) => {
-      await localForage.setItem(key, value);
-      setValue(() => value);
+    async (newValue: any) => {
+      await localForage.setItem(key, newValue);
+      setValue(() => newValue);
     },
     [key],
   );
@@ -40,21 +40,22 @@ export default function useLocalForage(
   }, [key]);
 
   const initializeItemFromStorage = useCallback(async () => {
-    const value = await getItem();
+    const newValue = await getItem();
     if (props.overrideValue) {
-      const initialValue = props.initialValue;
+      const { initialValue } = props;
       await localForage.setItem(key, initialValue);
       setValue(() => initialValue);
     } else {
-      const initialValue = value !== undefined ? value : props.initialValue;
+      const initialValue =
+        newValue !== undefined ? newValue : props.initialValue;
       await localForage.setItem(key, initialValue);
       setValue(() => initialValue);
     }
-  }, [key]);
+  }, [getItem, key, props]);
 
   useEffect(() => {
     initializeItemFromStorage();
-  }, []);
+  }, [initializeItemFromStorage]);
 
   return [value, updateValue, removeValue];
 }

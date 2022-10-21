@@ -23,3 +23,5 @@ export const getCurrentOAuth2User = async (
   }
   return result;
 };
+
+export default undefined;

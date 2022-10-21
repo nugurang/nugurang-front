@@ -1,7 +1,8 @@
-import useElementSize, { type ElementSize } from "./useElementSize";
-import useInterval from "./useInterval";
-import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
-import useWindowSize, { type WindowSize } from "./useWindowSize";
+/* eslint-disable import/no-named-as-default */
+import useElementSize, { type ElementSize } from './useElementSize';
+import useInterval from './useInterval';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+import useWindowSize, { type WindowSize } from './useWindowSize';
 
 export {
   useElementSize,

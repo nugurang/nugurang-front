@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Button as _Button,
+  Button as OriginalButton,
   ButtonExtendedProps as _ButtonExtendedProps,
 } from 'grommet';
 
-interface ButtonProps extends _ButtonExtendedProps {}
+type ButtonProps = _ButtonExtendedProps;
 const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
-  return <_Button {...props}></_Button>;
+  return <OriginalButton {...props} />;
 };
 
 export default Button;

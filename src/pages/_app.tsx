@@ -23,7 +23,7 @@ function BaseApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    const handleStart = (url: string) => {
+    const handleStart = () => {
       NProgress.start();
     };
     const handleStop = () => {
@@ -48,7 +48,7 @@ function BaseApp({ Component, pageProps }: AppProps) {
       </Head>
       <ApolloProvider client={graphQlClient}>
         <WindowSizeProvider>
-          <Grommet theme={darkTheme} full={true}>
+          <Grommet theme={darkTheme} full>
             <Component {...pageProps} />
           </Grommet>
         </WindowSizeProvider>

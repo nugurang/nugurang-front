@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, BoxExtendedProps } from 'grommet';
 
-interface ContainerSubsectionProps extends BoxExtendedProps {}
+type ContainerSubsectionProps = BoxExtendedProps;
 const ContainerSubsection: React.FunctionComponent<ContainerSubsectionProps> = (
   props: ContainerSubsectionProps,
 ) => {
-  return <Box pad={{ vertical: 'small' }} {...props}></Box>;
+  return <Box pad={{ vertical: 'small' }} {...props} />;
 };
 
 export default ContainerSubsection;

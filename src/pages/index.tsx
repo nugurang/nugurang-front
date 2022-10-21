@@ -2,13 +2,13 @@ export async function getServerSideProps(context) {
   return {
     redirect: {
       permanent: false,
-      destination: "/home",
+      destination: '/home',
     },
   };
 }
 
-const Index = () => {
+function Index() {
   return <></>;
-};
+}
 
 export default Index;

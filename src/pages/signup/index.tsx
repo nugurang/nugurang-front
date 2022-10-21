@@ -10,7 +10,7 @@ import {
   ContainerSubsection,
 } from '@/components/Container';
 import { PlainTextInput } from '@/components/Input';
-import { getCurrentOAuth2User } from '@/services/oAuthUser';
+import { getCurrentOAuth2User } from '@/services/oAuth2User';
 import { createUser } from '@/services/user';
 import { oAuthLogin } from '@/utilities/backend';
 
@@ -33,7 +33,7 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-const Signup = ({ currentOAuth2User }) => {
+function Signup({ currentOAuth2User }) {
   const router = useRouter();
   const [formState, setFormState] = useState({
     name: currentOAuth2User.name || '',
@@ -58,9 +58,7 @@ const Signup = ({ currentOAuth2User }) => {
       email: formState.email,
       biography: formState.biography,
     });
-    console.log(response);
     if (response.data.id) {
-      console.log(currentOAuth2User);
       await oAuthLogin(currentOAuth2User.oAuth2Provider);
     }
   };
@@ -100,14 +98,11 @@ const Signup = ({ currentOAuth2User }) => {
           />
         </ContainerSubsection>
         <ContainerSubsection align="center">
-          <Button
-            label="제출"
-            onClick={async () => await handleClickSubmitButton()}
-          />
+          <Button label="제출" onClick={handleClickSubmitButton} />
         </ContainerSubsection>
       </ContainerSection>
     </Container>
   );
-};
+}
 
 export default Signup;

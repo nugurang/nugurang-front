@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text as _Text, TextExtendedProps } from 'grommet';
+import { Text as OriginalText, TextExtendedProps } from 'grommet';
 
-interface TextProps extends TextExtendedProps {}
+type TextProps = TextExtendedProps;
 const Text: React.FunctionComponent<TextProps> = (props: TextProps) => {
-  return <_Text {...props}></_Text>;
+  return <OriginalText {...props} />;
 };
 
 export default Text;

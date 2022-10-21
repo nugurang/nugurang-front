@@ -1,5 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache, from } from '@apollo/client';
-import { onError } from '@apollo/client/link/error';
+// import { onError } from '@apollo/client/link/error';
 import { backendRootUrl } from '@/constants/url';
 
 const link = from([

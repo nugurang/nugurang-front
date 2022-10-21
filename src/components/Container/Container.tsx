@@ -1,11 +1,11 @@
 import React from 'react';
 import { Page, PageExtendedProps } from 'grommet';
 
-interface ContainerProps extends PageExtendedProps {}
+type ContainerProps = PageExtendedProps;
 const Container: React.FunctionComponent<ContainerProps> = (
   props: ContainerProps,
 ) => {
-  return <Page kind="narrow" pad="medium" {...props}></Page>;
+  return <Page kind="narrow" pad="medium" {...props} />;
 };
 
 export default Container;

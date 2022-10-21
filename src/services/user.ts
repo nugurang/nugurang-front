@@ -41,7 +41,7 @@ interface CreateUserMutationProps {
   biography?: string;
 }
 export const createUser = async (
-  context: GetServerSidePropsContext = null,
+  context: GetServerSidePropsContext,
   variables: CreateUserMutationProps,
 ) => {
   const result: FetchResult<any> = await mutate(context, {

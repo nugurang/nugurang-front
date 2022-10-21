@@ -21,8 +21,8 @@ export async function getServerSideProps(context) {
   }
 }
 
-const OAuthLogoutCallback = () => {
+function OAuthLogoutCallback() {
   return <></>;
-};
+}
 
 export default OAuthLogoutCallback;

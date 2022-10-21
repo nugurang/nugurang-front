@@ -1,11 +1,11 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext } from 'react';
 import { useWindowSize, WindowSize } from '@/hooks/utilities';
 
 // https://usehooks.com/useWindowSize/
 
 const WindowSizeContext = createContext<WindowSize>(undefined);
 
-const WindowSizeProvider = ({ children }) => {
+function WindowSizeProvider({ children }) {
   const windowSize = useWindowSize();
 
   return (
@@ -13,6 +13,6 @@ const WindowSizeProvider = ({ children }) => {
       {children}
     </WindowSizeContext.Provider>
   );
-};
+}
 
 export { WindowSizeProvider, WindowSizeContext };

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import type { GetServerSidePropsContext } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { getCurrentOAuth2User } from '@/services/oAuthUser';
+import { getCurrentOAuth2User } from '@/services/oAuth2User';
 import { getCurrentUser } from '@/services/user';
 
 export function WithAuthServerSideProps(getServerSidePropsFunction?: Function) {
@@ -19,14 +20,13 @@ export function WithAuthServerSideProps(getServerSidePropsFunction?: Function) {
             permanent: false,
           },
         };
-      } else {
-        return {
-          redirect: {
-            destination: '/500',
-            permanent: false,
-          },
-        };
       }
+      return {
+        redirect: {
+          destination: '/500',
+          permanent: false,
+        },
+      };
     }
 
     try {
@@ -37,13 +37,13 @@ export function WithAuthServerSideProps(getServerSidePropsFunction?: Function) {
           currentUser: currentUserResult.data,
           ...serverSideTranslationsResult,
         });
-      } else
-        return {
-          props: {
-            currentUser: currentUserResult.data,
-            ...serverSideTranslationsResult,
-          },
-        };
+      }
+      return {
+        props: {
+          currentUser: currentUserResult.data,
+          ...serverSideTranslationsResult,
+        },
+      };
     } catch (error) {
       if (error.networkError?.statusCode === 401) {
         return {
@@ -52,15 +52,14 @@ export function WithAuthServerSideProps(getServerSidePropsFunction?: Function) {
             permanent: false,
           },
         };
-      } else {
-        console.error(error);
-        return {
-          redirect: {
-            destination: '/signup',
-            permanent: false,
-          },
-        };
       }
+      console.error(error);
+      return {
+        redirect: {
+          destination: '/signup',
+          permanent: false,
+        },
+      };
     }
   };
 }
@@ -79,12 +78,12 @@ export function WithDefaultServerSideProps(
           context,
           ...serverSideTranslationsResult,
         });
-      } else
-        return {
-          props: {
-            ...serverSideTranslationsResult,
-          },
-        };
+      }
+      return {
+        props: {
+          ...serverSideTranslationsResult,
+        },
+      };
     } catch (error) {
       console.error(error);
       return {

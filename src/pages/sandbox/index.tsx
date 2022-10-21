@@ -11,7 +11,7 @@ import { useLocalForage } from '@/hooks/storage';
 
 export const getServerSideProps = WithDefaultServerSideProps();
 
-const Sandbox = ({ currentUser }) => {
+function Sandbox({ currentUser }) {
   const { t } = useTranslation('common');
   const [value, updateValue, removeValue] = useLocalForage('test', {
     initialValue: {
@@ -58,6 +58,6 @@ const Sandbox = ({ currentUser }) => {
       </ContainerSection>
     </Container>
   );
-};
+}
 
 export default Sandbox;

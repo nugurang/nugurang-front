@@ -1,7 +1,4 @@
-export const getMaxEqualOrSmallerFromArray = (
-  array: number[],
-  target: number,
-) => {
+const getMaxEqualOrSmallerFromArray = (array: number[], target: number) => {
   const uniqueArray = [...array].filter((value, index, self) => {
     return self.indexOf(value) === index;
   });
@@ -12,3 +9,5 @@ export const getMaxEqualOrSmallerFromArray = (
   const result = sortedArray.pop();
   return result;
 };
+
+export default getMaxEqualOrSmallerFromArray;
