@@ -1,7 +1,7 @@
 import { frontendRootUrl } from './url';
 
-export type OAuthProvider = 'github';
-export const OAuthProviderConstant = {
+export type OAuth2Provider = 'github';
+export const OAuth2ProviderConstant = {
   github: {
     id: process.env.NEXT_PUBLIC_GITHUB_ID,
     secret: process.env.NEXT_PUBLIC_GITHUB_SECRET,

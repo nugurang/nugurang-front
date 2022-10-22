@@ -1,20 +1,20 @@
 import {
-  type OAuthProvider,
-  OAuthProviderConstant,
-} from '@/constants/oAuth.js';
-import { frontendRootUrl } from '@/constants/url.js';
+  type OAuth2Provider,
+  OAuth2ProviderConstant,
+} from '@/constants/oAuth2';
+import { frontendRootUrl } from '@/constants/url';
 
 export const getAuthorizationCodeAndRedirect = async (
-  oAuthProvider: OAuthProvider,
+  oAuthProvider: OAuth2Provider,
 ) => {
   if (typeof window === 'undefined') return;
   switch (oAuthProvider) {
     case 'github':
       {
         const params = {
-          client_id: OAuthProviderConstant[oAuthProvider].id,
+          client_id: OAuth2ProviderConstant[oAuthProvider].id,
           redirect_uri: `${frontendRootUrl}/oauth/login/callback/${oAuthProvider}`,
-          scope: OAuthProviderConstant[oAuthProvider].scope.join(','),
+          scope: OAuth2ProviderConstant[oAuthProvider].scope.join(','),
           state: 'nugurang', // TODO: insert state here
         };
         const query = Object.keys(params)
@@ -23,7 +23,7 @@ export const getAuthorizationCodeAndRedirect = async (
           )
           .join('&');
         window.location.assign(
-          OAuthProviderConstant[oAuthProvider].getCodeUrl +
+          OAuth2ProviderConstant[oAuthProvider].getCodeUrl +
             (query ? `?${query}` : ''),
         );
       }
@@ -34,7 +34,7 @@ export const getAuthorizationCodeAndRedirect = async (
 };
 
 export const getAccessToken = async (
-  oAuthProvider: OAuthProvider,
+  oAuthProvider: OAuth2Provider,
   oAuthAuthorizationCode: string,
 ) => {
   switch (oAuthProvider) {
@@ -46,14 +46,14 @@ export const getAccessToken = async (
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          client_id: OAuthProviderConstant[oAuthProvider].id,
-          client_secret: OAuthProviderConstant[oAuthProvider].secret,
+          client_id: OAuth2ProviderConstant[oAuthProvider].id,
+          client_secret: OAuth2ProviderConstant[oAuthProvider].secret,
           code: oAuthAuthorizationCode,
           redirect_uri: `${frontendRootUrl}/oauth/login/callback/github`,
         }),
       };
       const response = await fetch(
-        OAuthProviderConstant[oAuthProvider].getAccessTokenUrl,
+        OAuth2ProviderConstant[oAuthProvider].getAccessTokenUrl,
         options,
       );
       const { error, access_token: accessToken } = await response.json();

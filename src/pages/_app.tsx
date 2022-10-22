@@ -44,7 +44,7 @@ function BaseApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Nugurang</title>
+        <title>nugurang</title>
       </Head>
       <ApolloProvider client={graphQlClient}>
         <WindowSizeProvider>

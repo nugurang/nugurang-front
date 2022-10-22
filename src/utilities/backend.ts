@@ -1,4 +1,7 @@
-import { type OAuthProvider, OAuthProviderConstant } from '@/constants/oAuth';
+import {
+  type OAuth2Provider,
+  OAuth2ProviderConstant,
+} from '@/constants/oAuth2';
 import { backendRootUrl, frontendRootUrl } from '@/constants/url';
 import {
   getCookies,
@@ -7,7 +10,7 @@ import {
 import {
   getAccessToken,
   getAuthorizationCodeAndRedirect,
-} from '@/utilities/oAuth';
+} from '@/utilities/oAuth2';
 
 import graphQlClient from '@/utilities/graphQlClient';
 import { ApolloQueryResult, DocumentNode, FetchResult } from '@apollo/client';
@@ -16,11 +19,11 @@ import { GetServerSidePropsContext } from 'next/types';
 export const oAuthLogin = getAuthorizationCodeAndRedirect;
 
 export const login = async (
-  _oAuthProvider?: OAuthProvider,
+  _oAuthProvider?: OAuth2Provider,
   _oAuthAuthorizationCode?: string,
 ) => {
-  const oAuthProvider: OAuthProvider =
-    _oAuthProvider || (getCookies(null).oAuthProvider as OAuthProvider);
+  const oAuthProvider: OAuth2Provider =
+    _oAuthProvider || (getCookies(null).oAuthProvider as OAuth2Provider);
   const oAuthAuthorizationCode =
     _oAuthAuthorizationCode || getCookies(null).oAuthAuthorizationCode;
   const accessToken = await getAccessToken(
@@ -42,7 +45,7 @@ export const login = async (
               tokenValue: accessToken,
               issuedAt: String(Math.floor(new Date().getTime() / 1000)),
               expiresAt: String(new Date(8640000000000).getTime() / 1000),
-              scopes: OAuthProviderConstant.github.scope,
+              scopes: OAuth2ProviderConstant.github.scope,
             },
             refreshToken: {
               tokenValue: accessToken,
