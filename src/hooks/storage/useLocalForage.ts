@@ -55,7 +55,8 @@ export default function useLocalForage(
 
   useEffect(() => {
     initializeItemFromStorage();
-  }, [initializeItemFromStorage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return [value, updateValue, removeValue];
 }
