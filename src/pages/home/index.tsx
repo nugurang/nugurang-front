@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { Button } from '@/components/Button';
 import {
@@ -13,6 +14,7 @@ import { oAuthLogin, login, logout } from '@/utilities/backend';
 export const getServerSideProps = WithAuthServerSideProps();
 
 function Home({ currentUser }) {
+  const router = useRouter();
   const { t } = useTranslation('common');
 
   return (
@@ -27,7 +29,15 @@ function Home({ currentUser }) {
           {!currentUser && (
             <Button label="로그인" onClick={() => oAuthLogin('github')} />
           )}
-          {currentUser && <Button label="로그아웃" onClick={() => logout()} />}
+          {currentUser && (
+            <>
+              <Button label="로그아웃" onClick={() => logout()} />
+              <Button
+                label="샌드박스"
+                onClick={() => router.push('/sandbox')}
+              />
+            </>
+          )}
         </ContainerSubsection>
       </ContainerSection>
     </Container>
