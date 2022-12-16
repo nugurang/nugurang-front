@@ -1,0 +1,46 @@
+import { redirect } from 'next/navigation';
+import { getCurrentOAuth2User } from '@/services/api/oAuth2User';
+import { getCurrentUser } from '@/services/api/user';
+import AppErrors from '@/constants/appError';
+import type { AppError } from '@/constants/appError';
+
+const checkOAuth2UserLoggedIn = async () => {
+  try {
+    const currentOAuth2UserResponse = await getCurrentOAuth2User();
+    return {
+      currentOAuth2User: currentOAuth2UserResponse.data,
+    };
+  } catch (error) {
+    if((error as AppError).type === AppErrors.auth.OAuth2UserNotExistError.type) {
+      redirect('/signin');
+    } else {
+      redirect('/404');
+    }
+  }
+}
+
+const checkUserLoggedIn = async () => {
+  try {
+    const currentOAuth2UserResponse = await getCurrentOAuth2User();
+    const currentUserResponse = await getCurrentUser();
+    return {
+      currentOAuth2User: currentOAuth2UserResponse.data,
+      currentUser: currentUserResponse.data
+    };
+  } catch (error) {
+    if((error as AppError).type === AppErrors.auth.OAuth2UserNotExistError.type) {
+      redirect('/signin');
+    } else if((error as AppError).type === AppErrors.auth.UserNotExistError.type) {
+      redirect('/signup');
+    } else {
+      redirect('/404');
+    }
+  }
+}
+
+const ServerRouterAuthManager = {
+  checkOAuth2UserLoggedIn,
+  checkUserLoggedIn
+};
+
+export default ServerRouterAuthManager;

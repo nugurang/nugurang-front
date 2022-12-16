@@ -5,7 +5,7 @@ import nookies, {
 } from 'nookies';
 import CookieConstants from '@/constants/cookie';
 import IsomorphismManager from '@/utilities/common/isomorphism';
-import type { IsomorphicGetServerSidePropsContext } from '@/utilities/common/isomorphism';
+import { GetServerSidePropsContextAdapter } from '@/constants/common';
 
 interface SetCookieProps {
   maxAge?: number,
@@ -17,7 +17,6 @@ interface DeleteCookieProps {
 };
 
 const parseAndGetCookie = (
-  context: IsomorphicGetServerSidePropsContext,
   cookieString: string,
   key: string
 ) => {
@@ -29,38 +28,42 @@ const parseAndGetCookie = (
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-const getAllCookies = (context: IsomorphicGetServerSidePropsContext) => {
+interface GetAllCookiesProps extends GetServerSidePropsContextAdapter {}
+const getAllCookies = (props: GetAllCookiesProps = {}) => {
   if (IsomorphismManager.isServer) {
-    return nookies.get(context);
+    return nookies.get(props.context);
   } else {
     return parseCookiesFromNookies();
   }
 };
 
-const getCookie = (context: IsomorphicGetServerSidePropsContext, name: string) => {
-  return getAllCookies(context)[name] ?? null;
+interface GetCookieProps extends GetServerSidePropsContextAdapter {}
+const getCookie = (name: string, props: GetCookieProps = {}) => {
+  return getAllCookies(props)[name] ?? null;
 };
 
-const setCookie = (context: IsomorphicGetServerSidePropsContext, name: string, value: string, props: SetCookieProps = {}) => {
+interface SetCookieProps extends GetServerSidePropsContextAdapter {}
+const setCookie = (name: string, value: string, props: SetCookieProps = {}) => {
   const propsWithDefaultValues = {
     ...props,
     maxAge: props?.maxAge || CookieConstants.defaultMaxAge,
     path: props?.path || CookieConstants.defaultPath,
   };
   if (IsomorphismManager.isServer) {
-    return nookies.set(context, name, value, propsWithDefaultValues);
+    return nookies.set(props.context, name, value, propsWithDefaultValues);
   } else {
     return setCookieFromNookies(null, name, value, propsWithDefaultValues);
   }
 };
 
-const deleteCookie = (context: IsomorphicGetServerSidePropsContext, name: string, props: DeleteCookieProps = {}) => {
+interface DeleteCookieProps extends GetServerSidePropsContextAdapter {}
+const deleteCookie = (name: string, props: DeleteCookieProps = {}) => {
   const propsWithDefaultValues = {
     ...props,
     path: props?.path || CookieConstants.defaultPath,
   };
   if (IsomorphismManager.isServer) {
-    return nookies.destroy(context, name, propsWithDefaultValues);
+    return nookies.destroy(props.context, name, propsWithDefaultValues);
   } else {
     return destroyCookieFromNookies(null, name, propsWithDefaultValues);
   }

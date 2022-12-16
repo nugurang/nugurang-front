@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { WithDefaultServerSideProps } from '@/hocs/WithServerSideProps';
-import { oAuthLogin } from '@/services/oAuth2/index';
+import { oAuth2Login } from '@/services/oAuth2/index';
 
 export const getServerSideProps = WithDefaultServerSideProps();
 
@@ -19,7 +19,7 @@ function Signin({ currentUser }) {
       <span>{t('hello_world')}</span>
       {currentUser && <span>{currentUser.name}</span>}
       <button
-        onClick={() => oAuthLogin('github')}
+        onClick={() => oAuth2Login('github')}
       >GitHub 로그인</button>
     </>
   );

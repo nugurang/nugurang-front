@@ -1,0 +1,48 @@
+
+const getCookie = (key: string) => {
+  let matches = document.cookie.match(new RegExp(
+    '(?:^|; )' + key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+type SetCookieProps = {
+  [key: string]: any
+};
+
+const setCookie = (key: string, value: string, props: SetCookieProps = {}) => {
+
+  props = {
+    path: '/',
+  };
+
+  if (props.expires instanceof Date) {
+    props.expires = props.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(key) + '=' + encodeURIComponent(value);
+
+  for (const propKey in props) {
+    updatedCookie += '; ' + propKey;
+    const optionValue = props[propKey];
+    if (optionValue !== true) {
+      updatedCookie += '=' + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
+
+const deleteCookie = (key: string) => {
+  setCookie(key, '', {
+    'max-age': -1
+  })
+}
+
+const ClientCookieManager = {
+  get: getCookie,
+  set: setCookie,
+  delete: deleteCookie
+};
+
+export default ClientCookieManager;

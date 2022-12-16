@@ -1,9 +1,10 @@
-const backendRootUrl = process.env.NEXT_PUBLIC_BACKEND_ROOT_URL ?? "";
-const frontendRootUrl = process.env.NEXT_PUBLIC_FRONTEND_ROOT_URL ?? "";
+import { GetServerSidePropsContext } from "next";
 
-const CommonConstants = {
-  backendRootUrl,
-  frontendRootUrl
+export type PlainObjectKey = string | symbol;
+export type PlainObject = {
+  [key: PlainObjectKey]: any
 };
 
-export default CommonConstants;
+export interface GetServerSidePropsContextAdapter {
+  context?: GetServerSidePropsContext;
+}

@@ -1,4 +1,4 @@
-import CommonConstants from '@/constants/common';
+import EnvConstants from '@/constants/env';
 
 type RestApiMethod = 'GET' | 'POST';
 type RestApiOrigin = string;
@@ -12,7 +12,7 @@ interface RestApiProps {
 
 const restFetch = async (
   method: RestApiMethod = 'GET',
-  origin: RestApiOrigin = CommonConstants.backendRootUrl,
+  origin: RestApiOrigin = EnvConstants.backendRootUrl,
   pathname: RestApiPathname = '/',
   props: RestApiProps = {}
 ) => {
@@ -26,8 +26,22 @@ const restFetch = async (
     body: JSON.stringify(props.data),
   };
   const response = await fetch(`${origin}${pathname}`, options);
-  return response;
+  const responseJson = await response.json();
+  return {
+    headers: response.headers,
+    data: responseJson
+  };
 };
+const restGet = async (
+  origin: RestApiOrigin = EnvConstants.backendRootUrl,
+  pathname: RestApiPathname = '/',
+  props: RestApiProps = {}
+) => await restFetch('GET', origin, pathname, props);
+const restPost = async (
+  origin: RestApiOrigin = EnvConstants.backendRootUrl,
+  pathname: RestApiPathname = '/',
+  props: RestApiProps = {}
+) => await restFetch('POST', origin, pathname, props);
 
 const createFetcher = (method: RestApiMethod, origin: RestApiOrigin) => {
   return (async (pathname: RestApiPathname, props: RestApiProps) => await restFetch(
@@ -38,12 +52,14 @@ const createFetcher = (method: RestApiMethod, origin: RestApiOrigin) => {
   ));
 };
 
-const restGetFromBackend = createFetcher('GET', `${CommonConstants.backendRootUrl}`);
-const restPostToBackend = createFetcher('POST', `${CommonConstants.backendRootUrl}`);
-const restGetFromFrontend = createFetcher('GET', CommonConstants.frontendRootUrl);
-const restPostToFrontend = createFetcher('POST', CommonConstants.frontendRootUrl);
+const restGetFromBackend = createFetcher('GET', `${EnvConstants.backendRootUrl}`);
+const restPostToBackend = createFetcher('POST', `${EnvConstants.backendRootUrl}`);
+const restGetFromFrontend = createFetcher('GET', EnvConstants.frontendRootUrl);
+const restPostToFrontend = createFetcher('POST', EnvConstants.frontendRootUrl);
 
 const RestApiManager = {
+  get: restGet,
+  post: restPost,
   getFromBackend: restGetFromBackend,
   postToBackend: restPostToBackend,
   getFromFrontend: restGetFromFrontend,

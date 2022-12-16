@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Router from 'next/router';
+import { appWithTranslation } from "next-i18next";
 import { ApolloProvider } from '@apollo/client';
 import GraphQlApiManager from '@/utilities/network/graphQl';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -14,7 +15,7 @@ import '@/styles/global.css';
 library.add(fab);
 library.add(fas);
 
-function MyApp({ Component, pageProps }: AppProps) {
+function RootApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const handleStart = () => {};
     const handleStop = () => {};
@@ -36,10 +37,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Head>
       <title>nugurang</title>
     </Head>
-    <ApolloProvider client={GraphQlApiManager.getClient()}>
+    <ApolloProvider client={GraphQlApiManager.getInstance()}>
       <Component {...pageProps} />
     </ApolloProvider>
   </>;
 }
 
-export default MyApp;
+export default appWithTranslation(RootApp);

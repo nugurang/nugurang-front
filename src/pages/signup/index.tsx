@@ -4,10 +4,11 @@ import { useRouter } from 'next/router';
 import produce from 'immer';
 import { getCurrentOAuth2User } from '@/services/api/oAuth2User';
 import { createUser } from '@/services/api/user';
-import { oAuthLogin } from '@/services/oAuth2/index';
+import { oAuth2Login } from '@/services/oAuth2/index';
+import { PlainObject } from '@/constants/common';
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-  const currentOAuth2UserResponse = await getCurrentOAuth2User(context);
+  const currentOAuth2UserResponse = await getCurrentOAuth2User({ context });
   if (currentOAuth2UserResponse.data === undefined) {
     return {
       redirect: {
@@ -30,7 +31,7 @@ function Signup({ currentOAuth2User }) {
     email: currentOAuth2User.email || '',
     biography: currentOAuth2User.biography || '',
   });
-  const updateFormState = (patchObject) => {
+  const updateFormState = (patchObject: PlainObject) => {
     setFormState((baseObject) =>
       produce(baseObject, (draftObject) => ({
         ...draftObject,
@@ -43,14 +44,15 @@ function Signup({ currentOAuth2User }) {
     router.back();
   };
   const handleClickSubmitButton = async () => {
-    const response = await createUser(null, {
-      name: formState.name,
-      email: formState.email,
-      biography: formState.biography,
+    const response = await createUser({
+      user: {
+        name: formState.name,
+        email: formState.email,
+        biography: formState.biography,
+      }
     });
-    console.log(response)
     if (response.data.id) {
-      await oAuthLogin(currentOAuth2User.oAuth2Provider);
+      await oAuth2Login(currentOAuth2User.oAuth2Provider);
     }
   };
 

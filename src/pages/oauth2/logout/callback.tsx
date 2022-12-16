@@ -3,9 +3,9 @@ import CookieManager from '@/utilities/storage/cookie';
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   try {
-    CookieManager.delete(context, 'JSESSIONID');
-    CookieManager.delete(context, 'oAuthProvider');
-    CookieManager.delete(context, 'oAuthAuthorizationCode');
+    CookieManager.delete('JSESSIONID', { context });
+    CookieManager.delete('oAuthProvider', { context });
+    CookieManager.delete('oAuthAuthorizationCode', { context });
     return {
       redirect: {
         permanent: false,

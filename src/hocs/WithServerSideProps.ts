@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { GetServerSidePropsContext } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getCurrentOAuth2User } from '@/services/api/oAuth2User';
 import { getCurrentUser } from '@/services/api/user';
+import Logger from '@/utilities/common/logger';
+import { AppError } from '@/constants/appError';
+import { PlainObject } from '@/constants/common';
 
 export function WithAuthServerSideProps(getServerSidePropsFunction?: Function) {
   return async (context: GetServerSidePropsContext) => {
-    const serverSideTranslationsResult = await serverSideTranslations(
-      context.locale,
-      ['common'],
-    );
     try {
-      await getCurrentOAuth2User(context);
+      await getCurrentOAuth2User({ context });
     } catch (error) {
-      if (error.networkError?.statusCode === 401) {
+      if ((error as AppError).statusCode === 401) {
         return {
           redirect: {
             destination: '/signin',
@@ -30,22 +28,20 @@ export function WithAuthServerSideProps(getServerSidePropsFunction?: Function) {
     }
 
     try {
-      const currentUserResult = await getCurrentUser(context);
+      const currentUserResult = await getCurrentUser({ context });
       if (getServerSidePropsFunction) {
         return await getServerSidePropsFunction({
           context,
           currentUser: currentUserResult.data,
-          ...serverSideTranslationsResult,
         });
       }
       return {
         props: {
           currentUser: currentUserResult.data,
-          ...serverSideTranslationsResult,
         },
       };
     } catch (error) {
-      if (error.networkError?.statusCode === 401) {
+      if ((error as AppError).statusCode === 401) {
         return {
           redirect: {
             destination: '/signin',
@@ -67,24 +63,17 @@ export function WithDefaultServerSideProps(
   getServerSidePropsFunction?: Function,
 ) {
   return async (context: GetServerSidePropsContext) => {
-    const serverSideTranslationsResult = await serverSideTranslations(
-      context.locale,
-      ['common'],
-    );
     try {
       if (getServerSidePropsFunction) {
         return await getServerSidePropsFunction({
           context,
-          ...serverSideTranslationsResult,
         });
       }
       return {
-        props: {
-          ...serverSideTranslationsResult,
-        },
+        props: {},
       };
-    } catch (error) {
-      console.error(error);
+    } catch(error) {
+      Logger.error(error as PlainObject);
       return {
         redirect: {
           destination: '/500',
