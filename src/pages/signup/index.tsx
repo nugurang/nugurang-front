@@ -1,35 +1,20 @@
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import produce from 'immer';
-import { getCurrentOAuth2User } from '@/services/api/oAuth2User';
 import { createUser } from '@/services/api/user';
 import { oAuth2Login } from '@/services/oAuth2/index';
 import { PlainObject } from '@/constants/common';
+import { WithCheckOAuth2ServerSideProps, WithCheckOAuth2ServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-  const currentOAuth2UserResponse = await getCurrentOAuth2User({ context });
-  if (currentOAuth2UserResponse.data === undefined) {
-    return {
-      redirect: {
-        destination: '/signin/',
-        permanent: false,
-      },
-    };
-  }
-  return {
-    props: {
-      currentOAuth2User: currentOAuth2UserResponse.data,
-    },
-  };
-};
+export const getServerSideProps = WithCheckOAuth2ServerSideProps();
 
-function Signup({ currentOAuth2User }) {
+interface PageProps extends WithCheckOAuth2ServerSidePropsResponse {}
+export default ({ currentOAuth2User }: PageProps) => {
   const router = useRouter();
   const [formState, setFormState] = useState({
-    name: currentOAuth2User.name || '',
-    email: currentOAuth2User.email || '',
-    biography: currentOAuth2User.biography || '',
+    name: currentOAuth2User.data.name || '',
+    email: currentOAuth2User.data.email || '',
+    biography: currentOAuth2User.data.biography || '',
   });
   const updateFormState = (patchObject: PlainObject) => {
     setFormState((baseObject) =>
@@ -52,7 +37,7 @@ function Signup({ currentOAuth2User }) {
       }
     });
     if (response.data.id) {
-      await oAuth2Login(currentOAuth2User.oAuth2Provider);
+      await oAuth2Login(currentOAuth2User.data.oAuth2Provider);
     }
   };
 
@@ -81,6 +66,4 @@ function Signup({ currentOAuth2User }) {
           <button onClick={handleClickSubmitButton} >제출</button>
     </>
   );
-}
-
-export default Signup;
+};

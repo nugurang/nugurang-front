@@ -22,8 +22,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
   }
 }
 
-function OAuthLogoutCallback() {
+export default () => {
   return <></>;
-}
-
-export default OAuthLogoutCallback;
+};

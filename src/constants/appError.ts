@@ -7,7 +7,7 @@ type AppErrorGroup = {
   [key: string]: AppError
 };
 
-const commonErrors: AppErrorGroup = {
+const CommonErrors: AppErrorGroup = {
   DefaultError: {
     statusCode: 500,
     type: 'DefaultError',
@@ -15,9 +15,17 @@ const commonErrors: AppErrorGroup = {
   }
 }
 
+const NetworkErrors: AppErrorGroup = {
+  BackendConnectionLostError: {
+    statusCode: 502,
+    type: 'BackendConnectionLostError',
+    message: 'BackendConnectionLostError'
+  }
+}
+
 const AuthErrors: AppErrorGroup = {
   OAuth2LoginInternalError: {
-    statusCode: 401,
+    statusCode: 500,
     type: 'OAuth2LoginInternalError',
     message: 'OAuth2LoginInternalError'
   },
@@ -27,7 +35,7 @@ const AuthErrors: AppErrorGroup = {
     message: 'UserNotExistError'
   },
   BackendLoginInternalError: {
-    statusCode: 401,
+    statusCode: 500,
     type: 'BackendLoginInternalError',
     message: 'BackendLoginInternalError'
   },
@@ -39,7 +47,8 @@ const AuthErrors: AppErrorGroup = {
 }
 
 const AppErrors = {
-  common: commonErrors,
+  common: CommonErrors,
+  network: NetworkErrors,
   auth: AuthErrors
 };
 

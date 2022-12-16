@@ -3,8 +3,9 @@ import AppErrors from '@/constants/appError';
 import OAuth2Constants from '@/constants/oAuth2';
 import type { OAuth2Provider } from '@/constants/oAuth2';
 import RestApiManager from '@/utilities/network/rest';
+import { PlainObject } from '@/constants/common';
 
-export const getAuthorizationCodeAndRedirect = async (
+const getAuthorizationCodeAndRedirect = async (
   oAuthProvider: OAuth2Provider,
 ) => {
   const params = {
@@ -22,7 +23,7 @@ export const getAuthorizationCodeAndRedirect = async (
 };
 export const oAuth2Login = getAuthorizationCodeAndRedirect;
 
-export const getAccessToken = async (
+const getAccessToken = async (
   oAuthProvider: OAuth2Provider,
   oAuthAuthorizationCode: string,
 ) => {
@@ -43,9 +44,7 @@ export const getAccessToken = async (
     access_token: accessToken
   } = getAccessTokenResponse.data;
   if (error) {
-    console.log('2');
-    console.log(error);
-    throw AppErrors.auth.OAuth2LoginInternalError;
+    throw error;
   }
   return accessToken;
 };
@@ -54,21 +53,27 @@ export const login = async (
   oAuthProvider: OAuth2Provider,
   oAuthAuthorizationCode: string,
 ) => {
-  const accessToken = await getAccessToken(
-    oAuthProvider,
-    oAuthAuthorizationCode,
-  );
+  const responses: PlainObject = {};
+  try {
+    const accessToken = await getAccessToken(
+      oAuthProvider,
+      oAuthAuthorizationCode,
+    );
+    responses.accessToken = accessToken;
+  } catch(error) {
+    throw AppErrors.auth.BackendLoginInternalError;
+  }
   const options = {
     data: {
       clientRegistrationId: oAuthProvider,
       accessToken: {
-        tokenValue: accessToken,
+        tokenValue: responses.accessToken,
         issuedAt: String(Math.floor(new Date().getTime() / 1000)),
         expiresAt: String(new Date(8640000000000).getTime() / 1000),
         scopes: OAuth2Constants.providers[oAuthProvider].scope,
       },
       refreshToken: {
-        tokenValue: accessToken,
+        tokenValue: responses.accessToken,
         issuedAt: String(Math.floor(new Date().getTime() / 1000)),
         expiresAt: String(new Date(8640000000000).getTime() / 1000),
       },

@@ -3,16 +3,25 @@ import { query, mutate } from '@/utilities/network/graphQl';
 import type { ApplicationQueryError } from '@/utilities/network/graphQl';
 import ObjectManager from '@/utilities/common/object';
 import AppErrors from '@/constants/appError';
-import { GetServerSidePropsContextAdapter } from '@/constants/common';
+import { GetServerSidePropsContextAdapter, PlainObject } from '@/constants/common';
+import { OAuth2Provider } from '@/constants/oAuth2';
+import { GraphQLError } from 'graphql';
 
 export interface getCurrentUserProps extends GetServerSidePropsContextAdapter {}
 export interface getCurrentUserResponse {
   data: {
-    oAuth2Provider: string;
+    oAuth2Provider: OAuth2Provider;
     oAuth2Id: string;
+    name: string;
+    email: string;
+    image?: {
+      id: string;
+      address: string;
+    }
+    biography?: string;
   }
 }
-export const getCurrentUser = async (props: getCurrentUserProps) => {
+export const getCurrentUser = async (props: getCurrentUserProps = {}) => {
   try {
     const response: ApolloQueryResult<any> = await query({
       query: gql`
@@ -42,6 +51,11 @@ export const getCurrentUser = async (props: getCurrentUserProps) => {
   } catch(error) {
     if((error as ApplicationQueryError).statusCode === 401) {
       throw AppErrors.auth.UserNotExistError;
+    } else if(
+      ((error as ApplicationQueryError).graphQlErrors || [])
+      .some((error: GraphQLError) => error.extensions.type === 'NotFoundException')
+    ) {
+      throw AppErrors.auth.UserNotExistError;
     } else {
       throw AppErrors.auth.LoginInternalError;
     }
@@ -55,8 +69,8 @@ interface CreateUserMutationProps extends GetServerSidePropsContextAdapter {
     biography?: string;
   }
 }
-export const createUser = async (props: CreateUserMutationProps) => {
-  const response: FetchResult<any> = await mutate({
+export const createUser = async (props: CreateUserMutationProps = {}) => {
+  const response = await mutate({
     mutation: gql`
       mutation CreateUser($user: UserInput!) {
         createCurrentUser(user: $user) {
@@ -70,5 +84,5 @@ export const createUser = async (props: CreateUserMutationProps) => {
     dataPropertyName: 'createCurrentUser',
     context: props.context
   });
-  return response;
+  return response ?? ({} as PlainObject);
 };

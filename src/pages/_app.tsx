@@ -15,7 +15,7 @@ import '@/styles/global.css';
 library.add(fab);
 library.add(fas);
 
-function RootApp({ Component, pageProps }: AppProps) {
+const RootApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     const handleStart = () => {};
     const handleStop = () => {};
@@ -41,6 +41,6 @@ function RootApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
     </ApolloProvider>
   </>;
-}
+};
 
 export default appWithTranslation(RootApp);

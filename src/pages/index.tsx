@@ -7,8 +7,6 @@ export async function getServerSideProps() {
   };
 }
 
-function Index() {
+export default () => {
   return <></>;
-}
-
-export default Index;
+};

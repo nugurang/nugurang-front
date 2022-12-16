@@ -16,6 +16,7 @@ import IsomorphismManager from '@/utilities/common/isomorphism';
 import Logger from '@/utilities/common/logger';
 import type { PlainObject } from '@/constants/common';
 import { GetServerSidePropsContext } from 'next';
+import { GraphQLError } from 'graphql';
 
 const DynamicImports: PlainObject = {};
 if(IsomorphismManager.isServer) {
@@ -103,13 +104,14 @@ export interface ApplicationQueryResponse<T> {
 export interface ApplicationQueryError {
   loading: boolean;
   statusCode: number;
-  error?: ApolloError;
+  apolloError?: ApolloError;
+  graphQlErrors?: GraphQLError[];
 }
 export const query = async (
   props: ApplicationQueryProps,
 ) => {
-  const { query: _query, variables = {}, dataPropertyName, context = null } = props;
   try {
+    const { query: _query, variables = {}, dataPropertyName, context = null } = props;
     const response = await getInstance().query({
       query: _query,
       variables,
@@ -121,7 +123,10 @@ export const query = async (
       },
     });
     if (response.error || response.errors) {
-      throw response;
+      throw {
+        apolloError: response.error,
+        graphQlErrors: response.errors
+      };
     }
     return {
       loading: response.loading,
@@ -129,12 +134,12 @@ export const query = async (
       data: dataPropertyName ? response.data[dataPropertyName] : response.data,
     };
   } catch(error) {
-    Logger.error(error as PlainObject);
-    const statusCode = ((error as ApolloError).networkError as ServerError)?.statusCode ?? 500;
+    const statusCode = ((error as ApolloError)?.networkError as ServerError)?.statusCode ?? 500;
     throw {
       loading: false,
       statusCode,
-      error,
+      apolloError: (error as PlainObject).apolloError,
+      graphQlErrors: (error as PlainObject).graphQlErrors
     };
   }
 };
@@ -149,24 +154,20 @@ export const mutate = async (
   props: MutationProps,
 ) => {
   const { mutation, variables = {}, dataPropertyName, context = null } = props;
-  try {
-    const response = await getInstance().mutate({
-      mutation,
-      variables,
-      context: {
-        headers: {
-          // Cookie: IsomorphismManager.isServer ? `JSESSIONID=${DynamicImports.cookies().get('JSESSIONID').value}` : document.cookie,
-          Cookie: context ? context.req.headers.cookie : null,
-        },
+  const response = await getInstance().mutate({
+    mutation,
+    variables,
+    context: {
+      headers: {
+        // Cookie: IsomorphismManager.isServer ? `JSESSIONID=${DynamicImports.cookies().get('JSESSIONID').value}` : document.cookie,
+        Cookie: context ? context.req.headers.cookie : null,
       },
-    });
-    return {
-      ...response,
-      data: dataPropertyName ? response.data[dataPropertyName] : response.data,
-    };
-  } catch(error) {
-    Logger.error(error as PlainObject);
-  }
+    },
+  });
+  return {
+    ...response,
+    data: dataPropertyName ? response.data[dataPropertyName] : response.data,
+  };
 };
 
 const GraphQlApiManager = {

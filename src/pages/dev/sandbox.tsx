@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router';
-import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
+import { WithCheckUserServerSideProps } from '@/hocs/WithServerSideProps';
 import { oAuth2Login, logout } from '@/services/oAuth2/index';
 
 export const getServerSideProps = WithCheckUserServerSideProps();
 
-interface PageProps extends WithCheckUserServerSidePropsResponse {}
-export default ({ currentUser }: PageProps) => {
+export default ({ currentUser }) => {
   const router = useRouter();
 
   return (
@@ -18,9 +17,9 @@ export default ({ currentUser }: PageProps) => {
       )}
       {currentUser && (
         <>
-          <p>{currentUser.data.name}</p>
+          <p>{currentUser.name}</p>
           <button onClick={() => logout()} >로그아웃</button>
-          <button onClick={() => router.push('/dev/ping')} >Ping</button>
+          <button onClick={() => router.push('/sandbox')} >샌드박스</button>
         </>
       )}
     </>

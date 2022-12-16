@@ -5,7 +5,7 @@ import { oAuth2Login } from '@/services/oAuth2/index';
 
 export const getServerSideProps = WithDefaultServerSideProps();
 
-function Signin({ currentUser }) {
+export default ({ currentUser }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
 
@@ -23,6 +23,4 @@ function Signin({ currentUser }) {
       >GitHub 로그인</button>
     </>
   );
-}
-
-export default Signin;
+};

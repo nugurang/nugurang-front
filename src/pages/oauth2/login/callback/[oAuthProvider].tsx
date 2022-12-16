@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     if (!oAuthProvider || error || !code) throw new Error();
 
     const loginResponse = await login(oAuthProvider, code);
-    Logger.info(`Login successful: ${JSON.stringify(loginResponse.data.data)}`)
+    Logger.info(`Login successful: ${JSON.stringify(loginResponse.data.data.email)}`)
     const setCookieString = loginResponse.headers.get('set-cookie') ?? '';
     const jSessionId = CookieManager.parseAndGet(
       setCookieString,
@@ -37,8 +37,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
   }
 }
 
-function oAuth2LoginCallback() {
+export default () => {
   return <></>;
-}
-
-export default oAuth2LoginCallback;
+};

@@ -4,17 +4,19 @@ import type { ApplicationQueryError } from '@/utilities/network/graphQl';
 import ObjectManager from '@/utilities/common/object';
 import AppErrors from '@/constants/appError';
 import { GetServerSidePropsContextAdapter } from '@/constants/common';
+import { OAuth2Provider } from '@/constants/oAuth2';
+import { GraphQLError } from 'graphql';
 
 export interface getCurrentOAuth2UserProps extends GetServerSidePropsContextAdapter {}
 export interface getCurrentOAuth2UserResponse {
   data: {
-    oAuth2Provider: string;
+    oAuth2Provider: OAuth2Provider;
     name: string;
     email: string;
     biography: string;
   }
 }
-export const getCurrentOAuth2User = async (props: getCurrentOAuth2UserProps) => {
+export const getCurrentOAuth2User = async (props: getCurrentOAuth2UserProps = {}) => {
   try {
     const response: ApolloQueryResult<any> = await query({
       query: gql`
@@ -35,6 +37,11 @@ export const getCurrentOAuth2User = async (props: getCurrentOAuth2UserProps) => 
     };
   } catch(error) {
     if((error as ApplicationQueryError).statusCode === 401) {
+      throw AppErrors.auth.OAuth2UserNotExistError;
+    } else if(
+      ((error as ApplicationQueryError).graphQlErrors || [])
+      .some((error: GraphQLError) => error.extensions.type === 'NotFoundException')
+    ) {
       throw AppErrors.auth.OAuth2UserNotExistError;
     } else {
       throw AppErrors.auth.OAuth2LoginInternalError;
