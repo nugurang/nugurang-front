@@ -7,8 +7,8 @@ import { GetServerSidePropsContextAdapter } from '@/constants/common';
 import { OAuth2Provider } from '@/constants/oAuth2';
 import { GraphQLError } from 'graphql';
 
-export interface getCurrentOAuth2UserProps extends GetServerSidePropsContextAdapter {}
-export interface getCurrentOAuth2UserResponse {
+export interface GetCurrentOAuth2UserProps extends GetServerSidePropsContextAdapter {}
+export interface GetCurrentOAuth2UserResponse {
   data: {
     oAuth2Provider: OAuth2Provider;
     name: string;
@@ -16,7 +16,7 @@ export interface getCurrentOAuth2UserResponse {
     biography: string;
   }
 }
-export const getCurrentOAuth2User = async (props: getCurrentOAuth2UserProps = {}) => {
+export const getCurrentOAuth2User = async (props: GetCurrentOAuth2UserProps = {}) => {
   try {
     const response: ApolloQueryResult<any> = await query({
       query: gql`

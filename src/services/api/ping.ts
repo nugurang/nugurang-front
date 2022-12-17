@@ -3,13 +3,13 @@ import { query } from '@/utilities/network/graphQl';
 import AppErrors from '@/constants/appError';
 import { GetServerSidePropsContextAdapter } from '@/constants/common';
 
-export interface getPingProps extends GetServerSidePropsContextAdapter {}
-export interface getPingResponse {
+export interface GetPingProps extends GetServerSidePropsContextAdapter {}
+export interface GetPingResponse {
   data: {
     ping: string;
   }
 }
-export const getPing = async (props: getPingProps = {}) => {
+export const getPing = async (props: GetPingProps = {}) => {
   try {
     const response: ApolloQueryResult<any> = await query({
       query: gql`

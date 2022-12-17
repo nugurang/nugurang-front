@@ -1,3 +1,9 @@
 {
-  "hello_world": "Hello, World!"
+  "words": {
+    "sign_in": "Sign in",
+    "sign_out": "Sign out"
+  },
+  "sentences": {
+    "hello_world": "Hello, World!"
+  }
 }

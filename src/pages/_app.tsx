@@ -33,6 +33,7 @@ const RootApp = ({ Component, pageProps }: AppProps) => {
   if (process.env.NEXT_PUBLIC_APP_MODE === 'mock') {
     Mocks.initMockAPI();
   }
+  
   return <>
     <Head>
       <title>nugurang</title>

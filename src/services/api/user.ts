@@ -7,8 +7,8 @@ import { GetServerSidePropsContextAdapter, PlainObject } from '@/constants/commo
 import { OAuth2Provider } from '@/constants/oAuth2';
 import { GraphQLError } from 'graphql';
 
-export interface getCurrentUserProps extends GetServerSidePropsContextAdapter {}
-export interface getCurrentUserResponse {
+export interface GetCurrentUserProps extends GetServerSidePropsContextAdapter {}
+export interface GetCurrentUserResponse {
   data: {
     oAuth2Provider: OAuth2Provider;
     oAuth2Id: string;
@@ -21,7 +21,7 @@ export interface getCurrentUserResponse {
     biography?: string;
   }
 }
-export const getCurrentUser = async (props: getCurrentUserProps = {}) => {
+export const getCurrentUser = async (props: GetCurrentUserProps = {}) => {
   try {
     const response: ApolloQueryResult<any> = await query({
       query: gql`
@@ -69,7 +69,7 @@ interface CreateUserMutationProps extends GetServerSidePropsContextAdapter {
     biography?: string;
   }
 }
-export const createUser = async (props: CreateUserMutationProps = {}) => {
+export const createUser = async (props: CreateUserMutationProps) => {
   const response = await mutate({
     mutation: gql`
       mutation CreateUser($user: UserInput!) {

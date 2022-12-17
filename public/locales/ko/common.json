@@ -1,3 +1,9 @@
 {
-  "hello_world": "반갑구나, 세상아!"
+  "words": {
+    "sign_in": "로그인",
+    "sign_out": "로그아웃"
+  },
+  "sentences": {
+    "hello_world": "반갑구나, 세상아!"
+  }
 }

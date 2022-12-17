@@ -6,7 +6,6 @@ import { PlainObject } from '@/constants/common';
 export const getServerSideProps = WithDefaultServerSideProps(async({ context }) => {
   const responses: PlainObject = {};
   responses.ping = await getPing({ context });
-  console.log(responses.ping)
   return {
     props: responses
   };
@@ -17,7 +16,6 @@ interface PageProps extends WithCheckUserServerSidePropsResponse {
 }
 export default (props: PageProps) => {
   const { ping } = props;
-  console.log(ping)
   return (
     <div>
       <Head>
@@ -31,7 +29,7 @@ export default (props: PageProps) => {
           Welcome to <a href="https://nextjs.org">Next.js</a>
           <span> - {process.env.NEXT_PUBLIC_APP_MODE}!</span>
         </h1>
-        <p>ping -&gt; {ping.data ?? 'error'}</p>
+        <p>ping -&gt; {ping ?? 'error'}</p>
       </main>
     </div>
   )
