@@ -36,7 +36,7 @@ const link = from([
     if (networkError) Logger.warn(`[GraphQL Network error]: ${networkError}`);
   }),
   new HttpLink({
-    uri: `${EnvConstants.backendRootUrl}/graphql`,
+    uri: `${EnvConstants.backendRootUrl}/graphql}`,
     credentials: 'include',
   }),
 ]);

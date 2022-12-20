@@ -1,36 +1,15 @@
-import { graphql } from 'msw'
+import { mockCurrentUserQuery } from '@/__generated__/resolvers-types';
 
-export const mutationLogin = graphql.mutation('Login', (req, res, ctx) => {
-  const { username } = req.variables
-  sessionStorage.setItem('is-authenticated', username)
+export const currentUserQuery = mockCurrentUserQuery((req, res, ctx) => {
   return res(
     ctx.data({
-      login: {
-        username,
+      currentUser: {
+        id: 'mockuser',
+        oauth2Provider: 'mock',
+        oauth2Id: 'mockuser',
+        name: 'Mock User',
+        email: 'mockuser@nugurang.com'
       },
     }),
-  )
-})
-
-export const queryCurrentUser = graphql.query('CurrentUser', (req, res, ctx) => {
-  const authenticatedUser = sessionStorage.getItem('is-authenticated')
-  if (!authenticatedUser) {
-    return res(
-      ctx.errors([
-        {
-          message: 'Not authenticated',
-          errorType: 'AuthenticationError',
-        },
-      ]),
-    )
-  }
-
-  return res(
-    ctx.data({
-      user: {
-        username: authenticatedUser,
-        firstName: 'John',
-      },
-    }),
-  )
-})
+  );
+});

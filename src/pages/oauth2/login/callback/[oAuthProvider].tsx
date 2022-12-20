@@ -3,8 +3,17 @@ import CookieManager from '@/utilities/storage/cookie';
 import { login } from '@/services/oAuth2/index';
 import { OAuth2Provider } from '@/constants/oAuth2';
 import Logger from '@/utilities/common/logger';
+import EnvConstants from '@/constants/env';
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  if(EnvConstants.isAppModeMock) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
   try {
     const oAuthProvider = context.params?.oAuthProvider as OAuth2Provider;
     const error = context.query.error;

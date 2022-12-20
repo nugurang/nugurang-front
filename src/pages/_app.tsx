@@ -5,11 +5,10 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { appWithTranslation } from "next-i18next";
 import { ApolloProvider } from '@apollo/client';
-import GraphQlApiManager from '@/utilities/network/graphQl';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import Mocks from '../mocks';
+import GraphQlApiManager from '@/utilities/network/graphQl';
 import '@/styles/global.css';
 
 library.add(fab);
@@ -30,9 +29,6 @@ const RootApp = ({ Component, pageProps }: AppProps) => {
       Router.events.off('routeChangeError', handleStop);
     };
   }, []);
-  if (process.env.NEXT_PUBLIC_APP_MODE === 'mock') {
-    Mocks.initMockAPI();
-  }
   
   return <>
     <Head>

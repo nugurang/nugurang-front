@@ -7,10 +7,21 @@ You can go to nugurang-doc repository to see project description and installatio
 
 ```bash
 npm install
+npm run init
 
 ```
 
 ## Run
+
+```bash
+npm run mock
+
+```
+
+```bash
+npm run local
+
+```
 
 ```bash
 npm run dev

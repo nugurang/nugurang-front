@@ -1,0 +1,442 @@
+scalar DateTime
+
+input ArticleInput {
+    content: String!
+    title: String
+    images: [ID]!
+}
+
+input BoardInput {
+    name: String!
+}
+
+input EventInput {
+    name: String!
+    description: String
+    recruitingStart: DateTime!
+    recruitingEnd: DateTime!
+    eventStart: DateTime!
+    eventEnd: DateTime!
+    images: [ID]!
+}
+
+input MatchRequestInput {
+    minTeamSize: Int!
+    maxTeamSize: Int!
+    days: Int
+    hours: Int
+    minutes: Int
+    type: ID!
+    event: ID!
+}
+
+input PositionInput {
+    name: String!
+    description: String
+    image: ID
+}
+
+input PositionHonorInput {
+    position: ID!
+    honor: Int!
+}
+
+input ProjectInput {
+    name: String!
+    event: ID
+}
+
+input ProjectInvitationInput {
+    project: ID!
+    users: [ID]!
+}
+
+input TagInput {
+    name: String!
+}
+
+input TaskInput {
+    name: String!
+    difficulty: Int
+    order: Int
+    progress: ID
+    users: [ID]!
+    positions: [ID]!
+}
+
+input TaskReviewInput {
+    honor: Int!
+    task: ID!
+}
+
+input TeamInput {
+    name: String!
+}
+
+input TeamInvitationInput {
+    team: ID!
+    users: [ID]!
+}
+
+input ThreadInput {
+    name: String!
+    firstArticle: ArticleInput!
+    event: ID
+    team: ID
+}
+
+input UserInput {
+    name: String!
+    email: String!
+    biography: String
+    image: ID
+}
+
+input UserReviewInput {
+    toUser: ID!
+    honors: [PositionHonorInput]!
+}
+
+input VoteInput {
+    user: ID!
+    article: ID!
+    voteType: ID!
+}
+
+input WorkInput {
+    name: String!
+    order: Int
+}
+
+type Article {
+    id: ID!
+    content: String!
+    viewCount: Int!
+    createdAt: DateTime!
+    modifiedAt: DateTime!
+    title: String
+    thread: Thread!
+    user: User!
+    parent: Article
+    images: [Image]!
+    tags: [Tag]!
+    upCount: Int!
+    downCount: Int!
+    starCount: Int!
+}
+
+type Board {
+    id: ID!
+    name: String!
+    getUsers(page: Int!, pageSize: Int!): [User]!
+    getThreads(page: Int!, pageSize: Int!): [Thread]!
+}
+
+type Event {
+    id: ID!
+    name: String!
+    description: String!
+    recruitingStart: DateTime!
+    recruitingEnd: DateTime!
+    eventStart: DateTime!
+    eventEnd: DateTime!
+    images: [Image]!
+    tags: [Tag]!
+    matchRequests: [MatchRequest]!
+}
+
+type MatchRequest {
+    id: ID!
+    createdAt: DateTime!
+    expiresAt: DateTime!
+    minTeamSize: Int!
+    maxTeamSize: Int
+    type: MatchType!
+    event: Event!
+    user: User!
+}
+
+type MatchType {
+    id: ID!
+    name: String!
+}
+
+type Image {
+    id: ID!
+    address: String!
+}
+
+type InvitationStatus {
+    id: ID!
+    name: String!
+}
+
+type Notification {
+    id: ID!
+    isRead: Boolean!
+    createdAt: DateTime!
+    data: [String]!
+    type: NotificationType!
+    user: User!
+}
+
+type NotificationType {
+    id: ID!
+    name: String!
+}
+
+type OAuth2User {
+    provider: String!
+    id: String!
+    name: String!
+    email: String
+}
+
+type Position {
+    id: ID!
+    name: String!
+    description: String
+    image: Image
+}
+
+type Progress {
+    id: ID!
+    name: String!
+}
+
+type Project {
+    id: ID!
+    name: String!
+    finished: Boolean!
+    team: Team!
+    getUsers(page: Int!, pageSize: Int!): [User]!
+    event: Event
+    works: [Work]!
+}
+
+type ProjectInvitation {
+    id: ID!
+    status: InvitationStatus!
+    project: Project!
+    fromUser: User!
+    toUser: User!
+}
+
+type Role {
+    id: ID!
+    name: String!
+}
+
+type Tag {
+    id: ID!
+    name: String!
+}
+
+type Task {
+    id: ID!
+    name: String!
+    difficulty: Int!
+    order: Int!
+    work: Work!
+    progress: Progress!
+    positions: [Position]!
+    users: [User]!
+}
+
+type Team {
+    id: ID!
+    name: String!
+    projects: [Project]!
+    owner: User!
+    getMembers(page: Int!, pageSize: Int!): [User]!
+}
+
+type TeamInvitation {
+    id: ID!
+    status: InvitationStatus!
+    team: Team!
+    fromUser: User!
+    toUser: User!
+}
+
+type Thread {
+    id: ID!
+    name: String!
+    board: Board!
+    user: User!
+    team: Team
+    event: Event
+    firstArticle: Article!
+    getArticles(page: Int!, pageSize: Int!): [Article]!
+    commentCount: Int!
+    tags: [Tag]!
+}
+
+type User {
+    id: ID!
+    oauth2Provider: String!
+    oauth2Id: String!
+    name: String!
+    email: String!
+    biography: String
+    totalHonor: Int!
+    honors: [UserHonor]!
+    image: Image
+    blog: Board!
+    getArticles(page: Int!, pageSize: Int!): [Article]!
+    getFollowers(page: Int!, pageSize: Int!): [User]!
+    getFollowings(page: Int!, pageSize: Int!): [User]!
+    getNotifications(page: Int!, pageSize: Int!): [Notification]!
+    getProjects(page: Int!, pageSize: Int!): [Project]!
+    getTeams(page: Int!, pageSize: Int!): [Team]!
+    getThreads(page: Int!, pageSize: Int!): [Thread]!
+    getUserEvaluations(page: Int!, pageSize: Int!): [UserEvaluation]!
+}
+
+type UserEvaluation {
+    id: ID!
+    createdAt: DateTime!
+    expiresAt: DateTime!
+    project: Project!
+    reviews: [UserReview]!
+}
+
+type UserHonor {
+    id: ID!
+    honor: Int!
+    user: User!
+    position: Position!
+}
+
+type UserReview {
+    id: ID!
+    honor: Int!
+    position: Position!
+    fromUser: User!
+    toUser: User!
+    evaluation: UserEvaluation!
+}
+
+type Vote {
+    id: ID!
+    user: User!
+    article: Article!
+    voteType: VoteType!
+}
+
+type VoteType {
+    id: ID!
+    name: String!
+}
+
+type Work {
+    id: ID!
+    project: Project!
+    name: String!
+    opened: Boolean!
+    order: Int!
+    tasks: [Task]!
+}
+
+type Query {
+    ping: String!
+
+    currentUser: User
+    currentOAuth2User: OAuth2User
+    matchRequests: [MatchRequest]!
+    # taskReviews: [TaskReview]!
+    # userEvaluations: [UserEvaluation]!
+
+    boards: [Board]!
+    invitationStatus: [InvitationStatus]!
+    matchTypes: [MatchType]!
+    notificationTypes: [NotificationType]!
+    positions: [Position]!
+    progresses: [Progress]!
+    voteTypes: [VoteType]!
+
+    getArticle(id: ID!): Article
+    getBoard(id: ID!): Board
+    getBoardByName(name: String!): Board
+    getBoardsByNames(names: [String]!): [Board]!
+    getEvent(id: ID!): Event
+    getImage(id: ID!): Image
+    getImageByAddress(address: String!): Image
+    getNotification(id: ID!): Notification
+    getProject(id: ID!): Project
+    getProjectInvitation(id: ID!): ProjectInvitation
+    getTask(id: ID!): Task
+    # getTaskReviewByTask(id: ID!): TaskReview!
+    getTeam(id: ID!): Team
+    getTeamByName(name: String!): Team
+    getTeamsByName(name: String!, page: Int!, pageSize: Int!): [Team]!
+    getTeamInvitation(id: ID!): TeamInvitation
+    getThread(id: ID!): Thread
+    getThreadsByBoards(boards: [ID]!, page: Int!, pageSize: Int!): [Thread]!
+    getThreadsByBoardNames(boards: [String]!, page: Int!, pageSize: Int!): [Thread]!
+    getHotThreadsByBoardNames(boards: [String]!, page: Int!, pageSize: Int!): [Thread]!
+    getUser(id: ID!): User
+    getUserByName(name: String!): User
+    getUsers(page: Int!, pageSize: Int!): [User]!
+    getUsersByName(name: String!, page: Int!, pageSize: Int!): [User]!
+    getWork(id: ID!): Work
+}
+
+type Mutation {
+
+    """CREATE"""
+    createArticle(article: ArticleInput!, thread: ID!, parent: ID): Article!
+    createBoard(board: BoardInput!): Board!
+    createEvent(event: EventInput!): Event!
+    createFollowing(user: ID!): Boolean!
+    createImage(address: String!): Image!
+    createMatchRequest(request: MatchRequestInput!): MatchRequest!
+    createPosition(position: PositionInput!): Position!
+    createProject(project: ProjectInput!, team: ID!): Project!
+    createProjectInvitations(invitation: ProjectInvitationInput!): [ProjectInvitation]!
+    createTag(tag: TagInput!): Tag!
+    createTask(task: TaskInput!, work: ID!): Task!
+    createTeam(team: TeamInput!): Team!
+    createTeamInvitations(invitation: TeamInvitationInput!): [TeamInvitation]!
+    createThread(thread: ThreadInput!, board: ID!): Thread!
+    createCurrentUser(user: UserInput!): User!
+    createVote(vote: VoteInput!): Vote!
+    createWork(work: WorkInput!, project: ID!): Work!
+
+    """UPDATE"""
+    updateArticle(article: ArticleInput!, id: ID!): Article!
+    updateBoard(board: BoardInput!, id: ID!): Board!
+    updateEvent(event: EventInput!, id: ID!): Event!
+    updateProject(project: ProjectInput!, id: ID!): Project!
+    updateProjectFinish(id: ID!): Boolean!
+    updateProjectInvitationAccepted(id: ID!): Boolean!
+    updateProjectInvitationDenied(id: ID!): Boolean!
+    updateTask(task: TaskInput!, id: ID!): Task!
+    updateTaskReview(taskReview: TaskReviewInput!): Boolean!
+    updateTeam(team: TeamInput!, id: ID!): Team!
+    updateTeamInvitationAccepted(id: ID!): Boolean!
+    updateTeamInvitationDenied(id: ID!): Boolean!
+    updateThread(thread: ThreadInput!, id: ID!): Thread!
+    updateCurrentUser(user: UserInput!): User!
+    updateUserReviews(reviews: [UserReviewInput]!, evaluation: ID!): Boolean!
+    updateVote(vote: VoteInput!, id: ID!): Vote!
+    updateWork(work: WorkInput!, id: ID!): Work!
+
+    """DELETE"""
+    deleteArticle(id: ID!): ID!
+    deleteBoard(id: ID!): ID!
+    deleteEvent(id: ID!): ID!
+    deleteFollowing(id: ID!): ID!
+    deleteImage(id: ID!): ID!
+    deleteProject(id: ID!): ID!
+    deleteRole(id: ID!): ID!
+    deleteTag(id: ID!): ID!
+    deleteTask(id: ID!): ID!
+    deleteTeam(id: ID!): ID!
+    deleteThread(id: ID!): ID!
+    deleteCurrentUser: ID!
+    deleteUser(id: ID!): ID!
+    deleteVote(id: ID!): ID!
+    deleteVoteType(id: ID!): ID!
+    deleteWork(id: ID!): ID!
+}

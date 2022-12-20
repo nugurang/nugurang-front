@@ -1,9 +1,9 @@
-import { graphql } from 'msw'
+import { mockPingQuery } from '@/__generated__/resolvers-types';
 
-export const queryPing = graphql.query('Ping', (req, res, ctx) => {
+export const pingQuery = mockPingQuery((req, res, ctx) => {
   return res(
     ctx.data({
-      pong: 'Pong!',
+      ping: 'Pong from mock server!',
     }),
   )
 })

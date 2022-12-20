@@ -25,12 +25,14 @@
     ],
     "baseUrl": "./src",
     "paths": {
+      "@/__generated__/*": ["__generated__/*"],
       "@/components/*": ["components/*"],
       "@/compounds/*": ["compounds/*"],
       "@/constants/*": ["constants/*"],
       "@/contexts/*": ["contexts/*"],
       "@/hocs/*": ["hocs/*"],
       "@/hooks/*": ["hooks/*"],
+      "@/mocks/*": ["mocks/*"],
       "@/pages/*": ["pages/*"],
       "@/services/*": ["services/*"],
       "@/styles/*": ["styles/*"],
@@ -45,5 +47,10 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+    }
+  }
 }

@@ -7,7 +7,9 @@ export const getServerSideProps = WithDefaultServerSideProps(async({ context }) 
   const responses: PlainObject = {};
   responses.ping = await getPing({ context });
   return {
-    props: responses
+    props: {
+      ping: responses.ping.data
+    }
   };
 });
 
