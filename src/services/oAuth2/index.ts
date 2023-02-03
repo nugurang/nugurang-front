@@ -1,9 +1,10 @@
 import EnvConstants from '@/constants/env';
-import AppErrors from '@/constants/appError';
 import OAuth2Constants from '@/constants/oAuth2';
 import type { OAuth2Provider } from '@/constants/oAuth2';
 import RestApiManager from '@/utilities/network/rest';
 import { PlainObject } from '@/constants/common';
+import BackendInternalError from '@/errors/network/BackendInternalError';
+import UserNotExistError from '@/errors/network/UserNotExistError';
 
 const getAuthorizationCodeAndRedirect = async (
   oAuthProvider: OAuth2Provider,
@@ -43,8 +44,8 @@ const getAccessToken = async (
     error,
     access_token: accessToken
   } = getAccessTokenResponse.data;
-  if (error) {
-    throw error;
+  if(error) {
+    throw new BackendInternalError;
   }
   return accessToken;
 };
@@ -54,15 +55,11 @@ export const login = async (
   oAuthAuthorizationCode: string,
 ) => {
   const responses: PlainObject = {};
-  try {
-    const accessToken = await getAccessToken(
-      oAuthProvider,
-      oAuthAuthorizationCode,
-    );
-    responses.accessToken = accessToken;
-  } catch(error) {
-    throw AppErrors.auth.BackendLoginInternalError;
-  }
+  const accessToken = await getAccessToken(
+    oAuthProvider,
+    oAuthAuthorizationCode,
+  );
+  responses.accessToken = accessToken;
   const options = {
     data: {
       clientRegistrationId: oAuthProvider,
@@ -83,22 +80,17 @@ export const login = async (
   const loginResponse = await RestApiManager.postToBackend('/login', options);
   if (loginResponse.data.errors && loginResponse.data.errors.length > 0) {
     if(loginResponse.data.errors.some((error: any) => error.extensions.type === 'OAuth2AuthenticationException')) {
-      throw AppErrors.auth.UserNotExistError;
+      throw new UserNotExistError;
     } else {
-      throw AppErrors.auth.BackendLoginInternalError;
+      throw new BackendInternalError;
     }
   }
   return loginResponse;
 };
 
 export const logout = async () => {
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  };
-  await fetch(`${EnvConstants.backendRootUrl}/logout`, options);
+  await RestApiManager.postToBackend(
+    '/logout',
+  );
   window.location.assign(`${EnvConstants.frontendRootUrl}/oauth2/logout/callback`);
 };

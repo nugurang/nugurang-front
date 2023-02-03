@@ -3,13 +3,17 @@ import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Router from 'next/router';
-import { appWithTranslation } from "next-i18next";
+import { appWithTranslation } from 'next-i18next';
 import { ApolloProvider } from '@apollo/client';
+import CssBaseline from '@mui/material/CssBaseline';
+import GlobalStyles from '@mui/material/GlobalStyles';
+import { ThemeProvider } from '@mui/material/styles';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import GraphQlApiManager from '@/utilities/network/graphQl';
-import '@/styles/global.css';
+import globalStyles from '@/styles/global';
+import theme from '@/styles/theme';
 
 library.add(fab);
 library.add(fas);
@@ -34,8 +38,12 @@ const RootApp = ({ Component, pageProps }: AppProps) => {
     <Head>
       <title>nugurang</title>
     </Head>
-    <ApolloProvider client={GraphQlApiManager.getInstance()}>
-      <Component {...pageProps} />
+    <ApolloProvider client={GraphQlApiManager.getBackendApolloClient()}>
+      <ThemeProvider theme={theme.light}>
+        <CssBaseline />
+        <GlobalStyles styles={globalStyles} />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </ApolloProvider>
   </>;
 };

@@ -1,29 +1,24 @@
 import { ApolloQueryResult, gql } from '@apollo/client';
-import { query } from '@/utilities/network/graphQl';
-import AppErrors from '@/constants/appError';
+import { queryToBackend } from '@/utilities/network/graphQl';
 import { GetServerSidePropsContextAdapter } from '@/constants/common';
 
 export interface GetPingProps extends GetServerSidePropsContextAdapter {}
+export interface GetPingResponseData {
+  ping: string;
+}
 export interface GetPingResponse {
-  data: {
-    ping: string;
-  }
+  data: GetPingResponseData
 }
 export const getPing = async (props: GetPingProps = {}) => {
-  try {
-    const response: ApolloQueryResult<any> = await query({
-      query: gql`
-        query Ping {
-          ping
-        }
-      `,
-      dataPropertyName: 'ping',
-      context: props.context
-    });
-    return {
-      data: response.data
-    };
-  } catch(error) {
-    throw AppErrors.network.BackendConnectionLostError;
-  }
+  const response: ApolloQueryResult<any> = await queryToBackend({
+    query: gql`
+      query Ping {
+        ping
+      }
+    `,
+    context: props.context
+  });
+  return {
+    data: response.data.ping
+  };
 };

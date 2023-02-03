@@ -1,4 +1,5 @@
 import EnvConstants from '@/constants/env';
+import ObjectManager from '../common/object';
 
 type RestApiMethod = 'GET' | 'POST';
 type RestApiOrigin = string;
@@ -21,12 +22,13 @@ const restFetch = async (
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      ...props.headers
+      ...(props.headers ?? {})
     },
-    body: JSON.stringify(props.data),
+    body: JSON.stringify(props.data ?? {}),
   };
   const response = await fetch(`${origin}${pathname}`, options);
-  const responseJson = await response.json();
+  const responseText = await response.text();
+  const responseJson = ObjectManager.isValidJsonString(responseText) ? await JSON.parse(responseText) : {};
   return {
     headers: response.headers,
     data: responseJson
@@ -44,7 +46,7 @@ const restPost = async (
 ) => await restFetch('POST', origin, pathname, props);
 
 const createFetcher = (method: RestApiMethod, origin: RestApiOrigin) => {
-  return (async (pathname: RestApiPathname, props: RestApiProps) => await restFetch(
+  return (async (pathname: RestApiPathname, props: RestApiProps = {}) => await restFetch(
     method,
     origin,
     pathname,
@@ -52,8 +54,8 @@ const createFetcher = (method: RestApiMethod, origin: RestApiOrigin) => {
   ));
 };
 
-const restGetFromBackend = createFetcher('GET', `${EnvConstants.backendRootUrl}`);
-const restPostToBackend = createFetcher('POST', `${EnvConstants.backendRootUrl}`);
+const restGetFromBackend = createFetcher('GET', EnvConstants.backendRootUrl);
+const restPostToBackend = createFetcher('POST', EnvConstants.backendRootUrl);
 const restGetFromFrontend = createFetcher('GET', EnvConstants.frontendRootUrl);
 const restPostToFrontend = createFetcher('POST', EnvConstants.frontendRootUrl);
 

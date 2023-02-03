@@ -5,6 +5,7 @@ import { createUser } from '@/services/api/user';
 import { oAuth2Login } from '@/services/oAuth2/index';
 import { PlainObject } from '@/constants/common';
 import { WithCheckOAuth2ServerSideProps, WithCheckOAuth2ServerSidePropsResponse } from '@/hocs/WithServerSideProps';
+import UserAlreadyExistsError from '@/errors/network/UserAlreadyExistsError';
 
 export const getServerSideProps = WithCheckOAuth2ServerSideProps();
 
@@ -14,7 +15,7 @@ export default ({ currentOAuth2User }: PageProps) => {
   const [formState, setFormState] = useState({
     name: currentOAuth2User.data.name || '',
     email: currentOAuth2User.data.email || '',
-    biography: currentOAuth2User.data.biography || '',
+    biography: '',
   });
   const updateFormState = (patchObject: PlainObject) => {
     setFormState((baseObject) =>
@@ -29,22 +30,26 @@ export default ({ currentOAuth2User }: PageProps) => {
     router.back();
   };
   const handleClickSubmitButton = async () => {
-    const response = await createUser({
-      user: {
-        name: formState.name,
-        email: formState.email,
-        biography: formState.biography,
+    try {
+      const response = await createUser({
+        user: {
+          name: formState.name,
+          email: formState.email,
+          biography: formState.biography,
+        }
+      });
+      if(response?.data?.id) {
+        await oAuth2Login(currentOAuth2User.data.oAuth2Provider);
       }
-    });
-    if (response.data.id) {
-      await oAuth2Login(currentOAuth2User.data.oAuth2Provider);
+    } catch (error) {
+      if(error instanceof UserAlreadyExistsError) alert('User already exists!');
     }
   };
 
   return (
     <>
         <button
-          onClick={() => handleClickBackButton()}
+          onClick={handleClickBackButton}
         >뒤로가기</button>
           <input
             placeholder="name"
@@ -63,7 +68,7 @@ export default ({ currentOAuth2User }: PageProps) => {
               updateFormState({ biography: event.target.value })
             }
           />
-          <button onClick={handleClickSubmitButton} >제출</button>
+          <button onClick={handleClickSubmitButton}>제출</button>
     </>
   );
 };

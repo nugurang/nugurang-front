@@ -2,12 +2,14 @@
 import type { GetServerSidePropsContext } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getCurrentOAuth2User } from '@/services/api/oAuth2User';
-import type { GetCurrentOAuth2UserResponse } from '@/services/api/oAuth2User';
+import type { GetCurrentOAuth2UserResponseData } from '@/services/api/oAuth2User';
 import { getCurrentUser } from '@/services/api/user';
-import type { GetCurrentUserResponse } from '@/services/api/user';
-import Logger from '@/utilities/common/logger';
-import { AppError } from '@/constants/appError';
+import type { GetCurrentUserResponseData } from '@/services/api/user';
 import { GetServerSidePropsContextAdapter, PlainObject } from '@/constants/common';
+import LoginRequiredError from '@/errors/network/LoginRequiredError';
+import OAuth2UserNotExistError from '@/errors/network/OAuth2UserNotExistError';
+import UserNotExistError from '@/errors/network/UserNotExistError';
+import Logger from '@/utilities/common/logger';
 
 const commonServerSidePropsResponse = Object.freeze({
   signin: {
@@ -42,77 +44,64 @@ const getServerSideTranslationsResponse = async ({
 );
 
 export interface WithCheckUserServerSidePropsResponse extends GetServerSidePropsContextAdapter {
-  currentOAuth2User: GetCurrentOAuth2UserResponse,
-  currentUser: GetCurrentUserResponse,
+  currentOAuth2User: GetCurrentOAuth2UserResponseData,
+  currentUser: GetCurrentUserResponseData,
 }
 export function WithCheckUserServerSideProps(
   getServerSidePropsFunction: Function = defaultGetServerSidePropsFunction
 ) {
   return async (context: GetServerSidePropsContext) => {
     const responses: PlainObject = {};
-
     try {
       responses.translations = await getServerSideTranslationsResponse({ context });
-    } catch (error) {
-      return commonServerSidePropsResponse.error;
-    }
-
-    try {
       responses.oAuth2User = await getCurrentOAuth2User({ context });
+      responses.user = await getCurrentUser({ context });
+      return await getServerSidePropsFunction(context, {
+        ...responses.translations,
+        currentOAuth2User: responses.oAuth2User.data,
+        currentUser: responses.user.data
+      });
     } catch (error) {
-      if ((error as AppError).statusCode === 401) {
+      if (error instanceof LoginRequiredError) {
         return commonServerSidePropsResponse.signin;
       }
-      return commonServerSidePropsResponse.error;
-    }
-
-    try {
-      responses.user = await getCurrentUser({ context });
-    } catch(error) {
-      Logger.error(error as PlainObject);
-      if ((error as AppError).statusCode === 401) {
+      if (error instanceof OAuth2UserNotExistError) {
+        return commonServerSidePropsResponse.signin;
+      }
+      if (error instanceof UserNotExistError) {
         return commonServerSidePropsResponse.signup;
       }
+      Logger.error(JSON.stringify(error));
       return commonServerSidePropsResponse.error;
     }
-
-    return await getServerSidePropsFunction(context, {
-      ...responses.translations,
-      currentOAuth2User: responses.oAuth2User,
-      currentUser: responses.user
-    });
   };
 }
 
 export interface WithCheckOAuth2ServerSidePropsResponse extends GetServerSidePropsContextAdapter {
-  currentOAuth2User: GetCurrentOAuth2UserResponse,
+  currentOAuth2User: GetCurrentOAuth2UserResponseData,
 }
 export function WithCheckOAuth2ServerSideProps(
   getServerSidePropsFunction: Function = defaultGetServerSidePropsFunction
 ) {
   return async (context: GetServerSidePropsContext) => {
     const responses: PlainObject = {};
-
     try {
       responses.translations = await getServerSideTranslationsResponse({ context });
-    } catch (error) {
-      return commonServerSidePropsResponse.error;
-    }
-
-    try {
       responses.oAuth2User = await getCurrentOAuth2User({ context });
-    } catch(error) {
-      Logger.error(error as PlainObject);
-      if ((error as AppError).statusCode === 401) {
+      return await getServerSidePropsFunction(context, {
+        ...responses.translations,
+        currentOAuth2User: responses.oAuth2User.data,
+      });
+    } catch (error) {
+      if (error instanceof LoginRequiredError) {
         return commonServerSidePropsResponse.signin;
       }
+      if (error instanceof OAuth2UserNotExistError) {
+        return commonServerSidePropsResponse.signin;
+      }
+      Logger.error(JSON.stringify(error));
       return commonServerSidePropsResponse.error;
     }
-
-    return await getServerSidePropsFunction(context, {
-      ...responses.translations,
-      currentOAuth2User: responses.oAuth2User
-    });
   };
 }
 
@@ -120,16 +109,15 @@ export function WithDefaultServerSideProps(
   getServerSidePropsFunction: Function = defaultGetServerSidePropsFunction,
 ) {
   return async (context: GetServerSidePropsContext) => {
-    const responses: PlainObject = {};
-
     try {
+      const responses: PlainObject = {};
       responses.translations = await getServerSideTranslationsResponse({ context });
+      return await getServerSidePropsFunction(context, {
+        ...responses.translations
+      });
     } catch (error) {
+      Logger.error(JSON.stringify(error));
       return commonServerSidePropsResponse.error;
     }
-  
-    return await getServerSidePropsFunction(context, {
-      ...responses.translations
-    });
   };
 }

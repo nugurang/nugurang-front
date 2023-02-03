@@ -9,8 +9,8 @@ const createUrlString = ({
   hostname,
   port
 }: CreateUrlStringProps) => [
-  protocol,
-  '://',
+  protocol ?? '',
+  protocol ? '://' : '',
   hostname,
   port ? ':' : '',
   port ? String(port) : '',

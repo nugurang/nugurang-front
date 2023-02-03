@@ -1,29 +1,30 @@
-import { ApolloQueryResult, FetchResult, gql } from '@apollo/client';
-import { query, mutate } from '@/utilities/network/graphQl';
-import type { ApplicationQueryError } from '@/utilities/network/graphQl';
+import { ApolloQueryResult, gql } from '@apollo/client';
+import { queryToBackend, mutateToBackend } from '@/utilities/network/graphQl';
 import ObjectManager from '@/utilities/common/object';
-import AppErrors from '@/constants/appError';
-import { GetServerSidePropsContextAdapter, PlainObject } from '@/constants/common';
+import { GetServerSidePropsContextAdapter } from '@/constants/common';
 import { OAuth2Provider } from '@/constants/oAuth2';
-import { GraphQLError } from 'graphql';
+import UserAlreadyExistsError from '@/errors/network/UserAlreadyExistsError';
+import UserNotExistError from '@/errors/network/UserNotExistError';
+import Logger from '@/utilities/common/logger';
 
 export interface GetCurrentUserProps extends GetServerSidePropsContextAdapter {}
-export interface GetCurrentUserResponse {
-  data: {
-    oAuth2Provider: OAuth2Provider;
-    oAuth2Id: string;
-    name: string;
-    email: string;
-    image?: {
-      id: string;
-      address: string;
-    }
-    biography?: string;
+export interface GetCurrentUserResponseData {
+  oAuth2Provider: OAuth2Provider;
+  oAuth2Id: string;
+  name: string;
+  email: string;
+  image?: {
+    id: string;
+    address: string;
   }
+  biography?: string;
+}
+export interface GetCurrentUserResponse {
+  data: GetCurrentUserResponseData
 }
 export const getCurrentUser = async (props: GetCurrentUserProps = {}) => {
   try {
-    const response: ApolloQueryResult<any> = await query({
+    const response: ApolloQueryResult<any> = await queryToBackend({
       query: gql`
         query CurrentUser {
           currentUser {
@@ -40,25 +41,18 @@ export const getCurrentUser = async (props: GetCurrentUserProps = {}) => {
           }
         }
       `,
-      dataPropertyName: 'currentUser',
       context: props.context
     });
-    ObjectManager.replaceObjectProperty(response.data, 'oauth2Provider', 'oAuth2Provider');
-    ObjectManager.replaceObjectProperty(response.data, 'oauth2Id', 'oAuth2Id');
+    if(Array.isArray(response.errors) && response.errors[0]?.extensions.type === 'NotFoundException') {
+      throw new UserNotExistError;
+    }
+    ObjectManager.replaceObjectProperty(response.data.currentUser, 'oauth2Provider', 'oAuth2Provider');
+    ObjectManager.replaceObjectProperty(response.data.currentUser, 'oauth2Id', 'oAuth2Id');
     return {
-      data: response.data
+      data: response.data.currentUser
     };
   } catch(error) {
-    if((error as ApplicationQueryError).statusCode === 401) {
-      throw AppErrors.auth.UserNotExistError;
-    } else if(
-      ((error as ApplicationQueryError).graphQlErrors || [])
-      .some((error: GraphQLError) => error.extensions.type === 'NotFoundException')
-    ) {
-      throw AppErrors.auth.UserNotExistError;
-    } else {
-      throw AppErrors.auth.LoginInternalError;
-    }
+    Logger.debug(JSON.stringify(error))
   }
 };
 
@@ -70,7 +64,7 @@ interface CreateUserMutationProps extends GetServerSidePropsContextAdapter {
   }
 }
 export const createUser = async (props: CreateUserMutationProps) => {
-  const response = await mutate({
+  const response = await mutateToBackend({
     mutation: gql`
       mutation CreateUser($user: UserInput!) {
         createCurrentUser(user: $user) {
@@ -81,8 +75,12 @@ export const createUser = async (props: CreateUserMutationProps) => {
     variables: {
       user: props.user,
     },
-    dataPropertyName: 'createCurrentUser',
     context: props.context
   });
-  return response ?? ({} as PlainObject);
+  if(Array.isArray(response.errors?.graphQLErrors) && response.error?.graphQLErrors[0]?.extensions.type === 'DataIntegrityViolationException') {
+    throw new UserAlreadyExistsError;
+  }
+  return {
+    data: response.data.createCurrentUser
+  };
 };

@@ -1,6 +1,6 @@
-import { GetServerSidePropsContext as _GetServerSidePropsContext } from 'next'
+import { GetServerSidePropsContext } from 'next'
 
-export type IsomorphicGetServerSidePropsContext = _GetServerSidePropsContext | null;
+export type IsomorphicGetServerSidePropsContext = GetServerSidePropsContext | null;
 
 const isServer = typeof window === 'undefined';
 const isClient = !isServer;

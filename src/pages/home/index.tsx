@@ -13,14 +13,14 @@ export default ({ currentUser }: PageProps) => {
       <p>{'hello_world'}</p>
       {!currentUser && (
         <>
-          <button onClick={() => oAuth2Login('github')} >로그인</button>
+          <button onClick={() => oAuth2Login('github')}>로그인</button>
         </>
       )}
       {currentUser && (
         <>
-          <p>{currentUser.data.name}</p>
-          <button onClick={() => logout()} >로그아웃</button>
-          <button onClick={() => router.push('/dev/ping')} >Ping</button>
+          <p>{currentUser.name}</p>
+          <button onClick={() => logout()}>로그아웃</button>
+          <button onClick={() => router.push('/dev/ping')}>Ping</button>
         </>
       )}
     </>

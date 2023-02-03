@@ -30,6 +30,7 @@
       "@/compounds/*": ["compounds/*"],
       "@/constants/*": ["constants/*"],
       "@/contexts/*": ["contexts/*"],
+      "@/errors/*": ["errors/*"],
       "@/hocs/*": ["hocs/*"],
       "@/hooks/*": ["hooks/*"],
       "@/mocks/*": ["mocks/*"],

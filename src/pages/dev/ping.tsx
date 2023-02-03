@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import { getPing } from '@/services/api/ping';
-import { WithCheckUserServerSidePropsResponse, WithDefaultServerSideProps } from '@/hocs/WithServerSideProps';
+import { WithCheckOAuth2ServerSideProps, WithCheckOAuth2ServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import { PlainObject } from '@/constants/common';
 
-export const getServerSideProps = WithDefaultServerSideProps(async({ context }) => {
+export const getServerSideProps = WithCheckOAuth2ServerSideProps(async({ context }) => {
   const responses: PlainObject = {};
   responses.ping = await getPing({ context });
   return {
@@ -13,7 +13,7 @@ export const getServerSideProps = WithDefaultServerSideProps(async({ context }) 
   };
 });
 
-interface PageProps extends WithCheckUserServerSidePropsResponse {
+interface PageProps extends WithCheckOAuth2ServerSidePropsResponse {
   ping: string
 }
 export default (props: PageProps) => {

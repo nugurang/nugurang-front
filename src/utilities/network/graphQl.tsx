@@ -1,5 +1,5 @@
+import { GetServerSidePropsContext } from 'next';
 import {
-  ApolloError,
   ApolloClient,
   ApolloQueryResult,
   DocumentNode,
@@ -8,24 +8,17 @@ import {
   HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
-  ServerError
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import EnvConstants from '@/constants/env';
 import IsomorphismManager from '@/utilities/common/isomorphism';
 import Logger from '@/utilities/common/logger';
 import type { PlainObject } from '@/constants/common';
-import { GetServerSidePropsContext } from 'next';
-import { GraphQLError } from 'graphql';
+import BackendConnectionError from '@/errors/network/BackendConnectionError';
+import InvalidBackendUrlPathnameError from '@/errors/network/InvalidBackendUrlPathnameError';
+import LoginRequiredError from '@/errors/network/LoginRequiredError';
 
-const DynamicImports: PlainObject = {};
-if(IsomorphismManager.isServer) {
-  import('next/headers').then(({ cookies }) => {
-    DynamicImports.cookies = cookies;
-  });
-}
-
-const link = from([
+const backendHttpLink = from([
   onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
       graphQLErrors.map(({ message, locations, path }) =>
@@ -36,20 +29,19 @@ const link = from([
     if (networkError) Logger.warn(`[GraphQL Network error]: ${networkError}`);
   }),
   new HttpLink({
-    uri: `${EnvConstants.backendRootUrl}/graphql}`,
+    uri: `${EnvConstants.backendRootUrl}/graphql`,
     credentials: 'include',
   }),
 ]);
 
-const getInstance = (() => {
+const getBackendApolloClient = (() => {
   let instance: ApolloClient<NormalizedCacheObject> | null = null;
-
   return () => {
     if(!instance) {
       instance = new ApolloClient({
         ssrMode: IsomorphismManager.isServer,
         cache: new InMemoryCache(),
-        link,
+        link: backendHttpLink,
         headers: {
         },
         defaultOptions: {
@@ -87,93 +79,69 @@ export const flatApolloMutationResult = (
 interface ApplicationQueryProps {
   query: DocumentNode;
   variables?: PlainObject;
-  dataPropertyName?: string;
   context?: GetServerSidePropsContext;
 }
-export interface ApplicationQueryResponse<T> {
-  loading: boolean;
-  statusCode: number;
-  data?: T;
-  error?: ApolloError;
-}
-export interface ApplicationQueryResponse<T> {
-  loading: boolean;
-  statusCode: number;
-  data?: T;
-}
-export interface ApplicationQueryError {
-  loading: boolean;
-  statusCode: number;
-  apolloError?: ApolloError;
-  graphQlErrors?: GraphQLError[];
-}
-export const query = async (
+export const queryToBackend = async (
   props: ApplicationQueryProps,
 ) => {
   try {
-    const { query: _query, variables = {}, dataPropertyName, context = null } = props;
-    const response = await getInstance().query({
+    const { query: _query, variables = {}, context = null } = props;
+    const response = await getBackendApolloClient().query({
       query: _query,
       variables,
       context: {
         headers: {
-          // Cookie: IsomorphismManager.isServer ? `JSESSIONID=${DynamicImports.cookies().get('JSESSIONID').value}` : document.cookie,
           Cookie: context ? context.req.headers.cookie : null,
         },
       },
     });
-    if (response.error || response.errors) {
-      throw {
-        apolloError: response.error,
-        graphQlErrors: response.errors
-      };
-    }
-    return {
-      loading: response.loading,
-      networkStatus: response.networkStatus,
-      data: dataPropertyName ? response.data[dataPropertyName] : response.data,
-    };
+    return response;
   } catch(error) {
-    const statusCode = ((error as ApolloError)?.networkError as ServerError)?.statusCode ?? 500;
-    throw {
-      loading: false,
-      statusCode,
-      apolloError: (error as PlainObject).apolloError,
-      graphQlErrors: (error as PlainObject).graphQlErrors
-    };
+    if(error?.networkError?.statusCode === 401) {
+      throw new LoginRequiredError;
+    } else if(error?.networkError?.statusCode === 404) {
+      throw new InvalidBackendUrlPathnameError;
+    } else {
+      throw new BackendConnectionError;
+    }
   }
 };
 
 interface MutationProps {
   mutation: DocumentNode;
   variables?: PlainObject;
-  dataPropertyName?: string;
   context?: GetServerSidePropsContext;
 }
-export const mutate = async (
+export const mutateToBackend = async (
   props: MutationProps,
 ) => {
-  const { mutation, variables = {}, dataPropertyName, context = null } = props;
-  const response = await getInstance().mutate({
-    mutation,
-    variables,
-    context: {
-      headers: {
-        // Cookie: IsomorphismManager.isServer ? `JSESSIONID=${DynamicImports.cookies().get('JSESSIONID').value}` : document.cookie,
-        Cookie: context ? context.req.headers.cookie : null,
+  try {
+    const { mutation, variables = {}, context = null } = props;
+    const response = await getBackendApolloClient().mutate({
+      mutation,
+      variables,
+      context: {
+        headers: {
+          Cookie: context ? context.req.headers.cookie : null,
+        },
       },
-    },
-  });
-  return {
-    ...response,
-    data: dataPropertyName ? response.data[dataPropertyName] : response.data,
-  };
+    });
+    return response;
+  } catch(error) {
+    if(error?.networkError?.statusCode === 401) {
+      throw new LoginRequiredError;
+    } else if(error?.networkError?.statusCode === 404) {
+      throw new InvalidBackendUrlPathnameError;
+    } else {
+      throw new BackendConnectionError;
+    }
+  }
 };
 
 const GraphQlApiManager = {
-  getInstance,
-  query,
-  mutate
+  getBackendApolloClient,
+  queryToBackend,
+  mutateToBackend
 };
 
 export default GraphQlApiManager;
