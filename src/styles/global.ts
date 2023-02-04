@@ -3,8 +3,7 @@ import { css } from '@emotion/react';
 const globalStyles = css`
   @font-face {
     font-family: 'KOMACON';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-      format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff') format('woff');
   }
 
   /* https://meyerweb.com/eric/tools/css/reset/ */
@@ -93,7 +92,7 @@ const globalStyles = css`
     padding: 0;
     border: 0;
     font-size: 16px;
-    font: inherit;
+    line-height: normal;
     vertical-align: baseline;
     box-sizing: border-box;
   }

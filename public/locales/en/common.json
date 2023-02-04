@@ -4,6 +4,7 @@
     "sign_out": "Sign out"
   },
   "sentences": {
-    "hello_world": "Hello, World!"
+    "hello_world": "Hello, World!",
+    "please_sign_in": "Please sign in."
   }
 }

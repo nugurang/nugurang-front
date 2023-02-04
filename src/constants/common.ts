@@ -8,3 +8,5 @@ export type PlainObject = {
 export interface GetServerSidePropsContextAdapter {
   context?: GetServerSidePropsContext;
 }
+
+export const wallpaperSourceUrl = 'https://source.unsplash.com/random/1920x1080/?crowd';

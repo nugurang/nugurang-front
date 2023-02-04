@@ -1,0 +1,24 @@
+import { ReactNode } from 'react';
+import styled from '@emotion/styled';
+
+const Card = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin: 16px;
+`;
+
+interface ContainerProps {
+  children: ReactNode | string;
+}
+export default (props: ContainerProps) => {
+  const {
+    children,
+  } = props;
+
+  return (
+    <Card>
+      {children}
+    </Card>
+  );
+}
