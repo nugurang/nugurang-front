@@ -5,6 +5,8 @@
   },
   "sentences": {
     "hello_world": "Hello, World!",
-    "please_sign_in": "Please sign in."
+    "please_check_your_user_data": "Please check your user data.",
+    "please_sign_in": "Please sign in.",
+    "welcome": "Welcome!"
   }
 }

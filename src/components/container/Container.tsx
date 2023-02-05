@@ -1,14 +1,14 @@
 import { ReactNode, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Card from './Card';
-import Centerizer from './Centerizer';
+import NavigationBar from './NavigationBar';
+import StatusBar from './StatusBar';
+import Box from '../layout/Box';
 
-const ContainerBase = styled.div`
+const ContainerOuterBase = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
 `;
-
 interface WallpaperProps {
   isLoaded: boolean;
   url?: string;
@@ -27,18 +27,59 @@ const Wallpaper = styled.img<WallpaperProps>`
     background-image: url("${props.url}");
   `)}
 `;
+const ContainerInnerBase = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
+`;
 
-interface ContainerProps {
+const VerticalFlex = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 100%;
+  &>*:last-child {
+    flex-grow: 1;
+  }
+`;
+const HorizontalFlex = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  width: 100%;
+  &>*:last-child {
+    flex-grow: 1;
+  }
+`;
+
+const ContentBase = styled.div`
+  position: relative;
+`;
+
+const Content = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: scroll;
+`;
+
+interface Props {
   children: ReactNode | string;
   centerizeHorizontally?: boolean;
   centerizeVertically?: boolean;
+  showNavigationBar?: boolean;
+  showStatusBar?: boolean;
   wallpaperUrl?: string;
 }
-export default (props: ContainerProps) => {
+export default (props: Props) => {
   const {
     children,
     centerizeHorizontally,
     centerizeVertically,
+    showNavigationBar,
+    showStatusBar,
     wallpaperUrl,
   } = props;
   const [wallpaperImage, setWallpaperImage] = useState({
@@ -58,19 +99,24 @@ export default (props: ContainerProps) => {
   }, []);
 
   return (
-    <ContainerBase>
+    <ContainerOuterBase>
       <Wallpaper
         isLoaded={wallpaperImage.isLoaded}
         src={wallpaperImage.isLoaded ? wallpaperImage.url : undefined}
       />
-      <Centerizer
-        horizontally={centerizeHorizontally ?? true}
-        vertically={centerizeVertically ?? false}
-      >
-        <Card>
-          {children}
-        </Card>
-      </Centerizer>
-    </ContainerBase>
+      <ContainerInnerBase>
+        <VerticalFlex>
+          <StatusBar show={showStatusBar ?? true}/>
+          <HorizontalFlex>
+            <NavigationBar show={showNavigationBar ?? true}/>
+            <ContentBase>
+              <Content>
+                {children}
+              </Content>
+            </ContentBase>
+          </HorizontalFlex>
+        </VerticalFlex>
+      </ContainerInnerBase>
+    </ContainerOuterBase>
   );
 }

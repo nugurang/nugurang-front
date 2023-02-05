@@ -23,37 +23,33 @@ export interface GetCurrentUserResponse {
   data: GetCurrentUserResponseData
 }
 export const getCurrentUser = async (props: GetCurrentUserProps = {}) => {
-  try {
-    const response: ApolloQueryResult<any> = await queryToBackend({
-      query: gql`
-        query CurrentUser {
-          currentUser {
+  const response: ApolloQueryResult<any> = await queryToBackend({
+    query: gql`
+      query CurrentUser {
+        currentUser {
+          id
+          oauth2Provider
+          oauth2Id
+          name
+          email
+          image {
             id
-            oauth2Provider
-            oauth2Id
-            name
-            email
-            image {
-              id
-              address
-            }
-            biography
+            address
           }
+          biography
         }
-      `,
-      context: props.context
-    });
-    if(Array.isArray(response.errors) && response.errors[0]?.extensions.type === 'NotFoundException') {
-      throw new UserNotExistError;
-    }
-    ObjectManager.replaceObjectProperty(response.data.currentUser, 'oauth2Provider', 'oAuth2Provider');
-    ObjectManager.replaceObjectProperty(response.data.currentUser, 'oauth2Id', 'oAuth2Id');
-    return {
-      data: response.data.currentUser
-    };
-  } catch(error) {
-    Logger.debug(JSON.stringify(error))
+      }
+    `,
+    context: props.context
+  });
+  if(Array.isArray(response.errors) && response.errors[0]?.extensions.type === 'NotFoundException') {
+    throw new UserNotExistError;
   }
+  ObjectManager.replaceObjectProperty(response.data.currentUser, 'oauth2Provider', 'oAuth2Provider');
+  ObjectManager.replaceObjectProperty(response.data.currentUser, 'oauth2Id', 'oAuth2Id');
+  return {
+    data: response.data.currentUser
+  };
 };
 
 interface CreateUserMutationProps extends GetServerSidePropsContextAdapter {

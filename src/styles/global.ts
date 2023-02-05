@@ -87,10 +87,12 @@ const globalStyles = css`
   time,
   mark,
   audio,
-  video {
+  video,
+  input {
     margin: 0;
     padding: 0;
     border: 0;
+    font-family: KOMACON;
     font-size: 16px;
     line-height: normal;
     vertical-align: baseline;

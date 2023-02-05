@@ -1,27 +1,10 @@
-import { useRouter } from 'next/router';
-import { WithCheckUserServerSideProps } from '@/hocs/WithServerSideProps';
-import { oAuth2Login, logout } from '@/services/oAuth2/index';
+import Container from '@/components/container/Container';
 
-export const getServerSideProps = WithCheckUserServerSideProps();
-
-export default ({ currentUser }) => {
-  const router = useRouter();
-
+export default () => {
   return (
-    <>
-      <p>{'hello_world'}</p>
-      {!currentUser && (
-        <>
-          <button onClick={() => oAuth2Login('github')} >로그인</button>
-        </>
-      )}
-      {currentUser && (
-        <>
-          <p>{currentUser.name}</p>
-          <button onClick={() => logout()} >로그아웃</button>
-          <button onClick={() => router.push('/sandbox')} >샌드박스</button>
-        </>
-      )}
-    </>
+    <Container centerizeVertically>
+      <div>Hello, World!</div>
+      <div>Hello, World!</div>
+    </Container>
   );
 };
