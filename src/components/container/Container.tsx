@@ -1,14 +1,39 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import NavigationBar from './NavigationBar';
 import StatusBar from './StatusBar';
-import Box from '../layout/Box';
+
+const useMediaQuery = (mediaQueryString: string) => {
+  const [isMatched, setMatched] = useState<boolean>(false);
+  const updateTarget = useCallback((event: MediaQueryListEvent) => {
+    if (event.matches) {
+      setMatched(true);
+    } else {
+      setMatched(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const media = window.matchMedia(mediaQueryString);
+      media.addEventListener('change', updateTarget);
+      if (media.matches) {
+        setMatched(true);
+      }
+      return () => {
+        media.removeEventListener('change', updateTarget);
+      };
+    }
+  }, []);
+  return [isMatched, setMatched];
+};
 
 const ContainerOuterBase = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
 `;
+
 interface WallpaperProps {
   isLoaded: boolean;
   url?: string;
@@ -56,12 +81,15 @@ const ContentBase = styled.div`
   position: relative;
 `;
 
-const Content = styled.div`
+interface ContentProps {
+  isMobileView: boolean;
+}
+const Content = styled.div<ContentProps>`
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: ${props => props.isMobileView ? '0' : '64px'};
+  right: ${props => props.isMobileView ? '0' : '64px'};
   overflow: scroll;
 `;
 
@@ -84,6 +112,7 @@ export default (props: Props) => {
     isLoaded: false,
     url: '',
   });
+  const [isMobileView] = useMediaQuery('(max-width: 720px)');
 
   useEffect(() => {
     const wallpaperImage = new Image();
@@ -106,8 +135,13 @@ export default (props: Props) => {
         <VerticalFlex>
           <StatusBar show={showStatusBar ?? true}/>
           <ContentBase>
-            <NavigationBar show={showNavigationBar ?? true}/>
-            <Content>
+            <NavigationBar
+              isMobileView={isMobileView as boolean ?? true}
+              show={showNavigationBar ?? true}
+            />
+            <Content
+              isMobileView={isMobileView as boolean ?? true}
+            >
               {children}
             </Content>
           </ContentBase>

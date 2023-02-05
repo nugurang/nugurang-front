@@ -4,38 +4,57 @@ import Card from '../layout/Card';
 interface NavigationBarProps {
   show?: boolean;
 }
-const NavigationBarOuterWrap = styled.div<NavigationBarProps>`
+const NavigationBarMobile = styled.div<NavigationBarProps>`
   display: ${props => (props.show ? 'block' : 'none')};
   position: absolute;
+  z-index: 100;
+
+  bottom: 0;
+  height: 48px;
+  width: 100%;
+  transition: height 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    height: 72px;
+    max-height: 100vh;
+  }
+`;
+const NavigationBarDesktop = styled.div<NavigationBarProps>`
+  display: ${props => (props.show ? 'block' : 'none')};
+  position: absolute;
+  z-index: 100;
+
   left: 0;
   height: 100%;
-	transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1);
   width: 48px;
+  transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1);
   &:hover {
     width: 240px;
     max-width: 100vw;
   }
-  z-index: 100;
-`;
-const NavigationBarInnerWrap = styled.div`
-  display: flex;
 `;
 
 interface Props {
+  isMobileView: boolean;
   show?: boolean;
 }
 export default (props: Props) => {
   const {
+    isMobileView,
     show
   } = props;
 
-  return (
-    <NavigationBarOuterWrap show={show}>
+  if(isMobileView) return (
+    <NavigationBarMobile show={show}>
       <Card fullSize roundCorner={false}>
-        <NavigationBarInnerWrap>
-          Nv
-        </NavigationBarInnerWrap>
+        Nv
       </Card>
-    </NavigationBarOuterWrap>
+    </NavigationBarMobile>
   );
+  else return (
+    <NavigationBarDesktop show={show}>
+      <Card fullSize roundCorner={false}>
+        Nv
+      </Card>
+    </NavigationBarDesktop>
+  )
 }
