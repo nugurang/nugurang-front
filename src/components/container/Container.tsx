@@ -59,9 +59,9 @@ const ContentBase = styled.div`
 const Content = styled.div`
   position: absolute;
   top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   overflow: scroll;
 `;
 
@@ -76,8 +76,6 @@ interface Props {
 export default (props: Props) => {
   const {
     children,
-    centerizeHorizontally,
-    centerizeVertically,
     showNavigationBar,
     showStatusBar,
     wallpaperUrl,
@@ -107,14 +105,12 @@ export default (props: Props) => {
       <ContainerInnerBase>
         <VerticalFlex>
           <StatusBar show={showStatusBar ?? true}/>
-          <HorizontalFlex>
+          <ContentBase>
             <NavigationBar show={showNavigationBar ?? true}/>
-            <ContentBase>
-              <Content>
-                {children}
-              </Content>
-            </ContentBase>
-          </HorizontalFlex>
+            <Content>
+              {children}
+            </Content>
+          </ContentBase>
         </VerticalFlex>
       </ContainerInnerBase>
     </ContainerOuterBase>

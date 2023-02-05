@@ -5,9 +5,12 @@ import Card from '../layout/Card';
 
 const Page = styled.div`
   margin: 0 auto;
-  padding: 16px 0;
+  padding-top: 24px;
   width: 100%;
   max-width: 720px;
+  &:last-child {
+    padding-bottom: 24px;
+  }
 `;
 
 interface Props {
