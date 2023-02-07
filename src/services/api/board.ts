@@ -1,16 +1,23 @@
 import { ApolloQueryResult, gql } from '@apollo/client';
 import { queryToBackend } from '@/utilities/network/graphQl';
 import { GetServerSidePropsContextAdapter } from '@/constants/common';
-import { OAuth2Provider } from '@/constants/oAuth2';
+import { getBoardNameI18nKey } from '@/constants/board';
 
 export interface GetAllBoardsProps extends GetServerSidePropsContextAdapter {}
-export interface GetAllBoardsResponseData {
-  oAuth2Provider: OAuth2Provider;
+interface GetAllBoardsResponseRawListItem {
+  id: string;
   name: string;
-  email: string;
+}
+export interface Board {
+  id: string;
+  i18nKey: string;
+  isEvent: boolean;
 }
 export interface GetAllBoardsResponse {
-  data: GetAllBoardsResponseData
+  data: {
+    boardList: Board[];
+    eventBoardList: Board[];
+  }
 }
 export const getAllBoards = async (props: GetAllBoardsProps = {}) => {
   const response: ApolloQueryResult<any> = await queryToBackend({
@@ -19,16 +26,29 @@ export const getAllBoards = async (props: GetAllBoardsProps = {}) => {
         boards {
           id
           name
-          getThreads(page: 0, pageSize: 10) {
-            id
-            name
-          }
         }
       }
     `,
     context: props.context
   });
+  const boardList = response.data.boards
+  .filter((board: GetAllBoardsResponseRawListItem) => !(board.name.endsWith('_event')))
+  .map((board: GetAllBoardsResponseRawListItem) => ({
+    ...board,
+    i18nKey: getBoardNameI18nKey(board.name),
+    isEvent: false,
+  }));
+  const eventBoardList = response.data.boards
+  .filter((board: GetAllBoardsResponseRawListItem) => (board.name.endsWith('_event')))
+  .map((board: GetAllBoardsResponseRawListItem) => ({
+    ...board,
+    i18nKey: getBoardNameI18nKey(board.name),
+    isEvent: true,
+  }));
   return {
-    data: response.data.boards
+    data: {
+      boardList,
+      eventBoardList
+    }
   };
 };

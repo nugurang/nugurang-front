@@ -3,11 +3,14 @@ import { queryToBackend } from '@/utilities/network/graphQl';
 import { GetServerSidePropsContextAdapter } from '@/constants/common';
 
 export interface GetPingProps extends GetServerSidePropsContextAdapter {}
-export interface GetPingResponseData {
+interface GetPingResponseRawData {
+  ping: string;
+}
+export interface Ping {
   ping: string;
 }
 export interface GetPingResponse {
-  data: GetPingResponseData
+  data: Ping
 }
 export const getPing = async (props: GetPingProps = {}) => {
   const response: ApolloQueryResult<any> = await queryToBackend({

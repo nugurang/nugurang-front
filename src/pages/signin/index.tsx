@@ -37,10 +37,18 @@ export default () => {
             {commonTranslation('sentences.please_sign_in')}
           </Text>
           <ButtonGroup>
-            <Button fullWidth onClick={() => oAuth2Login('github')}>
+            <Button
+              fullWidth
+              palette='primary'
+              onClick={() => oAuth2Login('github')}
+            >
               GitHub 로그인
             </Button>
-            <Button fullWidth onClick={() => handleClickBackButton()}>
+            <Button
+              fullWidth
+              palette='error'
+              onClick={() => handleClickBackButton()}
+            >
               뒤로가기
             </Button>
           </ButtonGroup>

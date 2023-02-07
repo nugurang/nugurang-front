@@ -2,9 +2,9 @@
 import type { GetServerSidePropsContext } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getCurrentOAuth2User } from '@/services/api/oAuth2User';
-import type { GetCurrentOAuth2UserResponseData } from '@/services/api/oAuth2User';
+import type { OAuth2User } from '@/services/api/oAuth2User';
 import { getCurrentUser } from '@/services/api/user';
-import type { GetCurrentUserResponseData } from '@/services/api/user';
+import type { User } from '@/services/api/user';
 import { GetServerSidePropsContextAdapter, PlainObject } from '@/constants/common';
 import LoginRequiredError from '@/errors/network/LoginRequiredError';
 import OAuth2UserNotExistError from '@/errors/network/OAuth2UserNotExistError';
@@ -40,12 +40,12 @@ const getServerSideTranslationsResponse = async ({
   context
 }: GetServerSideTranslationsResponseProps) => await serverSideTranslations(
   context?.locale ?? 'en',
-  ['common', ...[context?.req?.url?.split('/')[1] ?? ''].filter(e => !!e)],
+  ['common', 'dev', ...([context?.resolvedUrl?.split('/')[1] ?? ''].filter(word => !!word))],
 );
 
 export interface WithCheckUserServerSidePropsResponse extends GetServerSidePropsContextAdapter {
-  currentOAuth2User: GetCurrentOAuth2UserResponseData,
-  currentUser: GetCurrentUserResponseData,
+  currentOAuth2User: OAuth2User,
+  currentUser: User,
 }
 export function WithCheckUserServerSideProps(
   getServerSidePropsFunction: Function = defaultGetServerSidePropsFunction
@@ -78,7 +78,7 @@ export function WithCheckUserServerSideProps(
 }
 
 export interface WithCheckOAuth2ServerSidePropsResponse extends GetServerSidePropsContextAdapter {
-  currentOAuth2User: GetCurrentOAuth2UserResponseData,
+  currentOAuth2User: OAuth2User,
 }
 export function WithCheckOAuth2ServerSideProps(
   getServerSidePropsFunction: Function = defaultGetServerSidePropsFunction

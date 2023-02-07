@@ -100,8 +100,16 @@ export default ({ currentOAuth2User }: PageProps) => {
             }
           />
           <ButtonGroup>
-            <Button fullWidth onClick={handleClickBackButton}>뒤로가기</Button>
-            <Button fullWidth onClick={handleClickSubmitButton}>제출</Button>
+            <Button
+              fullWidth
+              palette='error'
+              onClick={handleClickBackButton}
+            >뒤로가기</Button>
+            <Button
+              fullWidth
+              palette='primary'
+              onClick={handleClickSubmitButton}
+            >제출</Button>
           </ButtonGroup>
         </Box>
       </CenterizedPage>

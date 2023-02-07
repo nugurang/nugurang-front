@@ -7,13 +7,12 @@ import { appWithTranslation } from 'next-i18next';
 import { ApolloProvider } from '@apollo/client';
 import CssBaseline from '@mui/material/CssBaseline';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import { ThemeProvider } from '@mui/material/styles';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import GraphQlApiManager from '@/utilities/network/graphQl';
 import globalStyles from '@/styles/global';
-import theme from '@/styles/theme';
+import { ThemeProvider } from '@/components/theme';
 
 library.add(fab);
 library.add(fas);
@@ -39,7 +38,7 @@ const RootApp = ({ Component, pageProps }: AppProps) => {
       <title>nugurang</title>
     </Head>
     <ApolloProvider client={GraphQlApiManager.getBackendApolloClient()}>
-      <ThemeProvider theme={theme.light}>
+      <ThemeProvider>
         <CssBaseline />
         <GlobalStyles styles={globalStyles} />
         <Component {...pageProps} />

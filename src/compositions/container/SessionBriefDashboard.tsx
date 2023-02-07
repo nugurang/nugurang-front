@@ -1,12 +1,11 @@
 import { MouseEventHandler } from 'react';
-import styled from '@emotion/styled';
 import Avatar from '@/components/button/Avatar';
 import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import Card from '@/components/layout/Card';
 import Text from '@/components/text/Text';
-import type { GetCurrentUserResponseData } from '@/services/api/user';
+import type { User } from '@/services/api/user';
 
 const NameCss = `
   font-size: 20px;
@@ -14,7 +13,7 @@ const NameCss = `
 `;
 
 interface Props {
-  currentUser?: GetCurrentUserResponseData;
+  currentUser?: User;
   onClickLogoutButton?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {
@@ -43,11 +42,15 @@ export default (props: Props) => {
           <Text variant='p'>{currentUser?.email ?? ''}</Text>
           <ButtonGroup direction='vertical'>
             <Button
+              fillVariant='filled'
+              palette='default'
               onClick={onClickLogoutButton}
             >
               마이페이지
             </Button>
             <Button
+              fillVariant='filled'
+              palette='error'
               onClick={onClickLogoutButton}
             >
               로그아웃

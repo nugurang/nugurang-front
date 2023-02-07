@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import NavigationBar, { navigationBarHeight } from './NavigationBar';
 import Header from './Header';
 import { useMediaQuery } from '@/components/common';
-import type { GetCurrentUserResponseData } from '@/services/api/user';
+import type { User } from '@/services/api/user';
 
 const ContainerOuterBase = styled.div`
   position: relative;
@@ -83,7 +83,7 @@ const Content = styled.div`
 
 interface Props {
   children: ReactNode | string;
-  currentUser?: GetCurrentUserResponseData;
+  currentUser?: User;
   centerizeHorizontally?: boolean;
   centerizeVertically?: boolean;
   showHeader?: boolean;

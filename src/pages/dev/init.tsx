@@ -14,9 +14,9 @@ import { queryToBackend, mutateToBackend } from '@/utilities/network/graphQl';
 
 export const getServerSideProps = WithCheckUserServerSideProps();
 
-const COMMON_BOARDS = ['study', 'hobby', 'circle', 'activity', 'startup', 'competition'];
-const EVENT_BOARDS = ['study_event', 'hobby_event', 'circle_event', 'activity_event', 'startup_event', 'competition_event'];
-const ALL_BOARDS = COMMON_BOARDS.concat(EVENT_BOARDS);
+const COMMON_BOARDS = ['study_group', 'learned_society', 'club', 'indie_band', 'startup'];
+const EVENT_BOARDS = COMMON_BOARDS.map(name => `${name}_event`);
+const ALL_BOARDS = [...COMMON_BOARDS, ...EVENT_BOARDS];
 const ALL_POSITIONS = ['C++', 'Java', 'Python', 'Presentation', 'Report', 'Testing', 'Research'];
 
 export const CURRENT_USER = gql`

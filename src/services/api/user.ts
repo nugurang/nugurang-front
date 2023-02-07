@@ -5,10 +5,20 @@ import { GetServerSidePropsContextAdapter } from '@/constants/common';
 import { OAuth2Provider } from '@/constants/oAuth2';
 import UserAlreadyExistsError from '@/errors/network/UserAlreadyExistsError';
 import UserNotExistError from '@/errors/network/UserNotExistError';
-import Logger from '@/utilities/common/logger';
 
 export interface GetCurrentUserProps extends GetServerSidePropsContextAdapter {}
-export interface GetCurrentUserResponseData {
+interface GetCurrentUserResponseRawData {
+  oauth2Provider: OAuth2Provider;
+  oauth2Id: string;
+  name: string;
+  email: string;
+  image?: {
+    id: string;
+    address: string;
+  }
+  biography?: string;
+}
+export interface User {
   oAuth2Provider: OAuth2Provider;
   oAuth2Id: string;
   name: string;
@@ -20,7 +30,7 @@ export interface GetCurrentUserResponseData {
   biography?: string;
 }
 export interface GetCurrentUserResponse {
-  data: GetCurrentUserResponseData
+  data: User
 }
 export const getCurrentUser = async (props: GetCurrentUserProps = {}) => {
   const response: ApolloQueryResult<any> = await queryToBackend({

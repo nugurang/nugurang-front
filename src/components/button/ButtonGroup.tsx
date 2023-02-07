@@ -13,32 +13,28 @@ const ButtonGroup = styled.div<ButtonGroupProps>`
     &>* {
       width: 100%;
     }
-    &>*:first-child {
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
     &>*:not(:first-child) {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
       margin-top: 2px;
     }
-    &>*:last-child {
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
+    &>*:not(:last-child) {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
   ` : '')}
   ${props => (props.direction === 'horizontal' ? `
     &>* {
-      flex-grow: 1;
-    }
-    &>*:first-child {
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
+      flex: 1 1 0px;
     }
     &>*:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
       margin-left: 2px;
     }
-    &>*:last-child {
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
+    &>*:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
   ` : '')}
 `;
@@ -55,7 +51,7 @@ export default (props: Props) => {
  
   return (
     <ButtonGroup
-    direction={direction ?? 'vertical'}
+    direction={direction ?? 'horizontal'}
     >
       {children}
     </ButtonGroup>

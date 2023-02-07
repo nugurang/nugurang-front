@@ -14,6 +14,7 @@ export const getServerSideProps = WithCheckUserServerSideProps();
 interface PageProps extends WithCheckUserServerSidePropsResponse {}
 export default ({ currentUser }: PageProps) => {
   const { t: commonTranslation } = useTranslation('common');
+  const { t: devTranslation } = useTranslation('dev');
   const router = useRouter();
 
   return (
@@ -24,7 +25,11 @@ export default ({ currentUser }: PageProps) => {
         </Text>
         {!currentUser && (
           <ButtonGroup>
-            <Button onClick={() => oAuth2Login('github')}>로그인</Button>
+            <Button
+              fillVariant='filled'
+              palette='primary'
+              onClick={() => oAuth2Login('github')}
+            >로그인</Button>
           </ButtonGroup>
         )}
         {currentUser && (
@@ -33,32 +38,23 @@ export default ({ currentUser }: PageProps) => {
               {currentUser.name}
             </Text>
             <ButtonGroup direction='horizontal'>
-              <Button onClick={() => logout()}>로그아웃</Button>
-              <Button onClick={() => router.push('/dev/ping')}>Ping</Button>
+              <Button
+                fillVariant='filled'
+                palette='error'
+                onClick={() => logout()}
+              >로그아웃</Button>
             </ButtonGroup>
           </>
         )}
       </Page>
       <Page setPadding>
         <Text variant='h2' align='center'>
-          {commonTranslation('sentences.hello_world')}
+          {devTranslation('words.developer_menu')}
         </Text>
-        {!currentUser && (
-          <ButtonGroup>
-            <Button onClick={() => oAuth2Login('github')}>로그인</Button>
-          </ButtonGroup>
-        )}
-        {currentUser && (
-          <>
-            <Text variant='p' align='center'>
-              {currentUser.name}
-            </Text>
-            <ButtonGroup direction='horizontal'>
-              <Button onClick={() => logout()}>로그아웃</Button>
-              <Button onClick={() => router.push('/dev/ping')}>Ping</Button>
-            </ButtonGroup>
-          </>
-        )}
+        <ButtonGroup direction='horizontal'>
+          <Button onClick={() => router.push('/dev/ping')}>{devTranslation('words.ping')}</Button>
+          <Button onClick={() => router.push('/dev/init')}>{devTranslation('words.generate_test_data')}</Button>
+        </ButtonGroup>
       </Page>
     </Container>
   );

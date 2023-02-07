@@ -5,13 +5,18 @@ import { GetServerSidePropsContextAdapter } from '@/constants/common';
 import { OAuth2Provider } from '@/constants/oAuth2';
 
 export interface GetCurrentOAuth2UserProps extends GetServerSidePropsContextAdapter {}
-export interface GetCurrentOAuth2UserResponseData {
+interface GetCurrentOAuth2UserResponseRawData {
+  id: OAuth2Provider;
+  name: string;
+  email: string;
+}
+export interface OAuth2User {
   oAuth2Provider: OAuth2Provider;
   name: string;
   email: string;
 }
 export interface GetCurrentOAuth2UserResponse {
-  data: GetCurrentOAuth2UserResponseData
+  data: OAuth2User
 }
 export const getCurrentOAuth2User = async (props: GetCurrentOAuth2UserProps = {}) => {
   const response: ApolloQueryResult<any> = await queryToBackend({
