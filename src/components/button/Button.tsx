@@ -7,6 +7,7 @@ interface ButtonProps {
 const Button = styled.button<ButtonProps>`
   border: none;
   padding: 12px 24px;
+  min-width: 120px;
   font-size: 16px;
   cursor: pointer;
   text-align: center;
@@ -19,7 +20,7 @@ const Button = styled.button<ButtonProps>`
 interface Props {
   children: ReactNode | string;
   fullWidth?: boolean;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {
   const {

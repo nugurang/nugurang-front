@@ -11,38 +11,48 @@ interface TextProps {
 }
 const TextBaseCss = (props: TextProps) => `
   ${(props.align ? `text-align: ${props.align};` : '')}
+`;
+const TextExternalCss = (props: TextProps) => `
   ${(props.css ? `${props.css}` : '')}
 `;
 const Header1 = styled.h1<TextProps>`
   ${props => TextBaseCss(props)}
   font-size: 28px;
+  ${props => TextExternalCss(props)}
 `;
 const Header2 = styled.h2<TextProps>`
   ${props => TextBaseCss(props)}
   font-size: 26px;
+  ${props => TextExternalCss(props)}
 `;
 const Header3 = styled.h3<TextProps>`
   ${props => TextBaseCss(props)}
   font-size: 24px;
+  ${props => TextExternalCss(props)}
 `;
 const Header4 = styled.h4<TextProps>`
   ${props => TextBaseCss(props)}
   font-size: 22px;
+  ${props => TextExternalCss(props)}
 `;
 const Header5 = styled.h5<TextProps>`
   ${props => TextBaseCss(props)}
   font-size: 20px;
+  ${props => TextExternalCss(props)}
 `;
 const Header6 = styled.h6<TextProps>`
   ${props => TextBaseCss(props)}
   font-size: 18px;
+  ${props => TextExternalCss(props)}
 `;
 const Paragraph = styled.p<TextProps>`
   ${props => TextBaseCss(props)}
   font-size: 16px;
+  ${props => TextExternalCss(props)}
 `;
 const Span = styled.span<TextProps>`
   ${props => TextBaseCss(props)}
+  ${props => TextExternalCss(props)}
 `;
 
 interface Props {

@@ -1,32 +1,9 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import NavigationBar from './NavigationBar';
-import StatusBar from './StatusBar';
-
-const useMediaQuery = (mediaQueryString: string) => {
-  const [isMatched, setMatched] = useState<boolean>(false);
-  const updateTarget = useCallback((event: MediaQueryListEvent) => {
-    if (event.matches) {
-      setMatched(true);
-    } else {
-      setMatched(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const media = window.matchMedia(mediaQueryString);
-      media.addEventListener('change', updateTarget);
-      if (media.matches) {
-        setMatched(true);
-      }
-      return () => {
-        media.removeEventListener('change', updateTarget);
-      };
-    }
-  }, []);
-  return [isMatched, setMatched];
-};
+import NavigationBar, { navigationBarHeight } from './NavigationBar';
+import Header from './Header';
+import { useMediaQuery } from '@/components/common';
+import type { GetCurrentUserResponseData } from '@/services/api/user';
 
 const ContainerOuterBase = styled.div`
   position: relative;
@@ -81,31 +58,42 @@ const ContentBase = styled.div`
   position: relative;
 `;
 
-interface ContentProps {
-  isMobileView: boolean;
+interface ContentSpacerForNavigationBarProps {
+  show?: boolean;
 }
-const Content = styled.div<ContentProps>`
+const ContentSpacerForNavigationBar = styled.div<ContentSpacerForNavigationBarProps>`
+  display: ${props => (props.show ? 'block' : 'none')};
+  height: ${navigationBarHeight ?? '0'};
+  width: 100%;
+`;
+
+const Content = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
-  left: ${props => props.isMobileView ? '0' : '64px'};
-  right: ${props => props.isMobileView ? '0' : '64px'};
+  left: 0;
+  right: 0;
   overflow: scroll;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 interface Props {
   children: ReactNode | string;
+  currentUser?: GetCurrentUserResponseData;
   centerizeHorizontally?: boolean;
   centerizeVertically?: boolean;
-  showNavigationBar?: boolean;
-  showStatusBar?: boolean;
+  showHeader?: boolean;
   wallpaperUrl?: string;
 }
 export default (props: Props) => {
   const {
     children,
-    showNavigationBar,
-    showStatusBar,
+    currentUser,
+    showHeader,
     wallpaperUrl,
   } = props;
   const [wallpaperImage, setWallpaperImage] = useState({
@@ -133,16 +121,14 @@ export default (props: Props) => {
       />
       <ContainerInnerBase>
         <VerticalFlex>
-          <StatusBar show={showStatusBar ?? true}/>
+          <Header show={showHeader ?? true} currentUser={currentUser} />
           <ContentBase>
             <NavigationBar
-              isMobileView={isMobileView as boolean ?? true}
-              show={showNavigationBar ?? true}
+              show={isMobileView as boolean ?? false}
             />
-            <Content
-              isMobileView={isMobileView as boolean ?? true}
-            >
+            <Content>
               {children}
+              <ContentSpacerForNavigationBar show={showHeader ?? true}/>
             </Content>
           </ContentBase>
         </VerticalFlex>

@@ -1,4 +1,4 @@
-import Container from '@/components/container/Container';
+import Container from '@/compositions/container/Container';
 
 export default () => {
   return (

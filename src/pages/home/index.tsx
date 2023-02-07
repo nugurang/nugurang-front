@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
-import Container from '@/components/container/Container';
+import Container from '@/compositions/container/Container';
 import Page from '@/components/page/Page';
 import Text from '@/components/text/Text';
 import { wallpaperSourceUrl } from '@/constants/common';
@@ -18,9 +17,7 @@ export default ({ currentUser }: PageProps) => {
   const router = useRouter();
 
   return (
-    <Container
-      wallpaperUrl={wallpaperSourceUrl}
-    >
+    <Container currentUser={currentUser}>
       <Page setPadding>
         <Text variant='h2' align='center'>
           {commonTranslation('sentences.hello_world')}

@@ -6,7 +6,7 @@ import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import CenterizedPage from '@/components/page/CenterizedPage';
-import Container from '@/components/container/Container';
+import Container from '@/compositions/container/Container';
 import Text from '@/components/text/Text';
 import Textfield from '@/components/input/Textfield';
 import { PlainObject, wallpaperSourceUrl } from '@/constants/common';
@@ -58,46 +58,52 @@ export default ({ currentOAuth2User }: PageProps) => {
   return (
     <Container
       centerizeVertically
-      showNavigationBar={false}
-      showStatusBar={false}
+      showHeader={false}
       wallpaperUrl={wallpaperSourceUrl}
     >
-      <CenterizedPage setPadding>
-        <Box>
-          <Text variant='h2' align='center'>
-            {commonTranslation('sentences.welcome')}
-          </Text>
-          <Text variant='p' align='center'>
-            {commonTranslation('sentences.please_check_your_user_data')}
-          </Text>
+      <CenterizedPage>
+        <Box
+          width='400px'
+          maxWidth='100vw'
+          horizontalPaddingLevel={2}
+          verticalPaddingLevel={2}
+        >
+          <Box>
+            <Text variant='h2' align='center'>
+              {commonTranslation('sentences.welcome')}
+            </Text>
+            <Text variant='p' align='center'>
+              {commonTranslation('sentences.please_check_your_user_data')}
+            </Text>
+          </Box>
+          <Textfield
+            id='name'
+            name='name'
+            placeholder='name'
+            value={formState.name}
+            onChange={(event) => updateFormState({ name: event.target.value })}
+          />
+          <Textfield
+            id='email'
+            name='email'
+            placeholder='email'
+            value={formState.email}
+            onChange={(event) => updateFormState({ email: event.target.value })}
+          />
+          <Textfield
+            id='biography'
+            name='biography'
+            placeholder='biography'
+            value={formState.biography}
+            onChange={(event) =>
+              updateFormState({ biography: event.target.value })
+            }
+          />
+          <ButtonGroup>
+            <Button fullWidth onClick={handleClickBackButton}>뒤로가기</Button>
+            <Button fullWidth onClick={handleClickSubmitButton}>제출</Button>
+          </ButtonGroup>
         </Box>
-        <Textfield
-          id='name'
-          name='name'
-          placeholder='name'
-          value={formState.name}
-          onChange={(event) => updateFormState({ name: event.target.value })}
-        />
-        <Textfield
-          id='email'
-          name='email'
-          placeholder='email'
-          value={formState.email}
-          onChange={(event) => updateFormState({ email: event.target.value })}
-        />
-        <Textfield
-          id='biography'
-          name='biography'
-          placeholder='biography'
-          value={formState.biography}
-          onChange={(event) =>
-            updateFormState({ biography: event.target.value })
-          }
-        />
-        <ButtonGroup>
-          <Button fullWidth onClick={handleClickBackButton}>뒤로가기</Button>
-          <Button fullWidth onClick={handleClickSubmitButton}>제출</Button>
-        </ButtonGroup>
       </CenterizedPage>
     </Container>
   );

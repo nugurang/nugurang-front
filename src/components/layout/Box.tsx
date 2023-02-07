@@ -1,11 +1,14 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 
+export type BoxPaddingLevel = 0 | 1 | 2 | 3;
+const BOX_PADDING_WEIGHT = 8;
+
 interface BoxProps {
   centerizeHorizontally?: boolean;
   centerizeVertically?: boolean;
-  setPaddingHorizontally?: boolean;
-  setPaddingVertically?: boolean;
+  horizontalPaddingLevel?: BoxPaddingLevel;
+  verticalPaddingLevel?: BoxPaddingLevel;
   gap?: string;
   height?: string;
   width?: string;
@@ -29,8 +32,14 @@ const Box = styled.div<BoxProps>`
   max-width: 100%;
   ${props => (props.centerizeHorizontally ? 'align-items: center;' : '')}
   ${props => (props.centerizeVertically ? 'justify-content: center;' : '')}
-  ${props => (props.setPaddingHorizontally ? 'padding-left: 16px; padding-right: 16px;' : '')}
-  ${props => (props.setPaddingVertically ? 'padding-top: 16px; padding-bottom: 16px;' : '')}
+  ${props => (props.horizontalPaddingLevel ? `
+    padding-left: ${BOX_PADDING_WEIGHT * props.horizontalPaddingLevel}px;
+    padding-right: ${BOX_PADDING_WEIGHT * props.horizontalPaddingLevel}px;
+  ` : '')}
+  ${props => (props.verticalPaddingLevel ? `
+    padding-top: ${BOX_PADDING_WEIGHT * props.verticalPaddingLevel}px;
+    padding-bottom: ${BOX_PADDING_WEIGHT * props.verticalPaddingLevel}px;
+  ` : '')}
   ${props => (props.height ? `height: ${props.height};` : '')}
   ${props => (props.width ? `width: ${props.width};` : '')}
   ${props => (props.maxHeight ? `max-height: ${props.maxHeight};` : '')}
@@ -43,45 +52,45 @@ interface Props {
   children: ReactNode | string;
   centerizeHorizontally?: boolean;
   centerizeVertically?: boolean;
-  setPaddingHorizontally?: boolean;
-  setPaddingVertically?: boolean;
-  gap?: string;
+  horizontalPaddingLevel?: BoxPaddingLevel;
+  verticalPaddingLevel?: BoxPaddingLevel;
   height?: string;
   width?: string;
   maxHeight?: string;
   maxWidth?: string;
   minHeight?: string;
   minWidth?: string;
+  gap?: string;
 }
 export default (props: Props) => {
   const {
     children,
     centerizeHorizontally,
     centerizeVertically,
-    setPaddingHorizontally,
-    setPaddingVertically,
-    gap,
+    horizontalPaddingLevel,
+    verticalPaddingLevel,
     height,
     width,
     maxHeight,
     maxWidth,
     minHeight,
     minWidth,
+    gap,
   } = props;
 
   return (
     <Box
       centerizeHorizontally={centerizeHorizontally ?? false}
       centerizeVertically={centerizeVertically ?? false}
-      setPaddingHorizontally={setPaddingHorizontally ?? false}
-      setPaddingVertically={setPaddingVertically ?? false}
-      gap={gap}
+      horizontalPaddingLevel={horizontalPaddingLevel ?? 0}
+      verticalPaddingLevel={verticalPaddingLevel ?? 0}
       height={height}
       width={width}
       maxHeight={maxHeight}
       maxWidth={maxWidth}
       minHeight={minHeight}
       minWidth={minWidth}
+      gap={gap}
     >
       {children}
     </Box>

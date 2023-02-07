@@ -1,16 +1,18 @@
 import styled from '@emotion/styled';
-import Card from '../layout/Card';
+import Card from '@/components/layout/Card';
+
+export const navigationBarHeight = '48px';
 
 interface NavigationBarProps {
   show?: boolean;
 }
-const NavigationBarMobile = styled.div<NavigationBarProps>`
+const NavigationBar = styled.div<NavigationBarProps>`
   display: ${props => (props.show ? 'block' : 'none')};
   position: absolute;
   z-index: 100;
 
   bottom: 0;
-  height: 48px;
+  height: ${navigationBarHeight};
   width: 100%;
   transition: height 500ms cubic-bezier(0.16, 1, 0.3, 1);
   &:hover {
@@ -34,27 +36,18 @@ const NavigationBarDesktop = styled.div<NavigationBarProps>`
 `;
 
 interface Props {
-  isMobileView: boolean;
   show?: boolean;
 }
 export default (props: Props) => {
   const {
-    isMobileView,
     show
   } = props;
 
-  if(isMobileView) return (
-    <NavigationBarMobile show={show}>
+  return (
+    <NavigationBar show={show}>
       <Card fullSize roundCorner={false}>
         Nv
       </Card>
-    </NavigationBarMobile>
+    </NavigationBar>
   );
-  else return (
-    <NavigationBarDesktop show={show}>
-      <Card fullSize roundCorner={false}>
-        Nv
-      </Card>
-    </NavigationBarDesktop>
-  )
 }

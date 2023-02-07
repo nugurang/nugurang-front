@@ -1,6 +1,16 @@
 import { ReactNode } from 'react';
-import Box from '../layout/Box';
+import styled from '@emotion/styled';
 import Card from '../layout/Card';
+
+const Box = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
 
 interface Props {
   children: ReactNode | string;
@@ -9,23 +19,12 @@ interface Props {
 export default (props: Props) => {
   const {
     children,
-    setPadding,
   } = props;
 
   return (
-    <Box
-      centerizeHorizontally
-      centerizeVertically
-    >
+    <Box>
       <Card>
-        <Box
-          width='400px'
-          maxWidth='100vw'
-          setPaddingHorizontally={setPadding ?? false}
-          setPaddingVertically={setPadding ?? false}
-        >
-          {children}
-        </Box>
+        {children}
       </Card>
     </Box>
   );

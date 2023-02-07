@@ -27,7 +27,7 @@
     "paths": {
       "@/__generated__/*": ["__generated__/*"],
       "@/components/*": ["components/*"],
-      "@/compounds/*": ["compounds/*"],
+      "@/compositions/*": ["compositions/*"],
       "@/constants/*": ["constants/*"],
       "@/contexts/*": ["contexts/*"],
       "@/errors/*": ["errors/*"],

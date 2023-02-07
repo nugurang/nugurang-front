@@ -14,13 +14,15 @@ const ButtonGroup = styled.div<ButtonGroupProps>`
       width: 100%;
     }
     &>*:first-child {
-      border-radius: 8px 8px 0 0;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
     }
     &>*:not(:first-child) {
       margin-top: 2px;
     }
     &>*:last-child {
-      border-radius: 0 0 8px 8px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
     }
   ` : '')}
   ${props => (props.direction === 'horizontal' ? `
@@ -28,13 +30,15 @@ const ButtonGroup = styled.div<ButtonGroupProps>`
       flex-grow: 1;
     }
     &>*:first-child {
-      border-radius: 8px 0 0 8px;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
     }
     &>*:not(:first-child) {
       margin-left: 2px;
     }
     &>*:last-child {
-      border-radius: 0 8px 8px 0;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
     }
   ` : '')}
 `;

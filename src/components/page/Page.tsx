@@ -27,8 +27,8 @@ export default (props: Props) => {
     <Page>
       <Card>
         <Box
-          setPaddingHorizontally={setPadding ?? false}
-          setPaddingVertically={setPadding ?? false}
+          horizontalPaddingLevel={setPadding ? 2 : 0}
+          verticalPaddingLevel={setPadding ? 2 : 0}
         >
           {children}
         </Box>
