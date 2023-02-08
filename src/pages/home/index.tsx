@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import Container from '@/compositions/container/Container';
-import Page from '@/components/page/Page';
+import Page from '@/compositions/page/Page';
 import Text from '@/components/text/Text';
 import { wallpaperSourceUrl } from '@/constants/common';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
@@ -20,7 +20,7 @@ export default ({ currentUser }: PageProps) => {
   return (
     <Container currentUser={currentUser}>
       <Page setPadding>
-        <Text variant='h2' align='center'>
+        <Text variant='h2' align='center' palette='primary' paletteColor='main'>
           {commonTranslation('sentences.hello_world')}
         </Text>
         {!currentUser && (

@@ -10,6 +10,14 @@ export type FillVariantKey = 'filled' | 'outlined' | 'text';
 type ThemeTypography = {
   fontFamily: string[];
 };
+type ThemeZIndex = {
+  tooltip: number;
+  modal: number;
+  header: number;
+  footer: number;
+  default: number;
+  hidden: number;
+};
 interface ThemePaletteColor {
   main: string;
   light: string;
@@ -26,12 +34,14 @@ interface ThemePalette {
 }
 interface BaseTheme {
   typography: ThemeTypography;
+  zIndex: ThemeZIndex;
 }
 export interface Theme extends BaseTheme {
   key: ThemeKey;
   palette: ThemePalette;
 }
 export type PaletteKey = keyof ThemePalette;
+export type PaletteColorKey = keyof ThemePaletteColor;
 
 const baseTheme = {
   typography: {
@@ -49,6 +59,14 @@ const baseTheme = {
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(','),
+  },
+  zIndex: {
+    tooltip: 8000,
+    modal: 6000,
+    header: 3000,
+    footer: 2000,
+    default: 0,
+    hidden: -1,
   },
 };
 
@@ -75,11 +93,11 @@ const lightTheme = {
       contrastText: '#fff',
     },
     default: {
-      main: '#888',
-      light: '#c3c3c3',
-      dark: '#444',
-      high: '#c3c3c3',
-      low: '#444',
+      main: '#aaa',
+      light: '#ccc',
+      dark: '#888',
+      high: '#ccc',
+      low: '#888',
       text: '#000',
       contrastText: '#fff',
     },
@@ -108,11 +126,11 @@ const darkTheme = {
       contrastText: '#000',
     },
     default: {
-      main: '#888',
-      light: '#c3c3c3',
+      main: '#666',
+      light: '#888',
       dark: '#444',
       high: '#444',
-      low: '#c3c3c3',
+      low: '#666',
       text: '#fff',
       contrastText: '#000',
     },

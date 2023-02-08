@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import Card from '../layout/Card';
+import Card from '@/components/layout/Card';
 
 const Box = styled.div`
   display: flex;

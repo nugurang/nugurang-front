@@ -1,5 +1,6 @@
 import { MouseEventHandler } from 'react';
 import styled from '@emotion/styled';
+import { FillVariantKey, PaletteKey, Theme, ThemeContext } from '../theme';
 
 interface AvatarButtonProps {
   size?: string;

@@ -1,26 +1,30 @@
 import { GetServerSidePropsContext } from 'next/types';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import BoardListItem from '@/compositions/board/BoardListItem';
 import Container from '@/compositions/container/Container';
 import Page from '@/compositions/page/Page';
 import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
-import { getAllBoards } from '@/services/api/board';
 import type { Board } from '@/services/api/board';
-import UnorderedList from '@/components/list/UnorderedList';
+import { getAllThreadsByBoardId, Thread } from '@/services/api/thread';
+import InvalidQueryParamsError from '@/errors/common/InvalidQueryParamsError';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
   props: WithCheckUserServerSidePropsResponse,
 ) => {
   try {
-    const getAllBoardsResponse = await getAllBoards({ context });
+    const { boardId } = context.query;
+    if(!boardId) throw new InvalidQueryParamsError;
+    const getAllThreadsByBoardIdResponse = await getAllThreadsByBoardId({
+      context,
+      boardId: boardId as string,
+    });
     return {
       props: {
         ...props,
-        boardList: getAllBoardsResponse.data.boardList,
-        eventBoardList: getAllBoardsResponse.data.eventBoardList,
+        board: getAllThreadsByBoardIdResponse.data.board,
+        threadList: getAllThreadsByBoardIdResponse.data.threadList,
       },
     };
   } catch(err) {
@@ -34,17 +38,18 @@ export const getServerSideProps = WithCheckUserServerSideProps(async (
 });
 
 interface PageProps extends WithCheckUserServerSidePropsResponse {
-  boardList: Board[];
-  eventBoardList: Board[];
+  board: Board;
+  threadList: Thread[];
 }
-export default ({ currentUser, boardList, eventBoardList }: PageProps) => {
+export default ({ currentUser, board, threadList }: PageProps) => {
   const { t: commonTranslation } = useTranslation('common');
   const { t: boardsTranslation } = useTranslation('boards');
+  const { t: threadsTranslation } = useTranslation('threads');
   const router = useRouter();
 
   const onClickBoardListItem = (boardId: string) =>{
     router.push({
-      pathname: '/boards/detail',
+      pathname: '/boards',
       query: {
         boardId
       },
@@ -55,19 +60,13 @@ export default ({ currentUser, boardList, eventBoardList }: PageProps) => {
     <Container currentUser={currentUser}>
       <Page setPadding>
         <Text variant='h2' align='center'>
-          {boardsTranslation('words.boards')}
+          {boardsTranslation(board.i18nKey)}
         </Text>
-        <UnorderedList
-          gap={'16px'}
-        >
-          {boardList.map((board: Board) => (
-            <BoardListItem
-              key={board.id}
-              board={board}
-              onClick={() => onClickBoardListItem(board.id)}
-            />
-          ))}
-        </UnorderedList>
+        {threadList.map((thread: Thread) => (
+          <div>
+            {thread.name}
+          </div>
+        ))}
       </Page>
     </Container>
   );

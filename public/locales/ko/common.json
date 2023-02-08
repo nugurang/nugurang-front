@@ -1,6 +1,7 @@
 {
   "words": {
     "boards": "게시판",
+    "my_account": "내 계정",
     "sign_in": "로그인",
     "sign_out": "로그아웃"
   },

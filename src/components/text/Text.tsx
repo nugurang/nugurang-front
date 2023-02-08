@@ -1,16 +1,22 @@
+import { useContext } from 'react';
 import styled from '@emotion/styled';
+import { PaletteKey, PaletteColorKey, Theme, ThemeContext } from '../theme';
 
 type TextAlignProps = 'left' | 'right' | 'center';
 type TextVariantProps = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
 
 interface TextProps {
+  theme: Theme;
   children: JSX.Element | string | null;
   align?: TextAlignProps;
+  palette?: PaletteKey;
+  paletteColor?: PaletteColorKey;
   variant?: TextVariantProps;
   css?: string;
 }
 const TextBaseCss = (props: TextProps) => `
   ${(props.align ? `text-align: ${props.align};` : '')}
+  color: ${props.theme.palette[props.palette ?? 'default'][props.paletteColor ?? 'text']};
 `;
 const TextExternalCss = (props: TextProps) => `
   ${(props.css ? `${props.css}` : '')}
@@ -58,6 +64,8 @@ const Span = styled.span<TextProps>`
 interface Props {
   children: JSX.Element | string | null;
   align?: TextAlignProps;
+  palette?: PaletteKey;
+  paletteColor?: PaletteColorKey;
   variant?: TextVariantProps;
   css?: string;
 }
@@ -65,57 +73,110 @@ export default (props: Props) => {
   const {
     children,
     align,
+    palette,
+    paletteColor,
     variant,
     css,
   } = props;
+  const { theme } = useContext(ThemeContext);
 
   const defaultAlign = 'left';
+  const defaultPalette = 'primary';
+  const defaultPaletteColor = 'text';
   switch(variant) {
     case 'h1':
       return (
-        <Header1 align={align ?? defaultAlign} css={css}>
+        <Header1
+          theme={theme}
+          align={align ?? defaultAlign}
+          palette={palette ?? defaultPalette}
+          paletteColor={paletteColor ?? defaultPaletteColor}
+          css={css}
+        >
           {children}
         </Header1>
       );
     case 'h2':
       return (
-        <Header2 align={align ?? defaultAlign} css={css}>
+        <Header2
+          theme={theme}
+          align={align ?? defaultAlign}
+          palette={palette ?? defaultPalette}
+          paletteColor={paletteColor ?? defaultPaletteColor}
+          css={css}
+        >
           {children}
         </Header2>
       );
     case 'h3':
       return (
-        <Header3 align={align ?? defaultAlign} css={css}>
+        <Header3
+          theme={theme}
+          align={align ?? defaultAlign}
+          palette={palette ?? defaultPalette}
+          paletteColor={paletteColor ?? defaultPaletteColor}
+          css={css}
+        >
           {children}
         </Header3>
       );
     case 'h4':
       return (
-        <Header4 align={align ?? defaultAlign} css={css}>
+        <Header4
+          theme={theme}
+          align={align ?? defaultAlign}
+          palette={palette ?? defaultPalette}
+          paletteColor={paletteColor ?? defaultPaletteColor}
+          css={css}
+        >
           {children}
         </Header4>
       );
     case 'h5':
       return (
-        <Header5 align={align ?? defaultAlign} css={css}>
+        <Header5
+          theme={theme}
+          align={align ?? defaultAlign}
+          palette={palette ?? defaultPalette}
+          paletteColor={paletteColor ?? defaultPaletteColor}
+          css={css}
+        >
           {children}
         </Header5>
       );
     case 'h6':
       return (
-        <Header6 align={align ?? defaultAlign} css={css}>
+        <Header6
+          theme={theme}
+          align={align ?? defaultAlign}
+          palette={palette ?? defaultPalette}
+          paletteColor={paletteColor ?? defaultPaletteColor}
+          css={css}
+        >
           {children}
         </Header6>
       );
     case 'p':
       return (
-        <Paragraph align={align ?? defaultAlign} css={css}>
+        <Paragraph
+          theme={theme}
+          align={align ?? defaultAlign}
+          palette={palette ?? defaultPalette}
+          paletteColor={paletteColor ?? defaultPaletteColor}
+          css={css}
+        >
           {children}
         </Paragraph>
       );
     default:
       return (
-        <Span align={align ?? defaultAlign} css={css}>
+        <Span
+          theme={theme}
+          align={align ?? defaultAlign}
+          palette={palette ?? defaultPalette}
+          paletteColor={paletteColor ?? defaultPaletteColor}
+          css={css}
+        >
           {children}
         </Span>
       );

@@ -1,6 +1,7 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
 import styled from '@emotion/styled';
 import { useElementDistanceFromViewport, UseElementDistanceFromViewportDistance } from '@/components/common'
+import { FillVariantKey, PaletteKey, Theme, ThemeContext } from '../theme';
 
 interface TooltipOuterWrapProps {
 }

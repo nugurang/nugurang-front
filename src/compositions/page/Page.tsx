@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import Box from '../layout/Box';
-import Card from '../layout/Card';
+import Box from '@/components/layout/Box';
+import Card from '@/components/layout/Card';
 
 const Page = styled.div`
   margin: 0 auto;

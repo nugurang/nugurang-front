@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
-import CenterizedPage from '@/components/page/CenterizedPage';
+import CenterizedPage from '@/compositions/page/CenterizedPage';
 import Container from '@/compositions/container/Container';
 import Text from '@/components/text/Text';
 import { WithDefaultServerSideProps } from '@/hocs/WithServerSideProps';
@@ -36,16 +36,18 @@ export default () => {
           <Text variant='h2' align='center'>
             {commonTranslation('sentences.please_sign_in')}
           </Text>
-          <ButtonGroup>
+          <ButtonGroup direction='vertical'>
             <Button
               fullWidth
-              palette='primary'
+              fillVariant='filled'
+              palette='default'
               onClick={() => oAuth2Login('github')}
             >
               GitHub 로그인
             </Button>
             <Button
               fullWidth
+              fillVariant='filled'
               palette='error'
               onClick={() => handleClickBackButton()}
             >

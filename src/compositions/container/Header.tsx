@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
 import styled from '@emotion/styled';
 import Avatar from '@/components/button/Avatar';
 import Button from '@/components/button/Button';
@@ -68,7 +67,6 @@ export default (props: Props) => {
     currentUser,
   } = props;
 
-  const { t: commonTranslation } = useTranslation('common');
   const router = useRouter();
 
   return (
@@ -76,11 +74,23 @@ export default (props: Props) => {
       <HeaderBackground />
       <HeaderInnerWrap>
         <HeaderContentLeft>
-          nugurang(&alpha;lpha)
+          <Button
+            fillVariant='text'
+            palette='primary'
+            onClick={() => router.push('/')}
+          >
+            nugurang(&alpha;lpha)
+          </Button>
         </HeaderContentLeft>
         <HeaderContentRight>
           <NavigationButtonGroup />
-          <Tooltip content={<SessionBriefDashboard currentUser={currentUser} onClickLogoutButton={logout} />}>
+          <Tooltip content={
+            <SessionBriefDashboard
+              currentUser={currentUser}
+              onClickGoToMyAccountButton={() => router.push('/myaccount')}
+              onClickLogoutButton={logout}
+            />
+          }>
             <Avatar src='' alt='Test' size={`calc(${headerHeight} - 16px)`}/>
           </Tooltip>
         </HeaderContentRight>

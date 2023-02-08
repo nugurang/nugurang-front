@@ -5,7 +5,7 @@ import produce from 'immer';
 import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
-import CenterizedPage from '@/components/page/CenterizedPage';
+import CenterizedPage from '@/compositions/page/CenterizedPage';
 import Container from '@/compositions/container/Container';
 import Text from '@/components/text/Text';
 import Textfield from '@/components/input/Textfield';

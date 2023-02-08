@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
+import { FillVariantKey, PaletteKey, Theme, ThemeContext } from '../theme';
 
 interface CardProps {
   fullSize?: boolean;

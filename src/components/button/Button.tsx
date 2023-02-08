@@ -32,11 +32,11 @@ const Button = styled.button<ButtonProps>`
   border: ${props => {
     switch(props.fillVariant) {
       case 'text':
-        return '1px solid transparent';
+        return '2px solid transparent';
       case 'outlined':
       case 'filled':
       default:
-        return `1px solid ${props.theme.palette[props.palette ?? 'default'].main}`;
+        return `2px solid ${props.theme.palette[props.palette ?? 'default'].main}`;
     }
   }};
   &:hover {
@@ -64,11 +64,11 @@ const Button = styled.button<ButtonProps>`
     border: ${props => {
       switch(props.fillVariant) {
         case 'text':
-          return '1px solid transparent';
+          return '2px solid transparent';
         case 'outlined':
         case 'filled':
         default:
-          return `1px solid ${props.theme.palette[props.palette ?? 'default'].high}`;
+          return `2px solid ${props.theme.palette[props.palette ?? 'default'].high}`;
       }
     }};
   }

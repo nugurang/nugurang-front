@@ -1,4 +1,5 @@
 import { MouseEventHandler } from 'react';
+import { useTranslation } from 'next-i18next';
 import Avatar from '@/components/button/Avatar';
 import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
@@ -14,13 +15,16 @@ const NameCss = `
 
 interface Props {
   currentUser?: User;
+  onClickGoToMyAccountButton?: MouseEventHandler<HTMLButtonElement>;
   onClickLogoutButton?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {
   const {
     currentUser,
+    onClickGoToMyAccountButton,
     onClickLogoutButton
   } = props;
+  const { t: commonTranslation } = useTranslation('common');
  
   return (
     <Box
@@ -44,16 +48,16 @@ export default (props: Props) => {
             <Button
               fillVariant='filled'
               palette='default'
-              onClick={onClickLogoutButton}
+              onClick={onClickGoToMyAccountButton}
             >
-              마이페이지
+              {commonTranslation('words.my_account')}
             </Button>
             <Button
               fillVariant='filled'
               palette='error'
               onClick={onClickLogoutButton}
             >
-              로그아웃
+              {commonTranslation('words.sign_out')}
             </Button>
           </ButtonGroup>
         </Box>
