@@ -32,6 +32,7 @@ const ButtonBase = styled.button<ButtonBaseProps>`
   ${props => (props.fullWidth ? `
     display: block;
     width: 100%;
+    text-align: left;
   ` : '')}
 `;
 

@@ -11,6 +11,7 @@ interface CardProps {
   maxWidth?: string;
   minHeight?: string;
   minWidth?: string;
+  setMargin?: boolean;
 }
 const Card = styled.div<CardProps>`
   background-color: #fff;
@@ -23,6 +24,7 @@ const Card = styled.div<CardProps>`
   ${props => (props.maxWidth ? `max-width: ${props.maxWidth};` : '')}
   ${props => (props.minHeight ? `min-height: ${props.minHeight};` : '')}
   ${props => (props.minWidth ? `min-width: ${props.minWidth};` : '')}
+  ${props => (props.setMargin ? 'margin: 8px;' : '')}
 `;
 
 interface Props {
@@ -35,6 +37,7 @@ interface Props {
   minWidth?: string;
   fullSize?: boolean;
   roundCorner?: boolean;
+  setMargin?: boolean;
 }
 export default (props: Props) => {
   const {
@@ -47,6 +50,7 @@ export default (props: Props) => {
     maxWidth,
     minHeight,
     minWidth,
+    setMargin,
   } = props;
 
   return (
@@ -59,6 +63,7 @@ export default (props: Props) => {
       maxWidth={maxWidth}
       minHeight={minHeight}
       minWidth={minWidth}
+      setMargin={setMargin ?? true}
     >
       {children}
     </Card>

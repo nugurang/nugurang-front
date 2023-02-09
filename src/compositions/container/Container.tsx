@@ -1,17 +1,33 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import NavigationBar, { navigationBarHeight } from './NavigationBar';
-import Header from './Header';
-import { useMediaQuery } from '@/components/common';
+import Header from '../page/Header';
+import { useViewportType } from '@/components/common';
 import type { User } from '@/services/api/user';
+import LeftSidebar from '../page/LeftSidebar';
+import RightSidebar from '../page/RightSidebar';
+import { Theme, ThemeContext } from '@/components/theme';
 
-const ContainerOuterBase = styled.div`
+const ContainerBase = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
 `;
 
+interface WallpaperFallbackProps {
+  theme: Theme;
+}
+const WallpaperFallback = styled.div<WallpaperFallbackProps>`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  ${props => (`
+    background-color: ${props.theme.palette.default.background};
+  `)}
+`;
+
 interface WallpaperProps {
+  theme: Theme;
   isLoaded: boolean;
   url?: string;
 }
@@ -28,11 +44,6 @@ const Wallpaper = styled.img<WallpaperProps>`
   ${props => (`
     background-image: url("${props.url}");
   `)}
-`;
-const ContainerInnerBase = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
 `;
 
 const VerticalFlex = styled.div`
@@ -55,24 +66,29 @@ const HorizontalFlex = styled.div`
 `;
 
 const ContentBase = styled.div`
+  display: flex;
   position: relative;
-`;
-
-interface ContentSpacerForNavigationBarProps {
-  show?: boolean;
-}
-const ContentSpacerForNavigationBar = styled.div<ContentSpacerForNavigationBarProps>`
-  display: ${props => (props.show ? 'block' : 'none')};
-  height: ${navigationBarHeight ?? '0'};
-  width: 100%;
+  flex-direction: row;
+  justify-content: center;
 `;
 
 const Content = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 1;
+  flex-basis: 768px;
+  position: relative;
+  overflow: scroll;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`;
+
+const SidebarWrap = styled.div`
+  display: flex;
+  flex-shrink: 1;
+  flex-basis: 256px;
+  position: relative;
   overflow: scroll;
   &::-webkit-scrollbar{
     display: none;
@@ -87,6 +103,7 @@ interface Props {
   centerizeHorizontally?: boolean;
   centerizeVertically?: boolean;
   showHeader?: boolean;
+  showSidebar?: boolean;
   wallpaperUrl?: string;
 }
 export default (props: Props) => {
@@ -96,11 +113,13 @@ export default (props: Props) => {
     showHeader,
     wallpaperUrl,
   } = props;
+  const { theme } = useContext(ThemeContext);
+  const viewportType = useViewportType();
   const [wallpaperImage, setWallpaperImage] = useState({
     isLoaded: false,
     url: '',
   });
-  const [isMobileView] = useMediaQuery('(max-width: 720px)');
+  const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
   useEffect(() => {
     const wallpaperImage = new Image();
@@ -113,26 +132,36 @@ export default (props: Props) => {
     wallpaperUrl && (wallpaperImage.src = wallpaperUrl);
   }, []);
 
+  useEffect(() => {
+    setShowSidebar(viewportType === 'desktop');
+  }, [viewportType]);
+
   return (
-    <ContainerOuterBase>
-      <Wallpaper
-        isLoaded={wallpaperImage.isLoaded}
-        src={wallpaperImage.isLoaded ? wallpaperImage.url : undefined}
-      />
-      <ContainerInnerBase>
-        <VerticalFlex>
-          <Header show={showHeader ?? true} currentUser={currentUser} />
-          <ContentBase>
-            <NavigationBar
-              show={isMobileView as boolean ?? false}
-            />
-            <Content>
-              {children}
-              <ContentSpacerForNavigationBar show={showHeader ?? true}/>
-            </Content>
-          </ContentBase>
-        </VerticalFlex>
-      </ContainerInnerBase>
-    </ContainerOuterBase>
+    <ContainerBase>
+      <VerticalFlex>
+        <Header show={showHeader ?? true} currentUser={currentUser} />
+        <ContentBase>
+          {showSidebar && (
+            <SidebarWrap>
+              <LeftSidebar />
+            </SidebarWrap>
+          )}
+          <WallpaperFallback theme={theme} />
+          <Wallpaper
+            theme={theme}
+            isLoaded={wallpaperImage.isLoaded}
+            src={wallpaperImage.isLoaded ? wallpaperImage.url : undefined}
+          />
+          <Content>
+            {children}
+          </Content>
+          {showSidebar && (
+            <SidebarWrap>
+              <RightSidebar />
+            </SidebarWrap>
+          )}
+        </ContentBase>
+      </VerticalFlex>
+    </ContainerBase>
   );
 }

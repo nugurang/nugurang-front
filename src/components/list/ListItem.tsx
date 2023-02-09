@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 
-interface ButtonBaseProps {
+interface ListItemProps {
   fullWidth?: boolean;
 }
-const ListItem = styled.li<ButtonBaseProps>`
+const ListItem = styled.li<ListItemProps>`
   display: block;
   width: 100%;
 `;

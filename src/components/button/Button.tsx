@@ -1,6 +1,7 @@
-import { MouseEventHandler, ReactNode, useContext } from 'react';
+import { MouseEventHandler, useContext, useEffect, useMemo } from 'react';
 import styled from '@emotion/styled';
 import { FillVariantKey, PaletteKey, Theme, ThemeContext } from '../theme';
+import CircularLoader from '../progress/CircularLoader';
 
 interface ButtonProps {
   theme: Theme;
@@ -9,6 +10,18 @@ interface ButtonProps {
   palette?: PaletteKey;
 }
 const Button = styled.button<ButtonProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  ${props => (props.fullWidth ? `
+    width: 100%;
+  ` : '')}
+
   color: ${props => {
     switch(props.fillVariant) {
       case 'outlined':
@@ -82,20 +95,38 @@ const Button = styled.button<ButtonProps>`
         return '12px 24px';
     }
   }};
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  ${props => (props.fullWidth ? `
-    display: block;
-    width: 100%;
-  ` : '')}
+`;
+
+interface ButtonIconWrapProps {
+}
+const ButtonIconWrap = styled.div<ButtonIconWrapProps>`
+  display: flex;
+  justify-content: center;
+`;
+
+interface ButtonCircularLoaderWrapProps {
+  show: boolean;
+  size: string;
+}
+const ButtonCircularLoaderWrap = styled.div<ButtonCircularLoaderWrapProps>`
+  height: ${props => props.size};
+  width: ${props => props.size};
+  margin-right: 8px;
+  opacity: 1;
+  ${props => !props.show ? `
+    width: 1px;
+    margin: -1px;
+    opacity: 0;
+  ` : ''}
+  overflow: hidden;
+  transition: all 500ms;
 `;
 
 interface Props {
-  children: ReactNode | string;
+  children: string;
   fullWidth?: boolean;
   fillVariant?: FillVariantKey;
+  isLoading?: boolean;
   palette?: PaletteKey;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -104,10 +135,26 @@ export default (props: Props) => {
     children,
     fullWidth,
     fillVariant,
+    isLoading,
     palette,
     onClick
   } = props;
   const { theme } = useContext(ThemeContext);
+  const defaultPalette = 'default';
+  const defaultPaletteColor = useMemo(() => {
+    switch(fillVariant) {
+      case 'outlined':
+      case 'text':
+        return 'text';
+      case 'filled':
+      default:
+        return 'contrastText';
+    }
+  }, [fillVariant]);
+
+  useEffect(() => {
+    console.log(children + ":" + isLoading)
+  }, [isLoading]);
  
   return (
     <Button
@@ -117,7 +164,19 @@ export default (props: Props) => {
       palette={palette}
       onClick={onClick}
     >
-      {children}
+      <ButtonIconWrap>
+        <ButtonCircularLoaderWrap
+          show={isLoading ?? false}
+          size='16px'
+        >
+          <CircularLoader
+            size='16px'
+            palette={palette ?? defaultPalette}
+            paletteColor={defaultPaletteColor}
+          />
+        </ButtonCircularLoaderWrap>
+      </ButtonIconWrap>
+      <span>{children}</span>
     </Button>
   );
 }

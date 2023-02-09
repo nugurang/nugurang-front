@@ -24,7 +24,28 @@ export const useMediaQuery = (mediaQueryString: string) => {
       };
     }
   }, []);
-  return [isMatched];
+  return isMatched;
+};
+
+export type ViewportType = 'none' | 'mobile' | 'tablet' | 'desktop';
+export const useViewportType = () => {
+  const isMobileView = useMediaQuery('only screen and (max-width: 640px)');
+  const isTabletView = useMediaQuery('only screen and (min-width: 640px) and (max-width: 1280px)');
+  const isDesktopView = useMediaQuery('only screen and (min-width: 1280px)');
+  
+  const [viewportType, setViewportType] = useState<ViewportType>('none');
+  
+  useEffect(() => {
+    if (isClient()) {
+      setViewportType(
+        isMobileView ? 'mobile'
+      : isTabletView ? 'tablet'
+      : isDesktopView ? 'desktop'
+      : 'none')
+    }
+  }, [isMobileView, isTabletView, isDesktopView]);
+
+  return viewportType;
 };
 
 // https://stackoverflow.com/questions/27745438/how-to-compute-getboundingclientrect-without-considering-transforms

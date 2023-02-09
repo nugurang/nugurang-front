@@ -24,6 +24,7 @@ interface ThemePaletteColor {
   dark: string;
   high: string;
   low: string;
+  background: string;
   text: string;
   contrastText: string;
 }
@@ -80,6 +81,7 @@ const lightTheme = {
       dark: '#482880',
       high: '#8561c5',
       low: '#482880',
+      background: '#f8f8f8',
       text: '#000',
       contrastText: '#fff',
     },
@@ -89,17 +91,19 @@ const lightTheme = {
       dark: '#761811',
       high: '#ef9d97',
       low: '#761811',
+      background: '#f8f8f8',
       text: '#000',
       contrastText: '#fff',
     },
     default: {
-      main: '#aaa',
-      light: '#ccc',
-      dark: '#888',
-      high: '#ccc',
-      low: '#888',
-      text: '#000',
-      contrastText: '#fff',
+      main: '#dfdfdf',
+      light: '#efefef',
+      dark: '#cfcfcf',
+      high: '#cfcfcf',
+      low: '#efefef',
+      background: '#f8f8f8',
+      text: '#fff',
+      contrastText: '#000',
     },
   },
 };
@@ -113,6 +117,7 @@ const darkTheme = {
       dark: '#666',
       high: '#666',
       low: '#aaa',
+      background: '#080808',
       text: '#fff',
       contrastText: '#000',
     },
@@ -122,17 +127,19 @@ const darkTheme = {
       dark: '#761811',
       high: '#761811',
       low: '#ef9d97',
+      background: '#080808',
       text: '#fff',
       contrastText: '#000',
     },
     default: {
-      main: '#666',
-      light: '#888',
-      dark: '#444',
-      high: '#444',
-      low: '#666',
-      text: '#fff',
-      contrastText: '#000',
+      main: '#202020',
+      light: '#303030',
+      dark: '#101010',
+      high: '#101010',
+      low: '#303030',
+      background: '#080808',
+      text: '#000',
+      contrastText: '#fff',
     },
   },
 };

@@ -52,7 +52,7 @@ export default ({ currentUser }: PageProps) => {
           {devTranslation('words.developer_menu')}
         </Text>
         <ButtonGroup direction='horizontal'>
-          <Button onClick={() => router.push('/dev/ping')}>{devTranslation('words.ping')}</Button>
+          <Button isLoading onClick={() => router.push('/dev/ping')}>{devTranslation('words.ping')}</Button>
           <Button onClick={() => router.push('/dev/init')}>{devTranslation('words.generate_test_data')}</Button>
         </ButtonGroup>
       </Page>

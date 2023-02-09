@@ -9,6 +9,8 @@
     "hello_world": "반갑구나, 세상아!",
     "please_check_your_user_data": "사용자 정보를 확인해주세요.",
     "please_sign_in": "로그인해주세요.",
+    "please_wait": "잠시만 기다려주세요...",
+    "unexpected_error_occurred": "예상치 못한 오류에요.",
     "welcome": "환영해요!"
   }
 }

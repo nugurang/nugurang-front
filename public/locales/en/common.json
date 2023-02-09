@@ -9,6 +9,8 @@
     "hello_world": "Hello, World!",
     "please_check_your_user_data": "Please check your user data.",
     "please_sign_in": "Please sign in.",
+    "please_wait": "Please wait...",
+    "unexpected_error_occurred": "Unexpected error occured.",
     "welcome": "Welcome!"
   }
 }

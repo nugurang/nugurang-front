@@ -105,6 +105,7 @@ export function WithCheckOAuth2ServerSideProps(
   };
 }
 
+export interface WithDefaultServerSidePropsResponse extends GetServerSidePropsContextAdapter {}
 export function WithDefaultServerSideProps(
   getServerSidePropsFunction: Function = defaultGetServerSidePropsFunction,
 ) {

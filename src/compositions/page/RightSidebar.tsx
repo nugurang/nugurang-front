@@ -3,35 +3,31 @@ import styled from '@emotion/styled';
 import Box from '@/components/layout/Box';
 import Card from '@/components/layout/Card';
 
-const Page = styled.div`
+const Sidebar = styled.div`
+  display: block;
+  margin: 0 auto;
   padding-top: 24px;
   width: 100%;
-  overflow: visible;
   &:last-child {
     padding-bottom: 24px;
   }
 `;
 
 interface Props {
-  children: ReactNode | string;
-  setPadding?: boolean;
 }
 export default (props: Props) => {
   const {
-    children,
-    setPadding,
   } = props;
 
   return (
-    <Page>
+    <Sidebar>
       <Card>
         <Box
-          horizontalPaddingLevel={setPadding ? 2 : 0}
-          verticalPaddingLevel={setPadding ? 2 : 0}
+          horizontalPaddingLevel={2}
+          verticalPaddingLevel={2}
         >
-          {children}
         </Box>
       </Card>
-    </Page>
+    </Sidebar>
   );
 }

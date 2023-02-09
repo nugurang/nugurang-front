@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Avatar from '@/components/button/Avatar';
 import Button from '@/components/button/Button';
-import ButtonGroup from '@/components/button/ButtonGroup';
 import Tooltip from '@/components/layout/Tooltip';
 import { oAuth2Login, logout } from '@/services/oAuth2/index';
 import SessionBriefDashboard from './SessionBriefDashboard';
@@ -66,7 +65,6 @@ export default (props: Props) => {
     show,
     currentUser,
   } = props;
-
   const router = useRouter();
 
   return (

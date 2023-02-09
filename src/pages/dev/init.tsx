@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
-import CenterizedPage from '@/compositions/page/CenterizedPage';
+import CenterizedContainer from '@/compositions/container/CenterizedContainer';
 import Container from '@/compositions/container/Container';
 import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps } from '@/hocs/WithServerSideProps';
@@ -328,36 +328,31 @@ export default () => {
   const onClickGoHomeButton = () => router.push('/');
 
   return (
-    <Container
-      centerizeVertically
-      showHeader={false}
-    >
-      <CenterizedPage>
-        <Box
-          width='400px'
-          maxWidth='100vw'
-          horizontalPaddingLevel={2}
-          verticalPaddingLevel={2}
-        >
-          <Text variant='h2' align='center'>
-            {title}
-          </Text>
-          <Text variant='p' align='center'>
-            {content}
-          </Text>
-          <ButtonGroup direction='vertical'>
-            {(!isDone && !isErrorOccurred) && (<>
-              <label htmlFor='init'>초기화 진척도</label>
-              <progress id='init' max='100' value='' />
-            </>)}
-            {(isDone || isErrorOccurred) && (<>
-              <Button fullWidth onClick={onClickGoHomeButton}>
-                홈으로 가기
-              </Button>
-            </>)}
-          </ButtonGroup>
-        </Box>
-      </CenterizedPage>
-    </Container>
+    <CenterizedContainer>
+      <Box
+        width='400px'
+        maxWidth='100vw'
+        horizontalPaddingLevel={2}
+        verticalPaddingLevel={2}
+      >
+        <Text variant='h2' align='center'>
+          {title}
+        </Text>
+        <Text variant='p' align='center'>
+          {content}
+        </Text>
+        <ButtonGroup direction='vertical'>
+          {(!isDone && !isErrorOccurred) && (<>
+            <label htmlFor='init'>초기화 진척도</label>
+            <progress id='init' max='100' value='' />
+          </>)}
+          {(isDone || isErrorOccurred) && (<>
+            <Button fullWidth onClick={onClickGoHomeButton}>
+              홈으로 가기
+            </Button>
+          </>)}
+        </ButtonGroup>
+      </Box>
+    </CenterizedContainer>
   );
 }

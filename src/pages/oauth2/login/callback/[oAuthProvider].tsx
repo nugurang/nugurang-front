@@ -47,5 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
 }
 
 export default () => {
-  return <></>;
+  return (
+    <></>
+  );
 };
