@@ -1,8 +1,8 @@
 import { MouseEventHandler } from 'react';
 import { useTranslation } from 'next-i18next';
 import Box from '@/components/layout/Box';
-import ButtonBase from '@/components/button/ButtonBase';
-import Card from '@/components/layout/Card';
+import ButtonBase from '@/components/base/ButtonBase';
+import Card from '@/components/paper/Card';
 import ListItem from '@/components/list/ListItem';
 import Text from '@/components/text/Text';
 import type { Board } from '@/services/api/board';

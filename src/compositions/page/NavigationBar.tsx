@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Card from '@/components/layout/Card';
+import Card from '@/components/paper/Card';
 
 export const navigationBarHeight = '48px';
 

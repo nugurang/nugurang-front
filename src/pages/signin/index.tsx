@@ -68,16 +68,6 @@ export default () => {
             준비중입니다.
           </Button>
         </ButtonGroup>
-        <ButtonGroup direction='vertical'>
-          <Button
-            fullWidth
-            fillVariant='filled'
-            palette='error'
-            onClick={() => handleClickBackButton()}
-          >
-            뒤로가기
-          </Button>
-        </ButtonGroup>
       </Box>
     </CenterizedContainer>
   );

@@ -1,24 +1,23 @@
 import { MouseEventHandler } from 'react';
 import styled from '@emotion/styled';
 import { FillVariantKey, PaletteKey, Theme, ThemeContext } from '../theme';
+import ButtonBase from '../base/ButtonBase';
 
-interface AvatarButtonProps {
+interface AvatarImageProps {
+  padding?: string;
   size?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
-const AvatarButton = styled.button<AvatarButtonProps>`
+const AvatarImage = styled.div<AvatarImageProps>`
   position: relative;
   background-image: url("https://cdn-icons-png.flaticon.com/512/149/149071.png");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  border: none;
   border-radius: 50%;
-  outline: none;
-  padding: 0;
   height: ${props => props.size ?? '100%'};
   width: ${props => props.size ?? '100%'};
-  ${props => props.onClick ? 'cursor: pointer;' : ''}
+  margin: ${props => props.padding ?? '0'};
 `;
 
 interface AvatarAltProps {
@@ -38,6 +37,7 @@ const AvatarAlt = styled.span<AvatarAltProps>`
 interface Props {
   src?: string;
   alt?: string;
+  padding?: string;
   size?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -45,13 +45,16 @@ export default (props: Props) => {
   const {
     src,
     alt,
+    padding,
     size,
     onClick,
   } = props;
  
   return (
-    <AvatarButton size={size} onClick={onClick}>
-      <AvatarAlt src={src}>{alt?.charAt(0) ?? ''}</AvatarAlt>
-    </AvatarButton>
+    <ButtonBase onClick={onClick}>
+      <AvatarImage padding={padding} size={size} >
+        <AvatarAlt src={src}>{alt?.charAt(0) ?? ''}</AvatarAlt>
+      </AvatarImage>
+    </ButtonBase>
   );
 }

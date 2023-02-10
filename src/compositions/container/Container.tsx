@@ -1,13 +1,12 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Header from '../page/Header';
-import { useViewportType } from '@/components/common';
+import Header, { headerSpacerHeight } from '../page/Header';
 import type { User } from '@/services/api/user';
 import LeftSidebar from '../page/LeftSidebar';
 import RightSidebar from '../page/RightSidebar';
 import { Theme, ThemeContext } from '@/components/theme';
 
-const ContainerBase = styled.div`
+const ContainerOuterWrap = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
@@ -17,9 +16,11 @@ interface WallpaperFallbackProps {
   theme: Theme;
 }
 const WallpaperFallback = styled.div<WallpaperFallbackProps>`
-  position: absolute;
-  height: 100%;
-  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: -1;
   ${props => (`
     background-color: ${props.theme.palette.default.background};
@@ -32,9 +33,12 @@ interface WallpaperProps {
   url?: string;
 }
 const Wallpaper = styled.img<WallpaperProps>`
-  position: absolute;
-  height: 100%;
-  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
   object-fit: cover;
 	transition-property: opacity;
 	transition-duration: 1000ms;
@@ -46,20 +50,30 @@ const Wallpaper = styled.img<WallpaperProps>`
   `)}
 `;
 
-const VerticalFlex = styled.div`
+interface HeaderWrapProps {
+  theme: Theme;
+  show: boolean;
+}
+const HeaderWrap = styled.div<HeaderWrapProps>`
+  display: ${props => props.show ? 'block' : 'none'};
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: ${props => props.theme.zIndex.header};
+`;
+interface HeaderSpacerProps {
+  show: boolean;
+}
+const HeaderSpacer = styled.div<HeaderSpacerProps>`
+  display: ${props => props.show ? 'block' : 'none'};
+  height: ${headerSpacerHeight};
+  width: 100%;
+`;
+
+const ContainerInnerWrap = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  height: 100%;
-  &>*:last-child {
-    flex-grow: 1;
-  }
-`;
-const HorizontalFlex = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: row;
-  width: 100%;
   &>*:last-child {
     flex-grow: 1;
   }
@@ -67,9 +81,10 @@ const HorizontalFlex = styled.div`
 
 const ContentBase = styled.div`
   display: flex;
-  position: relative;
   flex-direction: row;
   justify-content: center;
+  height: 100%;
+  width: 100%;
 `;
 
 const Content = styled.div`
@@ -85,11 +100,16 @@ const Content = styled.div`
 `;
 
 const SidebarWrap = styled.div`
-  display: flex;
-  flex-shrink: 1;
-  flex-basis: 256px;
-  position: relative;
-  overflow: scroll;
+  display: none;
+  @media (min-width: 1280px) {
+    display: flex;
+    flex-shrink: 1;
+    flex-basis: 256px;
+    position: relative;
+    overflow: scroll;
+    font-size: 50px;
+  }
+
   &::-webkit-scrollbar{
     display: none;
   }
@@ -114,12 +134,10 @@ export default (props: Props) => {
     wallpaperUrl,
   } = props;
   const { theme } = useContext(ThemeContext);
-  const viewportType = useViewportType();
   const [wallpaperImage, setWallpaperImage] = useState({
     isLoaded: false,
     url: '',
   });
-  const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
   useEffect(() => {
     const wallpaperImage = new Image();
@@ -132,36 +150,31 @@ export default (props: Props) => {
     wallpaperUrl && (wallpaperImage.src = wallpaperUrl);
   }, []);
 
-  useEffect(() => {
-    setShowSidebar(viewportType === 'desktop');
-  }, [viewportType]);
-
   return (
-    <ContainerBase>
-      <VerticalFlex>
+    <ContainerOuterWrap>
+      <HeaderWrap theme={theme} show={showHeader ?? true}>
         <Header show={showHeader ?? true} currentUser={currentUser} />
+      </HeaderWrap>
+      <WallpaperFallback theme={theme} />
+      <Wallpaper
+        theme={theme}
+        isLoaded={wallpaperImage.isLoaded}
+        src={wallpaperImage.isLoaded ? wallpaperImage.url : undefined}
+      />
+      <ContainerInnerWrap>
+        <HeaderSpacer show={showHeader ?? true} />
         <ContentBase>
-          {showSidebar && (
-            <SidebarWrap>
-              <LeftSidebar />
-            </SidebarWrap>
-          )}
-          <WallpaperFallback theme={theme} />
-          <Wallpaper
-            theme={theme}
-            isLoaded={wallpaperImage.isLoaded}
-            src={wallpaperImage.isLoaded ? wallpaperImage.url : undefined}
-          />
+          <SidebarWrap>
+            <LeftSidebar />
+          </SidebarWrap>
           <Content>
             {children}
           </Content>
-          {showSidebar && (
-            <SidebarWrap>
-              <RightSidebar />
-            </SidebarWrap>
-          )}
+          <SidebarWrap>
+            <RightSidebar />
+          </SidebarWrap>
         </ContentBase>
-      </VerticalFlex>
-    </ContainerBase>
+      </ContainerInnerWrap>
+    </ContainerOuterWrap>
   );
 }

@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import Box from '@/components/layout/Box';
-import Card from '@/components/layout/Card';
+import Card from '@/components/paper/Card';
 
 const Page = styled.div`
-  padding-top: 24px;
+  padding-top: 16px;
   width: 100%;
   overflow: visible;
   &:last-child {
-    padding-bottom: 24px;
+    padding-bottom: 16px;
   }
 `;
 

@@ -1,6 +1,6 @@
 import { MouseEventHandler, ReactNode } from 'react';
 import styled from '@emotion/styled';
-import ButtonBase from '../button/ButtonBase';
+import ButtonBase from '../base/ButtonBase';
 
 interface AccordionWrapProps {
   fullWidth?: boolean;

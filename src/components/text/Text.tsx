@@ -62,7 +62,7 @@ const Span = styled.span<TextProps>`
 `;
 
 interface Props {
-  children: JSX.Element | string | null;
+  children?: JSX.Element | string | null;
   align?: TextAlignProps;
   palette?: PaletteKey;
   paletteColor?: PaletteColorKey;
@@ -93,7 +93,7 @@ export default (props: Props) => {
           paletteColor={paletteColor ?? defaultPaletteColor}
           css={css}
         >
-          {children}
+          {children ?? ''}
         </Header1>
       );
     case 'h2':
@@ -105,7 +105,7 @@ export default (props: Props) => {
           paletteColor={paletteColor ?? defaultPaletteColor}
           css={css}
         >
-          {children}
+          {children ?? ''}
         </Header2>
       );
     case 'h3':
@@ -117,7 +117,7 @@ export default (props: Props) => {
           paletteColor={paletteColor ?? defaultPaletteColor}
           css={css}
         >
-          {children}
+          {children ?? ''}
         </Header3>
       );
     case 'h4':
@@ -129,7 +129,7 @@ export default (props: Props) => {
           paletteColor={paletteColor ?? defaultPaletteColor}
           css={css}
         >
-          {children}
+          {children ?? ''}
         </Header4>
       );
     case 'h5':
@@ -141,7 +141,7 @@ export default (props: Props) => {
           paletteColor={paletteColor ?? defaultPaletteColor}
           css={css}
         >
-          {children}
+          {children ?? ''}
         </Header5>
       );
     case 'h6':
@@ -153,7 +153,7 @@ export default (props: Props) => {
           paletteColor={paletteColor ?? defaultPaletteColor}
           css={css}
         >
-          {children}
+          {children ?? ''}
         </Header6>
       );
     case 'p':
@@ -165,7 +165,7 @@ export default (props: Props) => {
           paletteColor={paletteColor ?? defaultPaletteColor}
           css={css}
         >
-          {children}
+          {children ?? ''}
         </Paragraph>
       );
     default:
@@ -177,7 +177,7 @@ export default (props: Props) => {
           paletteColor={paletteColor ?? defaultPaletteColor}
           css={css}
         >
-          {children}
+          {children ?? ''}
         </Span>
       );
   }

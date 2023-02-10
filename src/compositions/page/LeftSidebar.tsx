@@ -1,20 +1,20 @@
 import produce from 'immer';
 import { useTranslation } from 'next-i18next';
 import styled from '@emotion/styled';
-import Card from '@/components/layout/Card';
+import Card from '@/components/paper/Card';
 import Accordion from '@/components/layout/Accordion';
-import Text from '@/components/text/Text';
+import Box from '@/components/layout/Box';
+import Text from "@/components/text/Text";
 import { PlainObject } from '@/constants/common';
 import { useState } from 'react';
-import Box from '@/components/layout/Box';
 
 const Sidebar = styled.div`
   display: block;
   margin: 0 auto;
-  padding-top: 24px;
+  padding-top: 16px;
   width: 100%;
   &:last-child {
-    padding-bottom: 24px;
+    padding-bottom: 16px;
   }
 `;
 
@@ -24,7 +24,7 @@ export default (props: Props) => {
   const {
   } = props;
   const [isOpen, setOpen] = useState<PlainObject>({
-    'test': true,
+    'boards': true,
   });
   const toggleOpen = (key: string) => setOpen(produce(isOpen, draft => {
     draft[key] = !draft[key];
@@ -37,14 +37,14 @@ export default (props: Props) => {
         <Accordion
           title={(
             <Box horizontalPaddingLevel={1} verticalPaddingLevel={1}>
-              {commonTranslation('words.boards')}
+              <Text>{commonTranslation('words.boards')}</Text>
             </Box>
           )}
-          isOpen={isOpen['test']}
-          onClickTitle={() => toggleOpen('test')}
+          isOpen={isOpen['boards']}
+          onClickTitle={() => toggleOpen('boards')}
         >
           <Box horizontalPaddingLevel={1} verticalPaddingLevel={1}>
-            <div>* Test</div>
+            <Text>* Test</Text>
           </Box>
         </Accordion>
       </Card>

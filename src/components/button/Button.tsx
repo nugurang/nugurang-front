@@ -1,4 +1,4 @@
-import { MouseEventHandler, useContext, useEffect, useMemo } from 'react';
+import { MouseEventHandler, ReactNode, useContext, useEffect, useMemo } from 'react';
 import styled from '@emotion/styled';
 import { FillVariantKey, PaletteKey, Theme, ThemeContext } from '../theme';
 import CircularLoader from '../progress/CircularLoader';
@@ -7,6 +7,7 @@ interface ButtonProps {
   theme: Theme;
   fillVariant?: FillVariantKey;
   fullWidth?: boolean;
+  minWidth?: string;
   palette?: PaletteKey;
 }
 const Button = styled.button<ButtonProps>`
@@ -21,7 +22,10 @@ const Button = styled.button<ButtonProps>`
   ${props => (props.fullWidth ? `
     width: 100%;
   ` : '')}
-
+  ${props => (props.fillVariant !== 'text' && props.minWidth ? `
+    min-width: ${props.minWidth};
+  ` : '')}
+  
   color: ${props => {
     switch(props.fillVariant) {
       case 'outlined':
@@ -88,7 +92,7 @@ const Button = styled.button<ButtonProps>`
   padding: ${props => {
     switch(props.fillVariant) {
       case 'text':
-        return '12px';
+        return '12px 0';
       case 'outlined':
       case 'filled':
       default:
@@ -123,10 +127,11 @@ const ButtonCircularLoaderWrap = styled.div<ButtonCircularLoaderWrapProps>`
 `;
 
 interface Props {
-  children: string;
+  children: ReactNode | string;
   fullWidth?: boolean;
   fillVariant?: FillVariantKey;
   isLoading?: boolean;
+  minWidth?: string;
   palette?: PaletteKey;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
@@ -136,6 +141,7 @@ export default (props: Props) => {
     fullWidth,
     fillVariant,
     isLoading,
+    minWidth,
     palette,
     onClick
   } = props;
@@ -161,6 +167,7 @@ export default (props: Props) => {
       theme={theme}
       fullWidth={fullWidth}
       fillVariant={fillVariant}
+      minWidth={minWidth ?? '120px'}
       palette={palette}
       onClick={onClick}
     >

@@ -37,7 +37,7 @@ const ButtonBase = styled.button<ButtonBaseProps>`
 `;
 
 interface Props {
-  children: ReactNode | string;
+  children?: ReactNode | string;
   fullWidth?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }

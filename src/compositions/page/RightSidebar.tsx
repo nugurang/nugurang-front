@@ -1,15 +1,15 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import Box from '@/components/layout/Box';
-import Card from '@/components/layout/Card';
+import Card from '@/components/paper/Card';
 
 const Sidebar = styled.div`
   display: block;
   margin: 0 auto;
-  padding-top: 24px;
+  padding-top: 16px;
   width: 100%;
   &:last-child {
-    padding-bottom: 24px;
+    padding-bottom: 16px;
   }
 `;
 
@@ -22,11 +22,14 @@ export default (props: Props) => {
   return (
     <Sidebar>
       <Card>
-        <Box
-          horizontalPaddingLevel={2}
-          verticalPaddingLevel={2}
-        >
-        </Box>
+        {Array.from(Array(50).keys()).map((count: number) => (
+          <Box
+            horizontalPaddingLevel={2}
+            verticalPaddingLevel={2}
+          >
+            Test {count}
+          </Box>
+        ))}
       </Card>
     </Sidebar>
   );

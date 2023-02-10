@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import Card from '@/components/layout/Card';
+import Card from '@/components/paper/Card';
 import { Theme, ThemeContext } from '@/components/theme';
 
 const ContainerOuterBase = styled.div`

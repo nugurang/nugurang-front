@@ -1,7 +1,9 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useElementDistanceFromViewport, UseElementDistanceFromViewportDistance } from '@/components/common'
-import { FillVariantKey, PaletteKey, Theme, ThemeContext } from '../theme';
+import { Theme, ThemeContext } from '../theme';
+
+export type TooltipTrigger = 'click' | 'hover';
 
 interface TooltipOuterWrapProps {
 }
@@ -10,6 +12,7 @@ const TooltipOuterWrap = styled.div<TooltipOuterWrapProps>`
 `;
 
 interface TooltipInnerWrapProps {
+  theme: Theme;
   ref?: React.RefObject<HTMLDivElement>;
   show: boolean;
   marginNumber?: number;
@@ -19,7 +22,7 @@ const TooltipInnerWrap = styled.div<TooltipInnerWrapProps>`
   display: ${props => props.show ? 'block' : 'none'};
   position: absolute;
   overflow: visible;
-  z-index: 100;
+  z-index: ${props => props.theme.zIndex.tooltip};
   ${props => props.distanceFromViewport.bottom < 0 ? 'bottom: 0;' : 'top: 100%;'}
   ${true && (props => {
     const prefix = 'transform: translate(';
@@ -47,47 +50,75 @@ const TooltipInnerWrap = styled.div<TooltipInnerWrapProps>`
 
 interface Props {
   children: ReactNode | string;
+  isOpen: boolean;
+  setOpen: (_: boolean) => void;
   content: ReactNode | string;
   delay?: number;
   marginNumber?: number;
+  trigger?: TooltipTrigger;
 }
 export default (props: Props) => {
   const {
     children,
+    isOpen,
+    setOpen,
     content,
     delay,
     marginNumber,
+    trigger = 'click',
   } = props;
+  const { theme } = useContext(ThemeContext);
 
   let timeout: string | number | NodeJS.Timeout | undefined;
-  const [active, setActive] = useState(false);
+  const tooltipOuterWrapRef = useRef<HTMLDivElement>(null);
   const tooltipInnerWrapRef = useRef<HTMLDivElement>(null);
   const [distanceFromViewport, handleResize] = useElementDistanceFromViewport(tooltipInnerWrapRef);
 
-  const showTip = () => {
-    timeout = setTimeout(() => {
-      setActive(true);
-    }, delay || 0);
+  const showTooltip = (eventTrigger: TooltipTrigger) => {
+    if(eventTrigger === trigger) {
+      timeout = setTimeout(() => {
+        setOpen(true);
+      }, delay || 0);
+    }
   };
 
-  const hideTip = () => {
-    clearInterval(timeout);
-    setActive(false);
+  const hideTooltip = (eventTrigger: TooltipTrigger) => {
+    if(eventTrigger === trigger) {
+      setOpen(false);
+      clearInterval(timeout);
+    }
   };
 
   useEffect(() => {
-    (handleResize as Function)();
-  }, [active]);
+    if(isOpen) {
+      (handleResize as Function)();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (tooltipInnerWrapRef.current && !tooltipInnerWrapRef.current.contains(event.target)) {
+        hideTooltip('click');
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <TooltipOuterWrap
-      onMouseEnter={showTip}
-      onMouseLeave={hideTip}
+      ref={tooltipOuterWrapRef}
+      onClick={() => showTooltip('click')}
+      onMouseEnter={() => showTooltip('hover')}
+      onMouseLeave={() => hideTooltip('hover')}
     >
       {children}
       <TooltipInnerWrap
         ref={tooltipInnerWrapRef}
-        show={active}
+        theme={theme}
+        show={isOpen}
         marginNumber={marginNumber}
         distanceFromViewport={distanceFromViewport as UseElementDistanceFromViewportDistance}
       >

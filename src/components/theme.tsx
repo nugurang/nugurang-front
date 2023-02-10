@@ -1,9 +1,10 @@
 import {
   ReactNode,
   createContext,
-  useCallback,
-  useState
+  useState,
+  useEffect
 } from 'react';
+import { isClient } from './common';
 
 export type ThemeKey = 'light' | 'dark';
 export type FillVariantKey = 'filled' | 'outlined' | 'text';
@@ -11,14 +12,17 @@ type ThemeTypography = {
   fontFamily: string[];
 };
 type ThemeZIndex = {
-  tooltip: number;
+  modalTooltip: number;
   modal: number;
+  backdrop: number;
+  tooltip: number;
   header: number;
   footer: number;
   default: number;
   hidden: number;
 };
 interface ThemePaletteColor {
+  base: string;
   main: string;
   light: string;
   dark: string;
@@ -62,8 +66,10 @@ const baseTheme = {
     ].join(','),
   },
   zIndex: {
-    tooltip: 8000,
-    modal: 6000,
+    modalTooltip: 5000,
+    modal: 7100,
+    backdrop: 7000,
+    tooltip: 5000,
     header: 3000,
     footer: 2000,
     default: 0,
@@ -76,6 +82,7 @@ const lightTheme = {
   key: 'light' as ThemeKey,
   palette: {
     primary: {
+      base: '#fff',
       main: '#673ab7',
       light: '#8561c5',
       dark: '#482880',
@@ -86,6 +93,7 @@ const lightTheme = {
       contrastText: '#fff',
     },
     error: {
+      base: '#fff',
       main: '#e03c31',
       light: '#ef9d97',
       dark: '#761811',
@@ -96,11 +104,12 @@ const lightTheme = {
       contrastText: '#fff',
     },
     default: {
+      base: '#fff',
       main: '#dfdfdf',
       light: '#efefef',
       dark: '#cfcfcf',
-      high: '#cfcfcf',
-      low: '#efefef',
+      high: '#efefef',
+      low: '#cfcfcf',
       background: '#f8f8f8',
       text: '#fff',
       contrastText: '#000',
@@ -112,6 +121,7 @@ const darkTheme = {
   key: 'dark' as ThemeKey,
   palette: {
     primary: {
+      base: '#000',
       main: '#888',
       light: '#aaa',
       dark: '#666',
@@ -122,6 +132,7 @@ const darkTheme = {
       contrastText: '#000',
     },
     error: {
+      base: '#000',
       main: '#e03c31',
       light: '#ef9d97',
       dark: '#761811',
@@ -132,10 +143,11 @@ const darkTheme = {
       contrastText: '#000',
     },
     default: {
+      base: '#000',
       main: '#202020',
       light: '#303030',
-      dark: '#101010',
-      high: '#101010',
+      dark: '#0f0f0f',
+      high: '#0f0f0f',
       low: '#303030',
       background: '#080808',
       text: '#000',
@@ -154,37 +166,32 @@ export const getTheme = (key: string) => {
   return (theme[key] as Theme) ?? theme[defaultThemeKey];
 };
 
-const useTheme = () => {
-  const [themeKey, setThemeKey] = useState('light');
-
-  const toggleTheme = useCallback(() => {
-    setThemeKey((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  }, []);
-
-  return {
-    themeKey,
-    toggleTheme,
-  };
-};
 interface ThemeProviderProps {
   children: ReactNode;
 };
 export const ThemeContext = createContext({
   theme: getTheme(defaultThemeKey),
-  toggleTheme: () => {},
+  setThemeKey: (_: ThemeKey) => {},
 });
 export const ThemeProvider = ({
   children
 }: ThemeProviderProps) => {
-  const {
-    themeKey,
-    toggleTheme
-  } = useTheme();
+  const [themeKey, _setThemeKey] = useState(defaultThemeKey);
+  const setThemeKey = (key: ThemeKey) => {
+    _setThemeKey(key);
+    localStorage.setItem('theme-key', key);
+  };
+
+  useEffect(() => {
+    if (isClient()) {
+      _setThemeKey((localStorage.getItem('theme-key') ?? defaultThemeKey) as ThemeKey);
+    }
+  }, []);
 
   return (
     <ThemeContext.Provider value={{
       theme: getTheme(themeKey),
-      toggleTheme,
+      setThemeKey,
     }}>
       {children}
     </ThemeContext.Provider>
