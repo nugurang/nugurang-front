@@ -8,6 +8,9 @@ interface GridOuterWrapProps {
 }
 const GridOuterWrap = styled.div<GridOuterWrapProps>`
   ${props => (`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     margin-top: -${props.gap};
     margin-left: -${props.gap};
 
@@ -38,9 +41,7 @@ export default (props: Props) => {
       stage={stage ?? 1}
     >
       {React.Children.toArray(children).map(child => (
-        <div>
-          {child}
-        </div>
+        child
       ))}
     </GridOuterWrap>
   );

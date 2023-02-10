@@ -3,10 +3,13 @@ import { useTranslation } from 'next-i18next';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import Container from '@/compositions/container/Container';
-import Page from '@/compositions/page/Page';
-import Text from '@/components/text/Text';
+import Section from '@/compositions/page/Section';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import { logout } from '@/services/oAuth2/index';
+import Article from '@/compositions/page/Article';
+import UserDashboard from '@/compositions/user/UserDashboard';
+import Dialog from '@/compositions/common/Dialog';
+import { useState } from 'react';
 
 export const getServerSideProps = WithCheckUserServerSideProps();
 
@@ -14,26 +17,54 @@ interface PageProps extends WithCheckUserServerSidePropsResponse {}
 export default ({ currentUser }: PageProps) => {
   const { t: commonTranslation } = useTranslation('common');
   const router = useRouter();
+  const [isLogoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
+  const [isLogoutOngoing, setLogoutOngoing] = useState<boolean>(false);
+
+  const handleClickLogoutButton = () => {
+    setLogoutModalOpen(true);
+  };
+  const handleClickLogoutYesButton = () => {
+    setLogoutOngoing(true);
+    logout();
+  };
+  const handleClickLogoutNoButton = () => {
+    setLogoutModalOpen(false);
+  };
 
   return (
     <Container currentUser={currentUser}>
-      <Page setPadding>
-        <Text variant='h2' align='center' palette='primary' paletteColor='main'>
-          {commonTranslation('words.my_account')}
-        </Text>
-        <Text variant='p' align='center'>
-          {currentUser.name}
-        </Text>
-        <ButtonGroup direction='horizontal'>
+      <Section title={commonTranslation('words.my_account')}>
+        <Article>
+          <UserDashboard
+            user={currentUser}
+            onClickLogoutButton={handleClickLogoutButton}
+          />
+        </Article>
+      </Section>
+      <Dialog
+        open={isLogoutModalOpen}
+        title={commonTranslation('words.sign_out')}
+        content={commonTranslation('sentences.are_you_sure_to_sign_out')}
+        onClickBackdrop={handleClickLogoutNoButton}
+      >
+        <ButtonGroup>
           <Button
             fillVariant='filled'
             palette='error'
-            onClick={logout}
+            isLoading={isLogoutOngoing}
+            onClick={handleClickLogoutYesButton}
           >
-            {commonTranslation('words.sign_out')}
+            {commonTranslation('words.yes')}
+          </Button>
+          <Button
+            fillVariant='filled'
+            palette='default'
+            onClick={handleClickLogoutNoButton}
+          >
+            {commonTranslation('words.no')}
           </Button>
         </ButtonGroup>
-      </Page>
+      </Dialog>
     </Container>
   );
 };

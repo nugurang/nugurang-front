@@ -8,14 +8,10 @@ import Text from "@/components/text/Text";
 import { PlainObject } from '@/constants/common';
 import { useState } from 'react';
 
-const Sidebar = styled.div`
+const Sidebar = styled.aside`
   display: block;
   margin: 0 auto;
-  padding-top: 16px;
   width: 100%;
-  &:last-child {
-    padding-bottom: 16px;
-  }
 `;
 
 interface Props {

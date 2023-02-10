@@ -2,28 +2,31 @@ import { MouseEventHandler, ReactNode } from 'react';
 import styled from '@emotion/styled';
 import React from 'react';
 import Modal from '../../components/layout/Modal';
-import Text from '../../components/text/Text';
 import Card from '../../components/paper/Card';
+import Box from '@/components/layout/Box';
 
 const DialogTextBox = styled.div`
   padding: 16px 16px 0 16px;
 `;
+
 const DialogButtonBox = styled.div`
   padding: 16px;
 `;
 
-const TitleCss = `
+const TitleText = styled.p`
   font-size: 24px;
+  font-weight: bold;
+  color: props.theme.default.contrastText;
 `;
 
-const ContentCss = `
+const ContentText = styled.p`
   font-size: 20px;
 `;
 
 interface Props {
   children: ReactNode | string;
-  title?: string;
-  content?: string;
+  title?: string | null;
+  content?: string | null;
   dimmed?: boolean;
   maxHeight?: string;
   maxWidth?: string;
@@ -48,20 +51,14 @@ export default (props: Props) => {
     >
       <Card>
         <DialogTextBox>
-          <Text
-            align='center'
-            variant='p'
-            css={TitleCss}
-          >
-            {title}
-          </Text>
-          <Text
-            align='center'
-            variant='p'
-            css={ContentCss}
-          >
-            {content}
-          </Text>
+          <Box centerizeHorizontally>
+            <TitleText>
+              {title}
+            </TitleText>
+            <ContentText>
+              {content}
+            </ContentText>
+          </Box>
         </DialogTextBox>
         <DialogButtonBox>
           {children}

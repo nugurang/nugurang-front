@@ -2,12 +2,14 @@ import { GetServerSidePropsContext } from 'next/types';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import Container from '@/compositions/container/Container';
-import Page from '@/compositions/page/Page';
+import Section from '@/compositions/page/Section';
 import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import type { Board } from '@/services/api/board';
 import { getAllThreadsByBoardId, Thread } from '@/services/api/thread';
 import InvalidQueryParamsError from '@/errors/common/InvalidQueryParamsError';
+import Article from '@/compositions/page/Article';
+import UnorderedList from '@/components/list/UnorderedList';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -58,16 +60,19 @@ export default ({ currentUser, board, threadList }: PageProps) => {
 
   return (
     <Container currentUser={currentUser}>
-      <Page setPadding>
-        <Text variant='h2' align='center'>
-          {boardsTranslation(board.i18nKey)}
-        </Text>
-        {threadList.map((thread: Thread) => (
-          <div>
-            {thread.name}
-          </div>
-        ))}
-      </Page>
+      <Section title={boardsTranslation(board.i18nKey)}>
+        <Article>
+          <UnorderedList
+            gap={'16px'}
+          >
+          {threadList.map((thread: Thread) => (
+            <div>
+              {thread.name}
+            </div>
+          ))}
+          </UnorderedList>
+        </Article>
+      </Section>
     </Container>
   );
 };

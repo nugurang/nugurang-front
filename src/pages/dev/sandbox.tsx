@@ -5,7 +5,7 @@ import CircularLoader from '@/components/progress/CircularLoader';
 import Container from '@/compositions/container/Container';
 import Grid from '@/components/layout/Grid';
 import Multistage from '@/components/layout/Multistage';
-import Page from '@/compositions/page/Page';
+import Section from '@/compositions/page/Section';
 import Text from '@/components/text/Text';
 import { ThemeContext } from '@/components/theme';
 import Modal from '@/components/layout/Modal';
@@ -19,7 +19,7 @@ export default () => {
   return (
     <>
       <Container centerizeVertically>
-        <Page>
+        <Section>
           <Grid stage={4} gap='8px'>
             <Text>{theme.palette.primary.main}</Text>
             <Text>{theme.palette.primary.main}</Text>
@@ -72,7 +72,7 @@ export default () => {
             </Button>
             <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
           </ButtonGroup>
-        </Page>
+        </Section>
         <Dialog
           open={isModalOpen}
           title='Test Title'

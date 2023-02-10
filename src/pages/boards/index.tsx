@@ -3,12 +3,13 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import BoardListItem from '@/compositions/board/BoardListItem';
 import Container from '@/compositions/container/Container';
-import Page from '@/compositions/page/Page';
+import Section from '@/compositions/page/Section';
 import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import { getAllBoards } from '@/services/api/board';
 import type { Board } from '@/services/api/board';
 import UnorderedList from '@/components/list/UnorderedList';
+import Article from '@/compositions/page/Article';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -53,22 +54,21 @@ export default ({ currentUser, boardList, eventBoardList }: PageProps) => {
 
   return (
     <Container currentUser={currentUser}>
-      <Page setPadding>
-        <Text variant='h2' align='center'>
-          {boardsTranslation('words.boards')}
-        </Text>
-        <UnorderedList
-          gap={'16px'}
-        >
-          {boardList.map((board: Board) => (
-            <BoardListItem
-              key={board.id}
-              board={board}
-              onClick={() => onClickBoardListItem(board.id)}
-            />
-          ))}
-        </UnorderedList>
-      </Page>
+      <Section title={boardsTranslation('words.boards')}>
+        <Article>
+          <UnorderedList
+            gap={'16px'}
+          >
+            {boardList.map((board: Board) => (
+              <BoardListItem
+                key={board.id}
+                board={board}
+                onClick={() => onClickBoardListItem(board.id)}
+              />
+            ))}
+          </UnorderedList>
+        </Article>
+      </Section>
     </Container>
   );
 };

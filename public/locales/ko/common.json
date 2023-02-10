@@ -1,11 +1,15 @@
 {
   "words": {
     "boards": "게시판",
+    "cancel": "취소",
     "my_account": "내 계정",
+    "no": "아니요",
     "sign_in": "로그인",
-    "sign_out": "로그아웃"
+    "sign_out": "로그아웃",
+    "yes": "네"
   },
   "sentences": {
+    "are_you_sure_to_sign_out": "정말 로그아웃 하시겠어요?",
     "hello_world": "반갑구나, 세상아!",
     "please_check_your_user_data": "사용자 정보를 확인해주세요.",
     "please_sign_in": "로그인해주세요.",

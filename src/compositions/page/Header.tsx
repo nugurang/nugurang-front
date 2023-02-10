@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import styled from '@emotion/styled';
 import Avatar from '@/components/button/Avatar';
 import Button from '@/components/button/Button';
 import Tooltip from '@/components/layout/Tooltip';
-import Text from '@/components/text/Text';
 import { Theme, ThemeContext } from '@/components/theme';
 import { oAuth2Login, logout } from '@/services/oAuth2/index';
 import SessionBriefDashboard from './SessionBriefDashboard';
@@ -23,6 +23,7 @@ interface HeaderOuterWrapProps {
 const HeaderOuterWrap = styled.div<HeaderOuterWrapProps>`
   position: relative;
   height: ${headerHeight};
+  max-height: ${headerHeight};
   width: 100%;
   max-width: 768px;
   @media (min-width: 1280px) {
@@ -30,6 +31,7 @@ const HeaderOuterWrap = styled.div<HeaderOuterWrapProps>`
   }
   margin: 0 auto;
 `;
+
 interface HeaderInnerWrapProps {
   theme: Theme;
   show?: boolean;
@@ -40,6 +42,7 @@ const HeaderInnerWrap = styled.div<HeaderInnerWrapProps>`
   justify-content: space-between;
   align-items: center;
   position: relative;
+  max-height: ${headerHeight};
   margin: 16px 8px 8px 8px;
   background-color: ${props => props.theme.palette.default.base};
   border-radius: 8px;
@@ -75,6 +78,7 @@ export default (props: Props) => {
   } = props;
   const router = useRouter();
   const { theme } = useContext(ThemeContext);
+  const { t: commonTranslation } = useTranslation('common');
   const [isSessionTooltipOpen, setSessionTooltipOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
   const [isLogoutOngoing, setLogoutOngoing] = useState<boolean>(false);
@@ -100,7 +104,7 @@ export default (props: Props) => {
               palette='primary'
               onClick={() => router.push('/')}
             >
-              <Text>nugurang(&alpha;lpha)</Text>
+              nugurang(&alpha;lpha)
             </Button>
           </HeaderContentLeft>
           <HeaderContentRight>
@@ -127,8 +131,8 @@ export default (props: Props) => {
       </HeaderOuterWrap>
       <Dialog
         open={isLogoutModalOpen}
-        title='Test Title'
-        content='Test Content'
+        title={commonTranslation('words.sign_out')}
+        content={commonTranslation('sentences.are_you_sure_to_sign_out')}
         onClickBackdrop={handleClickLogoutNoButton}
       >
         <ButtonGroup>
@@ -138,14 +142,14 @@ export default (props: Props) => {
             isLoading={isLogoutOngoing}
             onClick={handleClickLogoutYesButton}
           >
-            Yes
+            {commonTranslation('words.yes')}
           </Button>
           <Button
             fillVariant='filled'
             palette='default'
             onClick={handleClickLogoutNoButton}
           >
-            No
+            {commonTranslation('words.no')}
           </Button>
         </ButtonGroup>
       </Dialog>

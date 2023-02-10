@@ -11,6 +11,7 @@ import Container from '@/compositions/container/Container';
 import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps } from '@/hocs/WithServerSideProps';
 import { queryToBackend, mutateToBackend } from '@/utilities/network/graphQl';
+import CircularLoader from '@/components/progress/CircularLoader';
 
 export const getServerSideProps = WithCheckUserServerSideProps();
 
@@ -334,7 +335,11 @@ export default () => {
         maxWidth='100vw'
         horizontalPaddingLevel={2}
         verticalPaddingLevel={2}
+        centerizeHorizontally
       >
+        {(!isDone && !isErrorOccurred) && (<>
+          <CircularLoader size='48px'/>
+        </>)}
         <Text variant='h2' align='center'>
           {title}
         </Text>
@@ -342,10 +347,6 @@ export default () => {
           {content}
         </Text>
         <ButtonGroup direction='vertical'>
-          {(!isDone && !isErrorOccurred) && (<>
-            <label htmlFor='init'>초기화 진척도</label>
-            <progress id='init' max='100' value='' />
-          </>)}
           {(isDone || isErrorOccurred) && (<>
             <Button fullWidth onClick={onClickGoHomeButton}>
               홈으로 가기

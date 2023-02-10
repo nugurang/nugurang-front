@@ -15,7 +15,6 @@ const MultistageOuterWrap = styled.div<MultistageOuterWrapProps>`
     gap: ${props.gap};
     width: 100%;
     flex-basis: ${props.minWidth};
-
     &>* {
       flex-grow: 1;
     }
@@ -39,13 +38,11 @@ export default (props: Props) => {
   return (
     <MultistageOuterWrap
       gap={gap ?? '0'}
-      minWidth={minWidth ?? '100%'}
+      minWidth={minWidth ?? `${100 / (stage ?? 1)}%`}
       stage={stage ?? 1}
     >
       {React.Children.toArray(children).map(child => (
-        <div>
-          {child}
-        </div>
+        child
       ))}
     </MultistageOuterWrap>
   );

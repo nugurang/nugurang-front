@@ -1,40 +1,30 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
+import React from 'react';
 
 type Direction = 'vertical' | 'horizontal';
 interface ButtonGroupProps {
-  direction?: Direction;
+  direction: Direction;
+  fullWidth: boolean;
 }
 const ButtonGroup = styled.div<ButtonGroupProps>`
   display: flex;
-  width: 100%;
+  ${props => (props.fullWidth ? 'width: 100%;' : '')}
+  gap: 2px;
+  overflow: hidden;
+  border-radius: 8px;
   ${props => (props.direction === 'vertical' ? `
     flex-direction: column;
     &>* {
       width: 100%;
-    }
-    &>*:not(:first-child) {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      margin-top: 2px;
-    }
-    &>*:not(:last-child) {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      border-radius: 0;
     }
   ` : '')}
   ${props => (props.direction === 'horizontal' ? `
+    flex-wrap: wrap;
     &>* {
       flex: 1 1 0px;
-    }
-    &>*:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      margin-left: 2px;
-    }
-    &>*:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+      border-radius: 0;
     }
   ` : '')}
 `;
@@ -42,18 +32,23 @@ const ButtonGroup = styled.div<ButtonGroupProps>`
 interface Props {
   children: ReactNode | string;
   direction?: Direction;
+  fullWidth?: boolean;
 }
 export default (props: Props) => {
   const {
     children,
     direction,
+    fullWidth,
   } = props;
  
   return (
     <ButtonGroup
-    direction={direction ?? 'horizontal'}
+      direction={direction ?? 'horizontal'}
+      fullWidth={fullWidth ?? false}
     >
-      {children}
+      {React.Children.toArray(children).map(child => (
+        child
+      ))}
     </ButtonGroup>
   );
 }

@@ -15,7 +15,6 @@ const Button = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
 
-  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   text-align: center;
@@ -60,9 +59,8 @@ const Button = styled.button<ButtonProps>`
     color: ${props => {
       switch(props.fillVariant) {
         case 'text':
-          return props.theme.palette[props.palette ?? 'default'].main;
         case 'outlined':
-          return props.theme.palette[props.palette ?? 'default'].text;
+          return props.theme.palette[props.palette ?? 'default'].main;
         case 'filled':
         default:
           return props.theme.palette[props.palette ?? 'default'].contrastText;
@@ -157,10 +155,6 @@ export default (props: Props) => {
         return 'contrastText';
     }
   }, [fillVariant]);
-
-  useEffect(() => {
-    console.log(children + ":" + isLoading)
-  }, [isLoading]);
  
   return (
     <Button

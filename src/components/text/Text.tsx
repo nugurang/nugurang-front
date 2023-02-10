@@ -1,72 +1,20 @@
 import { useContext } from 'react';
 import styled from '@emotion/styled';
-import { PaletteKey, PaletteColorKey, Theme, ThemeContext } from '../theme';
+import { PaletteKey, PaletteColorKey, ThemeContext } from '../theme';
 
-type TextAlignProps = 'left' | 'right' | 'center';
-type TextVariantProps = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+type TextAlignKey = 'left' | 'right' | 'center';
+type TextVariantKey = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
 
-interface TextProps {
-  theme: Theme;
-  children: JSX.Element | string | null;
-  align?: TextAlignProps;
-  palette?: PaletteKey;
-  paletteColor?: PaletteColorKey;
-  variant?: TextVariantProps;
-  css?: string;
+export const getHtmlTagByVariant = (variant?: TextVariantKey) => {
+  return styled[variant ?? 'span'] ?? styled.span;
 }
-const TextBaseCss = (props: TextProps) => `
-  ${(props.align ? `text-align: ${props.align};` : '')}
-  color: ${props.theme.palette[props.palette ?? 'default'][props.paletteColor ?? 'text']};
-`;
-const TextExternalCss = (props: TextProps) => `
-  ${(props.css ? `${props.css}` : '')}
-`;
-const Header1 = styled.h1<TextProps>`
-  ${props => TextBaseCss(props)}
-  font-size: 28px;
-  ${props => TextExternalCss(props)}
-`;
-const Header2 = styled.h2<TextProps>`
-  ${props => TextBaseCss(props)}
-  font-size: 26px;
-  ${props => TextExternalCss(props)}
-`;
-const Header3 = styled.h3<TextProps>`
-  ${props => TextBaseCss(props)}
-  font-size: 24px;
-  ${props => TextExternalCss(props)}
-`;
-const Header4 = styled.h4<TextProps>`
-  ${props => TextBaseCss(props)}
-  font-size: 22px;
-  ${props => TextExternalCss(props)}
-`;
-const Header5 = styled.h5<TextProps>`
-  ${props => TextBaseCss(props)}
-  font-size: 20px;
-  ${props => TextExternalCss(props)}
-`;
-const Header6 = styled.h6<TextProps>`
-  ${props => TextBaseCss(props)}
-  font-size: 18px;
-  ${props => TextExternalCss(props)}
-`;
-const Paragraph = styled.p<TextProps>`
-  ${props => TextBaseCss(props)}
-  font-size: 16px;
-  ${props => TextExternalCss(props)}
-`;
-const Span = styled.span<TextProps>`
-  ${props => TextBaseCss(props)}
-  ${props => TextExternalCss(props)}
-`;
 
 interface Props {
-  children?: JSX.Element | string | null;
-  align?: TextAlignProps;
+  children?: string | null;
+  align?: TextAlignKey;
   palette?: PaletteKey;
   paletteColor?: PaletteColorKey;
-  variant?: TextVariantProps;
+  variant?: TextVariantKey;
   css?: string;
 }
 export default (props: Props) => {
@@ -76,109 +24,53 @@ export default (props: Props) => {
     palette,
     paletteColor,
     variant,
-    css,
   } = props;
   const { theme } = useContext(ThemeContext);
-
-  const defaultAlign = 'left';
-  const defaultPalette = 'primary';
-  const defaultPaletteColor = 'text';
-  switch(variant) {
-    case 'h1':
-      return (
-        <Header1
-          theme={theme}
-          align={align ?? defaultAlign}
-          palette={palette ?? defaultPalette}
-          paletteColor={paletteColor ?? defaultPaletteColor}
-          css={css}
-        >
-          {children ?? ''}
-        </Header1>
-      );
-    case 'h2':
-      return (
-        <Header2
-          theme={theme}
-          align={align ?? defaultAlign}
-          palette={palette ?? defaultPalette}
-          paletteColor={paletteColor ?? defaultPaletteColor}
-          css={css}
-        >
-          {children ?? ''}
-        </Header2>
-      );
-    case 'h3':
-      return (
-        <Header3
-          theme={theme}
-          align={align ?? defaultAlign}
-          palette={palette ?? defaultPalette}
-          paletteColor={paletteColor ?? defaultPaletteColor}
-          css={css}
-        >
-          {children ?? ''}
-        </Header3>
-      );
-    case 'h4':
-      return (
-        <Header4
-          theme={theme}
-          align={align ?? defaultAlign}
-          palette={palette ?? defaultPalette}
-          paletteColor={paletteColor ?? defaultPaletteColor}
-          css={css}
-        >
-          {children ?? ''}
-        </Header4>
-      );
-    case 'h5':
-      return (
-        <Header5
-          theme={theme}
-          align={align ?? defaultAlign}
-          palette={palette ?? defaultPalette}
-          paletteColor={paletteColor ?? defaultPaletteColor}
-          css={css}
-        >
-          {children ?? ''}
-        </Header5>
-      );
-    case 'h6':
-      return (
-        <Header6
-          theme={theme}
-          align={align ?? defaultAlign}
-          palette={palette ?? defaultPalette}
-          paletteColor={paletteColor ?? defaultPaletteColor}
-          css={css}
-        >
-          {children ?? ''}
-        </Header6>
-      );
-    case 'p':
-      return (
-        <Paragraph
-          theme={theme}
-          align={align ?? defaultAlign}
-          palette={palette ?? defaultPalette}
-          paletteColor={paletteColor ?? defaultPaletteColor}
-          css={css}
-        >
-          {children ?? ''}
-        </Paragraph>
-      );
-    default:
-      return (
-        <Span
-          theme={theme}
-          align={align ?? defaultAlign}
-          palette={palette ?? defaultPalette}
-          paletteColor={paletteColor ?? defaultPaletteColor}
-          css={css}
-        >
-          {children ?? ''}
-        </Span>
-      );
-  }
+  const TextHtmlTag = (getHtmlTagByVariant(variant))`
+    ${(align ? `text-align: ${align};` : '')}
+    color: ${theme.palette[palette ?? 'default'][paletteColor ?? 'text']};
+    ${(() => {
+      switch(variant) {
+        case 'h1':
+          return `
+            font-size: 32px;
+          `;
+        case 'h2':
+          return `
+            font-size: 28px;
+          `;
+        case 'h3':
+          return `
+            font-size: 24px;
+          `;
+        case 'h4':
+          return `
+            font-size: 22px;
+          `;
+        case 'h5':
+          return `
+            font-size: 20px;
+          `;
+        case 'h6':
+          return `
+            font-size: 18px;
+          `;
+        case 'p':
+          return `
+            font-size: 16px;
+          `;
+        case 'span':
+        default:
+          return `
+            font-size: 16px;
+          `;
+      }
+    })()};
+  `;
+  
+  return (
+    <TextHtmlTag>
+      {children ?? ''}
+    </TextHtmlTag>
+  );
 }

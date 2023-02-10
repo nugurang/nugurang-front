@@ -26,10 +26,6 @@ const Box = styled.div<BoxProps>`
   display: flex;
   position: relative;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
-  max-height: 100%;
-  max-width: 100%;
   ${props => (props.centerizeHorizontally ? 'align-items: center;' : '')}
   ${props => (props.centerizeVertically ? 'justify-content: center;' : '')}
   ${props => (props.horizontalPaddingLevel ? `
