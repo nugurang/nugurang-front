@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import Text from '@/components/text/Text';
+import Header3 from '@/components/text/Header3';
 
 const Article = styled.article`
 `;
@@ -32,7 +32,7 @@ export default (props: Props) => {
     <Article>
       {title && (
         <TitleWrap>
-          <Text variant='h3'>{title}</Text>
+          <Header3>{title}</Header3>
         </TitleWrap>
       )}
       <ContentWrap setMargin={setMargin ?? true}>

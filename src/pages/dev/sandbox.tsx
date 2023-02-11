@@ -3,7 +3,7 @@ import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import CircularLoader from '@/components/progress/CircularLoader';
 import Container from '@/compositions/container/Container';
-import Grid from '@/components/layout/Grid';
+import GridList from '@/components/layout/GridList';
 import Multistage from '@/components/layout/Multistage';
 import Section from '@/compositions/page/Section';
 import Text from '@/components/text/Text';
@@ -20,26 +20,30 @@ export default () => {
     <>
       <Container centerizeVertically>
         <Section>
-          <Grid stage={4} gap='8px'>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-            <Text>{theme.palette.primary.main}</Text>
-          </Grid>
+          <GridList stage={4} gap='8px'>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+            <li><Text>{theme.palette.primary.main}</Text></li>
+          </GridList>
           <CircularLoader size='96px'/>
           <Multistage stage={2} minWidth={'40px'} gap='8px'>
             <Text>{theme.palette.primary.main}</Text>

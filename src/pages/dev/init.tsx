@@ -7,11 +7,11 @@ import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import CenterizedContainer from '@/compositions/container/CenterizedContainer';
-import Container from '@/compositions/container/Container';
-import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps } from '@/hocs/WithServerSideProps';
 import { queryToBackend, mutateToBackend } from '@/utilities/network/graphQl';
 import CircularLoader from '@/components/progress/CircularLoader';
+import Header2 from '@/components/text/Header2';
+import Paragraph from '@/components/text/Paragraph';
 
 export const getServerSideProps = WithCheckUserServerSideProps();
 
@@ -340,12 +340,12 @@ export default () => {
         {(!isDone && !isErrorOccurred) && (<>
           <CircularLoader size='48px'/>
         </>)}
-        <Text variant='h2' align='center'>
+        <Header2>
           {title}
-        </Text>
-        <Text variant='p' align='center'>
+        </Header2>
+        <Paragraph>
           {content}
-        </Text>
+        </Paragraph>
         <ButtonGroup direction='vertical'>
           {(isDone || isErrorOccurred) && (<>
             <Button fullWidth onClick={onClickGoHomeButton}>

@@ -5,6 +5,7 @@ interface ButtonBaseProps {
   fullWidth?: boolean;
 }
 const ButtonBase = styled.button<ButtonBaseProps>`
+  display: block;
   border: none;
   margin: 0;
   padding: 0;

@@ -3,14 +3,14 @@ import styled from '@emotion/styled';
 import { PaletteKey, PaletteColorKey, ThemeContext, Theme } from '../theme';
 import { TextAlignKey } from './common';
 
-interface TextProps {
+interface ParagraphProps {
   theme?: Theme
   children?: string | null;
   align?: TextAlignKey;
   palette?: PaletteKey;
   paletteColor?: PaletteColorKey;
 }
-const Text = styled.span<TextProps>`
+const Paragraph = styled.p<ParagraphProps>`
   ${props => `
     ${(props.align ? `text-align: ${props.align};` : '')}
     color: ${props.theme.palette[props.palette ?? 'default'][props.paletteColor ?? 'text']};
@@ -34,13 +34,13 @@ export default (props: Props) => {
   const { theme } = useContext(ThemeContext);
   
   return (
-    <Text
+    <Paragraph
       theme={theme}
       align={align}
       palette={palette}
       paletteColor={paletteColor}
     >
       {children}
-    </Text>
+    </Paragraph>
   );
 }

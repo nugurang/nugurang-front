@@ -4,9 +4,10 @@ import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import CenterizedContainer from '@/compositions/container/CenterizedContainer';
-import Text from '@/components/text/Text';
 import { WithDefaultServerSideProps, WithDefaultServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import { GetServerSidePropsContext } from 'next/types';
+import Header2 from '@/components/text/Header2';
+import Paragraph from '@/components/text/Paragraph';
 
 export const getServerSideProps = WithDefaultServerSideProps((
   context: GetServerSidePropsContext,
@@ -44,12 +45,12 @@ export default ({ statusCode }: PageProps) => {
         horizontalPaddingLevel={2}
         verticalPaddingLevel={2}
       >
-        <Text variant='h2' align='center'>
+        <Header2 align='center'>
           {`Error: ${statusCode}`}
-        </Text>
-        <Text variant='p' align='center'>
+        </Header2>
+        <Paragraph align='center'>
           {commonTranslation('sentences.unexpected_error_occurred')}
-        </Text>
+        </Paragraph>
         <ButtonGroup>
           <Button
             fullWidth

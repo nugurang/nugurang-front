@@ -6,13 +6,14 @@ import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import CenterizedContainer from '@/compositions/container/CenterizedContainer';
-import Text from '@/components/text/Text';
 import Textfield from '@/components/input/Textfield';
-import { PlainObject, wallpaperSourceUrl } from '@/constants/common';
+import { PlainObject, getImageUrl } from '@/constants/common';
 import UserAlreadyExistsError from '@/errors/network/UserAlreadyExistsError';
 import { WithCheckOAuth2ServerSideProps, WithCheckOAuth2ServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import { createUser } from '@/services/api/user';
 import { oAuth2Login } from '@/services/oAuth2/index';
+import Header2 from '@/components/text/Header2';
+import Paragraph from '@/components/text/Paragraph';
 
 export const getServerSideProps = WithCheckOAuth2ServerSideProps();
 
@@ -59,7 +60,7 @@ export default ({ currentOAuth2User }: PageProps) => {
 
   return (
     <CenterizedContainer
-      wallpaperUrl={wallpaperSourceUrl}
+      wallpaperUrl={getImageUrl({ keyword: 'welcome' })}
     >
       <Box
         width='400px'
@@ -68,12 +69,12 @@ export default ({ currentOAuth2User }: PageProps) => {
         verticalPaddingLevel={2}
       >
         <Box>
-          <Text variant='h2' align='center'>
+          <Header2 align='center'>
             {commonTranslation('sentences.welcome')}
-          </Text>
-          <Text variant='p' align='center'>
+          </Header2>
+          <Paragraph align='center'>
             {commonTranslation('sentences.please_check_your_user_data')}
-          </Text>
+          </Paragraph>
         </Box>
         <Textfield
           id='name'

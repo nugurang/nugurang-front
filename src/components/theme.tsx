@@ -128,8 +128,8 @@ const darkTheme = {
       high: '#8561c5',
       low: '#482880',
       background: '#f8f8f8',
-      text: '#000',
-      contrastText: '#fff',
+      text: '#fff',
+      contrastText: '#000',
     },
     error: {
       base: '#000',
@@ -139,8 +139,8 @@ const darkTheme = {
       high: '#761811',
       low: '#ef9d97',
       background: '#080808',
-      text: '#000',
-      contrastText: '#fff',
+      text: '#fff',
+      contrastText: '#000',
     },
     default: {
       base: '#000',

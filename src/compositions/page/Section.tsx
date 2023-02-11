@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import Text from '@/components/text/Text';
 import Card from '@/components/paper/Card';
+import Header2 from '@/components/text/Header2';
 
 const Section = styled.section`
 `;
@@ -25,7 +26,7 @@ export default (props: Props) => {
       <Section>
         {title && (
           <TitleWrap>
-            <Text variant='h2'>{title}</Text>
+            <Header2>{title}</Header2>
           </TitleWrap>
         )}
         {children}

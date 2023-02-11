@@ -8,8 +8,8 @@ import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import { getAllBoards } from '@/services/api/board';
 import type { Board } from '@/services/api/board';
-import UnorderedList from '@/components/list/UnorderedList';
 import Article from '@/compositions/page/Article';
+import GridList from '@/components/layout/GridList';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -56,9 +56,7 @@ export default ({ currentUser, boardList, eventBoardList }: PageProps) => {
     <Container currentUser={currentUser}>
       <Section title={boardsTranslation('words.boards')}>
         <Article>
-          <UnorderedList
-            gap={'16px'}
-          >
+          <GridList stage={3} minWidth='240px'>
             {boardList.map((board: Board) => (
               <BoardListItem
                 key={board.id}
@@ -66,7 +64,7 @@ export default ({ currentUser, boardList, eventBoardList }: PageProps) => {
                 onClick={() => onClickBoardListItem(board.id)}
               />
             ))}
-          </UnorderedList>
+          </GridList>
         </Article>
       </Section>
     </Container>

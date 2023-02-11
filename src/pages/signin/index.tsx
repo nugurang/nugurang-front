@@ -4,12 +4,13 @@ import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import CenterizedContainer from '@/compositions/container/CenterizedContainer';
-import Text from '@/components/text/Text';
 import { WithDefaultServerSideProps } from '@/hocs/WithServerSideProps';
 import { oAuth2Login } from '@/services/oAuth2/index';
-import { wallpaperSourceUrl } from '@/constants/common';
+import { getImageUrl } from '@/constants/common';
 import { useState } from 'react';
 import { OAuth2Provider } from '@/constants/oAuth2';
+import Header1 from '@/components/text/Header1';
+import Paragraph from '@/components/text/Paragraph';
 
 export const getServerSideProps = WithDefaultServerSideProps();
 
@@ -29,7 +30,7 @@ export default () => {
 
   return (
     <CenterizedContainer
-      wallpaperUrl={wallpaperSourceUrl}
+      wallpaperUrl={getImageUrl({ keyword: 'crowd' })}
     >
       <Box
         width='400px'
@@ -37,12 +38,12 @@ export default () => {
         horizontalPaddingLevel={2}
         verticalPaddingLevel={2}
       >
-        <Text variant='h1' align='center'>
+        <Header1 align='center'>
           nugurang
-        </Text>
-        <Text variant='p' align='center'>
+        </Header1>
+        <Paragraph align='center'>
           {commonTranslation('sentences.please_sign_in')}
-        </Text>
+        </Paragraph>
         <ButtonGroup direction='vertical'>
           <Button
             fullWidth

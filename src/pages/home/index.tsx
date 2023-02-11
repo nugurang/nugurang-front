@@ -4,7 +4,6 @@ import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import Container from '@/compositions/container/Container';
 import Section from '@/compositions/page/Section';
-import { wallpaperSourceUrl } from '@/constants/common';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import Article from '@/compositions/page/Article';
 

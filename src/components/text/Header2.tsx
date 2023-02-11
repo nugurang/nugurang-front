@@ -3,17 +3,20 @@ import styled from '@emotion/styled';
 import { PaletteKey, PaletteColorKey, ThemeContext, Theme } from '../theme';
 import { TextAlignKey } from './common';
 
-interface TextProps {
+interface Header2Props {
   theme?: Theme
   children?: string | null;
   align?: TextAlignKey;
   palette?: PaletteKey;
   paletteColor?: PaletteColorKey;
 }
-const Text = styled.span<TextProps>`
+const Header2 = styled.h2<Header2Props>`
   ${props => `
     ${(props.align ? `text-align: ${props.align};` : '')}
     color: ${props.theme.palette[props.palette ?? 'default'][props.paletteColor ?? 'text']};
+  
+    font-size: 24px;
+    font-weight: bold;
   `}
 `;
 
@@ -34,13 +37,13 @@ export default (props: Props) => {
   const { theme } = useContext(ThemeContext);
   
   return (
-    <Text
+    <Header2
       theme={theme}
       align={align}
       palette={palette}
       paletteColor={paletteColor}
     >
       {children}
-    </Text>
+    </Header2>
   );
 }

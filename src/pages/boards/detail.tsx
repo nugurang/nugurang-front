@@ -6,10 +6,12 @@ import Section from '@/compositions/page/Section';
 import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import type { Board } from '@/services/api/board';
-import { getAllThreadsByBoardId, Thread } from '@/services/api/thread';
+import { getBoard } from '@/services/api/board';
+import { Thread } from '@/services/api/thread';
 import InvalidQueryParamsError from '@/errors/common/InvalidQueryParamsError';
 import Article from '@/compositions/page/Article';
 import UnorderedList from '@/components/list/UnorderedList';
+import BoardBanner from '@/compositions/board/BoardBanner';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -18,15 +20,15 @@ export const getServerSideProps = WithCheckUserServerSideProps(async (
   try {
     const { boardId } = context.query;
     if(!boardId) throw new InvalidQueryParamsError;
-    const getAllThreadsByBoardIdResponse = await getAllThreadsByBoardId({
+    const getBoardResponse = await getBoard({
       context,
       boardId: boardId as string,
     });
     return {
       props: {
         ...props,
-        board: getAllThreadsByBoardIdResponse.data.board,
-        threadList: getAllThreadsByBoardIdResponse.data.threadList,
+        board: getBoardResponse.data.board,
+        threadList: getBoardResponse.data.threadList,
       },
     };
   } catch(err) {
@@ -60,7 +62,8 @@ export default ({ currentUser, board, threadList }: PageProps) => {
 
   return (
     <Container currentUser={currentUser}>
-      <Section title={boardsTranslation(board.i18nKey)}>
+      <BoardBanner board={board} />
+      <Section title={boardsTranslation(`boards.${board.i18nKey}`)}>
         <Article>
           <UnorderedList
             gap={'16px'}

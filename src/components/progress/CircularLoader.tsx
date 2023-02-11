@@ -65,7 +65,7 @@ export default (props: Props) => {
     palette,
     paletteColor,
     show,
-    size
+    size,
   } = props;
   const { theme } = useContext(ThemeContext);
   const defaultPalette = 'primary';

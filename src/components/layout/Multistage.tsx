@@ -14,9 +14,10 @@ const MultistageOuterWrap = styled.div<MultistageOuterWrapProps>`
     justify-content: spread-evenly;
     gap: ${props.gap};
     width: 100%;
-    flex-basis: ${props.minWidth};
+    
     &>* {
       flex-grow: 1;
+      ${props.minWidth ? `min-width: ${props.minWidth};` : ''}
     }
   `)}
 `;
