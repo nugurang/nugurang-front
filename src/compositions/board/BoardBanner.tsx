@@ -20,6 +20,7 @@ export default (props: Props) => {
     <Banner
       imageUrl={board.imageUrl}
       title={boardsTranslation(`boards.${board.i18nKey}`)}
+      backButton
     >
       <Paragraph palette='default' align='right'>
       {`${boardsTranslation(`boards.${board.i18nKey}`)} Brief Info Here`}

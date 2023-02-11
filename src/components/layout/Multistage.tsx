@@ -17,7 +17,7 @@ const MultistageOuterWrap = styled.div<MultistageOuterWrapProps>`
     
     &>* {
       flex-grow: 1;
-      ${props.minWidth ? `min-width: ${props.minWidth};` : ''}
+      ${props.minWidth ? `flex-basis: ${props.minWidth};` : ''}
     }
   `)}
 `;
@@ -25,7 +25,7 @@ const MultistageOuterWrap = styled.div<MultistageOuterWrapProps>`
 interface Props {
   children: ReactNode | string;
   gap?: string;
-  minWidth?: string;
+  minWidth: string;
   stage?: number;
 }
 export default (props: Props) => {
