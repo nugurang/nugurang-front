@@ -17,11 +17,11 @@ export default ({ currentUser }: PageProps) => {
 
   return (
     <Container currentUser={currentUser}>
-      <Section title={commonTranslation('sentences.hello_world')}>
+      <Section backButton={false} title={commonTranslation('sentences.hello_world')}>
         <Article title={commonTranslation('sentences.hello_world')}>
         </Article>
       </Section>
-      <Section>
+      <Section backButton={false}>
         <Article title={devTranslation('words.developer_menu')}>
           <ButtonGroup direction='horizontal'>
             <Button isLoading onClick={() => router.push('/dev/ping')}>{devTranslation('words.ping')}</Button>

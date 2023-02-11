@@ -9,6 +9,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   minWidth?: string;
   palette?: PaletteKey;
+  setPadding?: boolean;
 }
 const Button = styled.button<ButtonProps>`
   display: flex;
@@ -88,13 +89,17 @@ const Button = styled.button<ButtonProps>`
     }};
   }
   padding: ${props => {
-    switch(props.fillVariant) {
-      case 'text':
-        return '12px 0';
-      case 'outlined':
-      case 'filled':
-      default:
-        return '12px 24px';
+    if(props.setPadding) {
+      switch(props.fillVariant) {
+        case 'text':
+          return '12px 0';
+        case 'outlined':
+        case 'filled':
+        default:
+          return '12px 24px';
+      }
+    } else {
+      return '4px 8px';
     }
   }};
 `;
@@ -131,6 +136,7 @@ interface Props {
   isLoading?: boolean;
   minWidth?: string;
   palette?: PaletteKey;
+  setPadding?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {
@@ -141,6 +147,7 @@ export default (props: Props) => {
     isLoading,
     minWidth,
     palette,
+    setPadding,
     onClick
   } = props;
   const { theme } = useContext(ThemeContext);
@@ -161,8 +168,9 @@ export default (props: Props) => {
       theme={theme}
       fullWidth={fullWidth}
       fillVariant={fillVariant}
-      minWidth={minWidth ?? '120px'}
+      minWidth={setPadding ? (minWidth ?? '120px') : '0'}
       palette={palette}
+      setPadding={setPadding ?? true}
       onClick={onClick}
     >
       <ButtonIconWrap>

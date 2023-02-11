@@ -5,14 +5,17 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { appWithTranslation } from 'next-i18next';
 import { ApolloProvider } from '@apollo/client';
-import CssBaseline from '@mui/material/CssBaseline';
-import GlobalStyles from '@mui/material/GlobalStyles';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { Global, css } from '@emotion/react'
+import { library, config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import GraphQlApiManager from '@/utilities/network/graphQl';
 import globalStyles from '@/styles/global';
 import { ThemeProvider } from '@/components/theme';
+
+// Prevent fontawesome from dynamically adding its css since we are going to include it manually
+config.autoAddCss = false;
 
 library.add(fab);
 library.add(fas);
@@ -39,8 +42,9 @@ const RootApp = ({ Component, pageProps }: AppProps) => {
     </Head>
     <ApolloProvider client={GraphQlApiManager.getBackendApolloClient()}>
       <ThemeProvider>
-        <CssBaseline />
-        <GlobalStyles styles={globalStyles} />
+      <Global
+        styles={globalStyles}
+      />
         <Component {...pageProps} />
       </ThemeProvider>
     </ApolloProvider>

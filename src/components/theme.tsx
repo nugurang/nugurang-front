@@ -31,6 +31,7 @@ interface ThemePaletteColor {
   background: string;
   text: string;
   contrastText: string;
+  transparent: string;
 }
 interface ThemePalette {
   primary: ThemePaletteColor;
@@ -91,6 +92,7 @@ const lightTheme = {
       background: '#f8f8f8',
       text: '#000',
       contrastText: '#fff',
+      transparent: '#000f',
     },
     error: {
       base: '#fff',
@@ -102,6 +104,7 @@ const lightTheme = {
       background: '#f8f8f8',
       text: '#000',
       contrastText: '#fff',
+      transparent: '#000f',
     },
     default: {
       base: '#fff',
@@ -113,6 +116,7 @@ const lightTheme = {
       background: '#f8f8f8',
       text: '#000',
       contrastText: '#000',
+      transparent: '#000f',
     },
   },
 };
@@ -130,6 +134,7 @@ const darkTheme = {
       background: '#f8f8f8',
       text: '#fff',
       contrastText: '#000',
+      transparent: '#000f',
     },
     error: {
       base: '#000',
@@ -141,6 +146,7 @@ const darkTheme = {
       background: '#080808',
       text: '#fff',
       contrastText: '#000',
+      transparent: '#000f',
     },
     default: {
       base: '#000',
@@ -152,6 +158,7 @@ const darkTheme = {
       background: '#080808',
       text: '#fff',
       contrastText: '#fff',
+      transparent: '#000f',
     },
   },
 };

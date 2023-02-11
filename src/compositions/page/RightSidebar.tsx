@@ -19,6 +19,7 @@ export default (props: Props) => {
       <Card>
         {Array.from(Array(50).keys()).map((count: number) => (
           <Box
+            key={count}
             horizontalPaddingLevel={2}
             verticalPaddingLevel={2}
           >
