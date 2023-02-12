@@ -9,13 +9,13 @@ interface BoxProps {
   centerizeVertically?: boolean;
   horizontalPaddingLevel?: BoxPaddingLevel;
   verticalPaddingLevel?: BoxPaddingLevel;
-  gap?: string;
   height?: string;
   width?: string;
   maxHeight?: string;
   maxWidth?: string;
   minHeight?: string;
   minWidth?: string;
+  gap?: string;
 }
 const Box = styled.div<BoxProps>`
   ${props => (`

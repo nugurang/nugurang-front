@@ -2,8 +2,6 @@ import { ReactNode, useContext, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Header, { headerSpacerHeight } from '../page/Header';
 import type { User } from '@/services/api/user';
-import LeftSidebar from '../page/LeftSidebar';
-import RightSidebar from '../page/RightSidebar';
 import { Theme, ThemeContext } from '@/components/theme';
 
 const ContainerOuterWrap = styled.div`
@@ -70,53 +68,6 @@ const HeaderSpacer = styled.div<HeaderSpacerProps>`
   width: 100%;
 `;
 
-const ContainerInnerWrap = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  &>*:last-child {
-    flex-grow: 1;
-  }
-`;
-
-const ContentBase = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const Content = styled.div`
-  flex-shrink: 1;
-  flex-basis: 768px;
-  position: relative;
-  overflow: scroll;
-  &::-webkit-scrollbar{
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-`;
-
-const SidebarWrap = styled.div`
-  display: none;
-  @media (min-width: 1280px) {
-    display: flex;
-    flex-shrink: 1;
-    flex-basis: 256px;
-    position: relative;
-    overflow: scroll;
-    font-size: 50px;
-  }
-
-  &::-webkit-scrollbar{
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-`;
-
 interface Props {
   children: ReactNode | string;
   currentUser?: User;
@@ -161,20 +112,8 @@ export default (props: Props) => {
         isLoaded={wallpaperImage.isLoaded}
         src={wallpaperImage.isLoaded ? wallpaperImage.url : undefined}
       />
-      <ContainerInnerWrap>
-        <HeaderSpacer show={showHeader ?? true} />
-        <ContentBase>
-          <SidebarWrap>
-            <LeftSidebar />
-          </SidebarWrap>
-          <Content>
-            {children}
-          </Content>
-          <SidebarWrap>
-            <RightSidebar />
-          </SidebarWrap>
-        </ContentBase>
-      </ContainerInnerWrap>
+      <HeaderSpacer show={showHeader ?? true} />
+      {children}
     </ContainerOuterWrap>
   );
 }

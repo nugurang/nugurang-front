@@ -13,9 +13,11 @@ import { useContext, useState } from 'react';
 import Box from '@/components/layout/Box';
 import Dialog from '../common/Dialog';
 import ButtonGroup from '@/components/button/ButtonGroup';
+import HeaderLogo from './HeaderLogo';
+import Icon from '@/components/graphic/Icon';
 
 export const headerHeight = '60px';
-export const headerSpacerHeight = '72px';
+export const headerSpacerHeight = '76px';
 
 interface HeaderOuterWrapProps {
   theme: Theme;
@@ -29,7 +31,37 @@ const HeaderOuterWrap = styled.div<HeaderOuterWrapProps>`
   @media (min-width: 1280px) {
     max-width: 1280px;
   }
-  margin: 0 auto;
+  margin: 16px auto;
+`;
+
+interface HeaderBackgroundColorProps {
+  theme: Theme;
+}
+const HeaderBackgroundColor = styled.div<HeaderBackgroundColorProps>`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: ${props => props.theme.palette.default.base};
+  opacity: 0.5;
+`;
+
+interface HeaderBackdropProps {
+  theme: Theme;
+}
+const HeaderBackdrop = styled.div<HeaderBackdropProps>`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${props => props.theme.palette.default.low};
+  border-radius: 8px;
 `;
 
 interface HeaderInnerWrapProps {
@@ -41,13 +73,16 @@ const HeaderInnerWrap = styled.div<HeaderInnerWrapProps>`
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   max-height: ${headerHeight};
-  margin: 16px 8px 8px 8px;
-  background-color: ${props => props.theme.palette.default.base};
-  border-radius: 8px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  margin: 0 8px;
 `;
+
 const HeaderContentLeft = styled.div`
   display: flex;
   align-items: center;
@@ -58,6 +93,7 @@ const HeaderContentLeft = styled.div`
     margin-left: 4px;
   }
 `;
+
 const HeaderContentRight = styled.div`
   display: flex;
   align-items: center;
@@ -70,10 +106,12 @@ const HeaderContentRight = styled.div`
 
 interface Props {
   show?: boolean;
+  backButton?: boolean;
   currentUser?: User;
 }
 export default (props: Props) => {
   const {
+    backButton = true,
     currentUser,
   } = props;
   const router = useRouter();
@@ -83,6 +121,10 @@ export default (props: Props) => {
   const [isLogoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
   const [isLogoutOngoing, setLogoutOngoing] = useState<boolean>(false);
 
+  const handleClickBackButton = () => router.back();
+  const handleClickHeaderLogo = () => {
+    router.push('/');
+  };
   const handleClickLogoutButton = () => {
     setLogoutModalOpen(true);
   };
@@ -97,15 +139,26 @@ export default (props: Props) => {
   return (
     <>
       <HeaderOuterWrap theme={theme}>
+        <HeaderBackgroundColor theme={theme}/>
+        <HeaderBackdrop theme={theme}/>
         <HeaderInnerWrap theme={theme}>
           <HeaderContentLeft>
-            <Button
-              fillVariant='text'
-              palette='primary'
-              onClick={() => router.push('/')}
-            >
-              nugurang(&alpha;lpha)
-            </Button>
+            {backButton && (
+              <ButtonGroup>
+                {backButton && (
+                  <Button
+                    setPadding={false}
+                    fillVariant='text'
+                    onClick={handleClickBackButton}
+                  >
+                    <Icon type='fas' keyword='arrow-left' />
+                  </Button>
+                )}
+              </ButtonGroup>
+            )}
+            <HeaderLogo
+              onClick={handleClickHeaderLogo}
+            />
           </HeaderContentLeft>
           <HeaderContentRight>
             <NavigationButtonGroup />

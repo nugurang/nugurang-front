@@ -10,6 +10,9 @@ import Article from '@/compositions/page/Article';
 import UserDashboard from '@/compositions/user/UserDashboard';
 import Dialog from '@/compositions/common/Dialog';
 import { useState } from 'react';
+import Page from '@/compositions/page/Page';
+import Sidebar from '@/compositions/page/Sidebar';
+import Main from '@/compositions/page/Main';
 
 export const getServerSideProps = WithCheckUserServerSideProps();
 
@@ -33,14 +36,19 @@ export default ({ currentUser }: PageProps) => {
 
   return (
     <Container currentUser={currentUser}>
-      <Section title={commonTranslation('words.my_account')}>
-        <Article>
-          <UserDashboard
-            user={currentUser}
-            onClickLogoutButton={handleClickLogoutButton}
-          />
-        </Article>
-      </Section>
+      <Page>
+        <Main>
+          <Section title={commonTranslation('words.my_account')}>
+            <Article>
+              <UserDashboard
+                user={currentUser}
+                onClickLogoutButton={handleClickLogoutButton}
+              />
+            </Article>
+          </Section>
+        </Main>
+        <Sidebar>Right</Sidebar>
+      </Page>
       <Dialog
         open={isLogoutModalOpen}
         title={commonTranslation('words.sign_out')}

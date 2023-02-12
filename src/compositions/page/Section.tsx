@@ -8,6 +8,13 @@ import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
 
 const Section = styled.section`
+  margin-top: 16px;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 16px;
+  }
 `;
 
 const SectionHeader = styled.div`
@@ -25,15 +32,15 @@ interface Props {
 export default (props: Props) => {
   const {
     children,
-    backButton = true,
+    backButton,
     title,
   } = props;
   const router = useRouter();
   const handleClickBackButton = () => router.back();
 
   return (
-    <Card setMargin={true}>
-      <Section>
+    <Section>
+      <Card>
         {(backButton || title) && (
           <SectionHeader>
             {backButton && (
@@ -55,7 +62,7 @@ export default (props: Props) => {
           </SectionHeader>
         )}
         {children}
-      </Section>
-    </Card>
+      </Card>
+    </Section>
   );
 }

@@ -4,12 +4,14 @@ import { useTranslation } from 'next-i18next';
 import BoardListItem from '@/compositions/board/BoardListItem';
 import Container from '@/compositions/container/Container';
 import Section from '@/compositions/page/Section';
-import Text from '@/components/text/Text';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import { getAllBoards } from '@/services/api/board';
 import type { Board } from '@/services/api/board';
 import Article from '@/compositions/page/Article';
 import GridList from '@/components/layout/GridList';
+import Page from '@/compositions/page/Page';
+import Sidebar from '@/compositions/page/Sidebar';
+import Main from '@/compositions/page/Main';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -54,19 +56,25 @@ export default ({ currentUser, boardList, eventBoardList }: PageProps) => {
 
   return (
     <Container currentUser={currentUser}>
-      <Section title={boardsTranslation('words.boards')}>
-        <Article>
-          <GridList stage={3} minWidth='240px'>
-            {boardList.map((board: Board) => (
-              <BoardListItem
-                key={board.id}
-                board={board}
-                onClick={() => onClickBoardListItem(board.id)}
-              />
-            ))}
-          </GridList>
-        </Article>
-      </Section>
+      <Page>
+        <Sidebar>Left</Sidebar>
+        <Main>
+          <Section title={boardsTranslation('words.boards')}>
+            <Article>
+              <GridList stage={3} minWidth='240px'>
+                {boardList.map((board: Board) => (
+                  <BoardListItem
+                    key={board.id}
+                    board={board}
+                    onClick={() => onClickBoardListItem(board.id)}
+                  />
+                ))}
+              </GridList>
+            </Article>
+          </Section>
+        </Main>
+        <Sidebar>Right</Sidebar>
+      </Page>
     </Container>
   );
 };
