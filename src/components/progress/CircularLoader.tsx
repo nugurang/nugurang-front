@@ -1,6 +1,6 @@
 import { MouseEventHandler, useContext } from 'react';
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
 import { PaletteColorKey, PaletteKey, Theme, ThemeContext } from '../theme';
 
 const circularLoaderWrapKeyframes = keyframes`
@@ -17,13 +17,25 @@ const CircularLoaderWrap = styled.span<CircularLoaderWrapProps>`
   position: relative;
 	height: ${props => props.size};
 	width: ${props => props.size};
-	animation: ${circularLoaderWrapKeyframes} 2s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+
+	opacity: ${props => props.show ? '1' : '0'};
+  transition: opacity 500ms;
+
+  animation-name: ${circularLoaderWrapKeyframes};
+  animation-duration: 2000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+	${props => props.show ? css`
+  ` : css`
+    animation-play-state: paused;
+  `}
 `;
 
 interface CircularLoaderElementProps {
   theme: Theme;
   palette: PaletteKey;
   paletteColor: PaletteColorKey;
+  show: boolean;
   size?: string;
   rotation?: string;
 }
@@ -49,7 +61,15 @@ const CircularLoaderElement = styled.span<CircularLoaderElementProps>`
     width: calc(${props => props.size} / 5);
     background-color: ${props => props.theme.palette[props.palette][props.paletteColor]};
     border-radius: 50%;
-    animation: ${props => createCircularLoaderElementKeyframes(props)} 2s cubic-bezier(0.770, 0.000, 0.175, 1.000) infinite;
+
+    animation-name: ${props => createCircularLoaderElementKeyframes(props)};
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+    ${props => props.show ? css`
+    ` : css`
+      animation-play-state: paused;
+    `}
   }
 `;
 
@@ -73,7 +93,11 @@ export default (props: Props) => {
   const defaultSize = '24px';
 
   return (
-    <CircularLoaderWrap theme={theme} show={show ?? true} size={size ?? defaultSize}>
+    <CircularLoaderWrap
+      theme={theme}
+      show={show ?? true}
+      size={size ?? defaultSize}
+    >
       {Array.from(Array(6).keys()).map((_, index) => (
         <CircularLoaderElement
           key={index}
@@ -81,6 +105,7 @@ export default (props: Props) => {
           palette={palette ?? defaultPalette}
           paletteColor={paletteColor ?? defaultPaletteColor}
           rotation={`${index * 60}deg`}
+          show={show ?? true}
           size={size ?? defaultSize}
         />
       ))}

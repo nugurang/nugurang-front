@@ -35,43 +35,37 @@ export default (props: Props) => {
   const { t: commonTranslation } = useTranslation('common');
 
   return (
-    <>
+    <Card
+      maxHeight='100vh'
+      maxWidth='100vw'
+    >
       <Box
-        horizontalPaddingLevel={1}
-        verticalPaddingLevel={1}
+        flex
+        centerizeHorizontally
+        horizontalPaddingLevel={2}
+        verticalPaddingLevel={2}
+        gap={'8px'}
       >
-        <Card
-          maxHeight='100vh'
-          maxWidth='100vw'
-        >
-          <Box
-            centerizeHorizontally
-            horizontalPaddingLevel={2}
-            verticalPaddingLevel={2}
-            gap={'8px'}
+        <Avatar size={'64px'}/>
+        <UserNameText>{currentUser?.name}</UserNameText>
+        <UserEmailText>{currentUser?.email}</UserEmailText>
+        <ButtonGroup direction='vertical' fullWidth>
+          <Button
+            fillVariant='filled'
+            palette='default'
+            onClick={onClickGoToMyAccountButton}
           >
-            <Avatar size={'64px'}/>
-            <UserNameText>{currentUser?.name}</UserNameText>
-            <UserEmailText>{currentUser?.email}</UserEmailText>
-            <ButtonGroup direction='vertical' fullWidth>
-              <Button
-                fillVariant='filled'
-                palette='default'
-                onClick={onClickGoToMyAccountButton}
-              >
-                {commonTranslation('words.my_account')}
-              </Button>
-              <Button
-                fillVariant='filled'
-                palette='error'
-                onClick={onClickLogoutButton}
-              >
-                {commonTranslation('words.sign_out')}
-              </Button>
-            </ButtonGroup>
-          </Box>
-        </Card>
+            {commonTranslation('words.my_account')}
+          </Button>
+          <Button
+            fillVariant='filled'
+            palette='error'
+            onClick={onClickLogoutButton}
+          >
+            {commonTranslation('words.sign_out')}
+          </Button>
+        </ButtonGroup>
       </Box>
-    </>
+    </Card>
   );
 }

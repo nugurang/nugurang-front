@@ -8,8 +8,6 @@ import Multistage from '@/components/layout/Multistage';
 import Section from '@/compositions/page/Section';
 import Text from '@/components/text/Text';
 import { ThemeContext } from '@/components/theme';
-import Modal from '@/components/layout/Modal';
-import Card from '@/components/paper/Card';
 import Dialog from '@/compositions/common/Dialog';
 
 export default () => {
@@ -44,7 +42,7 @@ export default () => {
             <li><Text>{theme.palette.primary.main}</Text></li>
             <li><Text>{theme.palette.primary.main}</Text></li>
           </GridList>
-          <CircularLoader size='96px'/>
+          <CircularLoader show={isLoading} size='96px'/>
           <Multistage stage={2} minWidth={'40px'} gap='8px'>
             <Text>{theme.palette.primary.main}</Text>
             <Text>{theme.palette.primary.main}</Text>

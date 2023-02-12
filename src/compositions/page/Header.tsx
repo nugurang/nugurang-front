@@ -165,6 +165,7 @@ export default (props: Props) => {
             <Tooltip
               isOpen={isSessionTooltipOpen}
               setOpen={setSessionTooltipOpen}
+              baseDirection='right'
               content={
                 <SessionBriefDashboard
                   currentUser={currentUser}

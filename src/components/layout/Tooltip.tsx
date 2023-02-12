@@ -4,6 +4,7 @@ import { useElementDistanceFromViewport, UseElementDistanceFromViewportDistance 
 import { Theme, ThemeContext } from '../theme';
 
 export type TooltipTrigger = 'click' | 'hover';
+export type TooltipBaseDirection = 'left' | 'right';
 
 interface TooltipOuterWrapProps {
 }
@@ -15,6 +16,7 @@ interface TooltipInnerWrapProps {
   theme: Theme;
   ref?: React.RefObject<HTMLDivElement>;
   show: boolean;
+  baseDirection: TooltipBaseDirection;
   marginNumber?: number;
   distanceFromViewport: UseElementDistanceFromViewportDistance;
 }
@@ -22,8 +24,18 @@ const TooltipInnerWrap = styled.div<TooltipInnerWrapProps>`
   display: ${props => props.show ? 'block' : 'none'};
   position: absolute;
   overflow: visible;
+  ${props => props.baseDirection === 'left' ? `
+    left: 0;
+  ` : ''}
+  ${props => props.baseDirection === 'right' ? `
+    right: 0;
+  ` : ''}
   z-index: ${props => props.theme.zIndex.tooltip};
-  ${props => props.distanceFromViewport.bottom < 0 ? 'bottom: 0;' : 'top: 100%;'}
+
+  ${props => props.distanceFromViewport.bottom < 0
+    ? 'bottom: 0;'
+    : 'top: 100%;'
+  }
   ${true && (props => {
     const prefix = 'transform: translate(';
     const suffix = ');';
@@ -53,6 +65,7 @@ interface Props {
   isOpen: boolean;
   setOpen: (_: boolean) => void;
   content: ReactNode | string;
+  baseDirection?: TooltipBaseDirection;
   delay?: number;
   marginNumber?: number;
   trigger?: TooltipTrigger;
@@ -63,6 +76,7 @@ export default (props: Props) => {
     isOpen,
     setOpen,
     content,
+    baseDirection,
     delay,
     marginNumber,
     trigger = 'click',
@@ -119,6 +133,7 @@ export default (props: Props) => {
         ref={tooltipInnerWrapRef}
         theme={theme}
         show={isOpen}
+        baseDirection={baseDirection ?? 'left'}
         marginNumber={marginNumber}
         distanceFromViewport={distanceFromViewport as UseElementDistanceFromViewportDistance}
       >

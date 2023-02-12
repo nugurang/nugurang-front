@@ -19,6 +19,8 @@ const Button = styled.button<ButtonProps>`
   font-size: 16px;
   cursor: pointer;
   text-align: center;
+  word-break: keep-all;
+
   ${props => (props.fullWidth ? `
     width: 100%;
   ` : '')}

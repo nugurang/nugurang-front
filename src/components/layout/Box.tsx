@@ -15,6 +15,7 @@ interface BoxProps {
   maxWidth?: string;
   minHeight?: string;
   minWidth?: string;
+  flex?: boolean;
   gap?: string;
 }
 const Box = styled.div<BoxProps>`
@@ -23,11 +24,13 @@ const Box = styled.div<BoxProps>`
       margin-top: ${props.gap ?? '16px'};
     }`)
   }
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  ${props => (props.centerizeHorizontally ? 'align-items: center;' : '')}
-  ${props => (props.centerizeVertically ? 'justify-content: center;' : '')}
+  ${props => (props.flex ? `
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    ${props.centerizeHorizontally ? 'align-items: center;' : ''}
+    ${props.centerizeVertically ? 'justify-content: center;' : ''}
+  ` : '')}
   ${props => (props.horizontalPaddingLevel ? `
     padding-left: ${BOX_PADDING_WEIGHT * props.horizontalPaddingLevel}px;
     padding-right: ${BOX_PADDING_WEIGHT * props.horizontalPaddingLevel}px;
@@ -56,6 +59,7 @@ interface Props {
   maxWidth?: string;
   minHeight?: string;
   minWidth?: string;
+  flex?: boolean;
   gap?: string;
 }
 export default (props: Props) => {
@@ -71,6 +75,7 @@ export default (props: Props) => {
     maxWidth,
     minHeight,
     minWidth,
+    flex,
     gap,
   } = props;
 
@@ -86,6 +91,7 @@ export default (props: Props) => {
       maxWidth={maxWidth}
       minHeight={minHeight}
       minWidth={minWidth}
+      flex={flex}
       gap={gap}
     >
       {children}

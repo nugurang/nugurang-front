@@ -3,9 +3,6 @@ import styled from '@emotion/styled';
 import { Theme, ThemeContext } from '../theme';
 import Box, { BoxPaddingLevel } from '../layout/Box';
 
-export type CardMarginLevel = 0 | 1 | 2 | 3;
-const CARD_MARGIN_WEIGHT = 8;
-
 interface CardProps {
   theme: Theme;
   roundCorner?: boolean;
