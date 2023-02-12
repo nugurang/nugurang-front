@@ -4,6 +4,7 @@ import React from 'react';
 import Modal from '../../components/layout/Modal';
 import Card from '../../components/paper/Card';
 import Box from '@/components/layout/Box';
+import Text from '@/components/text/Text';
 
 const DialogTextBox = styled.div`
   padding: 16px 16px 0 16px;
@@ -13,13 +14,15 @@ const DialogButtonBox = styled.div`
   padding: 16px;
 `;
 
-const TitleText = styled.p`
+const TitleTextCss = `
+  display: block;
   font-size: 24px;
   font-weight: bold;
   color: props.theme.default.contrastText;
 `;
 
-const ContentText = styled.p`
+const ContentTextCss = `
+  display: block;
   font-size: 20px;
 `;
 
@@ -54,12 +57,12 @@ export default (props: Props) => {
       >
         <DialogTextBox>
           <Box centerizeHorizontally>
-            <TitleText>
+            <Text css={TitleTextCss}>
               {title}
-            </TitleText>
-            <ContentText>
+            </Text>
+            <Text css={ContentTextCss}>
               {content}
-            </ContentText>
+            </Text>
           </Box>
         </DialogTextBox>
         <DialogButtonBox>

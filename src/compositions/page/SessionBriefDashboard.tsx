@@ -1,19 +1,21 @@
 import { MouseEventHandler } from 'react';
 import { useTranslation } from 'next-i18next';
-import styled from '@emotion/styled';
 import Avatar from '@/components/button/Avatar';
-import Box from '@/components/layout/Box';
 import Button from '@/components/button/Button';
+import Box from '@/components/layout/Box';
+import Text from '@/components/text/Text';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import Card from '@/components/paper/Card';
 import type { User } from '@/services/api/user';
 
-const UserNameText = styled.p`
+const UserNameTextCss = `
+  display: block;
   font-size: 20px;
   font-weight: bold;
 `;
 
-const UserEmailText = styled.p`
+const UserEmailTextCss = `
+  display: block;
   font-size: 16px;
 `;
 
@@ -47,8 +49,8 @@ export default (props: Props) => {
         gap={'8px'}
       >
         <Avatar size={'64px'}/>
-        <UserNameText>{currentUser?.name}</UserNameText>
-        <UserEmailText>{currentUser?.email}</UserEmailText>
+        <Text css={UserNameTextCss}>{currentUser?.name}</Text>
+        <Text css={UserEmailTextCss}>{currentUser?.email}</Text>
         <ButtonGroup direction='vertical' fullWidth>
           <Button
             fillVariant='filled'
