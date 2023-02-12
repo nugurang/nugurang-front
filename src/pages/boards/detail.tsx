@@ -74,7 +74,7 @@ export default ({ currentUser, board, threadList }: PageProps) => {
                 gap={'16px'}
               >
               {threadList.map((thread: Thread) => (
-                <div>
+                <div key={thread.id}>
                   {thread.name}
                 </div>
               ))}

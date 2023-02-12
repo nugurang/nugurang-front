@@ -1,6 +1,6 @@
 import { FALLBACK_IMAGE_URL } from '@/constants/common';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CircularLoader from '../progress/CircularLoader';
 
 interface ImageWrapProps {
@@ -75,6 +75,7 @@ export default (props: Props) => {
     width,
     absolutelytFullSize,
   } = props;
+  const imageRef = useRef<HTMLImageElement>(null);
   const [isLoaded, setLoaded] = useState<boolean>(false);
   const [fallback, setFallback] = useState<boolean>(false);
 
@@ -86,6 +87,9 @@ export default (props: Props) => {
   
   useEffect(() => {
     waitImageLoaded = setTimeout(() => setFallback(true), 5000);
+    if (imageRef.current?.complete) {
+      handleImageLoaded();
+    }
   }, []);
 
   return (
@@ -96,6 +100,7 @@ export default (props: Props) => {
       absolutelytFullSize={absolutelytFullSize}
     >
       <Image
+        ref={imageRef}
         src={fallback ? FALLBACK_IMAGE_URL : src}
         alt={alt}
         height={height}

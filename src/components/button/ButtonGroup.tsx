@@ -23,7 +23,7 @@ const ButtonGroup = styled.div<ButtonGroupProps>`
   ${props => (props.direction === 'horizontal' ? `
     flex-wrap: wrap;
     &>* {
-      flex: 1 1 fit-content;
+      flex: 1 1 0;
       border-radius: 0;
     }
   ` : '')}

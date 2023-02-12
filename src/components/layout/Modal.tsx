@@ -41,8 +41,10 @@ interface ModalInnerWrapProps {
 }
 const ModalInnerWrap = styled.div<ModalInnerWrapProps>`
   ${props => (`
-    max-height: ${props.maxHeight ?? '768px'};
-    max-width: ${props.maxWidth ?? '768px'};
+    ${props.minHeight ? `min-height: ${props.minHeight}` : ''}
+    ${props.minWidth ? `min-width: ${props.minWidth}` : ''}
+    ${props.maxHeight ? `max-height: ${props.maxHeight}` : ''}
+    ${props.maxWidth ? `max-width: ${props.maxWidth}` : ''}
     pointer-events: initial;
   `)}
 `;

@@ -335,6 +335,7 @@ export default () => {
         maxWidth='100vw'
         horizontalPaddingLevel={2}
         verticalPaddingLevel={2}
+        flex
         centerizeHorizontally
       >
         {(!isDone && !isErrorOccurred) && (<>

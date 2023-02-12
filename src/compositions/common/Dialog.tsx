@@ -49,7 +49,9 @@ export default (props: Props) => {
       open={open}
       onClickBackdrop={onClickBackdrop}
     >
-      <Card>
+      <Card
+        minWidth='min(368px, 100vw)'
+      >
         <DialogTextBox>
           <Box centerizeHorizontally>
             <TitleText>

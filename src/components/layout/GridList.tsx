@@ -43,7 +43,7 @@ export default (props: Props) => {
 
   return (
     <GridOuterWrap
-      gap={gap ?? '0px'}
+      gap={gap ?? '4px'}
       stage={stage ?? 1}
       minWidth={minWidth}
     >
