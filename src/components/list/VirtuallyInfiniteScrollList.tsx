@@ -20,7 +20,6 @@ const ListInnerWrap = styled.ul<ListInnerWrapProps>`
   position: relative;
   padding-top: ${props => props.paddingTop}px;
 `;
-// height: ${props => props.height}px;
 
 interface ListItemProps {
   ref?: React.RefObject<HTMLLIElement>;
@@ -32,8 +31,6 @@ interface ListItemProps {
 const ListItem = styled.li<ListItemProps>`
   flex-basis: calc(100% / ${props => props.column});
 `;
-// position: absolute;
-// top: ${props => props.top}px;
 
 interface ListEndObserveeProps {
   ref?: React.RefObject<HTMLDivElement>;
@@ -75,31 +72,24 @@ export default (props: Props) => {
   }, [itemHeightMemo, column]);
 
   const [scrollTop, setScrollTop] = useState(0);
-/*
-  const startIndex = useMemo(() =>  Math.floor(scrollTop / itemHeight), [children, scrollTop, itemHeight])
-  const endIndex = useMemo(() => Math.min(
-    itemsCount,
-    Math.floor((scrollTop + windowHeight) / itemHeight)
-  ), [children, scrollTop, windowHeight, itemHeight])
-*/
 
-const [startIndex, endIndex] = useMemo(() => {
-  let acc = 0;
-  let isStartIndexDecided = false;
-  let startIndex = 0;
-  let endIndex = Number.MAX_SAFE_INTEGER;
-  for(let index = 0; index <= itemsCount; index += column) {
-    if(acc >= scrollTop && !isStartIndexDecided) {
-      startIndex = index;
-      isStartIndexDecided = true;
-    } else if(acc >= scrollTop + windowHeight) {
-      endIndex = Math.min(index);
-      break;
+  const [startIndex, endIndex] = useMemo(() => {
+    let acc = 0;
+    let isStartIndexDecided = false;
+    let startIndex = 0;
+    let endIndex = Number.MAX_SAFE_INTEGER;
+    for(let index = 0; index <= itemsCount; index += column) {
+      if(acc >= scrollTop && !isStartIndexDecided) {
+        startIndex = index;
+        isStartIndexDecided = true;
+      } else if(acc >= scrollTop + windowHeight) {
+        endIndex = Math.min(index);
+        break;
+      }
+      acc += maxItemHeightPerChunkMemo[index / column];
     }
-    acc += maxItemHeightPerChunkMemo[index / column];
-  }
-  return [startIndex, Math.min(itemsCount, endIndex)];
-}, [column, itemHeightMemo, itemsCount, scrollTop, windowHeight]);
+    return [startIndex, Math.min(itemsCount, endIndex)];
+  }, [column, itemHeightMemo, itemsCount, scrollTop, windowHeight]);
   const innerPaddingTop = useMemo(() => {
     const indexOnlyPositive = startIndex - column >= 0 ? startIndex - column : 0;
     return sum(maxItemHeightPerChunkMemo.slice(0, indexOnlyPositive / column));
