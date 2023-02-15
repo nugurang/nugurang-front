@@ -1,9 +1,7 @@
 import { MouseEventHandler } from 'react';
 import styled from '@emotion/styled';
 import ButtonBase from '@/components/base/ButtonBase';
-import VisuallyHidden from '@/components/base/VisuallyHidden';
 import Header1 from '@/components/text/Header1';
-import Icon from '@/components/graphic/Icon';
 
 const HeaderLogoSimplified = styled.h1`
   display: none;

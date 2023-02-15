@@ -13,7 +13,7 @@ interface TextProps {
 }
 const Text = styled.span<TextProps>`
   ${props => `
-    ${(props.align ? `text-align: ${props.align};` : '')}
+    ${props.align ? `text-align: ${props.align};` : ''}
     color: ${props.theme.palette[props.palette ?? 'default'][props.paletteColor ?? 'text']};
     ${props.css ?? ''}
   `}

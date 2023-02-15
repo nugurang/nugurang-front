@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 
-interface ButtonBaseProps {
+interface UnorderedListProps {
   fullWidth?: boolean;
   gap?: string;
 }
-const UnorderedList = styled.ul<ButtonBaseProps>`
+const UnorderedList = styled.ul<UnorderedListProps>`
   ${props => (`
     &>*:not(:first-child) {
       margin-top: ${props.gap ?? '0'};
@@ -25,7 +25,7 @@ export default (props: Props) => {
  
   return (
     <UnorderedList
-    gap={gap}
+      gap={gap}
     >
       {children}
     </UnorderedList>
