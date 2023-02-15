@@ -11,6 +11,7 @@ import Sidebar from '@/compositions/page/Sidebar';
 import Main from '@/compositions/page/Main';
 import VirtuallyInfiniteScrollList from '@/components/list/VirtuallyInfiniteScrollList';
 import { useState } from 'react';
+import { faker } from '@faker-js/faker';
 
 export const getServerSideProps = WithDefaultServerSideProps();
 
@@ -30,14 +31,15 @@ export default () => {
           <Section backButton={false} title={commonTranslation('sentences.hello_world')}>
             <Article title={commonTranslation('sentences.hello_world')}>
               <VirtuallyInfiniteScrollList
-                windowHeight={720}
+                column={3}
                 itemHeight={40}
+                windowHeight={720}
                 onInitialize={onEndOfListReached}
                 onEndOfListReached={onEndOfListReached}
               >
                 {list.map((item, index) => (
                   <div key={index}>
-                    {item}
+                    {`${index}. ${faker.lorem.paragraph()}`}
                   </div>
                 ))}
               </VirtuallyInfiniteScrollList>
