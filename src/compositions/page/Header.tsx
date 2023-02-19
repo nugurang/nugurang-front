@@ -7,7 +7,6 @@ import Tooltip from '@/components/layout/Tooltip';
 import { Theme, ThemeContext } from '@/components/theme';
 import { oAuth2Login, logout } from '@/services/oAuth2/index';
 import SessionBriefDashboard from './SessionBriefDashboard';
-import type { User } from '@/services/api/user';
 import NavigationButtonGroup from './NavigationButtonGroup';
 import { useContext, useState } from 'react';
 import Box from '@/components/layout/Box';
@@ -15,6 +14,7 @@ import Dialog from '../common/Dialog';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import HeaderLogo from './HeaderLogo';
 import Icon from '@/components/graphic/Icon';
+import { UserDTO } from '@/dtos/user';
 
 export const headerHeight = '60px';
 export const headerSpacerHeight = '76px';
@@ -107,7 +107,7 @@ const HeaderContentRight = styled.div`
 interface Props {
   show?: boolean;
   backButton?: boolean;
-  currentUser?: User;
+  currentUser?: UserDTO;
 }
 export default (props: Props) => {
   const {

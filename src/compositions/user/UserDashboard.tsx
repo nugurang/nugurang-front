@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import React from 'react';
 import Avatar from '../../components/button/Avatar';
 import Text from '../../components/text/Text';
-import { User } from '@/services/api/user';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import Button from '@/components/button/Button';
+import { UserDTO } from '@/dtos/user';
 
 const UserDashboard = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ const UserEmailText = styled.p`
 `;
 
 interface Props {
-  user: User;
+  user: UserDTO;
   onClickLogoutButton?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {

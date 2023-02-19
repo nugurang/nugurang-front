@@ -1,12 +1,11 @@
 import { MouseEventHandler, useContext } from 'react';
 import { useTranslation } from 'next-i18next';
-import Card from '@/components/paper/Card';
-import type { Board } from '@/services/api/board';
 import Paragraph from '@/components/text/Paragraph';
 import Banner from '../common/Banner';
+import { BoardDTO } from '@/dtos/board';
 
 interface Props {
-  board: Board;
+  board: BoardDTO;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {

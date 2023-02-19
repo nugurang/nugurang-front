@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import styled from '@emotion/styled';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/button/ButtonGroup';
-import type { User } from '@/services/api/user';
+import { UserDTO } from '@/dtos/user';
 
 interface NavigationButtonGroupProps {
   show?: boolean;
@@ -17,7 +17,7 @@ const NavigationButtonGroup = styled(ButtonGroup)<NavigationButtonGroupProps>`
 
 interface Props {
   show?: boolean;
-  currentUser?: User;
+  currentUser?: UserDTO;
 }
 export default (props: Props) => {
   const {

@@ -4,20 +4,18 @@ import { useTranslation } from 'next-i18next';
 import Container from '@/compositions/container/Container';
 import Section from '@/compositions/page/Section';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
-import type { Board } from '@/services/api/board';
 import { getBoard } from '@/services/api/board';
-import { Thread } from '@/services/api/thread';
 import InvalidQueryParamsError from '@/errors/common/InvalidQueryParamsError';
 import Article from '@/compositions/page/Article';
-import UnorderedList from '@/components/list/UnorderedList';
 import BoardBanner from '@/compositions/board/BoardBanner';
 import Page from '@/compositions/page/Page';
 import Sidebar from '@/compositions/page/Sidebar';
 import Main from '@/compositions/page/Main';
 import { useCallback, useEffect, useState } from 'react';
 import VirtuallyInfiniteScrollList from '@/components/list/VirtuallyInfiniteScrollList';
-import Card from '@/components/paper/Card';
 import BoardThreadListItem from '@/compositions/board/BoardThreadListItem';
+import { BoardDTO } from '@/dtos/board';
+import { ThreadDTO } from '@/dtos/thread';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -48,15 +46,15 @@ export const getServerSideProps = WithCheckUserServerSideProps(async (
 });
 
 interface PageProps extends WithCheckUserServerSidePropsResponse {
-  board: Board;
-  threadList: Thread[];
+  board: BoardDTO;
+  threadList: ThreadDTO[];
 }
 export default ({ currentUser, board }: PageProps) => {
   const { t: commonTranslation } = useTranslation('common');
   const { t: boardsTranslation } = useTranslation('boards');
   const { t: threadsTranslation } = useTranslation('threads');
   const router = useRouter();
-  const [threadList, setThreadList] = useState<Thread[]>([]);
+  const [threadList, setThreadList] = useState<ThreadDTO[]>([]);
   const [page, setPage] = useState<number>(0);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
@@ -69,7 +67,6 @@ export default ({ currentUser, board }: PageProps) => {
       boardId: board.id,
       pagination: {
         page,
-        pageSize: 10,
       }
     });
     const moreThreadList = getBoardResponse.data.threadList;
@@ -117,7 +114,7 @@ export default ({ currentUser, board }: PageProps) => {
             hasNextPage={hasNextPage}
             onLoadMore={handleLoadMore}
           >
-            {threadList.map((thread: Thread) => (
+            {threadList.map((thread: ThreadDTO) => (
               <BoardThreadListItem
                 key={thread.id}
                 thread={thread}

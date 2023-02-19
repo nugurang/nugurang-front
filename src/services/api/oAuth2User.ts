@@ -3,6 +3,7 @@ import { queryToBackend } from '@/utilities/network/graphQl';
 import ObjectManager from '@/utilities/common/object';
 import { GetServerSidePropsContextAdapter } from '@/constants/common';
 import { OAuth2Provider } from '@/constants/oAuth2';
+import { OAuth2UserDTO } from '@/dtos/user';
 
 export interface GetCurrentOAuth2UserProps extends GetServerSidePropsContextAdapter {}
 interface GetCurrentOAuth2UserResponseRawData {
@@ -10,13 +11,8 @@ interface GetCurrentOAuth2UserResponseRawData {
   name: string;
   email: string;
 }
-export interface OAuth2User {
-  oAuth2Provider: OAuth2Provider;
-  name: string;
-  email: string;
-}
 export interface GetCurrentOAuth2UserResponse {
-  data: OAuth2User
+  data: OAuth2UserDTO
 }
 export const getCurrentOAuth2User = async (props: GetCurrentOAuth2UserProps = {}) => {
   const response: ApolloQueryResult<any> = await queryToBackend({

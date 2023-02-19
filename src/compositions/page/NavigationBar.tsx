@@ -45,7 +45,7 @@ export default (props: Props) => {
 
   return (
     <NavigationBar show={show}>
-      <Card fullSize roundCorner={false}>
+      <Card roundCorner={false}>
         Nv
       </Card>
     </NavigationBar>

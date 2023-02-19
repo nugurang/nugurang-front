@@ -6,7 +6,7 @@ import Box from '@/components/layout/Box';
 import Text from '@/components/text/Text';
 import ButtonGroup from '@/components/button/ButtonGroup';
 import Card from '@/components/paper/Card';
-import type { User } from '@/services/api/user';
+import { UserDTO } from '@/dtos/user';
 
 const UserNameTextCss = `
   display: block;
@@ -20,7 +20,7 @@ const UserEmailTextCss = `
 `;
 
 interface Props {
-  currentUser?: User;
+  currentUser?: UserDTO;
   isLogoutModalOpen: boolean;
   isLogoutOngoing: boolean;
   onClickGoToMyAccountButton?: MouseEventHandler<HTMLButtonElement>;

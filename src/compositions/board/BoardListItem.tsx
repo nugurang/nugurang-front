@@ -4,10 +4,10 @@ import ButtonBase from '@/components/base/ButtonBase';
 import Card from '@/components/paper/Card';
 import ListItem from '@/components/list/ListItem';
 import Text from '@/components/text/Text';
-import type { Board } from '@/services/api/board';
 import Image from '@/components/graphic/Image';
 import styled from '@emotion/styled';
 import { Theme, ThemeContext } from '@/components/theme';
+import { BoardDTO } from '@/dtos/board';
 
 const BoardInnerWrap = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ const BoardTitleWrap = styled.div<BoardTitleWrapProps>`
 `;
 
 interface Props {
-  board: Board;
+  board: BoardDTO;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {

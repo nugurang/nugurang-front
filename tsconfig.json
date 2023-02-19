@@ -30,6 +30,7 @@
       "@/compositions/*": ["compositions/*"],
       "@/constants/*": ["constants/*"],
       "@/contexts/*": ["contexts/*"],
+      "@/dtos/*": ["dtos/*"],
       "@/errors/*": ["errors/*"],
       "@/hocs/*": ["hocs/*"],
       "@/hooks/*": ["hooks/*"],

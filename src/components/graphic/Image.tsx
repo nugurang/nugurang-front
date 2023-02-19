@@ -81,19 +81,20 @@ export default (props: Props) => {
 
   let waitImageLoaded: NodeJS.Timeout | undefined = undefined;
   const handleImageLoaded = useCallback(() => {
-    if(waitImageLoaded) {
-      clearTimeout(waitImageLoaded);
-      waitImageLoaded = undefined;
-    };
+    waitImageLoaded && clearTimeout(waitImageLoaded);
+    waitImageLoaded = undefined;
     setLoaded(true);
   }, [waitImageLoaded]);
   
   useEffect(() => {
-    if (imageRef.current?.complete || waitImageLoaded) {
+    if (imageRef.current?.complete) {
+      waitImageLoaded && clearTimeout(waitImageLoaded);
+      waitImageLoaded = undefined;
       setLoaded(true);
     } else if(!imageRef.current?.complete && !waitImageLoaded) {
-      console.log(imageRef.current)
-      waitImageLoaded = setTimeout(() => setFallback(true), 5000);
+      waitImageLoaded = setTimeout(() => {
+        if(!imageRef.current?.complete) setFallback(true)
+      }, 5000);
     }
   }, [imageRef.current?.complete]);
 

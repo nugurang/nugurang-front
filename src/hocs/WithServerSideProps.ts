@@ -2,14 +2,13 @@
 import type { GetServerSidePropsContext } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getCurrentOAuth2User } from '@/services/api/oAuth2User';
-import type { OAuth2User } from '@/services/api/oAuth2User';
 import { getCurrentUser } from '@/services/api/user';
-import type { User } from '@/services/api/user';
 import { GetServerSidePropsContextAdapter, PlainObject } from '@/constants/common';
 import LoginRequiredError from '@/errors/network/LoginRequiredError';
 import OAuth2UserNotExistError from '@/errors/network/OAuth2UserNotExistError';
 import UserNotExistError from '@/errors/network/UserNotExistError';
 import Logger from '@/utilities/common/logger';
+import { OAuth2UserDTO, UserDTO } from '@/dtos/user';
 
 const commonServerSidePropsResponse = Object.freeze({
   signin: {
@@ -44,8 +43,8 @@ const getServerSideTranslationsResponse = async ({
 );
 
 export interface WithCheckUserServerSidePropsResponse extends GetServerSidePropsContextAdapter {
-  currentOAuth2User: OAuth2User,
-  currentUser: User,
+  currentOAuth2User: OAuth2UserDTO,
+  currentUser: UserDTO,
 }
 export function WithCheckUserServerSideProps(
   getServerSidePropsFunction: Function = defaultGetServerSidePropsFunction
@@ -78,7 +77,7 @@ export function WithCheckUserServerSideProps(
 }
 
 export interface WithCheckOAuth2ServerSidePropsResponse extends GetServerSidePropsContextAdapter {
-  currentOAuth2User: OAuth2User,
+  currentOAuth2User: OAuth2UserDTO,
 }
 export function WithCheckOAuth2ServerSideProps(
   getServerSidePropsFunction: Function = defaultGetServerSidePropsFunction

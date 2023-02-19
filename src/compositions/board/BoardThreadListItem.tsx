@@ -2,34 +2,27 @@ import { MouseEventHandler, useContext } from 'react';
 import { useTranslation } from 'next-i18next';
 import ButtonBase from '@/components/base/ButtonBase';
 import Card from '@/components/paper/Card';
-import Text from '@/components/text/Text';;
+import Image from '@/components/graphic/Image';
+import Text from '@/components/text/Text';
 import styled from '@emotion/styled';
 import { Theme, ThemeContext } from '@/components/theme';
-import type { Thread } from '@/services/api/thread';
+import { ThreadDTO } from '@/dtos/thread';
 
-const ThreadInnerWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
+const ThreadContentWrap = styled.div`
   height: 128px;
+  margin: 8px;
 `;
 
-interface ThreadTitleWrapProps {
-  theme: Theme;
-}
-const ThreadTitleWrap = styled.div<ThreadTitleWrapProps>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 48px;
+const ThreadTextWrap = styled.div`
+  height: 128px;
   width: 100%;
+  &>* {
+    display: block;
+  }
 `;
 
 interface Props {
-  thread: Thread;
+  thread: ThreadDTO;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {
@@ -43,13 +36,22 @@ export default (props: Props) => {
   return (
     <Card>
       <ButtonBase fullWidth onClick={onClick}>
-        <ThreadInnerWrap>
-          <ThreadTitleWrap theme={theme}>
-            <Text palette='default' align='center'>
+        <Image
+          src={thread.firstArticle?.images[0]?.address}
+          alt=''
+          height='128px'
+          width='100%'
+        />
+        <ThreadContentWrap>
+          <ThreadTextWrap>
+            <Text palette='default' weight='bold'>
               {thread.name}
             </Text>
-          </ThreadTitleWrap>
-        </ThreadInnerWrap>
+            <Text palette='default' ellipsis={2}>
+              {thread.firstArticle.content}
+            </Text>
+          </ThreadTextWrap>
+        </ThreadContentWrap>
       </ButtonBase>
     </Card>
   );

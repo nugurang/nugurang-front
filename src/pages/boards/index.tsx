@@ -6,12 +6,12 @@ import Container from '@/compositions/container/Container';
 import Section from '@/compositions/page/Section';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
 import { getAllBoards } from '@/services/api/board';
-import type { Board } from '@/services/api/board';
 import Article from '@/compositions/page/Article';
 import GridList from '@/components/layout/GridList';
 import Page from '@/compositions/page/Page';
 import Sidebar from '@/compositions/page/Sidebar';
 import Main from '@/compositions/page/Main';
+import { BoardDTO } from '@/dtos/board';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -37,8 +37,8 @@ export const getServerSideProps = WithCheckUserServerSideProps(async (
 });
 
 interface PageProps extends WithCheckUserServerSidePropsResponse {
-  boardList: Board[];
-  eventBoardList: Board[];
+  boardList: BoardDTO[];
+  eventBoardList: BoardDTO[];
 }
 export default ({ currentUser, boardList, eventBoardList }: PageProps) => {
   const { t: commonTranslation } = useTranslation('common');
@@ -62,7 +62,7 @@ export default ({ currentUser, boardList, eventBoardList }: PageProps) => {
           <Section title={boardsTranslation('words.boards')}>
             <Article>
               <GridList stage={3} minWidth='240px'>
-                {boardList.map((board: Board) => (
+                {boardList.map((board: BoardDTO) => (
                   <BoardListItem
                     key={board.id}
                     board={board}

@@ -1,16 +1,11 @@
+import produce from 'immer';
 import { ApolloQueryResult, gql } from '@apollo/client';
 import { queryToBackend } from '@/utilities/network/graphQl';
 import { getImageUrl, GetServerSidePropsContextAdapter } from '@/constants/common';
 import { getBoardImageKeyword, getBoardNameI18nKey } from '@/constants/board';
 import { Pagination } from './common';
-import { Thread } from './thread';
-
-export interface Board {
-  id: string;
-  i18nKey: string;
-  isEvent: boolean;
-  imageUrl: string;
-}
+import { BoardDTO } from '@/dtos/board';
+import { ThreadDTO } from '@/dtos/thread';
 
 export interface GetAllBoardsProps extends GetServerSidePropsContextAdapter {}
 interface GetAllBoardsResponseRawListItem {
@@ -19,8 +14,8 @@ interface GetAllBoardsResponseRawListItem {
 }
 export interface GetAllBoardsResponse {
   data: {
-    boardList: Board[];
-    eventBoardList: Board[];
+    boardList: BoardDTO[];
+    eventBoardList: BoardDTO[];
   }
 }
 export const getAllBoards = async (props: GetAllBoardsProps = {}) => {
@@ -69,8 +64,8 @@ interface getBoardResponseRawListItem {
 }
 export interface getBoardResponse {
   data: {
-    board: Board,
-    threadList: Thread[];
+    board: BoardDTO,
+    threadList: ThreadDTO[];
   }
 }
 export const getBoard = async (props: getBoardProps) => {
@@ -81,9 +76,20 @@ export const getBoard = async (props: getBoardProps) => {
         getBoard(id: ${boardId}) {
           id
           name
-          getThreads(page: ${pagination?.page ?? 0}, pageSize: ${pagination?.pageSize ?? 10}) {
+          getThreads(page: ${pagination?.page ?? 0}, pageSize: ${pagination?.pageSize ?? 12}) {
             id
             name
+            firstArticle {
+              user {
+                id
+                name
+              }
+              title
+              content
+              upCount
+              downCount
+              starCount
+            }
           }
         }
       }
@@ -91,16 +97,29 @@ export const getBoard = async (props: getBoardProps) => {
     context: props.context
   });
   const boardRaw = response.data?.getBoard;
-  const board: Board = {
+  const board: BoardDTO = {
     id: boardRaw.id,
     i18nKey: getBoardNameI18nKey(boardRaw.name),
     isEvent: boardRaw.isEvent ?? false,
     imageUrl: getImageUrl({ keyword: getBoardImageKeyword(boardRaw.name) }),
   };
+  const threadList = response.data?.getBoard?.getThreads.map((thread: ThreadDTO) => {
+    const imageUrl = getImageUrl({ keyword: 'test' });
+    return produce(thread,
+      (draft: ThreadDTO) => {
+        draft.firstArticle.images = [
+          {
+            id: '',
+            address: imageUrl,
+          }
+        ];
+      }
+    );
+  });
   return {
     data: {
       board,
-      threadList: response.data?.getBoard?.getThreads ?? [],
+      threadList,
     }
   };
 };
