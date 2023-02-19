@@ -1,6 +1,6 @@
 import { FALLBACK_IMAGE_URL } from '@/constants/common';
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import CircularLoader from '../progress/CircularLoader';
 
 interface ImageWrapProps {
@@ -80,17 +80,22 @@ export default (props: Props) => {
   const [fallback, setFallback] = useState<boolean>(false);
 
   let waitImageLoaded: NodeJS.Timeout | undefined = undefined;
-  const handleImageLoaded = () => {
-    waitImageLoaded && clearTimeout(waitImageLoaded);
+  const handleImageLoaded = useCallback(() => {
+    if(waitImageLoaded) {
+      clearTimeout(waitImageLoaded);
+      waitImageLoaded = undefined;
+    };
     setLoaded(true);
-  };
+  }, [waitImageLoaded]);
   
   useEffect(() => {
-    waitImageLoaded = setTimeout(() => setFallback(true), 5000);
-    if (imageRef.current?.complete) {
-      handleImageLoaded();
+    if (imageRef.current?.complete || waitImageLoaded) {
+      setLoaded(true);
+    } else if(!imageRef.current?.complete && !waitImageLoaded) {
+      console.log(imageRef.current)
+      waitImageLoaded = setTimeout(() => setFallback(true), 5000);
     }
-  }, []);
+  }, [imageRef.current?.complete]);
 
   return (
     <ImageWrap

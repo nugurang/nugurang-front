@@ -27,20 +27,22 @@ const SectionHeader = styled.div`
 interface Props {
   children: ReactNode | string;
   backButton?: boolean;
+  absolutelyFullSize?: boolean;
   title?: string | null;
 }
 export default (props: Props) => {
   const {
     children,
     backButton,
+    absolutelyFullSize,
     title,
   } = props;
   const router = useRouter();
   const handleClickBackButton = () => router.back();
 
   return (
-    <Section>
-      <Card>
+    <Card absolutelyFullSize={absolutelyFullSize}>
+      <Section>
         {(backButton || title) && (
           <SectionHeader>
             {backButton && (
@@ -62,7 +64,7 @@ export default (props: Props) => {
           </SectionHeader>
         )}
         {children}
-      </Card>
-    </Section>
+      </Section>
+    </Card>
   );
 }

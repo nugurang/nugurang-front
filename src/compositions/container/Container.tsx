@@ -5,6 +5,11 @@ import type { User } from '@/services/api/user';
 import { Theme, ThemeContext } from '@/components/theme';
 
 const ContainerOuterWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  &:last-child{
+    flex-grow: 1;
+  }
   position: relative;
   height: 100%;
   width: 100%;
@@ -59,13 +64,17 @@ const HeaderWrap = styled.div<HeaderWrapProps>`
   width: 100%;
   z-index: ${props => props.theme.zIndex.header};
 `;
-interface HeaderSpacerProps {
-  show: boolean;
+
+interface PageWrapProps {
+  showHeader: boolean;
 }
-const HeaderSpacer = styled.div<HeaderSpacerProps>`
-  display: ${props => props.show ? 'block' : 'none'};
-  height: ${headerSpacerHeight};
-  width: 100%;
+const PageWrap = styled.div<PageWrapProps>`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: ${props => props.showHeader ? headerSpacerHeight : 'none'};
 `;
 
 interface Props {
@@ -112,8 +121,9 @@ export default (props: Props) => {
         isLoaded={wallpaperImage.isLoaded}
         src={wallpaperImage.isLoaded ? wallpaperImage.url : undefined}
       />
-      <HeaderSpacer show={showHeader ?? true} />
-      {children}
+      <PageWrap showHeader={showHeader ?? true}>
+        {children}
+      </PageWrap>
     </ContainerOuterWrap>
   );
 }

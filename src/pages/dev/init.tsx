@@ -176,7 +176,7 @@ export default () => {
         mutation: PROGRESSES,
       });
       const eventList = [];
-      for (let i = 0; i < 10; ++i) {
+      for (let i = 0; i < 50; ++i) {
         const createEvent = await mutateToBackend({
           mutation: CREATE_EVENT,
           variables: {
@@ -223,7 +223,7 @@ export default () => {
       }
       const getCommonBoards = await queryToBackend({query: GET_BOARDS_BY_NAMES, variables: {names: COMMON_BOARDS}})
       for (const board of getCommonBoards.data.getBoardsByNames.map(board => board.id)) {
-        for (let i = 0; i < 10; ++i) {
+        for (let i = 0; i < 50; ++i) {
           const threadName = faker.commerce.productName();
           const createThread = await mutateToBackend({
             mutation: CREATE_THREAD,
@@ -268,7 +268,7 @@ export default () => {
       }
       const getEventBoards = await queryToBackend({query: GET_BOARDS_BY_NAMES, variables: {names: EVENT_BOARDS}})
       for (const board of getEventBoards.data.getBoardsByNames.map(board => board.id)) {
-        for (let i = 0; i < 10; ++i) {
+        for (let i = 0; i < 50; ++i) {
           const createThread = await mutateToBackend({
             mutation: CREATE_THREAD,
             variables: {

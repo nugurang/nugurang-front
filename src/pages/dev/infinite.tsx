@@ -1,50 +1,69 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import Button from '@/components/button/Button';
-import ButtonGroup from '@/components/button/ButtonGroup';
 import Container from '@/compositions/container/Container';
-import Section from '@/compositions/page/Section';
 import { WithDefaultServerSideProps } from '@/hocs/WithServerSideProps';
-import Article from '@/compositions/page/Article';
 import Page from '@/compositions/page/Page';
 import Sidebar from '@/compositions/page/Sidebar';
 import Main from '@/compositions/page/Main';
 import VirtuallyInfiniteScrollList from '@/components/list/VirtuallyInfiniteScrollList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
+import Card from '@/components/paper/Card';
 
 export const getServerSideProps = WithDefaultServerSideProps();
 
 export default () => {
   const { t: commonTranslation } = useTranslation('common');
-  const [list, setList] = useState<number[]>([]);
+  const [list, setList] = useState<string[]>([]);
+  const [isEndOfListReached, setEndOfListReached] = useState<boolean>(false);
+  
+  const wait = (timeToDelay: number) => new Promise((resolve) => setTimeout(resolve, timeToDelay));
 
-  const onEndOfListReached = () => {
-    setList(list => [...list, list.length + 1]);
-  }
+  const onLoadMore = async () => {
+    if(list.length <= 50) {
+      await wait(1000);
+      setList(list => [...list,
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+        faker.lorem.paragraph(),
+      ]);
+    } else {
+      setEndOfListReached(_ => true);
+    }
+  };
+
+  useEffect(() => {
+    console.log(list.length)
+    if(list.length >= 50) {
+      setEndOfListReached(true);
+    }
+  }, [list]);
 
   return (
     <Container>
       <Page>
         <Sidebar>Left</Sidebar>
-        <Main>
-          <Section backButton={false} title={commonTranslation('sentences.hello_world')}>
-            <Article title={commonTranslation('sentences.hello_world')}>
-              <VirtuallyInfiniteScrollList
-                column={3}
-                itemHeight={40}
-                windowHeight={720}
-                onInitialize={onEndOfListReached}
-                onEndOfListReached={onEndOfListReached}
-              >
-                {list.map((item, index) => (
-                  <div key={index}>
-                    {`${index}. ${faker.lorem.paragraph()}`}
-                  </div>
-                ))}
-              </VirtuallyInfiniteScrollList>
-            </Article>
-          </Section>
+        <Main fullHeight>
+          <div>Hi there</div>
+          <VirtuallyInfiniteScrollList
+            column={3}
+            isEndOfListReached={isEndOfListReached}
+            onInitialize={onLoadMore}
+            onLoadMore={() => onLoadMore()}
+          >
+            {list.map((item, index) => (
+              <div key={index}>
+                {`${index}. ${item}`}
+              </div>
+            ))}
+          </VirtuallyInfiniteScrollList>
         </Main>
         <Sidebar>Right</Sidebar>
       </Page>

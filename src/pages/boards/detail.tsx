@@ -14,6 +14,10 @@ import BoardBanner from '@/compositions/board/BoardBanner';
 import Page from '@/compositions/page/Page';
 import Sidebar from '@/compositions/page/Sidebar';
 import Main from '@/compositions/page/Main';
+import { useCallback, useEffect, useState } from 'react';
+import VirtuallyInfiniteScrollList from '@/components/list/VirtuallyInfiniteScrollList';
+import Card from '@/components/paper/Card';
+import BoardThreadListItem from '@/compositions/board/BoardThreadListItem';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -30,7 +34,7 @@ export const getServerSideProps = WithCheckUserServerSideProps(async (
       props: {
         ...props,
         board: getBoardResponse.data.board,
-        threadList: getBoardResponse.data.threadList,
+        // threadList: getBoardResponse.data.threadList,
       },
     };
   } catch(err) {
@@ -47,11 +51,48 @@ interface PageProps extends WithCheckUserServerSidePropsResponse {
   board: Board;
   threadList: Thread[];
 }
-export default ({ currentUser, board, threadList }: PageProps) => {
+export default ({ currentUser, board }: PageProps) => {
   const { t: commonTranslation } = useTranslation('common');
   const { t: boardsTranslation } = useTranslation('boards');
   const { t: threadsTranslation } = useTranslation('threads');
   const router = useRouter();
+  const [threadList, setThreadList] = useState<Thread[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+
+  const wait = (timeToDelay: number) => new Promise((resolve) => setTimeout(resolve, timeToDelay));
+
+  const fetchMore = useCallback(async () => {
+    await wait(1000);
+    const getBoardResponse = await getBoard({
+      boardId: board.id,
+      pagination: {
+        page,
+        pageSize: 10,
+      }
+    });
+    const moreThreadList = getBoardResponse.data.threadList;
+    if(moreThreadList.length <= 0) {
+      setHasNextPage(_ => false);
+    } else {
+      setThreadList([ ...threadList, ...moreThreadList ]);
+    }
+    setLoading(_ => false);
+  }, [page, threadList]);
+  
+  useEffect(() => {
+    if (isLoading && hasNextPage) {
+      setPage(prevPage => prevPage + 1);
+      fetchMore();
+    } else {
+      setLoading(_ => false);
+    }
+  }, [isLoading, hasNextPage]);
+
+  const handleLoadMore = () => {
+    setLoading(_ => true);
+  };
 
   const onClickBoardListItem = (boardId: string) =>{
     router.push({
@@ -60,27 +101,29 @@ export default ({ currentUser, board, threadList }: PageProps) => {
         boardId
       },
     });
-  }
+  };
 
   return (
     <Container currentUser={currentUser}>
       <Page>
         <Sidebar>Left</Sidebar>
-        <Main>
-          <BoardBanner board={board} />
-          <Section title={boardsTranslation(`boards.${board.i18nKey}`)}>
-            <Article>
-              <UnorderedList
-                gap={'16px'}
-              >
-              {threadList.map((thread: Thread) => (
-                <div key={thread.id}>
-                  {thread.name}
-                </div>
-              ))}
-              </UnorderedList>
-            </Article>
-          </Section>
+        <Main fullHeight>
+          <VirtuallyInfiniteScrollList
+            listHeader={(
+              <BoardBanner board={board} />
+            )}
+            listItemMinWidthPixel={240}
+            isLoading={isLoading}
+            hasNextPage={hasNextPage}
+            onLoadMore={handleLoadMore}
+          >
+            {threadList.map((thread: Thread) => (
+              <BoardThreadListItem
+                key={thread.id}
+                thread={thread}
+              />
+            ))}
+          </VirtuallyInfiniteScrollList>
         </Main>
         <Sidebar>Right</Sidebar>
       </Page>

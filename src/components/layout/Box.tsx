@@ -5,6 +5,7 @@ export type BoxPaddingLevel = 0 | 1 | 2 | 3;
 const BOX_PADDING_WEIGHT = 8;
 
 interface BoxProps {
+  absolutelyFullSize?: boolean;
   centerizeHorizontally?: boolean;
   centerizeVertically?: boolean;
   horizontalPaddingLevel?: BoxPaddingLevel;
@@ -24,6 +25,15 @@ const Box = styled.div<BoxProps>`
       margin-top: ${props.gap ?? '16px'};
     }`)
   }
+  ${props => `
+    ${props.absolutelyFullSize ? `
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    ` : ''}
+  `}
   ${props => (props.flex ? `
     display: flex;
     position: relative;
@@ -49,6 +59,7 @@ const Box = styled.div<BoxProps>`
 
 interface Props {
   children: ReactNode | string;
+  absolutelyFullSize?: boolean;
   centerizeHorizontally?: boolean;
   centerizeVertically?: boolean;
   horizontalPaddingLevel?: BoxPaddingLevel;
@@ -65,6 +76,7 @@ interface Props {
 export default (props: Props) => {
   const {
     children,
+    absolutelyFullSize,
     centerizeHorizontally,
     centerizeVertically,
     horizontalPaddingLevel,
@@ -81,6 +93,7 @@ export default (props: Props) => {
 
   return (
     <Box
+      absolutelyFullSize={absolutelyFullSize ?? false}
       centerizeHorizontally={centerizeHorizontally ?? false}
       centerizeVertically={centerizeVertically ?? false}
       horizontalPaddingLevel={horizontalPaddingLevel ?? 0}

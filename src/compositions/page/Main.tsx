@@ -1,9 +1,17 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import type { User } from '@/services/api/user';
 
-const Main = styled.main`
+interface MainProps {
+  fullHeight?: boolean;
+}
+const Main = styled.main<MainProps>`
   margin-top: 16px;
+  &>*{
+    margin-top: 16px;
+  }
+  &>*:first-child{
+    margin-top: 0;
+  }
 
   @media (max-width: 1280px) {
     flex-grow: 1;
@@ -12,10 +20,10 @@ const Main = styled.main`
     position: relative;
   }
   @media (min-width: 1280px) {
-    min-width: 768px;
-    max-width: 1280px;
-    flex-grow: 1;
+    flex-basis: 1280px;
     flex-shrink: 1;
+    min-width: 768px;
+    width: 1280px;
     position: relative;
     overflow: scroll;
   }
@@ -30,20 +38,16 @@ const Main = styled.main`
 
 interface Props {
   children: ReactNode | string;
-  currentUser?: User;
-  centerizeHorizontally?: boolean;
-  centerizeVertically?: boolean;
-  showHeader?: boolean;
-  showSidebar?: boolean;
-  wallpaperUrl?: string;
+  fullHeight?: boolean;
 }
 export default (props: Props) => {
   const {
     children,
+    fullHeight,
   } = props;
 
   return (
-    <Main>
+    <Main fullHeight={fullHeight ?? false}>
       {children}
     </Main>
   );

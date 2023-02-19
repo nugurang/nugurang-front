@@ -1,126 +1,188 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import React from 'react';
+import CircularLoader from '../progress/CircularLoader';
 
 interface ListWrapProps {
-  height: number;
+  ref?: React.RefObject<HTMLDivElement>;
+  height?: string;
 }
 const ListWrap = styled.div<ListWrapProps>`
-  height: ${props => props.height}px;
-  width: 100%;
-  overflow-y: scroll;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: scroll;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`;
+
+interface ListHeaderWrapProps {
+  ref?: React.RefObject<HTMLDivElement>;
+  gap?: string;
+}
+const ListHeaderWrap = styled.div<ListHeaderWrapProps>`
+  padding-bottom: ${props => props.gap};
 `;
 
 interface ListInnerWrapProps {
+  gap?: string;
   paddingTop: number;
 }
 const ListInnerWrap = styled.ul<ListInnerWrapProps>`
   display: flex;
   flex-wrap: wrap;
+  gap: ${props => props.gap ?? '0'};
   position: relative;
   padding-top: ${props => props.paddingTop}px;
 `;
 
 interface ListItemProps {
-  ref?: React.RefObject<HTMLLIElement>;
+  ref?: (element: HTMLLIElement | null) => HTMLLIElement | null;
   column: number;
-  width?: number;
-  top: number;
-  height?: number;
+  gap?: string;
 }
 const ListItem = styled.li<ListItemProps>`
-  flex-basis: calc(100% / ${props => props.column});
+  ${props => `
+    flex-grow: 1;
+    flex-basis: calc(${100 / props.column}% - (${props.gap ?? '0'} * (${props.column} - 1) / ${props.column}));
+    max-width: calc(${100 / props.column}% - (${props.gap ?? '0'} * (${props.column} - 1) / ${props.column}));
+  `}
 `;
 
 interface ListEndObserveeProps {
   ref?: React.RefObject<HTMLDivElement>;
 }
 const ListEndObservee = styled.div<ListEndObserveeProps>`
-  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 156px;
   width: 100%;
 `;
 
 interface Props {
+  listHeader?: ReactNode | string;
   children: ReactNode | string;
   column?: number;
-  itemHeight: number;
-  windowHeight: number;
-  onInitialize: () => void;
-  onEndOfListReached: () => void;
+  listHeight?: string;
+  listItemMinWidthPixel?: number;
+  gap?: string;
+  isLoading: boolean;
+  hasNextPage: boolean;
+  onInitialize?: () => void;
+  onLoadMore: () => void;
 }
 export default (props: Props) => {
-  const { 
+  const {
+    listHeader,
     children,
-    column = 1,
-    itemHeight,
-    windowHeight,
+    listHeight,
+    listItemMinWidthPixel,
+    gap = '8px',
+    isLoading,
+    hasNextPage,
     onInitialize,
-    onEndOfListReached,
+    onLoadMore,
   } = props;
 
-  const sum = (list: number[]) => list.reduce((acc, item) => acc + item, 0);
-  const itemsCount = useMemo(() => React.Children.toArray(children).length, [children]);
-  const listItemRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const listEndObserveeRef = useRef<(HTMLDivElement | null)>(null);
+  const [scrollTop, setScrollTop] = useState<number>(0);
   const [itemHeightMemo, setItemHeightMemo] = useState<number[]>([]);
-  const maxItemHeightPerChunkMemo = useMemo(() => {
+  const [maxItemHeightPerChunkMemo, setMaxItemHeightPerChunkMemo] = useState<number[]>([]);
+  const listWrapRef = useRef<(HTMLDivElement | null)>(null);
+  const listHeaderWrapRef = useRef<(HTMLDivElement | null)>(null);
+  const listItemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const listEndObserverRef = useRef<IntersectionObserver>();
+  const listEndObserveeRef = useRef<(HTMLDivElement | null)>(null);
+
+  const [windowHeight, setWindowHeight] = useState<number | undefined>(undefined);
+  const [windowWidth, setWindowWidth] = useState<number | undefined>(undefined);
+
+  const [startIndex, setStartIndex] = useState<number>(0);
+  const [endIndex, setEndIndex] = useState<number>(0);
+  const [column, setColumn] = useState<number>(1);
+  
+  const itemsCount = useMemo(() => React.Children.toArray(children).length, [children]);
+  
+  useEffect(() => {
     const chunkedItemHeightMemo = [];
     for (let index = 0; index < itemHeightMemo.length; index += column) {
       chunkedItemHeightMemo.push(itemHeightMemo.slice(index, index + column));
     }
-    return chunkedItemHeightMemo.map(chunk => Math.max(...chunk));
+    setMaxItemHeightPerChunkMemo(chunkedItemHeightMemo.map(chunk => Math.max(...chunk)));
   }, [itemHeightMemo, column]);
 
-  const [scrollTop, setScrollTop] = useState(0);
+  const innerPaddingTop = useMemo(() => {
+    const indexOnlyPositive = startIndex - column >= 0 ? startIndex - column : 0;
+    return maxItemHeightPerChunkMemo.slice(
+      0,
+      indexOnlyPositive / column
+    ).reduce((acc, item) => acc + item, 0);
+  }, [maxItemHeightPerChunkMemo, itemsCount, startIndex, column]);
 
-  const [startIndex, endIndex] = useMemo(() => {
-    let acc = 0;
+  const onScroll = (e: {
+    currentTarget: {
+      scrollTop: React.SetStateAction<number>;
+    };
+  }) => {
+    setScrollTop(e.currentTarget.scrollTop);
+  };
+
+  useEffect(() => {
+    const measure = () => {
+      if(listWrapRef.current) {
+        setWindowHeight(_ => listWrapRef.current?.clientHeight);
+        setWindowWidth(_ => listWrapRef.current?.clientWidth);
+
+        let newColumn = 1;
+        if(windowWidth && listItemMinWidthPixel) {
+          newColumn = Math.floor(windowWidth / listItemMinWidthPixel);
+        }
+        setColumn(_ => newColumn > 0 ? newColumn : 1);
+      }
+    }
+    measure();
+    window.addEventListener("resize", measure );
+    return () => {
+      window.removeEventListener("resize", measure );
+    };
+  }, [windowWidth, listItemMinWidthPixel]);
+
+  useEffect(() => {
+    const listHeaderWrapHeight = listHeaderWrapRef.current?.clientHeight ?? 0;
+    let acc = listHeaderWrapHeight ?? 0;
     let isStartIndexDecided = false;
-    let startIndex = 0;
+    let nextStartIndex = 0;
     let endIndex = Number.MAX_SAFE_INTEGER;
     for(let index = 0; index <= itemsCount; index += column) {
       if(acc >= scrollTop && !isStartIndexDecided) {
-        startIndex = index;
+        nextStartIndex = index;
         isStartIndexDecided = true;
-      } else if(acc >= scrollTop + windowHeight) {
+      } else if(windowHeight && (acc >= scrollTop + windowHeight)) {
         endIndex = Math.min(index);
         break;
       }
       acc += maxItemHeightPerChunkMemo[index / column];
     }
-    return [startIndex, Math.min(itemsCount, endIndex)];
-  }, [column, itemHeightMemo, itemsCount, scrollTop, windowHeight]);
-  const innerPaddingTop = useMemo(() => {
-    const indexOnlyPositive = startIndex - column >= 0 ? startIndex - column : 0;
-    return sum(maxItemHeightPerChunkMemo.slice(0, indexOnlyPositive / column));
-  }, [itemHeightMemo, itemsCount, startIndex, column]);
-
-  const onScroll = (e) => {
-    setScrollTop(e.currentTarget.scrollTop);
-  };
-
-  let listEndObserver: IntersectionObserver;
-  const onListEndIntersect: IntersectionObserverCallback = (entries) => {
-    entries.forEach((entry) => {
-      if(entry.isIntersecting) {
-        const observee = listEndObserveeRef.current;
-        listEndObserver.disconnect();
-        onEndOfListReached();
-        observee && listEndObserver.observe(observee);
-      }
-    });
-  };
-  const initializeListEndObserver = () => {
-    const observee = listEndObserveeRef.current;
-    listEndObserver = new IntersectionObserver(onListEndIntersect, { threshold: 0 });
-    observee && listEndObserver.observe(observee);
-  };
+    setStartIndex(_ => nextStartIndex);
+    setEndIndex(_ =>  Math.min(itemsCount, endIndex));
+  }, [
+    listWrapRef.current?.clientHeight,
+    column,
+    itemHeightMemo,
+    itemsCount,
+    scrollTop
+  ]);
 
   useEffect(() => {
     const newItemHeightMemo = [...itemHeightMemo];
     for(let index = startIndex; index <= endIndex; index++) {
       if(listItemRefs.current[index]) {
-        const newItemHeight = listItemRefs.current[index].clientHeight;
+        const newItemHeight = listItemRefs.current[index]?.clientHeight ?? 0;
         if(newItemHeight > 0) {
           newItemHeightMemo[index] = newItemHeight;
         }
@@ -130,38 +192,77 @@ export default (props: Props) => {
   }, [listItemRefs, startIndex, endIndex]);
 
   useEffect(() => {
-    initializeListEndObserver();
-    onInitialize();
-  }, []);
+    const listEndObservee = listEndObserveeRef.current;
+    if (!listEndObservee || !hasNextPage) return;
 
+    const onListEndIntersect: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if(entry.isIntersecting && hasNextPage) {
+          onLoadMore();
+        }
+      });
+    };
+
+    listEndObserverRef.current = new IntersectionObserver(onListEndIntersect, { threshold: 0 });
+    listEndObserverRef.current.observe(listEndObservee);
+    return () => {
+      listEndObserverRef.current && listEndObserverRef.current.disconnect();
+    };
+  }, [hasNextPage]);
+
+  useEffect(() => {
+    if(!isLoading
+      && hasNextPage
+      && listEndObserverRef.current
+      && listEndObserveeRef.current
+    ) {
+      listEndObserverRef.current.observe(listEndObserveeRef.current);
+    } else if(isLoading && listEndObserverRef.current) {
+      listEndObserverRef.current.disconnect();
+    }
+  }, [isLoading]);
+  
   return (
     <ListWrap
-      height={windowHeight}
+      ref={listWrapRef}
       onScroll={onScroll}
+      height={listHeight}
     >
+      <ListHeaderWrap
+        ref={listHeaderWrapRef}
+        gap={gap}
+      >
+        {listHeader}
+      </ListHeaderWrap>
       <ListInnerWrap
+        gap={gap}
         paddingTop={innerPaddingTop}
       >
         {React.Children.toArray(children).map((child, index) => (
-          ((index >= startIndex - column) && (index <= endIndex)) ? (
+          ((index >= startIndex - column) && (index <= endIndex)) && (
             <ListItem
               key={index}
               ref={element => listItemRefs.current[index] = element}
               data-index={String(index)}
               column={column}
-              top={index * itemHeight}
-              height={itemHeight}
+              gap={gap}
             >
               {child}
             </ListItem>
           )
-          : <></>
         ))}
       </ListInnerWrap>
       <ListEndObservee
         key='end'
         ref={listEndObserveeRef}
-      />
+      >
+        {isLoading && (
+          <CircularLoader />
+        )}
+        {!hasNextPage && (
+          <div>No more item.</div>
+        )}
+      </ListEndObservee>
     </ListWrap>
   );
 }
