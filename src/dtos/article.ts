@@ -1,6 +1,7 @@
 import { ImageDTO } from "./image";
 
 export interface ArticleDTO {
+  id: string;
   user: {
     id: string;
     name: string;

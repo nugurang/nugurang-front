@@ -80,6 +80,7 @@ export const getBoard = async (props: getBoardProps) => {
             id
             name
             firstArticle {
+              id
               user {
                 id
                 name

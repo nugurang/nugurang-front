@@ -30,7 +30,16 @@ export default ({ currentUser }: PageProps) => {
           <Section backButton={false}>
             <Article title={devTranslation('words.developer_menu')}>
               <ButtonGroup direction='horizontal'>
-                <Button isLoading onClick={() => router.push('/dev/ping')}>{devTranslation('words.ping')}</Button>
+                <Button
+                  icon={{
+                    type: 'fas',
+                    keyword: 'thumbs-up',
+                  }}
+                  isLoading
+                  onClick={() => router.push('/dev/ping')}
+                >
+                  {devTranslation('words.ping')}
+                </Button>
                 <Button palette='error' onClick={() => router.push('/dev/init')}>{devTranslation('words.generate_test_data')}</Button>
                 <Button onClick={() => router.push('/dev/sandbox')}>{devTranslation('words.sandbox')}</Button>
               </ButtonGroup>

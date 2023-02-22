@@ -4,31 +4,27 @@ import { FillVariantKey, PaletteKey, Theme, ThemeContext } from '../theme';
 import CircularLoader from '../progress/CircularLoader';
 import Icon, { IconSourceType } from '../graphic/Icon';
 
-interface ButtonProps {
+interface IconButtonProps {
   theme: Theme;
   fillVariant?: FillVariantKey;
-  fullWidth?: boolean;
-  minWidth?: string;
+  size?: string;
   palette?: PaletteKey;
   setPadding?: boolean;
 }
-const Button = styled.button<ButtonProps>`
+const IconButton = styled.button<IconButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 16px;
+  ${props => `
+    font-size: ${props.size};
+    height: ${props.size};
+    width: ${props.size};
+  `}
+  
   cursor: pointer;
   text-align: center;
-  word-break: keep-all;
 
-  ${props => (props.fullWidth ? `
-    width: 100%;
-  ` : '')}
-  ${props => (props.fillVariant !== 'text' && props.minWidth ? `
-    min-width: ${props.minWidth};
-  ` : '')}
-  
   color: ${props => {
     switch(props.fillVariant) {
       case 'outlined':
@@ -91,38 +87,17 @@ const Button = styled.button<ButtonProps>`
       }
     }};
   }
-  padding: ${props => {
-    if(props.setPadding) {
-      switch(props.fillVariant) {
-        case 'text':
-          return '12px 0';
-        case 'outlined':
-        case 'filled':
-        default:
-          return '12px 24px';
-      }
-    } else {
-      return '4px 8px';
-    }
-  }};
+  padding: 8px;
 `;
 
-interface ButtonIconWrapProps {
-}
-const ButtonIconWrap = styled.div<ButtonIconWrapProps>`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: 8px;
-`;
-
-interface ButtonCircularLoaderWrapProps {
+interface IconButtonCircularLoaderWrapProps {
   show: boolean;
   size: string;
 }
-const ButtonCircularLoaderWrap = styled.div<ButtonCircularLoaderWrapProps>`
+const IconButtonCircularLoaderWrap = styled.div<IconButtonCircularLoaderWrapProps>`
   height: ${props => props.size};
   width: ${props => props.size};
+  margin-right: 8px;
   opacity: 1;
   ${props => !props.show ? `
     width: 1px;
@@ -134,29 +109,22 @@ const ButtonCircularLoaderWrap = styled.div<ButtonCircularLoaderWrapProps>`
 `;
 
 interface Props {
-  icon?: {
-    type?: IconSourceType;
-    keyword: string;
-  }
-  children: ReactNode | string;
-  fullWidth?: boolean;
+  type?: IconSourceType;
+  keyword: string;
   fillVariant?: FillVariantKey;
   isLoading?: boolean;
-  minWidth?: string;
+  size?: string;
   palette?: PaletteKey;
-  setPadding?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 export default (props: Props) => {
   const {
-    icon,
-    children,
-    fullWidth,
+    type,
+    keyword,
     fillVariant,
     isLoading,
-    minWidth,
+    size,
     palette,
-    setPadding,
     onClick
   } = props;
   const { theme } = useContext(ThemeContext);
@@ -173,31 +141,24 @@ export default (props: Props) => {
   }, [fillVariant]);
  
   return (
-    <Button
+    <IconButton
       theme={theme}
-      fullWidth={fullWidth}
       fillVariant={fillVariant}
-      minWidth={`min(${minWidth ?? '120px'}, 100%)`}
+      size={size ?? '48px'}
       palette={palette}
-      setPadding={setPadding ?? true}
       onClick={onClick}
     >
-      <ButtonIconWrap>
-        <ButtonCircularLoaderWrap
+        <IconButtonCircularLoaderWrap
           show={isLoading ?? false}
-          size='16px'
+          size={size ?? '48px'}
         >
           <CircularLoader
-            size='16px'
+            size={size ?? '48px'}
             palette={palette ?? defaultPalette}
             paletteColor={defaultPaletteColor}
           />
-        </ButtonCircularLoaderWrap>
-        {icon && (
-          <Icon type={icon.type} keyword={icon.keyword} size={'16px'} />
-        )}
-      </ButtonIconWrap>
-      <span>{children}</span>
-    </Button>
+        </IconButtonCircularLoaderWrap>
+        <Icon type={type} keyword={keyword} size={`calc(${size ?? '48px'} * 0.4)`} />
+    </IconButton>
   );
 }

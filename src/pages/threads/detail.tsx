@@ -3,33 +3,38 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import Container from '@/compositions/container/Container';
 import { WithCheckUserServerSideProps, WithCheckUserServerSidePropsResponse } from '@/hocs/WithServerSideProps';
-import { getBoard } from '@/services/api/board';
+import { getThread } from '@/services/api/thread';
 import InvalidQueryParamsError from '@/errors/common/InvalidQueryParamsError';
-import BoardBanner from '@/compositions/board/BoardBanner';
+import Article from '@/compositions/page/Article';
+import ThreadBanner from '@/compositions/thread/ThreadBanner';
 import Page from '@/compositions/page/Page';
 import Sidebar from '@/compositions/page/Sidebar';
 import Main from '@/compositions/page/Main';
 import { useCallback, useEffect, useState } from 'react';
 import VirtuallyInfiniteScrollList from '@/components/list/VirtuallyInfiniteScrollList';
-import BoardThreadListItem from '@/compositions/board/BoardThreadListItem';
-import { BoardDTO } from '@/dtos/board';
+import ThreadArticleListItem from '@/compositions/thread/ThreadArticleListItem';
 import { ThreadDTO } from '@/dtos/thread';
+import { ArticleDTO } from '@/dtos/article';
+import ThreadFirstArticle from '@/compositions/thread/ThreadFirstArticle';
+import Card from '@/components/paper/Card';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
   props: WithCheckUserServerSidePropsResponse,
 ) => {
   try {
-    const { boardId } = context.query;
-    if(!boardId) throw new InvalidQueryParamsError;
-    const getBoardResponse = await getBoard({
+    const { threadId } = context.query;
+    if(!threadId) throw new InvalidQueryParamsError;
+    const getThreadResponse = await getThread({
       context,
-      boardId: boardId as string,
+      threadId: threadId as string,
     });
     return {
       props: {
         ...props,
-        board: getBoardResponse.data.board,
+        thread: getThreadResponse.data.thread,
+        firstArticle: getThreadResponse.data.firstArticle,
+        // articleList: getThreadResponse.data.articleList,
       },
     };
   } catch(err) {
@@ -43,15 +48,14 @@ export const getServerSideProps = WithCheckUserServerSideProps(async (
 });
 
 interface PageProps extends WithCheckUserServerSidePropsResponse {
-  board: BoardDTO;
-  threadList: ThreadDTO[];
+  thread: ThreadDTO;
+  firstArticle: ArticleDTO;
 }
-export default ({ currentUser, board }: PageProps) => {
+export default ({ currentUser, thread, firstArticle }: PageProps) => {
   const { t: commonTranslation } = useTranslation('common');
-  const { t: boardsTranslation } = useTranslation('boards');
-  const { t: threadsTranslation } = useTranslation('threads');
+  const { t: articlesTranslation } = useTranslation('articles');
   const router = useRouter();
-  const [threadList, setThreadList] = useState<ThreadDTO[]>([]);
+  const [articleList, setArticleList] = useState<ArticleDTO[]>([]);
   const [page, setPage] = useState<number>(0);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
@@ -60,20 +64,20 @@ export default ({ currentUser, board }: PageProps) => {
 
   const fetchMore = useCallback(async () => {
     await wait(1000);
-    const getBoardResponse = await getBoard({
-      boardId: board.id,
+    const getThreadResponse = await getThread({
+      threadId: thread.id,
       pagination: {
         page,
       }
     });
-    const moreThreadList = getBoardResponse.data.threadList;
-    if(moreThreadList.length <= 0) {
+    const moreArticleList = getThreadResponse.data.articleList;
+    if(moreArticleList.length <= 0) {
       setHasNextPage(_ => false);
     } else {
-      setThreadList([ ...threadList, ...moreThreadList ]);
+      setArticleList([ ...articleList, ...moreArticleList ]);
     }
     setLoading(_ => false);
-  }, [page, threadList]);
+  }, [page, articleList]);
   
   useEffect(() => {
     if (isLoading && hasNextPage) {
@@ -88,9 +92,9 @@ export default ({ currentUser, board }: PageProps) => {
     setLoading(_ => true);
   };
 
-  const onClickBoardListItem = (threadId: string) =>{
+  const onClickThreadListItem = (threadId: string) =>{
     router.push({
-      pathname: '/threads/detail',
+      pathname: '/threads',
       query: {
         threadId
       },
@@ -104,18 +108,16 @@ export default ({ currentUser, board }: PageProps) => {
         <Main fullHeight>
           <VirtuallyInfiniteScrollList
             listHeader={(
-              <BoardBanner board={board} />
+              <ThreadFirstArticle article={firstArticle} />
             )}
-            listItemMinWidthPixel={240}
             isLoading={isLoading}
             hasNextPage={hasNextPage}
             onLoadMore={handleLoadMore}
           >
-            {threadList.map((thread: ThreadDTO) => (
-              <BoardThreadListItem
-                key={thread.id}
-                thread={thread}
-                onClick={() => onClickBoardListItem(thread.id)}
+            {articleList.slice(1).map((article: ArticleDTO) => (
+              <ThreadArticleListItem
+                key={article.id}
+                article={article}
               />
             ))}
           </VirtuallyInfiniteScrollList>
