@@ -133,6 +133,11 @@ const ButtonCircularLoaderWrap = styled.div<ButtonCircularLoaderWrapProps>`
   transition: all 500ms;
 `;
 
+const ButtonText = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
 interface Props {
   icon?: {
     type?: IconSourceType;
@@ -154,7 +159,6 @@ export default (props: Props) => {
     fullWidth,
     fillVariant,
     isLoading,
-    minWidth,
     palette,
     setPadding,
     onClick
@@ -177,7 +181,6 @@ export default (props: Props) => {
       theme={theme}
       fullWidth={fullWidth}
       fillVariant={fillVariant}
-      minWidth={`min(${minWidth ?? '120px'}, 100%)`}
       palette={palette}
       setPadding={setPadding ?? true}
       onClick={onClick}
@@ -194,10 +197,16 @@ export default (props: Props) => {
           />
         </ButtonCircularLoaderWrap>
         {icon && (
-          <Icon type={icon.type} keyword={icon.keyword} size={'16px'} />
+          <Icon
+            type={icon.type}
+            keyword={icon.keyword}
+            size={'16px'}
+            palette={palette}
+            paletteColor={defaultPaletteColor}
+          />
         )}
       </ButtonIconWrap>
-      <span>{children}</span>
+      <ButtonText>{children}</ButtonText>
     </Button>
   );
 }

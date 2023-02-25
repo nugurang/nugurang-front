@@ -60,6 +60,7 @@ interface CreateUserMutationProps extends GetServerSidePropsContextAdapter {
   }
 }
 export const createUser = async (props: CreateUserMutationProps) => {
+  const { user } = props;
   const response = await mutateToBackend({
     mutation: gql`
       mutation CreateUser($user: UserInput!) {
@@ -69,7 +70,7 @@ export const createUser = async (props: CreateUserMutationProps) => {
       }
     `,
     variables: {
-      user: props.user,
+      user,
     },
     context: props.context
   });

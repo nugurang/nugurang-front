@@ -18,6 +18,8 @@ const PageInnerWrap = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+
+  position: relative;
   max-width: 1280px;
   gap: 8px;
 `;

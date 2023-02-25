@@ -1,6 +1,6 @@
 import produce from 'immer';
 import { ApolloQueryResult, gql } from '@apollo/client';
-import { queryToBackend } from '@/utilities/network/graphQl';
+import { mutateToBackend, queryToBackend } from '@/utilities/network/graphQl';
 import { getImageUrl, GetServerSidePropsContextAdapter } from '@/constants/common';
 import { Pagination } from './common';
 import { ThreadDTO } from '@/dtos/thread';
@@ -91,5 +91,42 @@ export const getThread = async (props: getThreadProps) => {
       firstArticle,
       articleList,
     }
+  };
+};
+
+interface CreateThreadMutationProps extends GetServerSidePropsContextAdapter {
+  boardId: string;
+  thread: {
+    name: string;
+    event?: string;
+    team?: string;
+  };
+  firstArticle: {
+    title: string;
+    content: string;
+    images?: string[];
+  };
+}
+export const createThread = async (props: CreateThreadMutationProps) => {
+  const { boardId, thread, firstArticle } = props; 
+  const response = await mutateToBackend({
+    mutation: gql`
+      mutation createThread($board: ID!, $thread: ThreadInput!) {
+        createThread (board: $board, thread: $thread) {
+          id
+        }
+      }
+    `,
+    variables: {
+      board: boardId,
+      thread: {
+        ...thread,
+        firstArticle,
+      },
+    },
+    context: props.context
+  });
+  return {
+    data: response.data.createThread
   };
 };

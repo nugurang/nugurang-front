@@ -9,6 +9,7 @@ interface ButtonGroupProps {
 }
 const ButtonGroup = styled.div<ButtonGroupProps>`
   display: flex;
+  justify-content: center;
   ${props => (props.fullWidth ? 'width: 100%;' : '')}
   gap: 2px;
   overflow: hidden;

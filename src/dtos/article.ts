@@ -13,3 +13,8 @@ export interface ArticleDTO {
   downCount: number;
   starCount: number;
 }
+
+export interface ArticleVoteTypeDTO {
+  id: string;
+  name: string;
+}

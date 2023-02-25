@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import React from 'react';
 import CircularLoader from '../progress/CircularLoader';
@@ -74,10 +74,12 @@ interface Props {
   gap?: string;
   isLoading: boolean;
   hasNextPage: boolean;
-  onInitialize?: () => void;
   onLoadMore: () => void;
 }
-export default (props: Props) => {
+export interface VirtuallyInfiniteScrollListHandle {
+  moveToTop: () => void;
+}
+export default forwardRef((props: Props, ref:React.ForwardedRef<VirtuallyInfiniteScrollListHandle | null | undefined>) => {
   const {
     listHeader,
     children,
@@ -86,7 +88,6 @@ export default (props: Props) => {
     gap = '8px',
     isLoading,
     hasNextPage,
-    onInitialize,
     onLoadMore,
   } = props;
 
@@ -108,6 +109,15 @@ export default (props: Props) => {
   
   const itemsCount = useMemo(() => React.Children.toArray(children).length, [children]);
   
+  useImperativeHandle(ref, () => ({
+    moveToTop: () => {
+      if(listWrapRef.current) {
+        listWrapRef.current.scrollTop = 0;
+        setScrollTop(0);
+      }
+    },
+  }));
+
   useEffect(() => {
     const chunkedItemHeightMemo = [];
     for (let index = 0; index < itemHeightMemo.length; index += column) {
@@ -265,4 +275,4 @@ export default (props: Props) => {
       </ListEndObservee>
     </ListWrap>
   );
-}
+});

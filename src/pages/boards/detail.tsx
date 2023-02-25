@@ -9,11 +9,13 @@ import BoardBanner from '@/compositions/board/BoardBanner';
 import Page from '@/compositions/page/Page';
 import Sidebar from '@/compositions/page/Sidebar';
 import Main from '@/compositions/page/Main';
-import { useCallback, useEffect, useState } from 'react';
-import VirtuallyInfiniteScrollList from '@/components/list/VirtuallyInfiniteScrollList';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import VirtuallyInfiniteScrollList, { VirtuallyInfiniteScrollListHandle } from '@/components/list/VirtuallyInfiniteScrollList';
 import BoardThreadListItem from '@/compositions/board/BoardThreadListItem';
 import { BoardDTO } from '@/dtos/board';
 import { ThreadDTO } from '@/dtos/thread';
+import FloatingBottomActionBox from '@/compositions/page/FloatingBottomActionBox';
+import BoardThreadListActions from '@/compositions/board/BoardThreadListActions';
 
 export const getServerSideProps = WithCheckUserServerSideProps(async (
   context: GetServerSidePropsContext,
@@ -50,7 +52,10 @@ export default ({ currentUser, board }: PageProps) => {
   const { t: commonTranslation } = useTranslation('common');
   const { t: boardsTranslation } = useTranslation('boards');
   const { t: threadsTranslation } = useTranslation('threads');
+  
   const router = useRouter();
+  const listRef = useRef<VirtuallyInfiniteScrollListHandle | null>();
+
   const [threadList, setThreadList] = useState<ThreadDTO[]>([]);
   const [page, setPage] = useState<number>(0);
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -88,7 +93,7 @@ export default ({ currentUser, board }: PageProps) => {
     setLoading(_ => true);
   };
 
-  const onClickBoardListItem = (threadId: string) =>{
+  const handleClickBoardListItem = (threadId: string) => {
     router.push({
       pathname: '/threads/detail',
       query: {
@@ -97,12 +102,20 @@ export default ({ currentUser, board }: PageProps) => {
     });
   };
 
+  const handleClickCreateThreadButton = () => {
+  };
+
+  const handleClickMoveToTopButton = () => {
+    listRef.current?.moveToTop()
+  };
+
   return (
     <Container currentUser={currentUser}>
       <Page>
         <Sidebar>Left</Sidebar>
         <Main fullHeight>
           <VirtuallyInfiniteScrollList
+            ref={listRef}
             listHeader={(
               <BoardBanner board={board} />
             )}
@@ -115,10 +128,16 @@ export default ({ currentUser, board }: PageProps) => {
               <BoardThreadListItem
                 key={thread.id}
                 thread={thread}
-                onClick={() => onClickBoardListItem(thread.id)}
+                onClick={() => handleClickBoardListItem(thread.id)}
               />
             ))}
           </VirtuallyInfiniteScrollList>
+          <FloatingBottomActionBox>
+            <BoardThreadListActions
+              onClickCreateThreadButton={handleClickCreateThreadButton}
+              onClickMoveToTopButton={handleClickMoveToTopButton}
+            />
+          </FloatingBottomActionBox>
         </Main>
         <Sidebar>Right</Sidebar>
       </Page>
