@@ -2,10 +2,12 @@
   "words": {
     "boards": "게시판",
     "cancel": "취소",
+    "go_back": "뒤로가기",
     "my_account": "내 계정",
     "no": "아니요",
     "sign_in": "로그인",
     "sign_out": "로그아웃",
+    "submit": "제출",
     "yes": "네"
   },
   "sentences": {

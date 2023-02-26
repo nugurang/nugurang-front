@@ -12,7 +12,7 @@ export default (props: Props) => {
   } = props;
  
   return (
-    <ButtonGroup>
+    <ButtonGroup maxWidthPerButton='150px'>
       <Button
         icon={{
           type: 'fas',

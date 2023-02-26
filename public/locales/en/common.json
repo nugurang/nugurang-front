@@ -2,10 +2,12 @@
   "words": {
     "boards": "Boards",
     "cancel": "Cancel",
+    "go_back": "Go back",
     "my_account": "My Account",
     "no": "No",
     "sign_in": "Sign in",
     "sign_out": "Sign out",
+    "submit": "Submit",
     "yes": "Yes"
   },
   "sentences": {

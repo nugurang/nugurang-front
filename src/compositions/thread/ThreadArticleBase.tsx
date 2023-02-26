@@ -104,16 +104,6 @@ export default (props: Props) => {
           <Button
             icon={{
               type: 'fas',
-              keyword: 'star',
-            }}
-            fillVariant='filled'
-            onClick={handleClickThumbsUpButton}
-          >
-            {article.starCount > 0 ? (article.upCount ?? NaN) : '찜하기'}
-          </Button>
-          <Button
-            icon={{
-              type: 'fas',
               keyword: 'thumbs-up',
             }}
             fillVariant='filled'
@@ -130,6 +120,16 @@ export default (props: Props) => {
             onClick={handleClickThumbsDownButton}
           >
             {article.downCount > 0 ? (article.downCount ?? NaN) : '싫어요'}
+          </Button>
+          <Button
+            icon={{
+              type: 'fas',
+              keyword: 'star',
+            }}
+            fillVariant='filled'
+            onClick={handleClickThumbsUpButton}
+          >
+            {article.starCount > 0 ? (article.upCount ?? NaN) : '찜하기'}
           </Button>
         </ButtonGroup>
       </ActionWrap>

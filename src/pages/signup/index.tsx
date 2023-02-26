@@ -104,13 +104,17 @@ export default ({ currentOAuth2User }: PageProps) => {
             fullWidth
             palette='error'
             onClick={handleClickBackButton}
-          >뒤로가기</Button>
+          >
+            {commonTranslation('words.go_back')}
+          </Button>
           <Button
             fullWidth
             isLoading={isCreatingUser}
             palette='primary'
             onClick={handleClickSubmitButton}
-          >제출</Button>
+          >
+            {commonTranslation('words.submit')}
+          </Button>
         </ButtonGroup>
       </Box>
     </CenterizedContainer>

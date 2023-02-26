@@ -99,7 +99,7 @@ const Button = styled.button<ButtonProps>`
         case 'outlined':
         case 'filled':
         default:
-          return '12px 24px';
+          return '12px';
       }
     } else {
       return '4px 8px';
@@ -108,12 +108,14 @@ const Button = styled.button<ButtonProps>`
 `;
 
 interface ButtonIconWrapProps {
+  show: boolean;
 }
 const ButtonIconWrap = styled.div<ButtonIconWrapProps>`
   display: flex;
   align-items: center;
   gap: 8px;
   margin-right: 8px;
+  margin-right: ${props => props.show ? '8px' : '0'};
 `;
 
 interface ButtonCircularLoaderWrapProps {
@@ -185,7 +187,9 @@ export default (props: Props) => {
       setPadding={setPadding ?? true}
       onClick={onClick}
     >
-      <ButtonIconWrap>
+      <ButtonIconWrap
+        show={(!!icon || isLoading) ?? false}
+      >
         <ButtonCircularLoaderWrap
           show={isLoading ?? false}
           size='16px'

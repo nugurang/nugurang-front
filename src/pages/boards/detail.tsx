@@ -103,6 +103,12 @@ export default ({ currentUser, board }: PageProps) => {
   };
 
   const handleClickCreateThreadButton = () => {
+    router.push({
+      pathname: '/threads/create',
+      query: {
+        boardId: board.id,
+      },
+    });
   };
 
   const handleClickMoveToTopButton = () => {
