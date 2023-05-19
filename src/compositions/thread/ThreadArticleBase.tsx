@@ -5,7 +5,6 @@ import ButtonGroup from '@/components/button/ButtonGroup';
 import Button from '@/components/button/Button';
 import { Theme, ThemeContext } from '@/components/theme';
 import Header2 from '@/components/text/Header2';
-import { useRouter } from 'next/router';
 import Paragraph from '@/components/text/Paragraph';
 import { ArticleDTO } from '@/dtos/article';
 import Text from '@/components/text/Text';
@@ -58,15 +57,21 @@ const ActionWrap = styled.div`
 
 interface Props {
   article: ArticleDTO;
+  onClickThumbsUpButton?: (article: ArticleDTO) => void;
+  onClickThumbsDownButton?: (article: ArticleDTO) => void;
+  onClickStarButton?: (article: ArticleDTO) => void;
 }
 export default (props: Props) => {
   const {
     article,
+    onClickThumbsUpButton,
+    onClickThumbsDownButton,
+    onClickStarButton,
   } = props;
   const { theme } = useContext(ThemeContext);
-  const router = useRouter();
-  const handleClickThumbsUpButton = () => router.back();
-  const handleClickThumbsDownButton = () => router.back();
+  const handleClickThumbsUpButton = () => onClickThumbsUpButton && onClickThumbsUpButton(article);
+  const handleClickThumbsDownButton = () => onClickThumbsDownButton && onClickThumbsDownButton(article);
+  const handleClickStarButton = () => onClickStarButton && onClickStarButton(article);
  
   return (
     <>
@@ -127,9 +132,9 @@ export default (props: Props) => {
               keyword: 'star',
             }}
             fillVariant='filled'
-            onClick={handleClickThumbsUpButton}
+            onClick={handleClickStarButton}
           >
-            {article.starCount > 0 ? (article.upCount ?? NaN) : '찜하기'}
+            {article.starCount > 0 ? (article.starCount ?? NaN) : '찜하기'}
           </Button>
         </ButtonGroup>
       </ActionWrap>

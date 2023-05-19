@@ -7,6 +7,7 @@ export interface OAuth2UserDTO {
 }
 
 export interface UserDTO {
+  id: string;
   oAuth2Provider: OAuth2Provider;
   oAuth2Id: string;
   name: string;

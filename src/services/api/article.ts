@@ -35,7 +35,7 @@ export const getAllArticleVoteTypes = async (props: GetAllArticleVoteTypesProps 
   };
 };
 
-interface CreateArticleVoteMutationProps extends GetServerSidePropsContextAdapter {
+export interface CreateArticleVoteMutationProps extends GetServerSidePropsContextAdapter {
   userId: string;
   articleId: string;
   articleVoteTypeId: string;

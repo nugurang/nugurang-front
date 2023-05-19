@@ -9,6 +9,7 @@ import { UserDTO } from '@/dtos/user';
 
 export interface GetCurrentUserProps extends GetServerSidePropsContextAdapter {}
 interface GetCurrentUserResponseRawData {
+  id: string;
   oauth2Provider: OAuth2Provider;
   oauth2Id: string;
   name: string;

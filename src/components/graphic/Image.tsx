@@ -1,3 +1,4 @@
+import NextJsImage from 'next/image';
 import { FALLBACK_IMAGE_URL } from '@/constants/common';
 import styled from '@emotion/styled';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -23,19 +24,15 @@ const ImageWrap = styled.div<ImageWrapProps>`
 `;
 
 interface ImageProps {
-  height?: string;
-  width?: string;
   isLoaded: boolean;
 }
-const Image = styled.img<ImageProps>`
+const Image = styled(NextJsImage)<ImageProps>`
   display: block;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  ${props => (props.height ? `height: ${props.height};` : 'height: 100%;')}
-  ${props => (props.width ? `width: ${props.width};` : 'width: 100%;')}
   object-fit: cover;
   opacity: ${props => (props.isLoaded ? '1' : '0')};
   transition-property: opacity;
@@ -109,8 +106,7 @@ export default (props: Props) => {
         ref={imageRef}
         src={fallback ? FALLBACK_IMAGE_URL : src}
         alt={alt}
-        height={height}
-        width={width}
+        fill={true}
         isLoaded={isLoaded}
         onLoad={handleImageLoaded}
       />
