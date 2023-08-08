@@ -1,7 +1,6 @@
 import PageRow from '@/components/PageRow';
 
-import ToolbarFragment from './ToolbarFragment';
-import ThreadThumbnailListFragment from './ThreadThumbnailListFragment';
+import NewThreadFormFragment from './NewThreadFormFragment';
 
 export default async function Page({
   params,
@@ -20,14 +19,11 @@ export default async function Page({
             'flex', 'justify-center', 'items-center'
           ].join(' ')}
         >
-          <span className='text-2xl font-bold'>boardId: {boardId}</span>
+          <span className='text-2xl font-bold'>스레드 작성</span>
         </div>
       </PageRow>
       <PageRow>
-        <ToolbarFragment />
-      </PageRow>
-      <PageRow>
-        <ThreadThumbnailListFragment />
+        <NewThreadFormFragment />
       </PageRow>
     </>
   );

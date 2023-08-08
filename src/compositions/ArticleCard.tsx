@@ -17,7 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-export interface ThreadThumbnailCardProps {
+export interface ArticleCardProps {
   title?: string
   content?: string
   icon?: IconDefinition
@@ -26,12 +26,12 @@ export interface ThreadThumbnailCardProps {
   onClickBody?: MouseEventHandler<HTMLDivElement>
 }
 
-export default function ThreadThumbnailCard({
+export default function ArticleCard({
   title = '',
   content = '',
   imageSrc = undefined,
   onClickThumbnail,
-}: ThreadThumbnailCardProps) {
+}: ArticleCardProps) {
   return (
     <Card>
       <img
@@ -81,13 +81,6 @@ export default function ThreadThumbnailCard({
           ].join(' ')}
         >
           {content}
-        </div>
-        <div
-          className={[
-            'mt-4'
-          ].join(' ')}
-        >
-          <Button label={'더 알아보기'}/>
         </div>
       </Box>
     </Card>

@@ -48,10 +48,10 @@ export default function Autocomplete({
     <div className='relative'>
       <input
       className={[
-        'h-8', 'w-full',
+        'h-[2.5rem]', 'w-full',
         'px-4',
         'text-sm',
-        'rounded-2xl',
+        'rounded-3xl',
         'bg-white',
         'border-2', 'border-slate-200',
         'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400',
@@ -73,7 +73,7 @@ export default function Autocomplete({
           className={[
             'w-full',
             'mt-2', 'px2',
-            'rounded-2xl',
+            'rounded-3xl',
             'bg-white',
             'border-2', 'border-slate-200',
             'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400'
@@ -82,7 +82,7 @@ export default function Autocomplete({
             <ol
               className={[
                 'bg-white',
-                'rounded-2xl',
+                'rounded-3xl',
                 'divide-y', 'divide-slate-200', 'divide-dashed',
               ].join(' ')}
             >
@@ -93,7 +93,7 @@ export default function Autocomplete({
                     'px-4', 'py-2',
                     'bg-white', 'hover:bg-slate-50',
                     // 'odd:bg-white', 'even:bg-slate-50',
-                    'rounded-2xl',
+                    'rounded-3xl',
                   ].join(' ')}
                 >
                   <button
@@ -117,7 +117,6 @@ export default function Autocomplete({
                       className={[
                         'flex', 'flex-col', 'justify-start', 'items-start',
                         'grow',
-                        'text-sm',
                       ].join(' ')}
                     >
                       <div>{candidate.label}</div>
@@ -129,7 +128,7 @@ export default function Autocomplete({
                 <div 
                   className={[
                     'flex', 'justify-center', 'items-center',
-                    'h-8',
+                    'h-10',
                   ].join(' ')}
                 >
                   <span className='text-slate-500'>검색 결과가 없습니다.</span>

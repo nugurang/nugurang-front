@@ -25,10 +25,9 @@ export default function Textfield({
     <div>
       <input
       className={[
-        'h-8', 'w-full',
+        'h-[2.5rem]', 'w-full',
         'px-4',
-        'text-sm',
-        'rounded-2xl',
+        'rounded-3xl',
         'bg-white',
         'border-2', 'border-slate-200',
         'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400'
@@ -37,7 +36,7 @@ export default function Textfield({
         placeholder={placeholder}
         onClick={onClick}
         onInput={onInput}
-      ></input>
+      />
     </div>
   );
 }

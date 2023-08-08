@@ -13,8 +13,8 @@ export default function FontAwesomeIcon({
   return (
     <div
       className={[
-        'h-8', 'w-8',
-        'rounded-2xl',
+        'h-10', 'w-10',
+        'rounded-3xl',
       ].join(' ')}
     >
       <ImportedFontAwesomeIcon

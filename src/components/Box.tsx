@@ -4,6 +4,7 @@ export interface BoxProps {
   paddingBottom?: boolean
   paddingLeft?: boolean
   paddingRight?: boolean
+  extraPadding?: boolean
   className?: string
 }
 
@@ -13,17 +14,22 @@ export default function Box({
   paddingBottom = true,
   paddingLeft = true,
   paddingRight = true,
+  extraPadding = false,
   className = '',
 }: BoxProps) {
   return (
     <div
       className={[
         'relative',
-        (paddingTop ? 'pt-2' : ''),
-        (paddingBottom ? 'pb-2' : ''),
-        (paddingLeft ? 'pl-2' : ''),
-        (paddingRight ? 'pr-2' : ''),
-        'rounded-2xl',
+        (paddingTop && extraPadding ? 'pt-4' : ''),
+        (paddingBottom && extraPadding ? 'pb-4' : ''),
+        (paddingLeft && extraPadding ? 'pl-4' : ''),
+        (paddingRight && extraPadding ? 'pr-4' : ''),
+        (paddingTop && !extraPadding ? 'pt-2' : ''),
+        (paddingBottom && !extraPadding ? 'pb-2' : ''),
+        (paddingLeft && !extraPadding ? 'pl-2' : ''),
+        (paddingRight && !extraPadding ? 'pr-2' : ''),
+        'rounded-3xl',
         className
       ].join(' ')}
     >

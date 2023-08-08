@@ -1,7 +1,6 @@
 'use client'
 
-import { ButtonBase } from '@/components/Button';
-import { ThreadThumbnailCard } from '@/compositions/ThreadThumbnailCard';
+import ThreadThumbnailCard from '@/compositions/ThreadThumbnailCard';
 
 import {
   faSearch

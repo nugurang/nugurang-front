@@ -20,13 +20,12 @@ export default function Chip({
   return (
     <label
       className={[
-        'h-8',
-        'px-4',
-        'bg-white',
-        'border-2', 'rounded-2xl',
-        'text-slate-500', 'border-slate-400',
+        'h-8', 'px-4',
+        'bg-white', 'border-2', 'rounded-3xl',
+        'text-slate-500', 'border-slate-400', 'hover:bg-slate-50',
         checked ? 'checked:text-slate-100' : '',
         checked ? 'checked:bg-purple-400': '',
+        'cursor-pointer',
         className,
       ].join(' ')}
     >
@@ -35,7 +34,14 @@ export default function Chip({
         className="sr-only peer"
         onChange={onChange}
       />
-      {label}
+      <div className={[
+        'h-8',
+        'pb-1',
+        'flex', 'items-center',
+        className,
+      ].join(' ')}>
+        <span>{label}</span>
+      </div>
     </label >
   );
 }

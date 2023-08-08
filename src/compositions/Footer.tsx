@@ -34,7 +34,7 @@ export default function Footer({
         'flex', 'justify-center', 'items-center', 'gap-2',
         'relative',
         'mx-auto', 'h-16', 'max-w-screen-sm',
-        'rounded-2xl'
+        'rounded-3xl'
       ].join(' ')}>
         <div className={[
           'absolute', 'top-0', 'bottom-0', 'left-0',

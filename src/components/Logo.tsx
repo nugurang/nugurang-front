@@ -19,7 +19,7 @@ export default function Logo({
       className={[
         'flex', 'justify-center', 'items-center',
         'px-2',
-        'rounded-2xl',
+        'rounded-3xl',
       ].join(' ')}
         onClick={onClick}
       >

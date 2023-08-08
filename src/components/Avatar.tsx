@@ -16,7 +16,7 @@ export default function Avatar({
   return (
     <div
       className={[
-        'rounded-2xl',
+        'rounded-3xl',
         'border-2', 'border-slate-100',
         `${onClick ? 'hover:border-purple-400' : ''}`,
         'shrink-0',
@@ -31,7 +31,7 @@ export default function Avatar({
         <img
           className={[
             'align-top',
-            `w-${size}`, `h-${size}`, 'rounded-2xl',
+            `w-${size}`, `h-${size}`, 'rounded-3xl',
           ].join(' ')}
           src={src ?? ''}
         />

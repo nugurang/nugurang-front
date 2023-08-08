@@ -14,7 +14,7 @@ export default function Card({
     <div
       className={[
         'bg-white',
-        'rounded-2xl',
+        'rounded-3xl',
         'border-2', 'border-slate-100',
       ].join(' ')}
     >
@@ -42,7 +42,7 @@ export function CardHeader({
         'flex', 'items-center',
         'px-4', 'py-3',
         'bg-white',
-        'rounded-2xl',
+        'rounded-3xl',
         'text-lg',
       ].join(' ')}
     >

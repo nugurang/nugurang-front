@@ -15,7 +15,7 @@ export default function Card({
     <ol
       className={[
         'bg-white',
-        'rounded-2xl',
+        'rounded-3xl',
         'divide-y', 'divide-slate-200', 'divide-dashed',
         className,
       ].join(' ')}
@@ -46,7 +46,7 @@ export function VerticalListItem({
         'px-4', 'py-2',
         'bg-white', 'hover:bg-slate-50',
         // 'odd:bg-white', 'even:bg-slate-50',
-        'rounded-2xl',
+        'rounded-3xl',
       ].join(' ')}
     >
       <button

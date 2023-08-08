@@ -1,10 +1,13 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 import Autocomplete from '@/components/Autocomplete';
 import FontAwesomeIconButton from "@/components/FontAwesomeIconButton";
 
 import {
-  faSearch
+  faSearch,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 const mockKeywordSearchCandidateList = [
@@ -25,7 +28,8 @@ const mockKeywordSearchCandidateList = [
   },
 ]
 
-export default function SearchBarFragment() {
+export default function ToolbarFragment() {
+  const router = useRouter();
   return (
     <>
       <div className={[
@@ -40,6 +44,7 @@ export default function SearchBarFragment() {
           candidateList={mockKeywordSearchCandidateList}
         />
         <FontAwesomeIconButton icon={faSearch} />
+        <FontAwesomeIconButton icon={faPlus} onClick={() => router.push('/common/boards/create')} />
       </div>
     </>
   );
