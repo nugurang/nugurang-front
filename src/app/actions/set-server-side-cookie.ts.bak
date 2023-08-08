@@ -1,0 +1,6 @@
+'use server'
+import { cookies } from 'next/headers'
+ 
+async function setServerSideCookie(key, value, options) {
+  cookies().set(key, value, options)
+}

@@ -1,24 +1,21 @@
-const { i18n } = require('./next-i18next.config');
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  i18n,
-  reactStrictMode: false, // 일부 useEffect가 2번씩 호출되는 문제가 있어 off 처리
-  swcMinify: true,
-  images: {
-    unoptimized: true
-  },
-  rewrites() {
-    return [
+module.exports = {
+	async rewrites() {
+		return [
+			{
+				source: "/api/dev-backend/:path*",
+				destination: "http://localhost:8080/:path*",
+			},
+			{
+				source: "/api/backend/:path*",
+				destination: "https://www.nugurang.com:8000/:path*",
+			},
       {
         source: '/api/oauth2/github/:path*',
         destination: 'https://github.com/login/oauth/:path*',
       },
-    ];
-  },
+		];
+	},
   experimental: {
-    // appDir: true
+    serverActions: true,
   },
 }
-
-module.exports = nextConfig

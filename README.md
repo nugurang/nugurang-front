@@ -19,11 +19,6 @@ npm run mock
 ```
 
 ```bash
-npm run local
-
-```
-
-```bash
 npm run dev
 
 ```
