@@ -40,8 +40,8 @@ export default function Button({
             case 'default':
             default:
               return [
-                'bg-slate-50', 'border-2', 'border-slate-50',
-                'hover:bg-slate-200', 'hover:border-slate-200',
+                'bg-slate-50', 'dark:bg-slate-950', 'border-2', 'border-slate-50', 'dark:border-slate-950',
+                'hover:bg-slate-200', 'dark:hover:bg-slate-800', 'hover:border-slate-200', 'dark:border-slate-800',
               ].join(' ')
           }
         })(),
@@ -96,7 +96,7 @@ export function ButtonBase({
         'h-10', 'w-full',
         'px-4',
         'rounded-3xl',
-        'hover:bg-slate-200', 'hover:border-slate-200',
+        'hover:bg-slate-200', 'dark:hover:bg-slate-800', 'hover:border-slate-200', 'dark:hover:border-slate-800',
         className,
       ].join(' ')}
         onClick={onClick}

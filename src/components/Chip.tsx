@@ -1,17 +1,19 @@
 'use client';
 
 import {
-  ChangeEvent
+  ChangeEventHandler
 } from 'react';
 
 export interface ChipProps {
+  id: string
   label: string
   checked?: boolean
-  onChange?: ChangeEvent<HTMLInputElement>
+  onChange?: ChangeEventHandler<HTMLInputElement>
   className?: string
 }
 
 export default function Chip({
+  id,
   label,
   checked,
   onChange,
@@ -19,10 +21,11 @@ export default function Chip({
 }: ChipProps) {
   return (
     <label
+      htmlFor={id}
       className={[
         'h-8', 'px-4',
-        'bg-white', 'border-2', 'rounded-3xl',
-        'text-slate-500', 'border-slate-400', 'hover:bg-slate-50',
+        'bg-white', 'dark:bg-black', 'border-2', 'rounded-3xl',
+        'text-slate-500', 'dark:text-slate-500', 'border-slate-400', 'dark:border-slate-600', 'hover:bg-slate-50', 'dark:hover:bg-slate-950', 
         checked ? 'checked:text-slate-100' : '',
         checked ? 'checked:bg-purple-400': '',
         'cursor-pointer',
@@ -30,6 +33,7 @@ export default function Chip({
       ].join(' ')}
     >
       <input
+        id={id}
         type='checkbox'
         className="sr-only peer"
         onChange={onChange}

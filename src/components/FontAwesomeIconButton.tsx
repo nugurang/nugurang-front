@@ -42,8 +42,8 @@ export default function FontAwesomeIconButton({
               case 'default':
               default:
                 return [
-                  'bg-slate-50', 'border-2', 'border-slate-50',
-                  'hover:bg-slate-200', 'hover:border-slate-200',
+                  'bg-slate-50', 'dark:bg-slate-950', 'border-2', 'border-slate-50', 'dark:border-slate-950',
+                  'hover:bg-slate-200', 'dark:hover:bg-slate-800', 'hover:border-slate-200', 'dark:hover:border-slate-800',
                 ].join(' ')
             }
           })(),

@@ -28,7 +28,7 @@ export default function Footer({
     <div className={[
       'fixed', 'bottom-0', 'left-0', 'right-0',
       'my-0',
-      'bg-white',
+      'bg-white', 'dark:bg-black',
     ].join(' ')}>
       <div className={[
         'flex', 'justify-center', 'items-center', 'gap-2',

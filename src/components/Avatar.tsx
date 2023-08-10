@@ -16,9 +16,9 @@ export default function Avatar({
   return (
     <div
       className={[
-        'rounded-3xl',
-        'border-2', 'border-slate-100',
-        `${onClick ? 'hover:border-purple-400' : ''}`,
+        'rounded-full',
+        'border-2', 'border-slate-100', 'dark:border-slate-900',
+        `${onClick ? 'hover:border-purple-400' : ''}`, `${onClick ? 'dark:hover:border-purple-400' : ''}`,
         'shrink-0',
       ].join(' ')}
     >
@@ -31,7 +31,7 @@ export default function Avatar({
         <img
           className={[
             'align-top',
-            `w-${size}`, `h-${size}`, 'rounded-3xl',
+            `w-${size}`, `h-${size}`, 'rounded-full',
           ].join(' ')}
           src={src ?? ''}
         />

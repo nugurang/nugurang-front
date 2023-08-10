@@ -13,9 +13,9 @@ export default function Card({
   return (
     <div
       className={[
-        'bg-white',
+        'bg-white', 'dark:bg-black', 
         'rounded-3xl',
-        'border-2', 'border-slate-100',
+        'border-2', 'border-slate-100', 'dark:border-slate-900',
       ].join(' ')}
     >
       {children}
@@ -25,15 +25,15 @@ export default function Card({
 
 export interface CardHeaderProps {
   title?: string
-  titleIcon?: IconDefinition
-  onClickTitleIcon?: MouseEventHandler<HTMLButtonElement>
+  icon?: IconDefinition
+  onClickIcon?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }
 
 export function CardHeader({
   title = '',
-  titleIcon,
-  onClickTitleIcon,
+  icon,
+  onClickIcon,
   className = '',
 }: CardHeaderProps) {
   return (
@@ -41,20 +41,20 @@ export function CardHeader({
       className={[
         'flex', 'items-center',
         'px-4', 'py-3',
-        'bg-white',
+        'bg-white', 'dark:bg-black', 
         'rounded-3xl',
         'text-lg',
       ].join(' ')}
     >
-      {titleIcon && (
-        <button onClick={onClickTitleIcon}>
+      {icon && (
+        <button onClick={onClickIcon}>
           <FontAwesomeIcon
             className={[
               'h-5', 'w-5',
               'mr-3',
               'text-lg',
             ].join(' ')}
-            icon={titleIcon}
+            icon={icon}
           />
         </button>
       )}

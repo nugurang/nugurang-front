@@ -4,25 +4,28 @@ import {
   MouseEventHandler
 } from "react";
 
-export interface TextfieldProps {
-  children: React.ReactNode
-  label: string,
-  isRequired?: boolean,
-  onClick?: MouseEventHandler<HTMLLabelElement>
-  className?: string
+export interface LabelProps {
+  children: React.ReactNode;
+  id: string;
+  label: string;
+  isRequired?: boolean;
+  onClick?: MouseEventHandler<HTMLLabelElement>;
+  className?: string;
 }
 
-export default function Textfield({
+export default function Label({
   children,
+  id,
   label = '',
   isRequired = false,
   onClick = () => {},
   className = '',
-}: TextfieldProps) {
+}: LabelProps) {
   return (
     <>
       <div>
         <label
+          htmlFor={id}
           className={[
             'inline-block', 'pl-2', 'py-2',
             isRequired ? [

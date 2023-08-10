@@ -14,10 +14,11 @@ import useClickOutside from '@/hooks/useClickOutside'
 export interface AutocompleteCandidate {
   label: string,
   icon?: IconDefinition
-  onClick?: MouseEventHandler<HTMLInputElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 export interface AutocompleteProps {
+  id?: string;
   type?: HTMLInputTypeAttribute,
   placeholder?: string,
   candidateList?: AutocompleteCandidate[],
@@ -27,6 +28,7 @@ export interface AutocompleteProps {
 }
 
 export default function Autocomplete({
+  id = '',
   type = 'text',
   placeholder = '',
   candidateList = [],
@@ -47,16 +49,17 @@ export default function Autocomplete({
   return (
     <div className='relative'>
       <input
-      className={[
-        'h-[2.5rem]', 'w-full',
-        'px-4',
-        'text-sm',
-        'rounded-3xl',
-        'bg-white',
-        'border-2', 'border-slate-200',
-        'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400',
-        className
-      ].join(' ')}
+        id={id}
+        className={[
+          'h-[2.5rem]', 'w-full',
+          'px-4',
+          'text-sm',
+          'rounded-3xl',
+          'bg-white', 'dark:bg-black',
+          'border-2', 'border-slate-200', 'dark:border-slate-800',
+          'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400', 'dark:focus:border-purple-400',
+          className
+        ].join(' ')}
         type={type}
         placeholder={placeholder}
         onInput={handleInputTextfield}
@@ -74,16 +77,16 @@ export default function Autocomplete({
             'w-full',
             'mt-2', 'px2',
             'rounded-3xl',
-            'bg-white',
-            'border-2', 'border-slate-200',
-            'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400'
+            'bg-white', 'dark:bg-black',
+            'border-2', 'border-purple-400', 'dark:border-purple-400',
+            'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400', 'dark:focus:border-purple-400',
           ].join(' ')}
           >
             <ol
               className={[
-                'bg-white',
+                'bg-white', 'dark:bg-black',
                 'rounded-3xl',
-                'divide-y', 'divide-slate-200', 'divide-dashed',
+                'divide-y', 'divide-slate-200', 'dark:divide-slate-800', 'divide-dashed',
               ].join(' ')}
             >
               {candidateList.length > 0 && candidateList.map((candidate, index) => (
@@ -91,7 +94,7 @@ export default function Autocomplete({
                   key={index}
                   className={[
                     'px-4', 'py-2',
-                    'bg-white', 'hover:bg-slate-50',
+                    'bg-white', 'dark:bg-black', 'hover:bg-slate-50', 'dark:hover:bg-black',
                     // 'odd:bg-white', 'even:bg-slate-50',
                     'rounded-3xl',
                   ].join(' ')}
@@ -131,7 +134,9 @@ export default function Autocomplete({
                     'h-10',
                   ].join(' ')}
                 >
-                  <span className='text-slate-500'>검색 결과가 없습니다.</span>
+                  <span className={[
+                    'text-slate-500', 'dark:text-slate-500',
+                  ].join(' ')}>검색 결과가 없습니다.</span>
                 </div>
               )}
             </ol>

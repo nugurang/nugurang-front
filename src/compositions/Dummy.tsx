@@ -5,7 +5,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import Box from "@/components/Box";
 import Button from '@/components/Button';
 import Card, { CardHeader } from "@/components/Card";
-import VerticalList, { VerticalListItem } from "@/components/VerticalList";
+import VerticalList, { TextVerticalListItem } from "@/compositions/VerticalList";
 
 export interface DummyBannerCardProps {
   title?: string
@@ -29,17 +29,16 @@ export function DummyBannerCard({
   );
 }
 
-
 export interface DummyVerticalListCardProps {
   title?: string
-  titleIcon?: IconDefinition
+  icon?: IconDefinition
   itemCount?: number,
   marginTop?: boolean,
 }
 
 export function DummyVerticalListCard({
   title = '',
-  titleIcon,
+  icon,
   itemCount = 0,
   marginTop = false,
 }: DummyVerticalListCardProps) {
@@ -51,23 +50,22 @@ export function DummyVerticalListCard({
         'flex', 'flex-col',
         'h-full',
       ].join(' ')}>
-        {(title || titleIcon) && (
+        {(title || icon) && (
           <CardHeader
             title={title}
-            titleIcon={titleIcon}
+            icon={icon}
           />
         )}
         <VerticalList className={[
           'grow'
         ].join(' ')}>
           {Array(itemCount).fill(true).map((_, index) => (
-            <VerticalListItem
+            <TextVerticalListItem
               key={index}
               title='Lorem Ipsum'
-              titleIcon={titleIcon}
-            >
-            Hello World
-          </VerticalListItem>
+              subtitle='Hello World'
+              icon={icon}
+            />
           ))}
         </VerticalList>
         <div className='p-2'>

@@ -7,16 +7,16 @@ export interface VerticalListProps {
   className?: string
 }
 
-export default function Card({
+export default function VerticalList({
   children,
   className = '',
 }: VerticalListProps) {
   return (
     <ol
       className={[
-        'bg-white',
+        'bg-white', 'dark:bg-black',
         'rounded-3xl',
-        'divide-y', 'divide-slate-200', 'divide-dashed',
+        'divide-y', 'divide-slate-200', 'dark:divide-slate-800', 'divide-dashed',
         className,
       ].join(' ')}
     >
@@ -27,55 +27,83 @@ export default function Card({
 
 export interface VerticalListItemProps {
   children: React.ReactNode
-  title?: string
-  titleIcon?: IconDefinition
+  icon?: IconDefinition
   onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }
 
 export function VerticalListItem({
   children,
-  title = '',
-  titleIcon,
+  icon,
   onClick,
   className = '',
 }: VerticalListItemProps) {
   return (
     <li
       className={[
-        'px-4', 'py-2',
-        'bg-white', 'hover:bg-slate-50',
-        // 'odd:bg-white', 'even:bg-slate-50',
-        'rounded-3xl',
+        'py-2',
+        className,
       ].join(' ')}
     >
-      <button
+      <div
         className={[
-          'flex', 'justify-start', 'items-start',
-          'w-full',
+          'px-4', 'py-2',
+          'bg-white', 'dark:bg-black', 'hover:bg-slate-50', 'dark:hover:bg-slate-950',
+          // 'odd:bg-white', 'even:bg-slate-50',
+          'rounded-3xl',
         ].join(' ')}
-        onClick={onClick}
       >
-        {titleIcon && (
-          <FontAwesomeIcon
-            className={[
-              'h-5', 'w-5',
-              'mr-3', 'py-[0.1rem]',
-              'text-lg',
-            ].join(' ')}
-            icon={titleIcon}
-          />
-        )}
-        <div
+        <button
           className={[
-            'flex', 'flex-col', 'justify-start', 'items-start',
-            'grow',
+            'flex', 'justify-start', 'items-start',
+            'w-full',
+            'rounded-3xl',
           ].join(' ')}
+          onClick={onClick}
         >
-          <div>{title}</div>
-          <div>{children}</div>
-        </div>
-      </button>
+          {icon && (
+            <FontAwesomeIcon
+              className={[
+                'h-5', 'w-5',
+                'mr-3', 'py-[0.1rem]',
+                'text-lg',
+              ].join(' ')}
+              icon={icon}
+            />
+          )}
+          <div
+            className={[
+              'flex', 'flex-col', 'justify-start', 'items-start',
+              'grow',
+            ].join(' ')}
+          >
+            {children}
+          </div>
+        </button>
+      </div>
     </li>
+  );
+}
+
+export interface VerticalListItemTextProps {
+  title?: string
+  subtitle?: string
+}
+
+export function VerticalListItemText({
+  title = '',
+  subtitle = '',
+}: VerticalListItemTextProps) {
+  return (
+    <>
+      <div className={[
+        'text-left',
+        'break-all',
+      ].join(' ')}>{title}</div>
+        <div className={[
+        'text-left', 'text-sm',
+        'break-all',
+      ].join(' ')}>{subtitle}</div>
+    </>
   );
 }

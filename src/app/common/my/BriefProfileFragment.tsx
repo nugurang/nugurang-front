@@ -1,13 +1,15 @@
 'use client';
 
+import { useRouter } from 'next/navigation'
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 import Avatar from '@/components/Avatar';
 import Box from '@/components/Box';
-import Button from '@/components/Button';
+import Button, { HorizontalButtonGroup } from '@/components/Button';
 import Card from '@/components/Card';
 
 export default function BriefProfileFragment() {
+  const router = useRouter();
   const { data: session, status } = useSession();
 
   return (
@@ -43,12 +45,17 @@ export default function BriefProfileFragment() {
           <></>
         )}
         {status === 'authenticated' && (
-          <>
+          <HorizontalButtonGroup>
+            <Button
+              label='Settings'
+              onClick={() => router.push('/common/my/settings')}
+            />
             <Button
               label='Sign out'
+              palette='error'
               onClick={() => signOut()}
             />
-          </>
+          </HorizontalButtonGroup>
         )}
         {status === 'unauthenticated' && (
           <>

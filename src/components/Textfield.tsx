@@ -7,14 +7,16 @@ import {
 } from "react";
 
 export interface TextfieldProps {
-  type?: HTMLInputTypeAttribute,
-  placeholder?: string,
-  onClick?: MouseEventHandler<HTMLInputElement>
-  onInput?: FormEventHandler<HTMLInputElement>
-  className?: string
+  id?: string;
+  type?: HTMLInputTypeAttribute;
+  placeholder?: string;
+  onClick?: MouseEventHandler<HTMLInputElement>;
+  onInput?: FormEventHandler<HTMLInputElement>;
+  className?: string;
 }
 
 export default function Textfield({
+  id = '',
   type = 'text',
   placeholder = '',
   onClick = () => {},
@@ -24,14 +26,15 @@ export default function Textfield({
   return (
     <div>
       <input
-      className={[
-        'h-[2.5rem]', 'w-full',
-        'px-4',
-        'rounded-3xl',
-        'bg-white',
-        'border-2', 'border-slate-200',
-        'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400'
-      ].join(' ')}
+        id={id}
+        className={[
+          'h-[2.5rem]', 'w-full',
+          'px-4',
+          'rounded-3xl',
+          'bg-white', 'dark:bg-black',
+          'border-2', 'border-slate-200', 'dark:border-slate-800',
+          'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400', 'dark:focus:border-purple-400',
+        ].join(' ')}
         type={type}
         placeholder={placeholder}
         onClick={onClick}

@@ -1,7 +1,7 @@
 'use client';
 
-import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
+import { signIn, signOut, useSession } from "next-auth/react";
 
 import Autocomplete from "@/components/Autocomplete";
 import Avatar from "@/components/Avatar";
@@ -48,17 +48,17 @@ export default function Header({
     <div className={[
       'fixed', 'top-0', 'left-0', 'right-0',
       'my-0',
-      'bg-white',
+      'bg-white', 'dark:bg-black',
       'z-40',
     ].join(' ')}>
       <div className={[
         'flex', 'justify-center', 'items-center', 'gap-2',
         'relative',
         'mx-auto', 'h-16', 'max-w-screen-sm',
-        'rounded-3xl'
+        'rounded-3xl',
       ].join(' ')}>
         <div className={[
-          'absolute', 'top-0', 'bottom-0', 'left-0',
+          'absolute', 'top-0', 'bottom-0', 'left-4',
           'flex', 'justify-center', 'items-center', 'gap-2',
         ].join(' ')}>
           
@@ -82,7 +82,7 @@ export default function Header({
         </div>
         <div className={[
           'flex', 'justify-center', 'items-center', 'gap-2',
-          'absolute', 'top-0', 'bottom-0', 'right-0',
+          'absolute', 'top-0', 'bottom-0', 'right-4',
         ].join(' ')}>
           {renderSessionPart()}
         </div>

@@ -81,12 +81,12 @@ export default async function Page() {
         >
           <DummyVerticalListCard
             title='Hot threads'
-            titleIcon={faCode}
+            icon={faCode}
             itemCount={5}
           />
           <DummyVerticalListCard
             title='Recently created threads'
-            titleIcon={faCode}
+            icon={faCode}
             itemCount={3}
           />
         </div>
@@ -102,14 +102,14 @@ export default async function Page() {
       </PageRow>
       <PageRow>
         <ChipGroup>
-          <Chip label='C/C++' />
-          <Chip label='Java/Kotlin' />
-          <Chip label='Objective-C/Swift' />
-          <Chip label='Python' />
-          <Chip label='JavaScript/TypeScript' />
-          <Chip label='Ruby' />
-          <Chip label='Go' />
-          <Chip label='Etc' />
+          <Chip id='thread-cpp' label='C/C++' />
+          <Chip id='thread-kotlin' label='Java/Kotlin' />
+          <Chip id='thread-swift' label='Objective-C/Swift' />
+          <Chip id='thread-python' label='Python' />
+          <Chip id='thread-typescript' label='JavaScript/TypeScript' />
+          <Chip id='thread-ruby' label='Ruby' />
+          <Chip id='thread-go' label='Go' />
+          <Chip id='thread-etc' label='Etc' />
         </ChipGroup>
       </PageRow>
       <PageRow>
