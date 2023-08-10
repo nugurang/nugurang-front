@@ -7,6 +7,7 @@ import Autocomplete from "@/components/Autocomplete";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import FontAwesomeIconButton from "@/components/FontAwesomeIconButton";
+import LoadingIcon from '@/components/LoadingIcon';
 import Logo from "@/components/Logo";
 
 import {
@@ -29,6 +30,9 @@ export default function Header({
 
   const renderSessionPart = () => (
     <>
+      {status === 'loading' && (
+        <LoadingIcon className={[ 'h-8', 'w-8' ].join(' ')} />
+      )}
       {status === 'authenticated' && (
         <Avatar
           src={session.user?.image ?? ''}
@@ -65,7 +69,7 @@ export default function Header({
         </div>
         <div className={[
           'flex', 'justify-center', 'items-center', 'gap-2',
-          'p-16',
+          'px-16',
         ].join(' ')}>
           <div className={[
             'flex', 'justify-center', 'items-center', 'gap-2',

@@ -2,7 +2,6 @@ import PageRow from '@/components/PageRow';
 import BriefProfileFragment from './BriefProfileFragment';
 
 export default async function Page() {
-
   return (
     <>
       <PageRow>

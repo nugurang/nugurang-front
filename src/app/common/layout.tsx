@@ -1,7 +1,7 @@
 import Footer, { FooterSpacer } from '@/compositions/Footer';
 import Header, { HeaderSpacer } from '@/compositions/Header';
 
-export default function RootLayout({
+export default function CommonLayout({
   children,
 }: {
   children: React.ReactNode
