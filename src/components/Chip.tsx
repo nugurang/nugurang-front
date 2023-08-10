@@ -25,8 +25,8 @@ export default function Chip({
       className={[
         'h-8', 'px-4',
         'bg-white', 'dark:bg-black', 'border-2', 'rounded-3xl',
-        'text-slate-500', 'dark:text-slate-500', 'border-slate-400', 'dark:border-slate-600', 'hover:bg-slate-50', 'dark:hover:bg-slate-950', 
-        checked ? 'checked:text-slate-100' : '',
+        'text-neutral-500', 'dark:text-neutral-500', 'border-neutral-400', 'dark:border-neutral-600', 'hover:bg-neutral-50', 'dark:hover:bg-neutral-950', 
+        checked ? 'checked:text-neutral-100' : '',
         checked ? 'checked:bg-purple-400': '',
         'cursor-pointer',
         className,

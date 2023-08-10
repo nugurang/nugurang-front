@@ -32,7 +32,7 @@ export default function Textfield({
           'px-4',
           'rounded-3xl',
           'bg-white', 'dark:bg-black',
-          'border-2', 'border-slate-200', 'dark:border-slate-800',
+          'border-2', 'border-neutral-200', 'dark:border-neutral-800',
           'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400', 'dark:focus:border-purple-400',
         ].join(' ')}
         type={type}

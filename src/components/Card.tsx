@@ -15,7 +15,7 @@ export default function Card({
       className={[
         'bg-white', 'dark:bg-black', 
         'rounded-3xl',
-        'border-2', 'border-slate-100', 'dark:border-slate-900',
+        'border-2', 'border-neutral-100', 'dark:border-neutral-900',
       ].join(' ')}
     >
       {children}

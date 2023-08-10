@@ -16,7 +16,7 @@ export default function VerticalList({
       className={[
         'bg-white', 'dark:bg-black',
         'rounded-3xl',
-        'divide-y', 'divide-slate-200', 'dark:divide-slate-800', 'divide-dashed',
+        'divide-y', 'divide-neutral-200', 'dark:divide-neutral-800', 'divide-dashed',
         className,
       ].join(' ')}
     >
@@ -48,8 +48,8 @@ export function VerticalListItem({
       <div
         className={[
           'px-4', 'py-2',
-          'bg-white', 'dark:bg-black', 'hover:bg-slate-50', 'dark:hover:bg-slate-950',
-          // 'odd:bg-white', 'even:bg-slate-50',
+          'bg-white', 'dark:bg-black', 'hover:bg-neutral-50', 'dark:hover:bg-neutral-950',
+          // 'odd:bg-white', 'even:bg-neutral-50',
           'rounded-3xl',
         ].join(' ')}
       >

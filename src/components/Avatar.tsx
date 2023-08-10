@@ -17,7 +17,7 @@ export default function Avatar({
     <div
       className={[
         'rounded-full',
-        'border-2', 'border-slate-100', 'dark:border-slate-900',
+        'border-2', 'border-neutral-100', 'dark:border-neutral-900',
         `${onClick ? 'hover:border-purple-400' : ''}`, `${onClick ? 'dark:hover:border-purple-400' : ''}`,
         'shrink-0',
       ].join(' ')}

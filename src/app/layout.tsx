@@ -18,8 +18,8 @@ export default function RootLayout({
       <body
         className={[
           'h-screen',
-          'bg-slate-50', 'dark:bg-slate-950',
-          'text-slate-950', 'dark:text-slate-50',
+          'bg-neutral-50', 'dark:bg-neutral-950',
+          'text-neutral-950', 'dark:text-neutral-50',
         ].join(' ')}
       >
         <AuthSessionProvider>

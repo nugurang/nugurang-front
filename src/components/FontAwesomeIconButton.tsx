@@ -31,19 +31,19 @@ export default function FontAwesomeIconButton({
             switch(palette) {
               case 'primary':
                 return [
-                  'text-slate-50', 'bg-purple-400', 'border-2', 'border-purple-400',
+                  'text-neutral-50', 'bg-purple-400', 'border-2', 'border-purple-400',
                   'hover:bg-purple-600', 'hover:border-purple-600',
                 ].join(' ')
               case 'error':
                 return [
-                  'text-slate-50', 'bg-red-400', 'border-2', 'border-red-400',
+                  'text-neutral-50', 'bg-red-400', 'border-2', 'border-red-400',
                   'hover:bg-red-600', 'hover:border-red-600',
                 ].join(' ')
               case 'default':
               default:
                 return [
-                  'bg-slate-50', 'dark:bg-slate-950', 'border-2', 'border-slate-50', 'dark:border-slate-950',
-                  'hover:bg-slate-200', 'dark:hover:bg-slate-800', 'hover:border-slate-200', 'dark:hover:border-slate-800',
+                  'bg-neutral-50', 'dark:bg-neutral-950', 'border-2', 'border-neutral-50', 'dark:border-neutral-950',
+                  'hover:bg-neutral-200', 'dark:hover:bg-neutral-800', 'hover:border-neutral-200', 'dark:hover:border-neutral-800',
                 ].join(' ')
             }
           })(),

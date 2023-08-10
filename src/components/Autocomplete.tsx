@@ -56,7 +56,7 @@ export default function Autocomplete({
           'text-sm',
           'rounded-3xl',
           'bg-white', 'dark:bg-black',
-          'border-2', 'border-slate-200', 'dark:border-slate-800',
+          'border-2', 'border-neutral-200', 'dark:border-neutral-800',
           'focus:outline-none', 'focus:ring-0', 'focus:border-purple-400', 'dark:focus:border-purple-400',
           className
         ].join(' ')}
@@ -86,7 +86,7 @@ export default function Autocomplete({
               className={[
                 'bg-white', 'dark:bg-black',
                 'rounded-3xl',
-                'divide-y', 'divide-slate-200', 'dark:divide-slate-800', 'divide-dashed',
+                'divide-y', 'divide-neutral-200', 'dark:divide-neutral-800', 'divide-dashed',
               ].join(' ')}
             >
               {candidateList.length > 0 && candidateList.map((candidate, index) => (
@@ -94,8 +94,8 @@ export default function Autocomplete({
                   key={index}
                   className={[
                     'px-4', 'py-2',
-                    'bg-white', 'dark:bg-black', 'hover:bg-slate-50', 'dark:hover:bg-black',
-                    // 'odd:bg-white', 'even:bg-slate-50',
+                    'bg-white', 'dark:bg-black', 'hover:bg-neutral-50', 'dark:hover:bg-black',
+                    // 'odd:bg-white', 'even:bg-neutral-50',
                     'rounded-3xl',
                   ].join(' ')}
                 >
@@ -135,7 +135,7 @@ export default function Autocomplete({
                   ].join(' ')}
                 >
                   <span className={[
-                    'text-slate-500', 'dark:text-slate-500',
+                    'text-neutral-500', 'dark:text-neutral-500',
                   ].join(' ')}>검색 결과가 없습니다.</span>
                 </div>
               )}

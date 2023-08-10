@@ -36,7 +36,7 @@ export default function ToggleSwitch({
           'block',
           'h-6', 'w-10',
           'rounded-full',
-          (checked ? 'bg-purple-400' : 'bg-slate-400')
+          (checked ? 'bg-purple-400' : 'bg-neutral-400')
         ].join(' ')}></div>
         <div className={[
           'flex', 'items-center', 'justify-center',
