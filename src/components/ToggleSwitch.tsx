@@ -34,18 +34,22 @@ export default function ToggleSwitch({
         />
         <div className={[
           'block',
-          'h-6', 'w-10',
+          'h-6', 'w-12',
           'rounded-full',
           (checked ? 'bg-purple-400' : 'bg-neutral-400')
-        ].join(' ')}></div>
-        <div className={[
-          'flex', 'items-center', 'justify-center',
-          'absolute', 'top-1', (checked ? 'right-1' : 'left-1'),
-          'h-4', 'w-4',
-          'dot', 'rounded-full',
-          'bg-white',
-          'transition'
         ].join(' ')}>
+          <div className={[
+            'flex', 'items-center', 'justify-start',
+          ].join(' ')}>
+            <div className={[
+              'mt-1', (checked ? 'ml-7' : 'ml-1'),
+              'h-4', 'w-4',
+              'dot', 'rounded-full',
+              'bg-white',
+              'transition-all'
+            ].join(' ')}>
+            </div>
+          </div>
         </div>
       </div>
     </label>

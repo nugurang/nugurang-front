@@ -36,7 +36,7 @@ export default function ThreadThumbnailCard({
     <Card>
       <img
         className={[
-          'max-h-60', 'sm:max-h-72', 'w-full',
+          'h-60', 'sm:h-72', 'w-full',
           'object-cover',
           'rounded-tl-2xl', 'rounded-tr-2xl',
         ].join(' ')}
