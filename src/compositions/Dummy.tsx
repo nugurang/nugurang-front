@@ -5,6 +5,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import Box from "@/components/Box";
 import Button from '@/components/Button';
 import Card, { CardHeader } from "@/components/Card";
+import type { FontAwesomeIconProps } from "@/components/FontAwesomeIcon";
 import VerticalList, { TextVerticalListItem } from "@/compositions/VerticalList";
 
 export interface DummyBannerCardProps {
@@ -31,7 +32,7 @@ export function DummyBannerCard({
 
 export interface DummyVerticalListCardProps {
   title?: string
-  icon?: IconDefinition
+  icon?: FontAwesomeIconProps
   itemCount?: number,
   marginTop?: boolean,
 }

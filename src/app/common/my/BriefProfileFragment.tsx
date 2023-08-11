@@ -1,5 +1,6 @@
 'use client';
 
+import { useContext } from 'react';
 import { useRouter } from 'next/navigation'
 import { signIn, signOut, useSession } from 'next-auth/react';
 
@@ -7,10 +8,43 @@ import Avatar from '@/components/Avatar';
 import Box from '@/components/Box';
 import Button, { HorizontalButtonGroup } from '@/components/Button';
 import Card from '@/components/Card';
+import Dialog from '@/compositions/Dialog';
+import { BackdropContext } from '@/providers/BackdropProvider';
+
+import {
+  faKey
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function BriefProfileFragment() {
+  const { openBackdrop, closeBackdrop } = useContext(BackdropContext);
   const router = useRouter();
   const { data: session, status } = useSession();
+
+  const handleClickLogoutButton = () => {
+    openBackdrop(
+      <Dialog
+        icon={{
+          icon: faKey,
+          palette: 'error',
+          variant: 'text',
+        }}
+        title='로그아웃'
+        subtitle='정말 로그아웃하시겠습니까?'
+        bottomButtonList={[
+          {
+            label: 'No',
+            onClick: () => closeBackdrop()
+          },
+          {
+            label: 'Yes',
+            palette: 'error',
+            onClick: () => signOut()
+          },
+        ]}
+        onClickCancel={() => closeBackdrop()}
+      />
+    )
+  };
 
   return (
     <Card>
@@ -53,7 +87,7 @@ export default function BriefProfileFragment() {
             <Button
               label='Sign out'
               palette='error'
-              onClick={() => signOut()}
+              onClick={() => handleClickLogoutButton()}
             />
           </HorizontalButtonGroup>
         )}

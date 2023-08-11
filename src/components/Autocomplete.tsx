@@ -68,7 +68,7 @@ export default function Autocomplete({
         <div
           className={[
             'absolute', 'top-full', 'left-0', 'right-0',
-            'z-50',
+            'z-40',
           ].join(' ')}
           ref={candidateListRef}
         >

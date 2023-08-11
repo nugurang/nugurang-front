@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import FontAwesomeIcon from "@/components/FontAwesomeIcon";
+import type { FontAwesomeIconProps } from '@/components/FontAwesomeIcon';
 
 export interface VerticalListProps {
   children: React.ReactNode
@@ -27,7 +27,7 @@ export default function VerticalList({
 
 export interface VerticalListItemProps {
   children: React.ReactNode
-  icon?: IconDefinition
+  icon?: FontAwesomeIconProps
   onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }
@@ -65,10 +65,10 @@ export function VerticalListItem({
             <FontAwesomeIcon
               className={[
                 'h-5', 'w-5',
-                'mr-3', 'py-[0.1rem]',
-                'text-lg',
+                'mt-1', 'mr-3',
               ].join(' ')}
-              icon={icon}
+              icon={icon.icon}
+              palette={icon.palette}
             />
           )}
           <div

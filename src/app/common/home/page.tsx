@@ -81,12 +81,16 @@ export default async function Page() {
         >
           <DummyVerticalListCard
             title='Hot threads'
-            icon={faCode}
+            icon={{
+              icon: faCode,
+            }}
             itemCount={5}
           />
           <DummyVerticalListCard
             title='Recently created threads'
-            icon={faCode}
+            icon={{
+              icon: faCode,
+            }}
             itemCount={3}
           />
         </div>

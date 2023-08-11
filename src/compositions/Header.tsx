@@ -53,7 +53,7 @@ export default function Header({
       'fixed', 'top-0', 'left-0', 'right-0',
       'my-0',
       'bg-white', 'dark:bg-black',
-      'z-40',
+      'z-30',
     ].join(' ')}>
       <div className={[
         'flex', 'justify-center', 'items-center', 'gap-2',

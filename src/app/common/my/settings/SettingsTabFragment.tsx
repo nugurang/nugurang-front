@@ -43,7 +43,9 @@ export default function BriefProfileFragment() {
       ].join(' ')}>
         <CardHeader
           title='설정'
-          icon={faGear}
+          icon={{
+            icon: faGear,
+          }}
         />
         <VerticalList className={[
           'grow'
@@ -51,14 +53,18 @@ export default function BriefProfileFragment() {
           <TextVerticalListItem
             title='Lorem Ipsum'
             subtitle='Display'
-            icon={faDisplay}
+            icon={{
+              icon: faDisplay,
+            }}
           />
           <ToggleSwitchVerticalListItem
             id='settings-theme'
             checked={isDarkMode}
             title='어두운 모드'
             subtitle='어두운 모드를 켜거나 끕니다.'
-            icon={faMoon}
+            icon={{
+              icon: faMoon,
+            }}
             onChange={toggleTheme}
           />
         </VerticalList>

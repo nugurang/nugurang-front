@@ -14,18 +14,17 @@ export default function Logo({
   className = '',
 }: LogoProps) {
   return (
-    <div>
-      <button
-      className={[
-        'flex', 'justify-center', 'items-center',
-        'px-2',
-        'rounded-3xl',
-      ].join(' ')}
-        onClick={onClick}
-      >
-        <span className='block sm:hidden px-2 text-lg'>nά</span>
-        <span className='hidden sm:block px-2 text-lg'>nugurang άλφα</span>
-      </button>
-    </div>
+    <button
+    className={[
+      'flex', 'justify-center', 'items-center',
+      'px-2',
+      'rounded-3xl',
+      className,
+    ].join(' ')}
+      onClick={onClick}
+    >
+      <span className='block sm:hidden px-2 text-lg'>nά</span>
+      <span className='hidden sm:block px-2 text-lg'>nugurang άλφα</span>
+    </button>
   );
 }

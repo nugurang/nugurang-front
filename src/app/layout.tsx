@@ -1,5 +1,6 @@
 import '@/styles/global.css';
-import AuthSessionProvider from "@/providers/AuthSessionProvider";
+import AuthSessionProvider from '@/providers/AuthSessionProvider';
+import BackdropProvider from '@/providers/BackdropProvider';
 
 // FontAwesomeIcon
 import { config } from '@fortawesome/fontawesome-svg-core'
@@ -14,7 +15,7 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="en">
+    <html lang='en'>
       <body
         className={[
           'h-screen',
@@ -23,8 +24,17 @@ export default function RootLayout({
         ].join(' ')}
       >
         <AuthSessionProvider>
-          {children}
+          <BackdropProvider>
+            {children}
+          </BackdropProvider>
         </AuthSessionProvider>
+        <div
+          id='backdrop-portal-destination'
+          className={[
+            'relative',
+            'z-50',
+          ].join(' ')}
+        />
       </body>
     </html>
   );

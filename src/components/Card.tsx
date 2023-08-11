@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import FontAwesomeIcon from "./FontAwesomeIcon";
+import type { FontAwesomeIconProps } from "./FontAwesomeIcon";
 
 export interface CardProps {
   children: React.ReactNode
@@ -25,7 +25,7 @@ export default function Card({
 
 export interface CardHeaderProps {
   title?: string
-  icon?: IconDefinition
+  icon?: FontAwesomeIconProps
   onClickIcon?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }
@@ -33,7 +33,6 @@ export interface CardHeaderProps {
 export function CardHeader({
   title = '',
   icon,
-  onClickIcon,
   className = '',
 }: CardHeaderProps) {
   return (
@@ -44,19 +43,19 @@ export function CardHeader({
         'bg-white', 'dark:bg-black', 
         'rounded-3xl',
         'text-lg',
+        className,
       ].join(' ')}
     >
       {icon && (
-        <button onClick={onClickIcon}>
-          <FontAwesomeIcon
-            className={[
-              'h-5', 'w-5',
-              'mr-3',
-              'text-lg',
-            ].join(' ')}
-            icon={icon}
-          />
-        </button>
+        <FontAwesomeIcon
+          className={[
+            'h-5', 'w-5',
+            'mr-3',
+            'text-lg',
+          ].join(' ')}
+          icon={icon.icon}
+          palette={icon.palette}
+        />
       )}
       <div>{title}</div>
     </div>
